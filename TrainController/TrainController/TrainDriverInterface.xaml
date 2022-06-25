@@ -1,0 +1,39 @@
+﻿<Window x:Class="TrainController.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TrainController"
+        mc:Ignorable="d"
+        Title="Train Driver Interface" Height="450" Width="800">
+    <Grid>
+        <Label Content="Authority and Brakes" HorizontalAlignment="Left" Margin="50,20,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Width="200" FontSize="15" HorizontalContentAlignment="Center"/>
+        <Label Content="Controls" HorizontalAlignment="Left" Margin="300,20,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Width="200" FontSize="15" HorizontalContentAlignment="Center"/>
+        <Label Content="Non-Vitals" HorizontalAlignment="Left" Margin="550,20,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Width="200" FontSize="15" HorizontalContentAlignment="Center"/>
+        <Label Content="Temperature" HorizontalAlignment="Left" Margin="540,255,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Width="112" FontSize="15" HorizontalContentAlignment="Center" Height="36"/>
+
+        <TextBox TextAlignment="Center" HorizontalAlignment="Left" Margin="41,167,0,0" TextWrapping="Wrap" Text="&#xD;&#xA;Current Authority" VerticalAlignment="Top" Width="218" Height="50"/>
+        <TextBox TextAlignment="Center" HorizontalAlignment="Left" Margin="41,237,0,0" TextWrapping="Wrap" Text="&#xD;&#xA;Commanded Authority" VerticalAlignment="Top" Width="218" Height="50"/>
+        <TextBox TextAlignment="Center" HorizontalAlignment="Left" Margin="41,308,0,0" TextWrapping="Wrap" Text="&#xD;&#xA;Service Brake" VerticalAlignment="Top" Width="218" Height="50"/>
+        <TextBox TextAlignment="Center" HorizontalAlignment="Left" Margin="541,308,0,0" TextWrapping="Wrap" Text="&#xA;Current Authority" VerticalAlignment="Top" Width="218" Height="50"/>
+
+        <Slider HorizontalAlignment="Left" Margin="50,380,0,0" VerticalAlignment="Top" Width="200"/>
+
+        <Button x:Name="AutoMode" Click="Button_Click" ClickMode="Press" Content="Automatic Mode" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="290,81,0,0" Height="43" Width="100"/>
+        <Button x:Name="ManualMode" Click="Button_Click" ClickMode="Press" Content="Manual Mode" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="408,81,0,0" Height="43" Width="100"/>
+
+        <Button x:Name="EmergencyBrake" Click="Button_Click" ClickMode="Press" Content="Emergency Brake" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="41,80,0,0" Height="67" Width="218"/>
+
+        <Button x:Name="LeftDoors" Click="Button_Click" ClickMode="Press" Content="Doors (Left)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="540,80,0,0" Height="44" Width="100"/>
+        <Button x:Name="RightDoors" Click="Button_Click" ClickMode="Press" Content="Doors (Right)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="660,80,0,0" Height="44" Width="100"/>
+
+        <Button x:Name="LightsInterior" Click="Button_Click" ClickMode="Press" Content="Lights (Interior)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="540,141,0,0" Height="40" Width="100"/>
+        <Button x:Name="LightsExterior" Click="Button_Click" ClickMode="Press" Content="Lights (Exterior)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="660,141,0,0" Height="40" Width="100"/>
+
+        <Button x:Name="Announcements" Click="Button_Click" ClickMode="Press" Content="Announcements" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="540,195,0,0" Height="43" Width="220"/>
+
+        <Button x:Name="TempIncrease" Click="Button_Click" ClickMode="Press" Content="+" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="665,255,0,0" Height="36" Width="40"/>
+        <Button x:Name="TempDecrease" Click="Button_Click" ClickMode="Press" Content="-" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="720,255,0,0" Height="36" Width="40"/>
+
+    </Grid>
+</Window>
