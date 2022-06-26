@@ -6,5 +6,5 @@ build_property.ProjectTypeGuids =
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
-build_property.RootNamespace = TrainController
-build_property.ProjectDir = C:\Users\Howard\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\
+build_property.RootNamespace = TrainModel
+build_property.ProjectDir = C:\Users\Howard\source\repos\Mike3916\1140-Team-1\Train Model\TrainModel\
