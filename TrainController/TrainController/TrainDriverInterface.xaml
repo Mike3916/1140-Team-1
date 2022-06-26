@@ -22,7 +22,7 @@
         <Button x:Name="AutoMode" Click="Button_Click" ClickMode="Press" Content="Automatic Mode" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="290,81,0,0" Height="43" Width="100"/>
         <Button x:Name="ManualMode" Click="Button_Click" ClickMode="Press" Content="Manual Mode" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="408,81,0,0" Height="43" Width="100"/>
 
-        <Button x:Name="EmergencyBrake" Click="Button_Click" ClickMode="Press" Content="Emergency Brake" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="41,315,0,0" Height="67" Width="218" Background="#FFFF5A5A" FontSize="20"/>
+        <Button x:Name="EmergencyBrake" Click="Button_Click" ClickMode="Press" Content="Emergency Brake" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="41,317,0,0" Height="65" Width="218" Background="#FFFF5A5A" FontSize="20"/>
 
         <Button x:Name="LeftDoors" Click="Button_Click" ClickMode="Press" Content="Doors (Left)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="540,80,0,0" Height="44" Width="100"/>
         <Button x:Name="RightDoors" Click="Button_Click" ClickMode="Press" Content="Doors (Right)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="660,80,0,0" Height="44" Width="100"/>
