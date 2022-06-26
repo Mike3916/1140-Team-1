@@ -12,17 +12,17 @@
         <Label Content="Non-Vitals" HorizontalAlignment="Left" Margin="550,20,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Width="200" FontSize="15" HorizontalContentAlignment="Center"/>
         <Label Content="Temperature" HorizontalAlignment="Left" Margin="540,255,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Width="112" FontSize="15" HorizontalContentAlignment="Center" Height="36"/>
 
-        <TextBox TextAlignment="Center" HorizontalAlignment="Left" Margin="41,167,0,0" TextWrapping="Wrap" Text="&#xD;&#xA;Current Authority" VerticalAlignment="Top" Width="218" Height="50"/>
-        <TextBox TextAlignment="Center" HorizontalAlignment="Left" Margin="41,237,0,0" TextWrapping="Wrap" Text="&#xD;&#xA;Commanded Authority" VerticalAlignment="Top" Width="218" Height="50"/>
-        <TextBox TextAlignment="Center" HorizontalAlignment="Left" Margin="41,308,0,0" TextWrapping="Wrap" Text="&#xD;&#xA;Service Brake" VerticalAlignment="Top" Width="218" Height="50"/>
-        <TextBox TextAlignment="Center" HorizontalAlignment="Left" Margin="541,308,0,0" TextWrapping="Wrap" Text="&#xA;Current Authority" VerticalAlignment="Top" Width="218" Height="50"/>
+        <TextBlock HorizontalAlignment="Left" Margin="41,242,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="60" Width="218" Background="#FF64E164" FontSize="20" TextAlignment="Center"><Run Text="Current Authority:"/><LineBreak/><Run/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="41,165,0,0" TextWrapping="Wrap" Text="Commanded Authority:" VerticalAlignment="Top" Height="60" Width="218" Background="#FF64E164" FontSize="20" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="41,80,0,0" TextWrapping="Wrap" Text="Service Brakes:" VerticalAlignment="Top" Height="70" Width="218" Background="#FFFF5A5A" FontSize="20" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="280,140,0,0" TextWrapping="Wrap" Text="Current Speed:" VerticalAlignment="Top" Height="131" Width="238" Background="#FF64E164" FontSize="32" TextAlignment="Center"/>
 
-        <Slider HorizontalAlignment="Left" Margin="50,380,0,0" VerticalAlignment="Top" Width="200"/>
+        <Slider HorizontalAlignment="Left" Margin="50,115,0,0" VerticalAlignment="Top" Width="200" Height="20"/>
 
         <Button x:Name="AutoMode" Click="Button_Click" ClickMode="Press" Content="Automatic Mode" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="290,81,0,0" Height="43" Width="100"/>
         <Button x:Name="ManualMode" Click="Button_Click" ClickMode="Press" Content="Manual Mode" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="408,81,0,0" Height="43" Width="100"/>
 
-        <Button x:Name="EmergencyBrake" Click="Button_Click" ClickMode="Press" Content="Emergency Brake" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="41,80,0,0" Height="67" Width="218"/>
+        <Button x:Name="EmergencyBrake" Click="Button_Click" ClickMode="Press" Content="Emergency Brake" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="41,315,0,0" Height="67" Width="218" Background="#FFFF5A5A" FontSize="20"/>
 
         <Button x:Name="LeftDoors" Click="Button_Click" ClickMode="Press" Content="Doors (Left)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="540,80,0,0" Height="44" Width="100"/>
         <Button x:Name="RightDoors" Click="Button_Click" ClickMode="Press" Content="Doors (Right)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="660,80,0,0" Height="44" Width="100"/>
