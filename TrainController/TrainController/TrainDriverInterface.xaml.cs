@@ -22,6 +22,8 @@ namespace TrainController
     {
         // Boolean for switching between auto and manual driving modes:
         private bool mAutoMode = false;
+        private bool mLeftDoorsStatus = false;
+        private bool mRightDoorsStatus = false;
 
         public MainWindow()
         {
@@ -72,11 +74,29 @@ namespace TrainController
             }
             else if (sender == LeftDoors)
             {
-                MessageBox.Show("Left Doors open");
+                if (!mLeftDoorsStatus)
+                {
+                    mLeftDoorsStatus = true;
+                    LeftDoors.Content = "Doors - Left\n    (OPEN)";
+                }
+                else
+                {
+                    mLeftDoorsStatus = false;
+                    LeftDoors.Content = "Doors - Left\n  (CLOSED)";
+                }
             }
             else if (sender == RightDoors)
             {
-                MessageBox.Show("Right Doors open");
+                if (!mRightDoorsStatus)
+                {
+                    mRightDoorsStatus = true;
+                    RightDoors.Content = "Doors - Right\n     (OPEN)";
+                }
+                else
+                {
+                    mRightDoorsStatus = false;
+                    RightDoors.Content = "Doors - Right\n   (CLOSED)";
+                }
             }
             else if (sender == LightsInterior)
             {
