@@ -9,11 +9,9 @@
     <Grid>
         <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" Text="CTC" VerticalAlignment="Top"/>
         <Image HorizontalAlignment="Left" Height="240" Margin="78,118,0,0" VerticalAlignment="Top" Width="253" Source="/Red &amp; Green Line.png"/>
-        <ListBox x:Name="SelectTrain" HorizontalAlignment="Left" Height="105" Margin="471,59,0,0" VerticalAlignment="Top" Width="154" d:ItemsSource="{d:SampleData ItemCount=5}" ScrollViewer.CanContentScroll="False">
-            <Button/>
-        </ListBox>
-        <Button x:Name="LoadFile" Content="Load Track" HorizontalAlignment="Left" Margin="18,14,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="LoadFile" Content="Load Track" HorizontalAlignment="Left" Margin="18,14,0,0" VerticalAlignment="Top" Click="LoadFile_Click" Initialized="LoadFile_Init"/>
         <Button x:Name="Dispatch" Content="Dispatch New Train" HorizontalAlignment="Left" Margin="679,397,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="SelectTrain" HorizontalAlignment="Left" Margin="583,69,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="SelectTrain_SelectionChanged" IsDropDownOpen="False"/>
 
     </Grid>
 </Window>

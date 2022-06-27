@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CTCObject= Backend.CTCObject;
 
 namespace CTC
 {
@@ -20,15 +21,33 @@ namespace CTC
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent(); ///Default code
+
+            SelectTrain.Items.Add("Train_1"); ///Creating placeholder trains
+            SelectTrain.Items.Add("Train_2");
+            SelectTrain.Items.Add("Train_3");
         }
 
 
         private void SelectTrain_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            MessageBox.Show(SelectTrain.SelectedItem.ToString());
+        }
 
+      
+
+        private void LoadFile_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Click");
+        }
+
+        private void LoadFile_Init(object sender, EventArgs e)
+        {
+            MessageBox.Show("Init!");
         }
     }
 }
