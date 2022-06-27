@@ -10,11 +10,11 @@ none
 false
 TRACE;RELEASE;NET;NET6_0;NETCOREAPP
 C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\App.xaml
-1504225851
+3-1872864077
 
-31647779949
+563907573
 194-97651837
-TrainDriverInterface.xaml;
+EngineerPanel.xaml;TestPanel.xaml;TrainDriverInterface.xaml;
 
 False
 

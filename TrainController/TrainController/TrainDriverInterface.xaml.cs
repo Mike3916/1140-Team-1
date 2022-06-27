@@ -20,20 +20,51 @@ namespace TrainController
     /// </summary>
     public partial class MainWindow : Window
     {
+        // Boolean for switching between auto and manual driving modes:
+        private bool mAutoMode = false;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            ManualMode.IsEnabled = false;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (sender == AutoMode)
             {
-                MessageBox.Show("Automatic Mode");
+                AutoMode.IsEnabled = false;
+                ManualMode.IsEnabled = true;
+
+                LeftDoors.IsEnabled = false;
+                RightDoors.IsEnabled = false;
+                LightsInterior.IsEnabled = false;
+                LightsExterior.IsEnabled = false;
+                Announcements.IsEnabled = false;
+                TempIncrease.IsEnabled = false;
+                TempDecrease.IsEnabled = false;
+
+                SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0x30, 0, 0, 0));
+                
+                mAutoMode = true;
             }
             else if (sender == ManualMode)
             {
-                MessageBox.Show("Manual Mode");
+                ManualMode.IsEnabled = false;
+                AutoMode.IsEnabled = true;
+
+                LeftDoors.IsEnabled = true;
+                RightDoors.IsEnabled = true;
+                LightsInterior.IsEnabled = true;
+                LightsExterior.IsEnabled = true;
+                Announcements.IsEnabled = true;
+                TempIncrease.IsEnabled = true;
+                TempDecrease.IsEnabled = true;
+
+                SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xDF, 0x20));
+
+                mAutoMode = false;
             }
             else if (sender == EmergencyBrake)
             {
@@ -66,6 +97,16 @@ namespace TrainController
             else if (sender == TempDecrease)
             {
                 MessageBox.Show("Temperature Decreased");
+            }
+            else if (sender == EngineerPanel)
+            {
+                EngineerPanel ePan = new EngineerPanel();
+                ePan.Show();
+            }
+            else if (sender == TestPanel)
+            {
+                TestPanel tPan = new TestPanel();
+                tPan.Show();
             }
         }
     }

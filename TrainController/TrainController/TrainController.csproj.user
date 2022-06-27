@@ -7,7 +7,21 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="EngineerPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="TestPanel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="TrainDriverInterface.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="EngineerPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TestPanel.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

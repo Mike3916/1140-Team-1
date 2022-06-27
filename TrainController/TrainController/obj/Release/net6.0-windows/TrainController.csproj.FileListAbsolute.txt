@@ -4,10 +4,14 @@ C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController
 C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\bin\Release\net6.0-windows\TrainController.dll
 C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\bin\Release\net6.0-windows\TrainController.pdb
 C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\obj\Release\net6.0-windows\TrainController.csproj.AssemblyReference.cache
+C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\obj\Release\net6.0-windows\EngineerPanel.g.cs
+C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\obj\Release\net6.0-windows\TestPanel.g.cs
 C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\obj\Release\net6.0-windows\TrainDriverInterface.g.cs
 C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\obj\Release\net6.0-windows\App.g.cs
 C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\obj\Release\net6.0-windows\TrainController_MarkupCompile.cache
 C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\obj\Release\net6.0-windows\TrainController_MarkupCompile.lref
+C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\obj\Release\net6.0-windows\EngineerPanel.baml
+C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\obj\Release\net6.0-windows\TestPanel.baml
 C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\obj\Release\net6.0-windows\TrainDriverInterface.baml
 C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\obj\Release\net6.0-windows\TrainController.g.resources
 C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\obj\Release\net6.0-windows\TrainController.GeneratedMSBuildEditorConfig.editorconfig
