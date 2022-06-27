@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Howard\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\obj\Release\net6.0-windows\
+C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\obj\Release\net6.0-windows\
 TrainController
 none
 false
 TRACE;RELEASE;NET;NET6_0;NETCOREAPP
-C:\Users\Howard\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\App.xaml
-1504225851
+C:\Users\teche\Source\Repos\Mike3916\1140-Team-1\TrainController\TrainController\App.xaml
+3-1872864077
 
-31647779949
+563907573
 194-97651837
-TrainDriverInterface.xaml;
+EngineerPanel.xaml;TestPanel.xaml;TrainDriverInterface.xaml;
 
-True
+False
 
