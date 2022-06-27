@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Train=TrainObject.Train;
+
 namespace TrainModel
 {
     /// <summary>
@@ -20,9 +22,31 @@ namespace TrainModel
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        Train train;
         public MainWindow()
         {
             InitializeComponent();
+            train = new Train();
+            
+
+            
+        }
+
+      
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            
+            if (HelloButton.IsChecked == true)
+            {
+                double speed = train.getCurrentSpeed();
+                MessageBox.Show(speed.ToString());
+            }
+            else if (GoodbyeButton.IsChecked == true)
+            {
+                MessageBox.Show("Goodbye.");
+            }
         }
     }
 }

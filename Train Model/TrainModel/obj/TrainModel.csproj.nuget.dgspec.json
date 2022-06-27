@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Howard\\source\\repos\\Mike3916\\1140-Team-1\\Train Model\\TrainModel\\TrainModel.csproj": {}
+    "C:\\Users\\Howard\\Source\\Repos\\Mike3916\\1140-Team-1\\Train Model\\TrainModel\\TrainModel.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Howard\\source\\repos\\Mike3916\\1140-Team-1\\Train Model\\TrainModel\\TrainModel.csproj": {
+    "C:\\Users\\Howard\\Source\\Repos\\Mike3916\\1140-Team-1\\Train Model\\TrainModel\\TrainModel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Howard\\source\\repos\\Mike3916\\1140-Team-1\\Train Model\\TrainModel\\TrainModel.csproj",
+        "projectUniqueName": "C:\\Users\\Howard\\Source\\Repos\\Mike3916\\1140-Team-1\\Train Model\\TrainModel\\TrainModel.csproj",
         "projectName": "TrainModel",
-        "projectPath": "C:\\Users\\Howard\\source\\repos\\Mike3916\\1140-Team-1\\Train Model\\TrainModel\\TrainModel.csproj",
+        "projectPath": "C:\\Users\\Howard\\Source\\Repos\\Mike3916\\1140-Team-1\\Train Model\\TrainModel\\TrainModel.csproj",
         "packagesPath": "C:\\Users\\Howard\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Howard\\source\\repos\\Mike3916\\1140-Team-1\\Train Model\\TrainModel\\obj\\",
+        "outputPath": "C:\\Users\\Howard\\Source\\Repos\\Mike3916\\1140-Team-1\\Train Model\\TrainModel\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Howard\\AppData\\Roaming\\NuGet\\NuGet.Config",
