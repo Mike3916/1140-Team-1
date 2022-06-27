@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="Test Panel" Height="450" Width="800">
     <Grid>
-        
+        <TextBox x:Name="DumbGuy" HorizontalAlignment="Left" Height="54" Margin="324,151,0,0" TextWrapping="Wrap" Text="First" VerticalAlignment="Top" Width="242"/>
+
     </Grid>
 </Window>

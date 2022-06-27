@@ -25,11 +25,17 @@ namespace TrainController
         private bool mLeftDoorsStatus = false;
         private bool mRightDoorsStatus = false;
 
+        private TestPanel tPan;
+        private EngineerPanel ePan;
+
         public MainWindow()
         {
             InitializeComponent();
 
             ManualMode.IsEnabled = false;
+
+            ePan = new EngineerPanel();
+            tPan = new TestPanel();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -120,13 +126,13 @@ namespace TrainController
             }
             else if (sender == EngineerPanel)
             {
-                EngineerPanel ePan = new EngineerPanel();
                 ePan.Show();
+                ePan.Activate();
             }
             else if (sender == TestPanel)
             {
-                TestPanel tPan = new TestPanel();
                 tPan.Show();
+                tPan.Activate();
             }
             else if (sender == HardwareController)
             {
