@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrainController"
         mc:Ignorable="d"
-        Title="Engineer's Panel" Height="250" Width="300">
-    <Grid Margin="0,0,500,250">
+        Title="Engineer's Panel" Height="302" Width="382">
+    <Grid>
+        <TextBlock x:Name="Kp" TextWrapping="Wrap" Text="Change Kp:" Margin="58,42,0,0" Background="#FFFFFF64" TextAlignment="Center" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top" Height="83" Width="263"/>
+        <TextBlock x:Name="Ki" TextWrapping="Wrap" Text="Change Ki:" Margin="58,168,0,0" Background="#FFFFFF64" TextAlignment="Center" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top" Height="73" Width="263"/>
+        <TextBox TextWrapping="Wrap" Text="TextBox" Margin="110,93,0,0" TextAlignment="Center" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164"/>
+        <TextBox TextWrapping="Wrap" Text="TextBox" Margin="110,213,0,0" TextAlignment="Center" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164"/>
 
     </Grid>
 </Window>

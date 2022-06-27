@@ -23,5 +23,17 @@ namespace TrainController
         {
             InitializeComponent();
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(sender == Kp)
+            {
+
+            }
+            else if(sender == Ki)
+            {
+
+            }
+        }
     }
 }

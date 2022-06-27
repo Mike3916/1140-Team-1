@@ -108,6 +108,14 @@ namespace TrainController
                 TestPanel tPan = new TestPanel();
                 tPan.Show();
             }
+            else if (sender == HardwareController)
+            {
+
+            }
+            else if (sender == SoftwareController)
+            {
+
+            }
         }
     }
 }
