@@ -13,6 +13,9 @@
     <Compile Update="TestPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="HW_SW.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="TrainDriverInterface.xaml">
@@ -22,6 +25,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="TestPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="HW_SW.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
