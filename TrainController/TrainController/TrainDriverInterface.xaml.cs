@@ -69,7 +69,7 @@ namespace TrainController
                 TempIncrease.IsEnabled = true;
                 TempDecrease.IsEnabled = true;
 
-                SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0x38, 0xC8));
+                SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xDF, 0x20));
 
                 mAutoMode = false;
             }
