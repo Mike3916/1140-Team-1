@@ -25,6 +25,8 @@ namespace TrainController
         private bool mAutoMode = false;
         private bool mLeftDoorsStatus = false;
         private bool mRightDoorsStatus = false;
+        private bool mInteriorLightsStatus = false;
+        private bool mExteriorLightsStatus = false;
 
         public MainWindow()
         {
@@ -119,11 +121,29 @@ namespace TrainController
             }
             else if (sender == LightsInterior)
             {
-                MessageBox.Show("Interior Lights on");
+                if (!mInteriorLightsStatus)
+                {
+                    mInteriorLightsStatus = true;
+                    LightsInterior.Content = "Lights - Interior\n        (ON)";
+                }
+                else
+                {
+                    mInteriorLightsStatus = false;
+                    LightsInterior.Content = "Lights - Interior\n        (OFF)";
+                }
             }
             else if (sender == LightsExterior)
             {
-                MessageBox.Show("Exterior Lights on");
+                if (!mExteriorLightsStatus)
+                {
+                    mExteriorLightsStatus = true;
+                    LightsExterior.Content = "Lights - Exterior\n        (ON)";
+                }
+                else
+                {
+                    mExteriorLightsStatus = false;
+                    LightsExterior.Content = "Lights - Exterior\n        (OFF)";
+                }
             }
             else if (sender == Announcements)
             {
