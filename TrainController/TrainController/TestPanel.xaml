@@ -5,16 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrainController"
         mc:Ignorable="d"
-        Title="Test Panel" Height="450" Width="800">
-    <Grid>
-        <TextBox x:Name="DumbGuy" HorizontalAlignment="Left" Height="54" Margin="324,151,0,0" TextWrapping="Wrap" Text="First" VerticalAlignment="Top" Width="242"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="53,42,0,0" VerticalAlignment="Top" Height="60" Width="137" Click="Button_Click"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="262,319,0,0" VerticalAlignment="Top"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="262,287,0,0" VerticalAlignment="Top"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="262,253,0,0" VerticalAlignment="Top"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="262,214,0,0" VerticalAlignment="Top"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="262,178,0,0" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Height="43" Margin="53,339,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="117" Background="#FFD2D2D2"/>
+        Title="Test Panel" Height="515" Width="732">
+    <Grid Margin="0,0,10,15">
+        <TextBlock HorizontalAlignment="Left" Margin="49,26,0,0" TextWrapping="Wrap" Text="Emergency Brakes" VerticalAlignment="Top" Height="36" Width="134" Background="Gainsboro" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="49,67,0,0" TextWrapping="Wrap" Text="Service Brakes" VerticalAlignment="Top" Height="36" Width="134" Background="Gainsboro" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="49,108,0,0" TextWrapping="Wrap" Text="Left Doors" VerticalAlignment="Top" Height="36" Width="134" Background="Gainsboro" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="49,149,0,0" TextWrapping="Wrap" Text="Right Doors" VerticalAlignment="Top" Height="36" Width="134" Background="Gainsboro" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="49,190,0,0" TextWrapping="Wrap" Text="Interior Lights" VerticalAlignment="Top" Height="36" Width="134" Background="Gainsboro" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="49,231,0,0" TextWrapping="Wrap" Text="Exterior Lights" VerticalAlignment="Top" Height="36" Width="134" Background="Gainsboro" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="49,272,0,0" TextWrapping="Wrap" Text="Interior Temperature" VerticalAlignment="Top" Height="36" Width="134" Background="Gainsboro" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="49,313,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="36" Width="134" Background="Gainsboro" TextAlignment="Center"><Run Text="Commanded Authority"/><LineBreak/><Run Text="(in blocks):"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="49,354,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="36" Width="134" Background="Gainsboro" TextAlignment="Center"><Run Text="Current Authority"/><LineBreak/><Run Text="(in blocks):"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="49,395,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="48" Width="106" Background="Gainsboro" TextAlignment="Center"><Run/><LineBreak/><Run Text="Current Beacon:"/></TextBlock>
+
+        <Button x:Name="EmergencyBrakes" Content="OFF" HorizontalAlignment="Left" Margin="198,30,0,0" VerticalAlignment="Top" Height="28" Width="120" Click="Button_Click" ClickMode="Press" Background="#FFFF5050"/>
+        <Button x:Name="ServiceBrakes" Content="Button" HorizontalAlignment="Left" Margin="198,71,0,0" VerticalAlignment="Top" Height="28" Width="120" Click="Button_Click" ClickMode="Press"/>
+        <Button x:Name="LeftDoors" Content="Button" HorizontalAlignment="Left" Margin="198,112,0,0" VerticalAlignment="Top" Height="28" Width="120" Click="Button_Click" ClickMode="Press"/>
+        <Button x:Name="RightDoors" Content="Button" HorizontalAlignment="Left" Margin="198,153,0,0" VerticalAlignment="Top" Height="28" Width="120" Click="Button_Click" ClickMode="Press"/>
+        <Button x:Name="InteriorLights" Content="Button" HorizontalAlignment="Left" Margin="198,194,0,0" VerticalAlignment="Top" Height="28" Width="120" Click="Button_Click" ClickMode="Press"/>
+        <Button x:Name="ExteriorLights" Content="Button" HorizontalAlignment="Left" Margin="198,235,0,0" VerticalAlignment="Top" Height="28" Width="120" Click="Button_Click" ClickMode="Press"/>
+
+        <TextBox x:Name="Temperature" HorizontalAlignment="Left" Margin="198,276,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Height="28" TextAlignment="Center" TextChanged="TextChanged"/>
+        <TextBox x:Name="CmdAuthority" HorizontalAlignment="Left" Margin="198,317,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Height="28" TextAlignment="Center" TextChanged="TextChanged"/>
+        <TextBox x:Name="CurAuthority" HorizontalAlignment="Left" Margin="198,358,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Height="28" TextAlignment="Center" TextChanged="TextChanged"/>
+        <TextBox x:Name="CurBeacon" HorizontalAlignment="Left" Margin="169,405,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="149" Height="28" TextAlignment="Center" TextChanged="TextChanged"/>
 
     </Grid>
 </Window>

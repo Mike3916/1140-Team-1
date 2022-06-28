@@ -33,6 +33,7 @@ namespace TrainController
                 ((MainWindow)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0xDF, 0x20)); ;
                 SoftwareController.IsEnabled = false;
                 HardwareController.IsEnabled = false;
+                this.Close();
             }
             else
             {
@@ -41,6 +42,7 @@ namespace TrainController
                 ((MainWindow)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0x5F, 0xA0)); ;
                 SoftwareController.IsEnabled = false;
                 HardwareController.IsEnabled = false;
+                this.Close();
             }
         }
     }
