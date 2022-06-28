@@ -23,5 +23,10 @@ namespace TrainController
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).EmergencyBrake.Content = "Some text";
+        }
     }
 }
