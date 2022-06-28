@@ -8,6 +8,13 @@
         Title="Test Panel" Height="450" Width="800">
     <Grid>
         <TextBox x:Name="DumbGuy" HorizontalAlignment="Left" Height="54" Margin="324,151,0,0" TextWrapping="Wrap" Text="First" VerticalAlignment="Top" Width="242"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="53,42,0,0" VerticalAlignment="Top" Height="60" Width="137" Click="Button_Click"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="262,319,0,0" VerticalAlignment="Top"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="262,287,0,0" VerticalAlignment="Top"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="262,253,0,0" VerticalAlignment="Top"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="262,214,0,0" VerticalAlignment="Top"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="262,178,0,0" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Height="43" Margin="53,339,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="117" Background="#FFD2D2D2"/>
 
     </Grid>
 </Window>
