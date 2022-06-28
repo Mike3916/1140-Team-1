@@ -30,7 +30,21 @@ namespace TrainController
         {
             InitializeComponent();
 
+            // Disable all buttons on main window until a HW_SW window option is selected:
             ManualMode.IsEnabled = false;
+            AutoMode.IsEnabled = false;
+            ServiceBrake.IsEnabled = false;
+            EmergencyBrake.IsEnabled = false;
+            SetSpeedBox.IsEnabled = false;
+            EngineerPanel.IsEnabled = false;
+            TestPanel.IsEnabled = false;
+            TempIncrease.IsEnabled = false;
+            TempDecrease.IsEnabled = false;
+            Announcements.IsEnabled = false;
+            LeftDoors.IsEnabled = false;
+            RightDoors.IsEnabled = false;
+            LightsInterior.IsEnabled = false;
+            LightsExterior.IsEnabled = false;
 
             HW_SW selectType = new HW_SW();
             selectType.Show();
