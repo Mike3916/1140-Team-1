@@ -21,6 +21,7 @@ namespace TrainController
     public partial class MainWindow : Window
     {
         // Boolean for switching between auto and manual driving modes:
+        public bool mControlType;
         private bool mAutoMode = false;
         private bool mLeftDoorsStatus = false;
         private bool mRightDoorsStatus = false;
@@ -30,6 +31,10 @@ namespace TrainController
             InitializeComponent();
 
             ManualMode.IsEnabled = false;
+
+            HW_SW selectType = new HW_SW();
+            selectType.Show();
+            selectType.Activate();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -64,7 +69,7 @@ namespace TrainController
                 TempIncrease.IsEnabled = true;
                 TempDecrease.IsEnabled = true;
 
-                SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xDF, 0x20));
+                SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0x38, 0xC8));
 
                 mAutoMode = false;
             }
@@ -127,16 +132,8 @@ namespace TrainController
             else if (sender == TestPanel)
             {
                 TestPanel tPan = new TestPanel();
+                tPan.Owner = this;
                 tPan.Show();
-                tPan.Activate();
-            }
-            else if (sender == HardwareController)
-            {
-
-            }
-            else if (sender == SoftwareController)
-            {
-
             }
         }
     }

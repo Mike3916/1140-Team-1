@@ -1,0 +1,14 @@
+﻿<Window x:Class="TrainController.HW_SW"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TrainController"
+        mc:Ignorable="d"
+        Title="Select Hardware or Software" Height="155" Width="301">
+    <Grid Margin="0,0,25,27">
+        <Button x:Name="HardwareController" Click="Button_Click" ClickMode="Press" Content="HW Controller" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,54,0,0" Height="28" Width="100"/>
+        <Button x:Name="SoftwareController" Click="Button_Click" ClickMode="Press" Content="SW Controller" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="150,54,0,0" Height="28" Width="100"/>
+        <TextBlock HorizontalAlignment="Left" Margin="64,16,0,0" TextWrapping="Wrap" Text="Select Hardware or Software:" VerticalAlignment="Top" Height="21" Width="163" Background="#FF87D8A6"/>
+    </Grid>
+</Window>
