@@ -41,7 +41,8 @@ namespace TrainModel
             InitializeComponent();
             train = new Train();
             train.setAuthority(35);
-
+            train.setCommandedSpeed(35);
+            train.setPowerCmd(0);
 
 
         }
@@ -72,6 +73,7 @@ namespace TrainModel
         private void Select_a_Train_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Position.Text = "Current Block: 10\nAuthority: " + train.getAuthority().ToString() + "\nLast Station: Castle Shannon\nNext Station: Dormont";
+            Speed.Text = "Current Speed: " + Math.Round(train.getCurrentSpeedMPH(),2).ToString() + "M/h\nCommanded Speed: " + Math.Round(train.getCommandedSpeedMPH(),2).ToString() + "M/h\nCurrent Acceleration: " + train.getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: 7s";
         }
 
        

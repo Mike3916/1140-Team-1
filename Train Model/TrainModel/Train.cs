@@ -13,9 +13,8 @@ namespace TrainObject
     {
         private double currentSpeed;
         private double previousAcceleration;
-        private double k1;
-        private double kP;
-        private double mass;
+        private double commandedSpeed;
+        private double mass=56.7*2000;
         private double powerCmd;
         private double powerMax = 120000;
         private bool emergencyBrake;
@@ -82,9 +81,28 @@ namespace TrainObject
             return powerCmd;
         }
 
+        public void setCommandedSpeed( double s)
+        {
+            commandedSpeed = s;
+        }
+
+        public double getCommandedSpeed() { 
+            return commandedSpeed; 
+        }
+
+        public double getCommandedSpeedMPH()
+        {
+            return commandedSpeed * 2.23694;
+        }
+
         public double getCurrentSpeed()
         {
             return currentSpeed;
+        }
+
+        public double getCurrentSpeedMPH()
+        {
+            return currentSpeed * 2.23694;
         }
 
         public void setAuthority(int a)
@@ -127,11 +145,16 @@ namespace TrainObject
             }
             else
             {
+                
                 return accelerationCalc;
             }
 
         }
 
+        public double getAccelerationFPS()
+        {
+            return getAcceleration() * 3.280839;
+        }
 
         public double getVelocity()
         {
