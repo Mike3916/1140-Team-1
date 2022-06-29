@@ -135,6 +135,7 @@ namespace TrainController
                     if (mEmergencyBrakeStatus == false)
                     {
                         mEmergencyBrakeStatus = true;
+                        EmergencyBrake.Content = "Emergency Brake (ON)";
                     }
                 }
                 else
@@ -142,10 +143,10 @@ namespace TrainController
                     if(mEmergencyBrakeStatus == false)
                     {
                         mEmergencyBrakeStatus = true;
-                        pi.WriteLine("E_Brakes from windows");
+                        pi.WriteLine("e");
                         string brakeStatus = pi.ReadLine();
-                        MessageBox.Show(brakeStatus);
-                    }   
+                        EmergencyBrake.Content = "Emergency Brake (ON)";
+                    }
                 }
             }
             else if (sender == LeftDoors)
