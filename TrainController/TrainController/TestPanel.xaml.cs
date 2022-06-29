@@ -189,6 +189,11 @@ namespace TrainController
                     ((MainWindow)Application.Current.MainWindow).mCurAuthority = int.Parse(CurAuthority.Text);
                     ((MainWindow)Application.Current.MainWindow).CurAuthority.Text = "Current Authority:\n" + ((MainWindow)Application.Current.MainWindow).mCurAuthority + " blocks";
                 }
+                else if (sender == CurBeacon)
+                {
+                    ((MainWindow)Application.Current.MainWindow).mBeacon = CurBeacon.Text;
+                    ((MainWindow)Application.Current.MainWindow).Beacon.Text = "Nearest Beacon:\n" + ((MainWindow)Application.Current.MainWindow).mBeacon;
+                }
             }
         }
         private void TextChanged(object sender, TextChangedEventArgs e)

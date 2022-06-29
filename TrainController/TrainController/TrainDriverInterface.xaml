@@ -19,11 +19,11 @@
         <TextBlock x:Name="CmdSpeed" HorizontalAlignment="Left" Margin="280,271,0,0" TextWrapping="Wrap" Text="Cmd Speed:&#xa;0 mph" VerticalAlignment="Top" Height="62" Width="109" Background="#FF64E164" FontSize="18" TextAlignment="Center"/>
         <TextBlock x:Name="SetSpeed" HorizontalAlignment="Left" Margin="410,271,0,0" TextWrapping="Wrap" Text="Set Speed:&#xa;        mph" VerticalAlignment="Top" Height="62" Width="109" Background="#FFFFDF20" FontSize="18" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="282,345,0,0" TextWrapping="Wrap" Text="       Power:" VerticalAlignment="Top" Height="32" Width="238" Background="#FF64E164" FontSize="18" TextAlignment="Left"/>
-        <TextBlock HorizontalAlignment="Left" Margin="540,317,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="60" Width="220" Background="#FF64E164" FontSize="20" TextAlignment="Center"><Run Text="Nearest Beacon:"/><LineBreak/><Run/></TextBlock>
+        <TextBlock x:Name="Beacon" HorizontalAlignment="Left" Margin="540,317,0,0" TextWrapping="Wrap" Text="Nearest Beacon:&#xa;-" VerticalAlignment="Top" Height="60" Width="220" Background="#FF64E164" FontSize="20" TextAlignment="Center"/>
         <TextBlock x:Name="Temperature" HorizontalAlignment="Left" Margin="540,249,0,0" TextWrapping="Wrap" Text="Temperature: 72°F" VerticalAlignment="Top" Height="54" Width="109" Background="#FF57F1D9" FontSize="16" TextAlignment="Center"/>
         <!--<TextBlock HorizontalAlignment="Left" Margin="102,268,0,0" TextWrapping="Wrap" Text="0 blocks" VerticalAlignment="Top" Background="White" Height="18" Width="96" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="102,195,0,0" TextWrapping="Wrap" Text="0 blocks" VerticalAlignment="Top" Background="White" Height="16" Width="96" TextAlignment="Center"/>-->
-        <TextBlock HorizontalAlignment="Left" Margin="594,348,0,0" TextWrapping="Wrap" Text="Mt. Washington" VerticalAlignment="Top" Background="White" TextAlignment="Center" Width="111"/>
+        <!--<TextBlock HorizontalAlignment="Left" Margin="594,348,0,0" TextWrapping="Wrap" Text="Mt. Washington" VerticalAlignment="Top" Background="White" TextAlignment="Center" Width="111"/>-->
         <TextBlock HorizontalAlignment="Left" Margin="410,352,0,0" TextWrapping="Wrap" Text="0 kW" VerticalAlignment="Top" Background="White" Width="90" TextAlignment="Center"/>
         <TextBlock x:Name="SelectType" HorizontalAlignment="Left" Margin="41,392,0,0" TextWrapping="Wrap" Text="Select Controller Type" VerticalAlignment="Top" Height="27" Width="218" Background="#FFDADADA" FontSize="16" TextAlignment="Center"/>
 

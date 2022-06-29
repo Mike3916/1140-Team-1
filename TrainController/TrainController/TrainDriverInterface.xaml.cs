@@ -41,6 +41,7 @@ namespace TrainController
         public int mSetSpeed = 0;
         public int mCmdAuthority = 0;
         public int mCurAuthority = 0;
+        public string mBeacon = "-";
 
         public MainWindow()
         {
@@ -270,6 +271,8 @@ namespace TrainController
 
                 tPan.CmdAuthority.Text = mCmdAuthority.ToString();
                 tPan.CurAuthority.Text = mCurAuthority.ToString();
+
+                tPan.CurBeacon.Text = mBeacon;
 
                 tPan.Show();
             }
