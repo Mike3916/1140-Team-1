@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,17 @@ namespace TrainModel
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+
+    class railLines : ObservableCollection<string>
+    {
+        public railLines()
+        {
+
+            Add("Green");
+            Add("Red");
+            Add("Blue");
+        }
+    }
     public partial class MainWindow : Window
     {
 
@@ -47,6 +59,11 @@ namespace TrainModel
             {
                 MessageBox.Show("Goodbye.");
             }
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

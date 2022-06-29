@@ -6,14 +6,23 @@
         xmlns:local="clr-namespace:TrainModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
+   
+  
+
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="26,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Train"/><LineBreak/><Run/></TextBlock>
-        
-            <TextBlock HorizontalAlignment="Left" Margin="252,47,0,0" TextWrapping="Wrap" Text="Select a message option and then choose the Display button." VerticalAlignment="Top"/>
-            <RadioButton x:Name="HelloButton" Content="Hello" IsChecked="True" HorizontalAlignment="Left" Margin="297,161,0,0" VerticalAlignment="Top"/>
-            <RadioButton x:Name="GoodbyeButton" Content="Goodbye" HorizontalAlignment="Left" Margin="488,161,0,0" VerticalAlignment="Top"/>
-            <Button Content="Display" HorizontalAlignment="Left" Margin="377,270,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
-       
+        <TextBlock HorizontalAlignment="Left" Margin="26,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text=""/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="252,47,0,0" TextWrapping="Wrap" Text="Select a message option and then choose the Display button." VerticalAlignment="Top"/>
+        <RadioButton x:Name="HelloButton" Content="Hello" IsChecked="True" HorizontalAlignment="Left" Margin="297,161,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="GoodbyeButton" Content="Goodbye" HorizontalAlignment="Left" Margin="488,161,0,0" VerticalAlignment="Top"/>
+        <Button Content="Display" HorizontalAlignment="Left" Margin="377,270,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+        <ComboBox x:Name="Select_a_Line" Text ="Select a Line" HorizontalAlignment="Left" Margin="40,20,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" IsReadOnly="True" IsDropDownOpen="True">
+            <ComboBoxItem Content="Red Line"/>
+            <ComboBoxItem Content="Blue Line"/>
+            <ComboBoxItem Content="Green Line"/>
+        </ComboBox>
+
 
     </Grid>
 </Window>
