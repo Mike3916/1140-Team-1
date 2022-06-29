@@ -22,13 +22,13 @@ namespace TrainController
     {
         // Boolean for switching between auto and manual driving modes:
         public bool mControlType;
-        public bool mAutoMode;
-        public bool mLeftDoorsStatus;
-        public bool mRightDoorsStatus;
-        public bool mInteriorLightsStatus;
-        public bool mExteriorLightsStatus;
-        public bool mAnnouncementsStatus;
-        public int mTemperature;
+
+        private bool mAutoMode = false;
+        private bool mLeftDoorsStatus = false;
+        private bool mRightDoorsStatus = false;
+        private bool mInteriorLightsStatus = false;
+        private bool mExteriorLightsStatus = false;
+        private int mTemperature = 72;
 
         public MainWindow()
         {
@@ -127,11 +127,29 @@ namespace TrainController
             }
             else if (sender == LightsInterior)
             {
-                MessageBox.Show("Interior Lights on");
+                if (!mInteriorLightsStatus)
+                {
+                    mInteriorLightsStatus = true;
+                    LightsInterior.Content = "Lights - Interior\n        (ON)";
+                }
+                else
+                {
+                    mInteriorLightsStatus = false;
+                    LightsInterior.Content = "Lights - Interior\n        (OFF)";
+                }
             }
             else if (sender == LightsExterior)
             {
-                MessageBox.Show("Exterior Lights on");
+                if (!mExteriorLightsStatus)
+                {
+                    mExteriorLightsStatus = true;
+                    LightsExterior.Content = "Lights - Exterior\n        (ON)";
+                }
+                else
+                {
+                    mExteriorLightsStatus = false;
+                    LightsExterior.Content = "Lights - Exterior\n        (OFF)";
+                }
             }
             else if (sender == Announcements)
             {
@@ -139,11 +157,13 @@ namespace TrainController
             }
             else if (sender == TempIncrease)
             {
-                MessageBox.Show("Temperature Increased");
+                mTemperature++;
+                Temperature.Text = "Temperature: " + mTemperature.ToString() + "°F";
             }
             else if (sender == TempDecrease)
             {
-                MessageBox.Show("Temperature Decreased");
+                mTemperature--;
+                Temperature.Text = "Temperature: " + mTemperature.ToString() + "°F";
             }
             else if (sender == EngineerPanel)
             {
