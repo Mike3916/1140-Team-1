@@ -18,7 +18,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="280,350,0,0" TextWrapping="Wrap" Text="       Power:" VerticalAlignment="Top" Height="32" Width="238" Background="#FF64E164" FontSize="18" TextAlignment="Left"/>
         <TextBlock HorizontalAlignment="Left" Margin="280,272,0,0" TextWrapping="Wrap" Text="Cmd Speed:" VerticalAlignment="Top" Height="62" Width="109" Background="#FF64E164" FontSize="18" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="540,322,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="60" Width="220" Background="#FF64E164" FontSize="20" TextAlignment="Center"><Run Text="Nearest Beacon:"/><LineBreak/><Run/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="540,254,0,0" TextWrapping="Wrap" Text="Temperature:" VerticalAlignment="Top" Height="54" Width="109" Background="#FF57F1D9" FontSize="16" TextAlignment="Center"/>
+        <TextBlock x:Name="Temperature" HorizontalAlignment="Left" Margin="540,254,0,0" TextWrapping="Wrap" Text="Temperature: 72°F" VerticalAlignment="Top" Height="54" Width="109" Background="#FF57F1D9" FontSize="16" TextAlignment="Center"/>
         <TextBlock x:Name="SetSpeed" HorizontalAlignment="Left" Margin="410,272,0,0" TextWrapping="Wrap" Text="Set Speed:" VerticalAlignment="Top" Height="62" Width="109" Background="#FFFFDF20" FontSize="18" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="290,303,0,0" TextWrapping="Wrap" Text="50 mph" VerticalAlignment="Top" Background="White" Height="18" Width="88" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="102,273,0,0" TextWrapping="Wrap" Text="0 blocks" VerticalAlignment="Top" Background="White" Height="18" Width="96" TextAlignment="Center"/>

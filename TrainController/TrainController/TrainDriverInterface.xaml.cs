@@ -27,6 +27,7 @@ namespace TrainController
         private bool mRightDoorsStatus = false;
         private bool mInteriorLightsStatus = false;
         private bool mExteriorLightsStatus = false;
+        private int mTemperature = 72;
 
         public MainWindow()
         {
@@ -151,11 +152,13 @@ namespace TrainController
             }
             else if (sender == TempIncrease)
             {
-                MessageBox.Show("Temperature Increased");
+                mTemperature++;
+                Temperature.Text = "Temperature: " + mTemperature.ToString() + "°F";
             }
             else if (sender == TempDecrease)
             {
-                MessageBox.Show("Temperature Decreased");
+                mTemperature--;
+                Temperature.Text = "Temperature: " + mTemperature.ToString() + "°F";
             }
             else if (sender == EngineerPanel)
             {
