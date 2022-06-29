@@ -18,7 +18,7 @@
         <TextBlock x:Name="CurSpeed" HorizontalAlignment="Left" Margin="280,138,0,0" TextWrapping="Wrap" Text="Current Speed:&#xa;0 mph" VerticalAlignment="Top" Height="119" Width="242" Background="#FF64E164" FontSize="34" TextAlignment="Center"/>
         <TextBlock x:Name="CmdSpeed" HorizontalAlignment="Left" Margin="280,271,0,0" TextWrapping="Wrap" Text="Cmd Speed:&#xa;0 mph" VerticalAlignment="Top" Height="62" Width="109" Background="#FF64E164" FontSize="18" TextAlignment="Center"/>
         <TextBlock x:Name="SetSpeed" HorizontalAlignment="Left" Margin="410,271,0,0" TextWrapping="Wrap" Text="Set Speed:&#xa;        mph" VerticalAlignment="Top" Height="62" Width="109" Background="#FFFFDF20" FontSize="18" TextAlignment="Center"/>
-        <TextBlock HorizontalAlignment="Left" Margin="282,345,0,0" TextWrapping="Wrap" Text="       Power:" VerticalAlignment="Top" Height="32" Width="238" Background="#FF64E164" FontSize="18" TextAlignment="Left"/>
+        <TextBlock x:Name="CurPower" HorizontalAlignment="Left" Margin="282,345,0,0" TextWrapping="Wrap" Text="       Power:" VerticalAlignment="Top" Height="32" Width="238" Background="#FF64E164" FontSize="18" TextAlignment="Left"/>
         <TextBlock x:Name="Beacon" HorizontalAlignment="Left" Margin="540,317,0,0" TextWrapping="Wrap" Text="Nearest Beacon:&#xa;-" VerticalAlignment="Top" Height="60" Width="220" Background="#FF64E164" FontSize="20" TextAlignment="Center"/>
         <TextBlock x:Name="Temperature" HorizontalAlignment="Left" Margin="540,249,0,0" TextWrapping="Wrap" Text="Temperature: 72°F" VerticalAlignment="Top" Height="54" Width="109" Background="#FF57F1D9" FontSize="16" TextAlignment="Center"/>
         <!--<TextBlock HorizontalAlignment="Left" Margin="102,268,0,0" TextWrapping="Wrap" Text="0 blocks" VerticalAlignment="Top" Background="White" Height="18" Width="96" TextAlignment="Center"/>
@@ -45,7 +45,7 @@
 
         <!--<TextBlock HorizontalAlignment="Left" Margin="290,303,0,0" TextWrapping="Wrap" Text="0 mph" VerticalAlignment="Top" Background="White" Height="18" Width="88" TextAlignment="Center"/>-->
         <!--<TextBlock HorizontalAlignment="Left" Margin="335,195,0,0" TextWrapping="Wrap" Text="0 mph" VerticalAlignment="Top" Background="White" Height="50" Width="125" FontSize="28" TextAlignment="Center"/>-->
-        <TextBox x:Name="SetSpeedBox" HorizontalAlignment="Left" Margin="420,296,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="41" TextAlignment="Center" KeyDown="KeyDownButton"/>
+        <TextBox x:Name="SetSpeedBox" HorizontalAlignment="Left" Margin="422,302,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="41" TextAlignment="Center" KeyDown="KeyDownButton"/>
 
     </Grid>
 </Window>

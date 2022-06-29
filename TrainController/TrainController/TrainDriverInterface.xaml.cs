@@ -144,10 +144,10 @@ namespace TrainController
                     if (!mEmergencyBrakeStatus)
                     {
                         mEmergencyBrakeStatus = true;
-                        pi.WriteLine("E_Brakes from windows");
+                        pi.WriteLine("e");
                         string brakeStatus = pi.ReadLine();
-                        MessageBox.Show(brakeStatus);
-                    }   
+                        EmergencyBrake.Content = "Emergency Brake (ON)";
+                    }
                 }
             }
             else if (sender == LeftDoors)
