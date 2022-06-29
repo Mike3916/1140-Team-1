@@ -124,6 +124,21 @@ namespace TrainController
                 {
                     ((MainWindow)Application.Current.MainWindow).mKi = int.Parse(SetKi.Text);
                 }
+                else if (sender == CurSpeed)
+                {
+                    ((MainWindow)Application.Current.MainWindow).mCurSpeed = int.Parse(CurSpeed.Text);
+                    ((MainWindow)Application.Current.MainWindow).CurSpeed.Text = "Current Speed:\n" + ((MainWindow)Application.Current.MainWindow).mCurSpeed.ToString() + " mph";
+                }
+                else if (sender == CmdSpeed)
+                {
+                    ((MainWindow)Application.Current.MainWindow).mCmdSpeed = int.Parse(CmdSpeed.Text);
+                    ((MainWindow)Application.Current.MainWindow).CmdSpeed.Text = "Cmd Speed:\n" + ((MainWindow)Application.Current.MainWindow).mCmdSpeed.ToString() + " mph";
+                }
+                else if (sender == SetSpeed)
+                {
+                    ((MainWindow)Application.Current.MainWindow).mSetSpeed = int.Parse(SetSpeed.Text);
+                    ((MainWindow)Application.Current.MainWindow).SetSpeedBox.Text = ((MainWindow)Application.Current.MainWindow).mSetSpeed.ToString();
+                }
             }
         }
         private void TextChanged(object sender, TextChangedEventArgs e)

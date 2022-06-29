@@ -36,6 +36,9 @@ namespace TrainController
         public int mTemperature = 72;
         public int mKp = 0;
         public int mKi = 0;
+        public int mCurSpeed = 0;
+        public int mCmdSpeed = 0;
+        public int mSetSpeed = 0;
 
         public MainWindow()
         {
@@ -60,6 +63,7 @@ namespace TrainController
             mAutoMode = false;
 
             HW_SW selectType = new HW_SW();
+            selectType.Topmost = true;
             selectType.Show();
             selectType.Activate();
         }
@@ -81,7 +85,7 @@ namespace TrainController
                 SetSpeedBox.IsEnabled = false;
 
                 SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0x30, 0, 0, 0));
-                
+
                 mAutoMode = true;
             }
             else if (sender == ManualMode)
@@ -243,7 +247,22 @@ namespace TrainController
                 tPan.SetKp.Text = mKp.ToString();
                 tPan.SetKi.Text = mKi.ToString();
 
+                tPan.CurSpeed.Text = mCurSpeed.ToString();
+                tPan.CmdSpeed.Text = mCmdSpeed.ToString();
+                tPan.SetSpeed.Text = mSetSpeed.ToString();
+
                 tPan.Show();
+            }
+        }
+
+        private void KeyDownButton(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (sender == SetSpeedBox)
+                {
+                    mSetSpeed = int.Parse(SetSpeedBox.Text);
+                }
             }
         }
     }
