@@ -37,6 +37,7 @@ namespace TrainController
 
                 }*/
             }
+            //((MainWindow)Application.Current.MainWindow)
             else if (sender == LeftDoors)
             {
                 if (!((MainWindow)Application.Current.MainWindow).mLeftDoorsStatus)
@@ -107,6 +108,17 @@ namespace TrainController
             }
         }
 
+        private void KeyDownButton(object sender, KeyEventArgs e)
+        {
+            if (sender == Temperature)
+            {
+                if (e.Key == Key.Enter)
+                {
+                    ((MainWindow)Application.Current.MainWindow).mTemperature = int.Parse(Temperature.Text);
+                    ((MainWindow)Application.Current.MainWindow).Temperature.Text = "Temperature: " + ((MainWindow)Application.Current.MainWindow).mTemperature.ToString() + "°F";
+                }
+            }
+        }
         private void TextChanged(object sender, TextChangedEventArgs e)
         {
 

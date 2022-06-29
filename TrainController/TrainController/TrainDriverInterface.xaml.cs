@@ -165,7 +165,7 @@ namespace TrainController
             }
             else if (sender == Announcements)
             {
-                MessageBox.Show("Announcements off");
+                MessageBox.Show("Making an Announcement");
             }
             else if (sender == TempIncrease)
             {
@@ -231,6 +231,8 @@ namespace TrainController
                     tPan.ExteriorLights.Content = "OFF";
                     tPan.ExteriorLights.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
                 }
+
+                tPan.Temperature.Text = mTemperature.ToString();
 
                 tPan.Show();
             }
