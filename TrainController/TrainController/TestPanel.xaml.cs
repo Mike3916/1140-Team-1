@@ -179,6 +179,16 @@ namespace TrainController
                     ((MainWindow)Application.Current.MainWindow).mSetSpeed = int.Parse(SetSpeed.Text);
                     ((MainWindow)Application.Current.MainWindow).SetSpeedBox.Text = ((MainWindow)Application.Current.MainWindow).mSetSpeed.ToString();
                 }
+                else if (sender == CmdAuthority)
+                {
+                    ((MainWindow)Application.Current.MainWindow).mCmdAuthority = int.Parse(CmdAuthority.Text);
+                    ((MainWindow)Application.Current.MainWindow).CmdAuthority.Text = "Commanded Authority:\n" + ((MainWindow)Application.Current.MainWindow).mCmdAuthority + " blocks";
+                }
+                else if (sender == CurAuthority)
+                {
+                    ((MainWindow)Application.Current.MainWindow).mCurAuthority = int.Parse(CurAuthority.Text);
+                    ((MainWindow)Application.Current.MainWindow).CurAuthority.Text = "Current Authority:\n" + ((MainWindow)Application.Current.MainWindow).mCurAuthority + " blocks";
+                }
             }
         }
         private void TextChanged(object sender, TextChangedEventArgs e)

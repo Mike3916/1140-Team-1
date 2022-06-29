@@ -39,6 +39,8 @@ namespace TrainController
         public int mCurSpeed = 0;
         public int mCmdSpeed = 0;
         public int mSetSpeed = 0;
+        public int mCmdAuthority = 0;
+        public int mCurAuthority = 0;
 
         public MainWindow()
         {
@@ -265,6 +267,9 @@ namespace TrainController
                     tPan.AutoMode.Content = "OFF";
                     tPan.AutoMode.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
                 }
+
+                tPan.CmdAuthority.Text = mCmdAuthority.ToString();
+                tPan.CurAuthority.Text = mCurAuthority.ToString();
 
                 tPan.Show();
             }
