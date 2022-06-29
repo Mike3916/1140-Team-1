@@ -52,8 +52,8 @@ namespace TrainController
             Announcements.IsEnabled = false;
             LeftDoors.IsEnabled = false;
             RightDoors.IsEnabled = false;
-            LightsInterior.IsEnabled = false;
-            LightsExterior.IsEnabled = false;
+            InteriorLights.IsEnabled = false;
+            ExteriorLights.IsEnabled = false;
 
             mAutoMode = false;
 
@@ -71,8 +71,8 @@ namespace TrainController
 
                 LeftDoors.IsEnabled = false;
                 RightDoors.IsEnabled = false;
-                LightsInterior.IsEnabled = false;
-                LightsExterior.IsEnabled = false;
+                InteriorLights.IsEnabled = false;
+                ExteriorLights.IsEnabled = false;
                 Announcements.IsEnabled = false;
                 TempIncrease.IsEnabled = false;
                 TempDecrease.IsEnabled = false;
@@ -89,8 +89,8 @@ namespace TrainController
 
                 LeftDoors.IsEnabled = true;
                 RightDoors.IsEnabled = true;
-                LightsInterior.IsEnabled = true;
-                LightsExterior.IsEnabled = true;
+                InteriorLights.IsEnabled = true;
+                ExteriorLights.IsEnabled = true;
                 Announcements.IsEnabled = true;
                 TempIncrease.IsEnabled = true;
                 TempDecrease.IsEnabled = true;
@@ -121,7 +121,7 @@ namespace TrainController
                 else
                 {
                     mLeftDoorsStatus = false;
-                    LeftDoors.Content = "Doors - Left\n  (CLOSED)";
+                    LeftDoors.Content = "Doors - Left\n   (CLOSED)";
                 }
             }
             else if (sender == RightDoors)
@@ -137,30 +137,30 @@ namespace TrainController
                     RightDoors.Content = "Doors - Right\n   (CLOSED)";
                 }
             }
-            else if (sender == LightsInterior)
+            else if (sender == InteriorLights)
             {
                 if (!mInteriorLightsStatus)
                 {
                     mInteriorLightsStatus = true;
-                    LightsInterior.Content = "Lights - Interior\n        (ON)";
+                    InteriorLights.Content = "Lights - Interior\n        (ON)";
                 }
                 else
                 {
                     mInteriorLightsStatus = false;
-                    LightsInterior.Content = "Lights - Interior\n        (OFF)";
+                    InteriorLights.Content = "Lights - Interior\n        (OFF)";
                 }
             }
-            else if (sender == LightsExterior)
+            else if (sender == ExteriorLights)
             {
                 if (!mExteriorLightsStatus)
                 {
                     mExteriorLightsStatus = true;
-                    LightsExterior.Content = "Lights - Exterior\n        (ON)";
+                    ExteriorLights.Content = "Lights - Exterior\n        (ON)";
                 }
                 else
                 {
                     mExteriorLightsStatus = false;
-                    LightsExterior.Content = "Lights - Exterior\n        (OFF)";
+                    ExteriorLights.Content = "Lights - Exterior\n        (OFF)";
                 }
             }
             else if (sender == Announcements)
@@ -197,6 +197,39 @@ namespace TrainController
                 {
                     tPan.LeftDoors.Content = "CLOSED";
                     tPan.LeftDoors.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                }
+
+                if (mRightDoorsStatus)
+                {
+                    tPan.RightDoors.Content = "OPEN";
+                    tPan.RightDoors.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
+                }
+                else
+                {
+                    tPan.RightDoors.Content = "CLOSED";
+                    tPan.RightDoors.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                }
+
+                if (mInteriorLightsStatus)
+                {
+                    tPan.InteriorLights.Content = "ON";
+                    tPan.InteriorLights.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
+                }
+                else
+                {
+                    tPan.InteriorLights.Content = "OFF";
+                    tPan.InteriorLights.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                }
+
+                if (mExteriorLightsStatus)
+                {
+                    tPan.ExteriorLights.Content = "ON";
+                    tPan.ExteriorLights.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
+                }
+                else
+                {
+                    tPan.ExteriorLights.Content = "OFF";
+                    tPan.ExteriorLights.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
                 }
 
                 tPan.Show();

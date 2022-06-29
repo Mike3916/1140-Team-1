@@ -49,7 +49,7 @@ namespace TrainController
                 else
                 {
                     ((MainWindow)Application.Current.MainWindow).mLeftDoorsStatus = false;
-                    ((MainWindow)Application.Current.MainWindow).LeftDoors.Content = "Doors - Left\n  (CLOSED)";
+                    ((MainWindow)Application.Current.MainWindow).LeftDoors.Content = "Doors - Left\n   (CLOSED)";
                     LeftDoors.Content = "CLOSED";
                     LeftDoors.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
                 }
@@ -59,16 +59,50 @@ namespace TrainController
                 if (!((MainWindow)Application.Current.MainWindow).mRightDoorsStatus)
                 {
                     ((MainWindow)Application.Current.MainWindow).mRightDoorsStatus = true;
-                    ((MainWindow)Application.Current.MainWindow).RightDoors.Content = "Doors - Right\n    (OPEN)";
+                    ((MainWindow)Application.Current.MainWindow).RightDoors.Content = "Doors - Right\n     (OPEN)";
                     RightDoors.Content = "OPEN";
                     RightDoors.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
                 }
                 else
                 {
                     ((MainWindow)Application.Current.MainWindow).mRightDoorsStatus = false;
-                    ((MainWindow)Application.Current.MainWindow).RightDoors.Content = "Doors - Right\n  (CLOSED)";
+                    ((MainWindow)Application.Current.MainWindow).RightDoors.Content = "Doors - Right\n   (CLOSED)";
                     RightDoors.Content = "CLOSED";
                     RightDoors.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                }
+            }
+            else if (sender == InteriorLights)
+            {
+                if (!((MainWindow)Application.Current.MainWindow).mInteriorLightsStatus)
+                {
+                    ((MainWindow)Application.Current.MainWindow).mInteriorLightsStatus = true;
+                    ((MainWindow)Application.Current.MainWindow).InteriorLights.Content = "Lights - Interior\n        (ON)";
+                    InteriorLights.Content = "ON";
+                    InteriorLights.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
+                }
+                else
+                {
+                    ((MainWindow)Application.Current.MainWindow).mInteriorLightsStatus = false;
+                    ((MainWindow)Application.Current.MainWindow).InteriorLights.Content = "Lights - Interior\n        (OFF)";
+                    InteriorLights.Content = "OFF";
+                    InteriorLights.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                }
+            }
+            else if (sender == ExteriorLights)
+            {
+                if (!((MainWindow)Application.Current.MainWindow).mExteriorLightsStatus)
+                {
+                    ((MainWindow)Application.Current.MainWindow).mExteriorLightsStatus = true;
+                    ((MainWindow)Application.Current.MainWindow).ExteriorLights.Content = "Lights - Exterior\n        (ON)";
+                    ExteriorLights.Content = "ON";
+                    ExteriorLights.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
+                }
+                else
+                {
+                    ((MainWindow)Application.Current.MainWindow).mExteriorLightsStatus = false;
+                    ((MainWindow)Application.Current.MainWindow).ExteriorLights.Content = "Lights - Exterior\n        (OFF)";
+                    ExteriorLights.Content = "OFF";
+                    ExteriorLights.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
                 }
             }
         }

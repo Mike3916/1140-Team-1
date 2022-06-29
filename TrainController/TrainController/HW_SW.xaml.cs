@@ -48,8 +48,8 @@ namespace TrainController
                 ((MainWindow)Application.Current.MainWindow).Announcements.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).LeftDoors.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).RightDoors.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).LightsInterior.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).LightsExterior.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).InteriorLights.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).ExteriorLights.IsEnabled = true;
 
                 // Disable both controller type buttons and exit to main window:
                 SoftwareController.IsEnabled = false;
@@ -78,8 +78,8 @@ namespace TrainController
                 ((MainWindow)Application.Current.MainWindow).Announcements.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).LeftDoors.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).RightDoors.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).LightsInterior.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).LightsExterior.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).InteriorLights.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).ExteriorLights.IsEnabled = true;
 
                 // Disable both controller type buttons and exit to main window:
                 SoftwareController.IsEnabled = false;
