@@ -105,6 +105,46 @@ namespace TrainController
                     ExteriorLights.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
                 }
             }
+            else if (sender == ManualMode)
+            {
+                ManualMode.Content = "ON";
+                ManualMode.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
+                AutoMode.Content = "OFF";
+                AutoMode.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+
+                ((MainWindow)Application.Current.MainWindow).ManualMode.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).AutoMode.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).LeftDoors.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).RightDoors.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).InteriorLights.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).ExteriorLights.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).Announcements.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).TempIncrease.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).TempDecrease.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).SetSpeedBox.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xDF, 0x20));
+                ((MainWindow)Application.Current.MainWindow).mAutoMode = false;
+            }
+            else if (sender == AutoMode)
+            {
+                AutoMode.Content = "ON";
+                AutoMode.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
+                ManualMode.Content = "OFF";
+                ManualMode.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+
+                ((MainWindow)Application.Current.MainWindow).AutoMode.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).ManualMode.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).LeftDoors.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).RightDoors.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).InteriorLights.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).ExteriorLights.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).Announcements.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).TempIncrease.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).TempDecrease.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).SetSpeedBox.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0x30, 0, 0, 0));
+                ((MainWindow)Application.Current.MainWindow).mAutoMode = true;
+            }
         }
 
         private void KeyDownButton(object sender, KeyEventArgs e)

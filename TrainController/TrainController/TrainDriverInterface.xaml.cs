@@ -251,6 +251,21 @@ namespace TrainController
                 tPan.CmdSpeed.Text = mCmdSpeed.ToString();
                 tPan.SetSpeed.Text = mSetSpeed.ToString();
 
+                if (mAutoMode)
+                {
+                    tPan.AutoMode.Content = "ON";
+                    tPan.AutoMode.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
+                    tPan.ManualMode.Content = "OFF";
+                    tPan.ManualMode.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                }
+                else
+                {
+                    tPan.ManualMode.Content = "ON";
+                    tPan.ManualMode.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
+                    tPan.AutoMode.Content = "OFF";
+                    tPan.AutoMode.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                }
+
                 tPan.Show();
             }
         }
