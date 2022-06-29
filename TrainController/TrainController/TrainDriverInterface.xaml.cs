@@ -130,16 +130,18 @@ namespace TrainController
             }
             else if (sender == EmergencyBrake)
             {
-                if (mControlType == false)
+                if (!mControlType)
                 {
-                    if (mEmergencyBrakeStatus == false)
+                    if (!mEmergencyBrakeStatus)
                     {
                         mEmergencyBrakeStatus = true;
+                        EmergencyBrake.Content = "Emergency Brake\n         (ON)";
+                        EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
                     }
                 }
                 else
                 {
-                    if(mEmergencyBrakeStatus == false)
+                    if (!mEmergencyBrakeStatus)
                     {
                         mEmergencyBrakeStatus = true;
                         pi.WriteLine("E_Brakes from windows");
@@ -344,16 +346,29 @@ namespace TrainController
 
         private void SpeedUpdate(object sender, EventArgs e)
         {
-            if (mAutoMode)
+            if (mEmergencyBrakeStatus)
+            {
+                if (mCurSpeed == 0)
+                {
+                    mEmergencyBrakeStatus = false;
+                    EmergencyBrake.Content = "Emergency Brake\n         (OFF)";
+                    EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5A5A"));
+                }
+                else
+                {
+                    mCurSpeed -= 1; // TODO: Replace with emergency brake deceleration!
+                }
+            }
+            else if (mAutoMode)
             {
                 if (mCurSpeed < mCmdSpeed)
                 {
-                    mCurSpeed++;
+                    mCurSpeed++;    // TODO: Replace with acceleration!
                     CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
                 }
                 else if (mCurSpeed > mCmdSpeed)
                 {
-                    mCurSpeed--;
+                    mCurSpeed--;    // TODO: Replace with deceleration!
                     CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
                 }
             }
@@ -361,12 +376,12 @@ namespace TrainController
             {
                 if (mCurSpeed < mSetSpeed)
                 {
-                    mCurSpeed++;
+                    mCurSpeed++;    // TODO: Replace with acceleration!
                     CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
                 }
                 else if (mCurSpeed > mSetSpeed)
                 {
-                    mCurSpeed--;
+                    mCurSpeed--;    // TODO: Replace with deceleration!
                     CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
                 }
             }
