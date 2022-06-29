@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace TrainController
 {
@@ -66,6 +67,8 @@ namespace TrainController
 
             mAutoMode = false;
 
+            InitTimer();
+
             HW_SW selectType = new HW_SW();
             selectType.Topmost = true;
             selectType.Show();
@@ -89,6 +92,8 @@ namespace TrainController
                 SetSpeedBox.IsEnabled = false;
 
                 SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0x30, 0, 0, 0));
+                mSetSpeed = mCmdSpeed;
+                SetSpeedBox.Text = mSetSpeed.ToString();
 
                 mAutoMode = true;
             }
@@ -294,7 +299,53 @@ namespace TrainController
             {
                 if (sender == SetSpeedBox)
                 {
-                    mSetSpeed = int.Parse(SetSpeedBox.Text);
+                    if (int.Parse(SetSpeedBox.Text) > mCmdSpeed)
+                    {
+                        SetSpeedBox.Text = mSetSpeed.ToString();
+                        MessageBox.Show("Set Speed Shall Not Exceed Commanded Speed");
+                    }
+                    else
+                    {
+                        mSetSpeed = int.Parse(SetSpeedBox.Text);
+                    }
+                }
+            }
+        }
+
+        private void InitTimer()
+        {
+            DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(SpeedUpdate);
+            dispatcherTimer.Interval = new TimeSpan(0,0,0,0,500);
+            dispatcherTimer.Start();
+        }
+
+        private void SpeedUpdate(object sender, EventArgs e)
+        {
+            if (mAutoMode)
+            {
+                if (mCurSpeed < mCmdSpeed)
+                {
+                    mCurSpeed++;
+                    CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                }
+                else if (mCurSpeed > mCmdSpeed)
+                {
+                    mCurSpeed--;
+                    CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                }
+            }
+            else
+            {
+                if (mCurSpeed < mSetSpeed)
+                {
+                    mCurSpeed++;
+                    CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                }
+                else if (mCurSpeed > mSetSpeed)
+                {
+                    mCurSpeed--;
+                    CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
                 }
             }
         }
