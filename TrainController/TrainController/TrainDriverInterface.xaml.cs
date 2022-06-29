@@ -35,6 +35,7 @@ namespace TrainController
         public bool mInteriorLightsStatus = false;
         public bool mExteriorLightsStatus = false;
         public bool mAnnouncementsStatus = false;
+        public bool mEmergencyBrakeStatus = false;
         public int mTemperature = 72;
         public int mKp = 0;
         public int mKi = 0;
@@ -73,6 +74,18 @@ namespace TrainController
             selectType.Topmost = true;
             selectType.Show();
             selectType.Activate();
+
+            // Setup serial port information: 
+            pi.PortName = "COM3";
+            pi.BaudRate = 115200;
+            pi.Parity = Parity.None;
+            pi.DataBits = 8;
+            pi.StopBits = StopBits.One;
+            pi.Handshake = Handshake.None;
+
+            pi.WriteTimeout = 500;
+
+            pi.Open();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -119,11 +132,20 @@ namespace TrainController
             {
                 if (mControlType == false)
                 {
-                    MessageBox.Show("Emergency Brakes engaged!");
+                    if (mEmergencyBrakeStatus == false)
+                    {
+                        mEmergencyBrakeStatus = true;
+                    }
                 }
                 else
                 {
-                    MessageBox.Show(SerialPort.GetPortNames()[1]);
+                    if(mEmergencyBrakeStatus == false)
+                    {
+                        mEmergencyBrakeStatus = true;
+                        pi.WriteLine("E_Brakes from windows");
+                        string brakeStatus = pi.ReadLine();
+                        MessageBox.Show(brakeStatus);
+                    }   
                 }
             }
             else if (sender == LeftDoors)
