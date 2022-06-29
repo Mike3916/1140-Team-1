@@ -22,9 +22,13 @@ namespace TrainController
     {
         // Boolean for switching between auto and manual driving modes:
         public bool mControlType;
-        private bool mAutoMode = false;
-        private bool mLeftDoorsStatus = false;
-        private bool mRightDoorsStatus = false;
+        public bool mAutoMode;
+        public bool mLeftDoorsStatus;
+        public bool mRightDoorsStatus;
+        public bool mInteriorLightsStatus;
+        public bool mExteriorLightsStatus;
+        public bool mAnnouncementsStatus;
+        public int mTemperature;
 
         public MainWindow()
         {
@@ -46,6 +50,8 @@ namespace TrainController
             LightsInterior.IsEnabled = false;
             LightsExterior.IsEnabled = false;
 
+            mAutoMode = false;
+
             HW_SW selectType = new HW_SW();
             selectType.Show();
             selectType.Activate();
@@ -65,6 +71,7 @@ namespace TrainController
                 Announcements.IsEnabled = false;
                 TempIncrease.IsEnabled = false;
                 TempDecrease.IsEnabled = false;
+                SetSpeedBox.IsEnabled = false;
 
                 SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0x30, 0, 0, 0));
                 
@@ -82,6 +89,7 @@ namespace TrainController
                 Announcements.IsEnabled = true;
                 TempIncrease.IsEnabled = true;
                 TempDecrease.IsEnabled = true;
+                SetSpeedBox.IsEnabled = true;
 
                 SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xDF, 0x20));
 
