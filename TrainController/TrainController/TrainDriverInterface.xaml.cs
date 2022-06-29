@@ -187,6 +187,18 @@ namespace TrainController
             {
                 TestPanel tPan = new TestPanel();
                 tPan.Owner = this;
+
+                if (mLeftDoorsStatus)
+                {
+                    tPan.LeftDoors.Content = "OPEN";
+                    tPan.LeftDoors.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
+                }
+                else
+                {
+                    tPan.LeftDoors.Content = "CLOSED";
+                    tPan.LeftDoors.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                }
+
                 tPan.Show();
             }
         }
