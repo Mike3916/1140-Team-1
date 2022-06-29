@@ -34,6 +34,8 @@ namespace TrainController
         public bool mInteriorLightsStatus = false;
         public bool mExteriorLightsStatus = false;
         public int mTemperature = 72;
+        public int mKp = 0;
+        public int mKi = 0;
 
         public MainWindow()
         {
@@ -181,6 +183,10 @@ namespace TrainController
             {
                 EngineerPanel ePan = new EngineerPanel();
                 ePan.Owner = this;
+
+                ePan.DisplayKp.Text = mKp.ToString();
+                ePan.DisplayKi.Text = mKi.ToString();
+
                 ePan.Show();
             }
             else if (sender == TestPanel)
@@ -233,6 +239,9 @@ namespace TrainController
                 }
 
                 tPan.Temperature.Text = mTemperature.ToString();
+
+                tPan.SetKp.Text = mKp.ToString();
+                tPan.SetKi.Text = mKi.ToString();
 
                 tPan.Show();
             }

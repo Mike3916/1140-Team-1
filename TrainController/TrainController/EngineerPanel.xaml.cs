@@ -26,13 +26,20 @@ namespace TrainController
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(sender == Kp)
-            {
+        }
 
-            }
-            else if(sender == Ki)
+        private void KeyDownButton(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
             {
-
+                if (sender == DisplayKp)
+                {
+                    ((MainWindow)Application.Current.MainWindow).mKp = int.Parse(DisplayKp.Text);
+                }
+                else if (sender == DisplayKi)
+                {
+                    ((MainWindow)Application.Current.MainWindow).mKi = int.Parse(DisplayKi.Text);
+                }
             }
         }
     }

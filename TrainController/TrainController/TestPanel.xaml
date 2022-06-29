@@ -42,8 +42,8 @@
         <TextBox x:Name="CmdSpeed" HorizontalAlignment="Left" Margin="482,115,0,0" TextWrapping="Wrap" Text="70" VerticalAlignment="Top" Width="120" Height="28" TextAlignment="Center" TextChanged="TextChanged"/>
         <TextBox x:Name="SetSpeed" HorizontalAlignment="Left" Margin="482,157,0,0" TextWrapping="Wrap" Text="70" VerticalAlignment="Top" Width="120" Height="28" TextAlignment="Center" TextChanged="TextChanged"/>
         <TextBox x:Name="CurSpeed" HorizontalAlignment="Left" Margin="482,198,0,0" TextWrapping="Wrap" Text="70" VerticalAlignment="Top" Width="120" Height="28" TextAlignment="Center" TextChanged="TextChanged"/>
-        <TextBox x:Name="SetKp" HorizontalAlignment="Left" Margin="482,240,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120" Height="28" TextAlignment="Center" TextChanged="TextChanged"/>
-        <TextBox x:Name="SetKi" HorizontalAlignment="Left" Margin="482,285,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120" Height="28" TextAlignment="Center" TextChanged="TextChanged"/>
+        <TextBox x:Name="SetKp" HorizontalAlignment="Left" Margin="482,240,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" Height="28" TextAlignment="Center" TextChanged="TextChanged" KeyDown="KeyDownButton"/>
+        <TextBox x:Name="SetKi" HorizontalAlignment="Left" Margin="482,285,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" Height="28" TextAlignment="Center" TextChanged="TextChanged" KeyDown="KeyDownButton"/>
         <TextBox x:Name="CurPower" HorizontalAlignment="Left" Margin="453,330,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="149" Height="28" TextAlignment="Center" TextChanged="TextChanged"/>
 
     </Grid>
