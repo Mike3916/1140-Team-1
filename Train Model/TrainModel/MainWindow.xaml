@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
-   
-  
+
+
 
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="26,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text=""/>
@@ -17,11 +17,21 @@
         <RadioButton x:Name="HelloButton" Content="Hello" IsChecked="True" HorizontalAlignment="Left" Margin="297,161,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="GoodbyeButton" Content="Goodbye" HorizontalAlignment="Left" Margin="488,161,0,0" VerticalAlignment="Top"/>
         <Button Content="Display" HorizontalAlignment="Left" Margin="377,270,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
-        <ComboBox x:Name="Select_a_Line" Text ="Select a Line" HorizontalAlignment="Left" Margin="40,20,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" IsReadOnly="True" IsDropDownOpen="True">
+        <ComboBox x:Name="Select_a_Line" Text ="Select a Line" HorizontalAlignment="Left" Margin="40,20,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="Select_a_Line_SelectionChanged" IsReadOnly="True">
             <ComboBoxItem Content="Red Line"/>
             <ComboBoxItem Content="Blue Line"/>
             <ComboBoxItem Content="Green Line"/>
         </ComboBox>
+        <ComboBox x:Name="Select_a_Train" Text ="Select a Train" HorizontalAlignment="Left" Margin="180,20,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="Select_a_Train_SelectionChanged" IsReadOnly="True"  IsEnabled="False">
+            <ComboBoxItem Content="Train 1"/>
+        </ComboBox>
+        <Label Content="Position" HorizontalAlignment="Left" Margin="40,48,0,0" VerticalAlignment="Top"/>
+        <Border BorderThickness="1,1,1,1" BorderBrush="Black" CornerRadius="15,15,15,15" Background="White" Width="200" Height="75" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,74,0,0">
+            <Border.Effect>
+                <DropShadowEffect/>
+            </Border.Effect>
+            <TextBlock Name="Position" HorizontalAlignment="Left" Margin="6,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="75" Width="190" Foreground="Black"><Run Text="Current Block:"/><LineBreak/><Run Text="Authority:"/><LineBreak/><Run Text="Last Station:"/><LineBreak/><Run Text="Next Station:"/></TextBlock>
+        </Border>
 
 
     </Grid>

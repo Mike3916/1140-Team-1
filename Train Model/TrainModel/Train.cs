@@ -20,6 +20,7 @@ namespace TrainObject
         private double powerMax = 120000;
         private bool emergencyBrake;
         private bool serviceBrake;
+        private int authority;
 
 
 
@@ -86,7 +87,15 @@ namespace TrainObject
             return currentSpeed;
         }
 
+        public void setAuthority(int a)
+        {
+            authority = a;
+        }
 
+        public int getAuthority()
+        {
+            return authority;
+        }
 
         public double getForce()
         {

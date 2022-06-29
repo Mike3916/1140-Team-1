@@ -40,9 +40,10 @@ namespace TrainModel
         {
             InitializeComponent();
             train = new Train();
-            
+            train.setAuthority(35);
 
-            
+
+
         }
 
       
@@ -61,9 +62,18 @@ namespace TrainModel
             }
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        private void Select_a_Line_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Select_a_Train.IsEnabled = true;
 
         }
+
+        private void Select_a_Train_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Position.Text = "Current Block: 10\nAuthority: " + train.getAuthority().ToString() + "\nLast Station: Castle Shannon\nNext Station: Dormont";
+        }
+
+       
     }
 }
