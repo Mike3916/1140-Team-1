@@ -33,6 +33,7 @@ namespace TrainController
         public bool mRightDoorsStatus = false;
         public bool mInteriorLightsStatus = false;
         public bool mExteriorLightsStatus = false;
+        public bool mAnnouncementsStatus = false;
         public int mTemperature = 72;
         public int mKp = 0;
         public int mKi = 0;
@@ -174,7 +175,16 @@ namespace TrainController
             }
             else if (sender == Announcements)
             {
-                MessageBox.Show("Making an Announcement");
+                if (!mAnnouncementsStatus)
+                {
+                    mAnnouncementsStatus = true;
+                    Announcements.Content = "Announcements\n        (ON)";
+                }
+                else
+                {
+                    mAnnouncementsStatus = false;
+                    Announcements.Content = "Announcements\n        (OFF)";
+                }
             }
             else if (sender == TempIncrease)
             {

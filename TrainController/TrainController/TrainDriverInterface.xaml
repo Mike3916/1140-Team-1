@@ -36,7 +36,7 @@
         <Button x:Name="RightDoors" Click="Button_Click" ClickMode="Press" Content="Doors - Right&#xa;   (CLOSED)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="660,75,0,0" Height="44" Width="100" Background="#FFDC8CFA" FontWeight="Normal"/>
         <Button x:Name="InteriorLights" Click="Button_Click" ClickMode="Press" Content="Lights - Interior&#xa;        (OFF)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="540,136,0,0" Height="40" Width="100" Background="#FFDC8CFA"/>
         <Button x:Name="ExteriorLights" Click="Button_Click" ClickMode="Press" Content="Lights - Exterior&#xa;        (OFF)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="660,136,0,0" Height="40" Width="100" Background="#FFDC8CFA"/>
-        <Button x:Name="Announcements" Click="Button_Click" ClickMode="Press" Content="Announcements" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="540,190,0,0" Height="43" Width="220" Background="#FFDC8CFA"/>
+        <Button x:Name="Announcements" Click="Button_Click" ClickMode="Press" Content="Announcements&#xa;        (OFF)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="540,190,0,0" Height="43" Width="220" Background="#FFDC8CFA"/>
         <Button x:Name="TempIncrease" Click="Button_Click" ClickMode="Press" Content="+" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="665,258,0,0" Height="36" Width="40" FontSize="20"/>
         <Button x:Name="TempDecrease" Click="Button_Click" ClickMode="Press" Content="-" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="720,258,0,0" Height="36" Width="40" FontSize="20"/>
 
