@@ -34,8 +34,10 @@ namespace TrainController
                 ((MainWindow)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0xDF, 0x20));
 
                 // Enable all manual mode buttons on main window:
+
                 // Controller enters manual mode by default
                 ((MainWindow)Application.Current.MainWindow).ManualMode.IsEnabled = false;
+
                 ((MainWindow)Application.Current.MainWindow).AutoMode.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).ServiceBrake.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).EmergencyBrake.IsEnabled = true;
@@ -63,8 +65,10 @@ namespace TrainController
                 ((MainWindow)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0x5F, 0xA0));
 
                 // Enable all manual mode buttons on main window:
+
                 // Controller enters manual mode by default
                 ((MainWindow)Application.Current.MainWindow).ManualMode.IsEnabled = false;
+                
                 ((MainWindow)Application.Current.MainWindow).AutoMode.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).ServiceBrake.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).EmergencyBrake.IsEnabled = true;
