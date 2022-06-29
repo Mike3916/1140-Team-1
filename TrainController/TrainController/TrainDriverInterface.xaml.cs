@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,13 +21,19 @@ namespace TrainController
     /// </summary>
     public partial class MainWindow : Window
     {
+        // Serial port for connecting to Raspberry Pi:
+        SerialPort pi = new SerialPort();
+
         // Boolean for switching between auto and manual driving modes:
+        // 'false' is software controller, 'true' is hardware controller:
         public bool mControlType;
-        private bool mAutoMode = false;
+
+        public bool mAutoMode = false;
         public bool mLeftDoorsStatus = false;
         public bool mRightDoorsStatus = false;
-        private bool mInteriorLightsStatus = false;
-        private bool mExteriorLightsStatus = false;
+        public bool mInteriorLightsStatus = false;
+        public bool mExteriorLightsStatus = false;
+        public int mTemperature = 72;
 
         public MainWindow()
         {
@@ -48,6 +55,8 @@ namespace TrainController
             LightsInterior.IsEnabled = false;
             LightsExterior.IsEnabled = false;
 
+            mAutoMode = false;
+
             HW_SW selectType = new HW_SW();
             selectType.Show();
             selectType.Activate();
@@ -67,6 +76,7 @@ namespace TrainController
                 Announcements.IsEnabled = false;
                 TempIncrease.IsEnabled = false;
                 TempDecrease.IsEnabled = false;
+                SetSpeedBox.IsEnabled = false;
 
                 SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0x30, 0, 0, 0));
                 
@@ -84,6 +94,7 @@ namespace TrainController
                 Announcements.IsEnabled = true;
                 TempIncrease.IsEnabled = true;
                 TempDecrease.IsEnabled = true;
+                SetSpeedBox.IsEnabled = true;
 
                 SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xDF, 0x20));
 
@@ -91,7 +102,14 @@ namespace TrainController
             }
             else if (sender == EmergencyBrake)
             {
-                MessageBox.Show("Emergency Brakes engaged!");
+                if (mControlType == false)
+                {
+                    MessageBox.Show("Emergency Brakes engaged!");
+                }
+                else
+                {
+                    MessageBox.Show(SerialPort.GetPortNames()[1]);
+                }
             }
             else if (sender == LeftDoors)
             {
@@ -151,11 +169,13 @@ namespace TrainController
             }
             else if (sender == TempIncrease)
             {
-                MessageBox.Show("Temperature Increased");
+                mTemperature++;
+                Temperature.Text = "Temperature: " + mTemperature.ToString() + "°F";
             }
             else if (sender == TempDecrease)
             {
-                MessageBox.Show("Temperature Decreased");
+                mTemperature--;
+                Temperature.Text = "Temperature: " + mTemperature.ToString() + "°F";
             }
             else if (sender == EngineerPanel)
             {
