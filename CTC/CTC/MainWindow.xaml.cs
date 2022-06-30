@@ -54,6 +54,8 @@ namespace CTC
                 string filepath = openFileDialog.FileName; ///Save the filename
                 MessageBox.Show(filepath); ///Output the filename
             }
+
+            Track.Visibility = Visibility.Visible;
         }
 
         private void Set_Checked(object sender, RoutedEventArgs e) ///The checkbox to put CTC in manual mode is checked
