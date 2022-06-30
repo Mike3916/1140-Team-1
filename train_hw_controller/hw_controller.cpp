@@ -28,6 +28,7 @@ class serialConnect
 		
 		int mCmdAuthority=0;
 		int mCurAuthority=0;
+		int mCurPower=0;
 		int fd;
 		
 		serialConnect()
@@ -54,6 +55,7 @@ class serialConnect
 				 << "mCmdSpeed = " << mCmdSpeed << "\n"
 				 << "mSetSpeed = " << mSetSpeed << "\n"
 				 << "mCurSpeed = " << mCurSpeed << "\n"
+				 << "mCurPower = " << mCurPower << "\n"
 				 << "mCmdAuthority = " << mCmdAuthority << "\n"
 				 << "mCurAuthority = " << mCurAuthority << "\n-------------------------------------------------------\n\n";
 		}
@@ -128,7 +130,7 @@ class serialConnect
 			int numChar; 
 			string str;
 					
-			for (int i=0;i<5;i++)
+			for (int i=0;i<4;i++)
 			{
 				numChar = serialGetchar(fd);
 				
@@ -260,13 +262,41 @@ int main ()
 		// Accept Set Speed:
 		else if(input == 'b')
 		{			
-			comm.mSetSpeed = comm.getValue(comm.fd);
+			int compare = comm.getValue(comm.fd);
+			
+			if(compare>comm.mCmdSpeed)
+			{
+				serialPrintf(comm.fd,"tooHigh\n");
+			}
+			else
+			{
+				comm.mSetSpeed = compare;
+				serialPrintf(comm.fd,"good\n");
+			}
 		}
 		
 		// Accept Current Speed:
 		else if(input == 'n')
 		{			
 			comm.mCurSpeed = comm.getValue(comm.fd);
+		}
+		
+		// Accept Set Power:
+		else if(input == 'p')
+		{			
+			comm.mCurPower = comm.getValue(comm.fd);
+		}
+		
+		// Accept Commanded Authority:
+		else if(input == 's')
+		{			
+			comm.mCmdAuthority = comm.getValue(comm.fd);
+		}
+		
+		// Accept Current Authority:
+		else if(input == 'd')
+		{			
+			comm.mCurAuthority = comm.getValue(comm.fd);
 		}
 	}
 }
