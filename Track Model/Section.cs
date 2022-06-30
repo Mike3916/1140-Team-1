@@ -19,6 +19,7 @@ namespace TrackModel_v0._1
         //getters
         public int getmnumBlocks()
         {
+            mnumBlocks = mBlocks.Count;
             return mnumBlocks;
         }
         public string getmnameSection()
@@ -44,12 +45,21 @@ namespace TrackModel_v0._1
             return mBlocks[blockIdx].getmblockSwitch();
         }
 
+        public double getmcumElevation(int blockIdx)
+        {
+            return mBlocks[blockIdx].getmcumElevation();
+        }
+
         //setters
         public void setmnameSection(string newName)
         {
             mnameSection = newName;
         }
 
+        public void UpdateCumElevation(int blockIdx, double info)
+        {
+            mBlocks[blockIdx].UpdateCumElevation(info);
+        }
         //gets Idx of block to change, the index of the parameter to change, and the new info
         //for param with double dataypes
         public void setBlockInfo(int blockIdx, int param, double info)
@@ -66,8 +76,22 @@ namespace TrackModel_v0._1
                     mBlocks[blockIdx].setmspeedLimit(info);
                     break;
                 case 3:         //elevation
+                    double currentElevation = mBlocks[blockIdx].getmElevation();
                     mBlocks[blockIdx].setmElevation(info);
+                    //for (int idx = 0; idx < mBlocks.Count; idx++)
+                    //{
+                    //    if (idx == blockIdx)
+                    //        continue;
+                    //    if (currentElevation > info)
+                    //        mBlocks[idx].UpdateCumElevation(-info);
+                    //    else
+                    //        mBlocks[idx].UpdateCumElevation(info);
+                    //}
                     break;
+                case 4: //track temperature
+                    mBlocks[blockIdx].setmtrackTemp(info);
+                    break;
+
                 default:
                     break;
             }
@@ -110,6 +134,6 @@ namespace TrackModel_v0._1
 
         int mnumBlocks;
         string mnameSection;
-        List<Block> mBlocks;
+        public List<Block> mBlocks;
     }
 }

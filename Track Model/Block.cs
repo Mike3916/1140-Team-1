@@ -27,6 +27,8 @@ namespace TrackModel_v0._1
 
             mblockInfo = blockInfo;
 
+            mtrackTemp = 32;
+
             readInfrastructure();
         }
 
@@ -46,6 +48,15 @@ namespace TrackModel_v0._1
             return mblockNum;
         }
 
+        public double getmElevation()
+        {
+            return mElevation;
+        }
+
+        public double getmcumElevation()
+        {
+            return mcumElevation;
+        }
         public List<int> getmblockSwitch()
         {
             return mblockSwitches;
@@ -66,6 +77,10 @@ namespace TrackModel_v0._1
         public bool getmPower()
         {
             return mPower;
+        }
+        public double getmtrackTemp()
+        {
+            return mtrackTemp;
         }
         
         //setters
@@ -89,16 +104,24 @@ namespace TrackModel_v0._1
 
         public void setmElevation(double info)
         {
-            mElevation = info;
+            double diff = Math.Abs(mElevation - info);
             if (mElevation > info)
             {
-                mcumElevation -= info;
+                mcumElevation -= diff;
             }
             else
             {
-                mcumElevation += info;
+                mcumElevation += diff;
             }
+            mElevation = info;
             mblockInfo[8] = mElevation + "";
+            mblockInfo[9] = mcumElevation + "";
+        }
+
+        //takes the elevation change as input
+        public void UpdateCumElevation(double dif)
+        {
+            mcumElevation += dif;
             mblockInfo[9] = mcumElevation + "";
         }
         public void setmOccupied(bool info)
@@ -120,6 +143,14 @@ namespace TrackModel_v0._1
         public void setNextBlock(int nextBlockNum)
         {
             this.mnextBlockNum = nextBlockNum;
+        }
+        public void setmtrackTemp(double info)
+        {
+            mtrackTemp = info;
+        }
+        public void setmswitchPos(int pos)
+        {
+            mswitchPos = pos;
         }
         
         //reads infrastructure data
@@ -161,6 +192,7 @@ namespace TrackModel_v0._1
         string mlineName;
         string msectionName;
         int mblockNum;
+        int mswitchPos;
         int mnextBlockNum; 
         double mLength;         //param = 0
         double mGrade;          //param = 1
@@ -169,8 +201,9 @@ namespace TrackModel_v0._1
         string mstationSide;
         double mElevation;      //param = 3
         double mcumElevation;   //should NOT be mutable
+        double mtrackTemp;
 
-        bool mOccupied;         //param = 0
+        public bool mOccupied;         //param = 0
         bool mtrackRail;        //param = 1
         bool mtrackCircuit;     //param = 2
         bool mPower;            //param = 3

@@ -39,7 +39,7 @@
         <TextBox x:Name="LengthBox" Grid.Column="8" HorizontalAlignment="Left" Margin="152,167,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="86" TextAlignment="Right" Grid.ColumnSpan="2" Height="18" TextChanged="LengthBox_TextChanged" />
         <TextBox x:Name="GradeBox" Grid.Column="8" HorizontalAlignment="Left" Margin="152,197,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="86" TextAlignment="Right" Grid.ColumnSpan="2" Height="18" TextChanged="GradeBox_TextChanged" />
         <TextBox x:Name="ElevationBox" Grid.Column="8" HorizontalAlignment="Left" Margin="152,230,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="86" TextAlignment="Right" Grid.ColumnSpan="2" Height="18" TextChanged="ElevationBox_TextChanged" />
-        <TextBox x:Name="HeatBox" Grid.Column="9" HorizontalAlignment="Left" Margin="0,374,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="86" TextAlignment="Right" Height="18" />
+        <TextBox x:Name="HeatBox" Grid.Column="8" HorizontalAlignment="Left" Margin="152,374,0,0" Grid.Row="1" TextWrapping="Wrap" Text="32" VerticalAlignment="Top" Width="86" TextAlignment="Right" Height="18" Grid.ColumnSpan="2" TextChanged="HeatBox_TextChanged" />
         <TextBlock x:Name="OccupiedBlock" Grid.Column="8" HorizontalAlignment="Left" Margin="136,72,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="128" TextAlignment="Right" Height="16"/>
         <TextBlock x:Name="InfrastructureBlock" Grid.Column="8" HorizontalAlignment="Left" Margin="136,101,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="129" Height="30" Grid.ColumnSpan="2" TextAlignment="Right"/>
         <TextBlock x:Name="CumElevationBlock" Grid.Column="8" HorizontalAlignment="Left" Margin="136,278,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" RenderTransformOrigin="0.841,1.13" TextAlignment="Right" Grid.ColumnSpan="2" Width="125" Height="16"/>
@@ -47,15 +47,16 @@
         <TextBlock x:Name="mph_Copy" Grid.Column="9" HorizontalAlignment="Left" Margin="69,167,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="32" Height="16" TextAlignment="Left"><Run Text="feet"/><LineBreak/><Run/></TextBlock>
         <TextBlock x:Name="mph_Copy1" Grid.Column="9" HorizontalAlignment="Left" Margin="70,199,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="32" Height="16" TextAlignment="Left"><Run Text="%"/><LineBreak/><Run/></TextBlock>
         <TextBlock x:Name="mph_Copy2" Grid.Column="9" HorizontalAlignment="Left" Margin="69,232,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="32" Height="16" TextAlignment="Left"><Run Text="feet"/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
-        <ComboBox x:Name="SwitchCombo" Grid.Column="9" HorizontalAlignment="Left" Margin="0,347,0,0" Grid.Row="1" VerticalAlignment="Top" Width="86" Height="22"/>
+        <ComboBox x:Name="SwitchCombo" Grid.Column="9" HorizontalAlignment="Left" Margin="0,341,0,0" Grid.Row="1" VerticalAlignment="Top" Width="86" Height="22"/>
         <TextBlock x:Name="BlockText_Copy" Grid.Column="8" HorizontalAlignment="Left" Margin="51,405,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Murphy Zone" VerticalAlignment="Top" Width="125" Grid.ColumnSpan="2" Height="16"/>
         <TextBlock Grid.Column="8" HorizontalAlignment="Left" Margin="51,426,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="Black" Height="94" Width="114"><Run Text="Track Rail"/><LineBreak/><Run/><LineBreak/><Run Text="Track Circuit"/><LineBreak/><Run/><LineBreak/><Run Text="Power"/></TextBlock>
-        <Button x:Name="FixTrackButton" Grid.Column="9" Content="Fix" HorizontalAlignment="Left" Margin="4,426,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20"/>
-        <Button x:Name="BreakTrackButton" Grid.Column="9" Content="Break" HorizontalAlignment="Left" Margin="48,426,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20"/>
-        <Button x:Name="FixCircuitButton" Grid.Column="9" Content="Fix" HorizontalAlignment="Left" Margin="4,456,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20"/>
-        <Button x:Name="BreakCircuitButton" Grid.Column="9" Content="Break" HorizontalAlignment="Left" Margin="48,456,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20"/>
-        <Button x:Name="FixPowerButton" Grid.Column="9" Content="Fix" HorizontalAlignment="Left" Margin="4,488,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20"/>
-        <Button x:Name="BreakPowerButton" Grid.Column="9" Content="Break" HorizontalAlignment="Left" Margin="48,488,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20"/>
+        <Button x:Name="FixTrackButton" Grid.Column="9" Content="Fix" HorizontalAlignment="Left" Margin="4,426,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20" Click="FixTrackButton_Click"/>
+        <Button x:Name="BreakTrackButton" Grid.Column="9" Content="Break" HorizontalAlignment="Left" Margin="48,426,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20" Click="BreakTrackButton_Click"/>
+        <Button x:Name="FixCircuitButton" Grid.Column="9" Content="Fix" HorizontalAlignment="Left" Margin="4,456,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20" Click="FixCircuitButton_Click"/>
+        <Button x:Name="BreakCircuitButton" Grid.Column="9" Content="Break" HorizontalAlignment="Left" Margin="48,456,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20" Click="BreakCircuitButton_Click"/>
+        <Button x:Name="FixPowerButton" Grid.Column="9" Content="Fix" HorizontalAlignment="Left" Margin="4,488,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20" Click="FixPowerButton_Click"/>
+        <Button x:Name="BreakPowerButton" Grid.Column="9" Content="Break" HorizontalAlignment="Left" Margin="48,488,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20" Click="BreakPowerButton_Click"/>
+        <TextBlock x:Name="mph_Copy3" Grid.Column="9" HorizontalAlignment="Left" Margin="69,375,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="32" Height="16" TextAlignment="Left" Text="F&#xD;&#xA;"/>
 
     </Grid>
 </Window>

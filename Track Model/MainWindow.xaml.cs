@@ -6,6 +6,8 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace TrackModel_v0._1
 {
@@ -14,6 +16,28 @@ namespace TrackModel_v0._1
     /// </summary>
     public partial class MainWindow : Window
     {
+        //global var
+        TrackModelTestWindow testWindow = new TrackModelTestWindow();
+        DispatcherTimer timer = new DispatcherTimer();
+
+        List<Line> mLines = new List<Line>();
+        List<DataTable> mLineData = new List<DataTable>();
+
+        int mnumLines;
+        int mlineIdx, msectIdx, mblockIdx;
+        static int interval = 0;
+        string mfileName;
+
+        bool traingo = false;
+        int mtrainPos = 0;
+        int mauth;
+        double mspeed;
+        int mdest;
+
+        int trainLine = 0,
+            trainSect = 0,
+            trainBlock = 0;
+
         public MainWindow()
         {
             mnumLines = 0;
@@ -23,8 +47,57 @@ namespace TrackModel_v0._1
             LineDataGrid.IsReadOnly = true;
             ResetBlockInfo();
             ToggleBlockInfo();
+
+            
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Tick += dispatcherTimer_Tick;
+            timer.Start();
         }
-        
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            interval++;
+            if (BlockCombo.SelectedIndex == -1)
+                return;
+            if (interval >= 5)
+            {
+                double currentTemp = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].getmtrackTemp();
+                if (currentTemp < 32)
+                {
+                    mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackTemp(currentTemp+1);
+                    HeatBox.Text = (currentTemp + 1).ToString();
+                }
+                else
+                {
+                    mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackTemp(currentTemp - 1);
+                    HeatBox.Text = (currentTemp - 1).ToString();
+                }
+                interval = 0;
+                if (traingo == true)
+                {
+                    if (mdest == 0 && mtrainPos == 5)
+                    {
+                        trainSect = 1;
+                        trainBlock = 0;
+                    }
+                    else if (mdest == 1 && mtrainPos == 5)
+                    {
+                        trainSect = 2;
+                        mtrainPos = 0;
+                    }
+
+
+                    mLines[trainLine].mSections[trainSect].mBlocks[mtrainPos].mOccupied = false;
+                    mtrainPos = mLines[trainLine].MoveTrain(mauth, mspeed, mdest);
+                    mLines[mlineIdx].mSections[msectIdx].mBlocks[mtrainPos].mOccupied = true;
+                    OccupiedBlock.Text = mLines[trainLine].mSections[trainSect].mBlocks[mblockIdx].mOccupied + "";
+                }
+
+            }
+            if (testWindow.traingo == true)
+                sendTrain(testWindow.authority, testWindow.speed, testWindow.destination);
+        }
+
+
 
         private DataTable MakeLineDataTable(int lineIdx)
         {
@@ -89,6 +162,7 @@ namespace TrackModel_v0._1
             ElevationBox.IsReadOnly = false;
             HeatBox.IsReadOnly = false;
 
+            OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
             InfrastructureBlock.Text = blockInfo[6];
             SpeedBox.Text = blockInfo[5];
             LengthBox.Text = blockInfo[3];
@@ -106,7 +180,41 @@ namespace TrackModel_v0._1
             GradeBox.Text = "N/A";
             ElevationBox.Text = "N/A";
             CumElevationBlock.Text = "N/A";
-            HeatBox.Text = "N/A";
+            HeatBox.Text = "32";
+        }
+
+        private void UpdateCurrentRow()
+        {
+            mLineData[mlineIdx].Select()[mblockIdx].BeginEdit();
+            string[] blockinfo = mLines[mlineIdx].getBlockInfo(msectIdx, mblockIdx);
+
+            for (int valueIdx = 0; valueIdx < mLineData[mlineIdx].Columns.Count; valueIdx++)
+                mLineData[mlineIdx].Select()[mblockIdx][valueIdx] = blockinfo[valueIdx];
+
+            mLineData[mlineIdx].Select()[mblockIdx].EndEdit();
+            mLineData[mlineIdx].Select()[mblockIdx].AcceptChanges();
+        }
+        private void UpdateCumElevation()
+        {            
+            for (int blockIdx = 0; blockIdx < mLines[mlineIdx].getmnumBlocks(); blockIdx++)
+            {
+                mLineData[mlineIdx].Select()[blockIdx].BeginEdit();
+
+                mLineData[mlineIdx].Select()[mblockIdx][9] = mLines[mlineIdx].getlineInfo()[blockIdx][9];
+
+                mLineData[mlineIdx].Select()[blockIdx].EndEdit();
+                mLineData[mlineIdx].Select()[blockIdx].AcceptChanges();
+            }
+        }
+
+        private void sendTrain(int authority, double speed, int destination)
+        {
+            mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied = true;
+            OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
+            traingo = true;
+            mauth = authority;
+            mspeed = speed;
+            mdest = destination;
         }
 
         //events
@@ -117,7 +225,6 @@ namespace TrackModel_v0._1
 
             if (e.Key == Key.T)
             {
-                TrackModelTestWindow testWindow = new TrackModelTestWindow();
                 testWindow.Show();
             }
         }
@@ -141,9 +248,8 @@ namespace TrackModel_v0._1
                 mLineData.Add(lineData);
 
                 LineDataGrid.ItemsSource = mLineData[mLineData.Count - 1].DefaultView;
-
+                LineCombo.Items.Add(mLines[mLines.Count - 1].getmnameLine());
             }
-            LineCombo.Items.Add(mLines[mLines.Count - 1].getmnameLine());
         }
 
         private void TextBoc_Focus(object sender, KeyboardFocusChangedEventArgs e)
@@ -207,6 +313,7 @@ namespace TrackModel_v0._1
                 List<int> switchList = mLines[lineIdx].getmblockSwitch(sectionIdx, blockIdx);
                 foreach (int sw in switchList)
                     SwitchCombo.Items.Add(sw);
+                SwitchCombo.SelectedIndex = 0;
             }
         }
 
@@ -245,20 +352,16 @@ namespace TrackModel_v0._1
             SwitchCombo.Items.Clear();
         }
 
-
-
-        //global var
-        int mnumLines;
-        int mlineIdx, msectIdx, mblockIdx;
-        string mfileName;
-
         //param = 0
         private void LengthBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (LengthBox.IsFocused == true)
             {
                 if (double.TryParse(LengthBox.Text, out double info) == true)
+                {
                     mLines[mlineIdx].setBlockInfo(msectIdx, mblockIdx, 0, info);
+                    UpdateCurrentRow();
+                }
                 else
                     MessageBox.Show("Only numbers PLEASE");
             }
@@ -270,7 +373,10 @@ namespace TrackModel_v0._1
             if (GradeBox.IsFocused == true)
             {
                 if (double.TryParse(GradeBox.Text, out double info) == true)
+                {
                     mLines[mlineIdx].setBlockInfo(msectIdx, mblockIdx, 1, info);
+                    UpdateCurrentRow();
+                }
                 else
                     MessageBox.Show("Only numbers PLEASE");
             }
@@ -282,7 +388,10 @@ namespace TrackModel_v0._1
             if (SpeedBox.IsFocused == true)
             {
                 if (double.TryParse(SpeedBox.Text, out double info) == true)
+                {
                     mLines[mlineIdx].setBlockInfo(msectIdx, mblockIdx, 2, info);
+                    UpdateCurrentRow();
+                }
                 else
                     MessageBox.Show("Only numbers PLEASE");
             }
@@ -294,15 +403,99 @@ namespace TrackModel_v0._1
             if (ElevationBox.IsFocused == true)
             {
                 if (double.TryParse(ElevationBox.Text, out double info) == true)
+                {
+                    double currentElevation = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].getmElevation();
+                    double dif = Math.Abs(currentElevation - info);
+                    if (currentElevation > info)
+                        dif *= -1;
                     mLines[mlineIdx].setBlockInfo(msectIdx, mblockIdx, 3, info);
+                    mLines[mlineIdx].UpdateCumElevation(msectIdx, mblockIdx, dif);
+                    UpdateCurrentRow();
+                    UpdateCumElevation();                    
+                }
+                else
+                    MessageBox.Show("Only numbers PLEASE");
+            }
+        }        
+
+        private void BreakTrackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(mblockIdx == -1) && mLines.Count != 0)
+            {
+                mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackRail(false);
+                BreakTrackButton.Background = Brushes.Red;
+                FixTrackButton.Background = Brushes.Gray;
+            }
+        }
+
+        private void FixTrackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(mblockIdx == -1) && mLines.Count != 0)
+            { 
+                mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackRail(true);
+                FixTrackButton.Background = Brushes.Green;
+                BreakTrackButton.Background = Brushes.Gray;
+            }
+        }
+
+        private void FixPowerButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(mblockIdx == -1) && mLines.Count != 0)
+            {
+                mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmPower(true);
+                FixPowerButton.Background = Brushes.Green;
+                BreakPowerButton.Background = Brushes.Gray;
+            }
+        }
+
+        private void BreakPowerButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(mblockIdx == -1) && mLines.Count != 0)
+            {
+                mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmPower(false);
+                BreakPowerButton.Background = Brushes.Red;
+                FixPowerButton.Background = Brushes.Gray;
+            }
+                
+        }
+
+        private void HeatBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (mLines.Count == 0)
+                return;
+
+            if (HeatBox.IsFocused == true)
+            {
+                if (double.TryParse(HeatBox.Text, out double info) == true)
+                {
+                    mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackTemp(Convert.ToDouble(HeatBox.Text));
+                }
                 else
                     MessageBox.Show("Only numbers PLEASE");
             }
         }
 
+        private void FixCircuitButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(mblockIdx == -1) && mLines.Count != 0)
+            {
+                mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackCircuit(true);
+                FixCircuitButton.Background = Brushes.Green;
+                BreakCircuitButton.Background = Brushes.Gray;
+            }
+                
+        }
         
+        private void BreakCircuitButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(mblockIdx == -1) && mLines.Count != 0)
+            {
+                mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackCircuit(false);
+                BreakCircuitButton.Background = Brushes.Red;
+                FixCircuitButton.Background = Brushes.Gray;
+            }
+        }
 
-        List<Line> mLines = new List<Line>();
-        List<DataTable> mLineData = new List<DataTable>();
+       
     }
 }
