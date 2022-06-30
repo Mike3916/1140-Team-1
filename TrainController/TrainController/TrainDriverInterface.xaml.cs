@@ -45,7 +45,11 @@ namespace TrainController
         public int mCmdAuthority = 0;
         public int mCurAuthority = 0;
         public string mBeacon = "-";
-        public int mCurPower = 0;
+        public float mCurPower = 0;
+
+        public const float Pmax = 120000; // 120 kW
+        public float Uk = 0;
+        public int T = 250; // 250 ms
 
         public MainWindow()
         {
@@ -623,7 +627,7 @@ namespace TrainController
         {
             DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(SpeedUpdate);
-            dispatcherTimer.Interval = new TimeSpan(0,0,0,0,500);
+            dispatcherTimer.Interval = new TimeSpan(0,0,0,0,T);
             dispatcherTimer.Start();
         }
 
@@ -653,12 +657,43 @@ namespace TrainController
                 if (mCurSpeed < mCmdSpeed)
                 {
                     mCurSpeed++;    // TODO: Replace with acceleration!
+
+                    if (mCurPower < Pmax)
+                    {
+                        Uk = Uk + (T / 1000) / 2 * (mCmdSpeed + mCurSpeed);
+                    }
+                    else
+                    {
+                        Uk = Uk;
+                    }
+
+                    mCurPower = mKp * mCmdSpeed + mKi * Uk;
+                    CurPower.Text = "Power: " + mCurPower/1000 + " kW";
+
                     CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
                 }
                 else if (mCurSpeed > mCmdSpeed)
                 {
                     mCurSpeed--;    // TODO: Replace with deceleration!
+
+                    if (mCurPower < Pmax)
+                    {
+                        Uk = Uk + (T / 1000) / 2 * (mCmdSpeed + mCurSpeed);
+                    }
+                    else
+                    {
+                        Uk = Uk;
+                    }
+
+                    mCurPower = -1 * (mKp * mCmdSpeed + mKi * Uk);
+                    CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
+
                     CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                }
+                else
+                {
+                    mCurPower = 0;
+                    CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
                 }
             }
             else
@@ -666,12 +701,43 @@ namespace TrainController
                 if (mCurSpeed < mSetSpeed)
                 {
                     mCurSpeed++;    // TODO: Replace with acceleration!
+
+                    if (mCurPower < Pmax)
+                    {
+                        Uk = Uk + (T / 1000) / 2 * (mSetSpeed + mCurSpeed);
+                    }
+                    else
+                    {
+                        Uk = Uk;
+                    }
+
+                    mCurPower = mKp * mSetSpeed + mKi * Uk;
+                    CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
+
                     CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
                 }
                 else if (mCurSpeed > mSetSpeed)
                 {
                     mCurSpeed--;    // TODO: Replace with deceleration!
+
+                    if (mCurPower < Pmax)
+                    {
+                        Uk = Uk + (T / 1000) / 2 * (mSetSpeed + mCurSpeed);
+                    }
+                    else
+                    {
+                        Uk = Uk;
+                    }
+
+                    mCurPower = -1 * (mKp * mSetSpeed + mKi * Uk);
+                    CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
+
                     CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                }
+                else
+                {
+                    mCurPower = 0;
+                    CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
                 }
             }
         }
