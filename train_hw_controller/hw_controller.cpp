@@ -273,6 +273,7 @@ int main ()
 				comm.mSetSpeed = compare;
 				serialPrintf(comm.fd,"good\n");
 			}
+			comm.mSetSpeed = comm.getValue(comm.fd);
 		}
 		
 		// Accept Current Speed:
