@@ -45,6 +45,7 @@ namespace TrainController
         public int mCmdAuthority = 0;
         public int mCurAuthority = 0;
         public string mBeacon = "-";
+        public int mCurPower = 0;
 
         public MainWindow()
         {
@@ -144,6 +145,7 @@ namespace TrainController
                     string output = pi.ReadLine();
                 }
             }
+
             else if (sender == EmergencyBrake)
             {
                 if (!mEmergencyBrakeStatus)
@@ -160,6 +162,7 @@ namespace TrainController
                     string output = pi.ReadLine();
                 }
             }
+
             else if (sender == LeftDoors)
             {
                 if (!mControlType)
@@ -224,6 +227,7 @@ namespace TrainController
                     }
                 }
             }
+
             else if (sender == InteriorLights)
             {
                 if (!mControlType)
@@ -288,6 +292,7 @@ namespace TrainController
                     }
                 }
             }
+
             else if (sender == Announcements)
             {
                 if (!mControlType)
@@ -320,23 +325,37 @@ namespace TrainController
                     }
                 }
             }
+
             else if (sender == TempIncrease)
             {
                 mTemperature++;
                 Temperature.Text = "Temperature: " + mTemperature.ToString() + "°F";
+
+                if (mControlType)
+                {
+                    pi.WriteLine("h");
+                    string output = pi.ReadLine();
+                }
             }
             else if (sender == TempDecrease)
             {
                 mTemperature--;
                 Temperature.Text = "Temperature: " + mTemperature.ToString() + "°F";
+
+                if (mControlType)
+                {
+                    pi.WriteLine("c");
+                    string output = pi.ReadLine();
+                }
             }
+
             else if (sender == EngineerPanel)
             {
                 EngineerPanel ePan = new EngineerPanel();
                 ePan.Owner = this;
 
-                ePan.DisplayKp.Text = mKp.ToString();
-                ePan.DisplayKi.Text = mKi.ToString();
+                ePan.Kp.Text = mKp.ToString();
+                ePan.Ki.Text = mKi.ToString();
 
                 ePan.Show();
             }
@@ -389,6 +408,17 @@ namespace TrainController
                     tPan.ExteriorLights.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
                 }
 
+                if (mAnnouncementsStatus)
+                {
+                    tPan.Announcements.Content = "ON";
+                    tPan.Announcements.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
+                }
+                else
+                {
+                    tPan.Announcements.Content = "OFF";
+                    tPan.Announcements.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                }
+
                 tPan.Temperature.Text = mTemperature.ToString();
 
                 tPan.SetKp.Text = mKp.ToString();
@@ -422,21 +452,141 @@ namespace TrainController
             }
         }
 
+        public void setKp(int value)
+        {
+            mKp = value;
+
+            // Hardware Controls:
+            if(mControlType)
+            {
+                pi.WriteLine("j");
+                pi.Write(mKp.ToString());
+            }
+        }
+
+        public void setKi(int value)
+        {
+            mKi = value;
+
+            // Hardware Controls:
+            if (mControlType)
+            {
+                pi.WriteLine("k");
+                pi.Write(mKi.ToString());
+            }
+        }
+
+        public void setCmdSpeed(int value)
+        {
+            mCmdSpeed = value;
+
+            // Hardware Controls:
+            if (mControlType)
+            {
+                pi.WriteLine("v");
+                pi.Write(mCmdSpeed.ToString());
+            }
+        }
+
+        public void setSetSpeed(int value)
+        {
+            if (!mControlType)
+            {
+                if (value > mCmdSpeed)
+                {
+                    MessageBox.Show("Set Speed Shall Not Exceed Commanded Speed");
+                }
+                else
+                {
+                    mSetSpeed = value;
+                    SetSpeedBox.Text = mSetSpeed.ToString();
+                }
+            }
+            else
+            {
+                pi.WriteLine("b");
+                pi.Write(value.ToString());
+                string output = pi.ReadLine();
+
+                if (output == "tooHigh")
+                {
+                    MessageBox.Show("Set Speed Shall Not Exceed Commanded Speed");
+                }
+                else
+                {
+                    mSetSpeed = value;
+                    SetSpeedBox.Text = mSetSpeed.ToString();
+                }
+            }
+        }
+
+        public void setCurSpeed(int value)
+        {
+            mCurSpeed = value;
+
+            // Hardware Controls:
+            if (mControlType)
+            {
+                pi.WriteLine("n");
+                pi.Write(mCurSpeed.ToString());
+            }
+        }
+
+        public void setCmdAuthority(int value)
+        {
+            mCmdAuthority = value;
+
+            // Hardware Controls:
+            if (mControlType)
+            {
+                pi.WriteLine("s");
+                pi.Write(mCmdAuthority.ToString());
+            }
+        }
+
+        public void setCurAuthority(int value)
+        {
+            mCurAuthority = value;
+
+            // Hardware Controls:
+            if (mControlType)
+            {
+                pi.WriteLine("d");
+                pi.Write(mCurAuthority.ToString());
+            }
+        }
+
+        public void setBeacon(string value)
+        {
+            mBeacon = value;
+
+            // Hardware Controls:
+            if (mControlType)
+            {
+                pi.WriteLine("f");
+                pi.Write(mBeacon);
+            }
+        }
+
+        public void setPower(int value)
+        {
+            mCurPower = value;
+
+            //Hardware Controls:
+            if (mControlType)
+            {
+                pi.WriteLine("p");
+                pi.Write(mCurPower.ToString());
+            }
+        }
+
         public void KeyDownButton(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
                 if (sender == SetSpeedBox)
                 {
-                    if (int.Parse(SetSpeedBox.Text) > mCmdSpeed)
-                    {
-                        SetSpeedBox.Text = mSetSpeed.ToString();
-                        MessageBox.Show("Set Speed Shall Not Exceed Commanded Speed");
-                    }
-                    else
-                    {
-                        mSetSpeed = int.Parse(SetSpeedBox.Text);
-                    }
+                    setSetSpeed(int.Parse(SetSpeedBox.Text));
                 }
             }
         }

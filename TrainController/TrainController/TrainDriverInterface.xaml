@@ -24,7 +24,7 @@
         <!--<TextBlock HorizontalAlignment="Left" Margin="102,268,0,0" TextWrapping="Wrap" Text="0 blocks" VerticalAlignment="Top" Background="White" Height="18" Width="96" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="102,195,0,0" TextWrapping="Wrap" Text="0 blocks" VerticalAlignment="Top" Background="White" Height="16" Width="96" TextAlignment="Center"/>-->
         <!--<TextBlock HorizontalAlignment="Left" Margin="594,348,0,0" TextWrapping="Wrap" Text="Mt. Washington" VerticalAlignment="Top" Background="White" TextAlignment="Center" Width="111"/>-->
-        <TextBlock HorizontalAlignment="Left" Margin="410,352,0,0" TextWrapping="Wrap" Text="0 kW" VerticalAlignment="Top" Background="White" Width="90" TextAlignment="Center"/>
+        <TextBlock x:Name="Power" HorizontalAlignment="Left" Margin="410,352,0,0" TextWrapping="Wrap" Text="0 kW" VerticalAlignment="Top" Background="White" Width="90" TextAlignment="Center"/>
         <TextBlock x:Name="SelectType" HorizontalAlignment="Left" Margin="41,392,0,0" TextWrapping="Wrap" Text="Select Controller Type" VerticalAlignment="Top" Height="27" Width="218" Background="#FFDADADA" FontSize="16" TextAlignment="Center"/>
 
         <Slider x:Name="ServiceBrake" HorizontalAlignment="Left" Margin="50,110,0,0" VerticalAlignment="Top" Width="200" Height="20"/>
