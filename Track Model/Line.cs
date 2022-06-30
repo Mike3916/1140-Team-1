@@ -15,10 +15,14 @@ namespace TrackModel_v0._1
             mnumSections = 0;
             mSections = new List<Section>();
         }
+
+        //getters
+
         public int getmnumSections()
         {
             return mnumSections;
         }
+
         public int getmnumBlocks()
         {
             int blockSum = 0;
@@ -29,10 +33,12 @@ namespace TrackModel_v0._1
             mnumBlocks = blockSum;
             return mnumBlocks;
         }
+
         public string getmnameLine()
         {
             return mnameLine;
         }
+
         public List<string[]> getlineInfo()
         {
             List<string[]> lineInfo = new List<string[]>();
@@ -51,6 +57,10 @@ namespace TrackModel_v0._1
         {
             return mSections[sectIdx].getmblockInfo(blockIdx);
         }
+        public List<int> getmblockSwitch(int sectIdx, int blockIdx)
+        {
+            return mSections[sectIdx].getmblockSwitch(blockIdx);
+        }
 
         public List<string> getSectionNames()
         {
@@ -61,46 +71,68 @@ namespace TrackModel_v0._1
             }
             return sectNames;
         }
+
         public List<string> getSectBlockNum(int sectIdx)
         {
             return mSections[sectIdx].getBlockNum();
         }
+
         public void setmnameLine(string newName)
         {
             mnameLine = newName;
         }
 
-        public void addSection(string[] lineInfo)
+        //setters
+        //sets info of param with type double
+        public void setBlockInfo(int sectIdx, int blockIdx, int param, double info)
         {
+            mSections[sectIdx].setBlockInfo(blockIdx, param, info);
+        }
+        //sets info of param with type bool
+        public void setBlockInfo(int sectIdx, int blockIdx, int param, bool info)
+        {
+            mSections[sectIdx].setBlockInfo(blockIdx, param, info);
+        }
+
+        //adds a section to the line
+        public void addSections(string[] lineInfo)
+        {
+            //foreach block entry in lineInfo:
+            //  1.check if the block's section exists:
+            //      if yes -> add block to section
+            //      else -> add a section w/ the block in it
+
             for (int i = 0; i < lineInfo.Length; i++)
             {
                 string[] blockInfo = lineInfo[i].Split(',');
                 string newSectName = blockInfo[1];
 
-                int sectionIDX = -1;
+                //gets Idx of section
+                int sectIdx = -1;
                 for (int j = 0; j < mSections.Count; j++)
                 {
                     if (mSections[j].getmnameSection() == newSectName)
                     {
-                        sectionIDX = j;
+                        sectIdx = j;
                         break;
                     }
                 }
 
-                if (sectionIDX == -1)
+                if (sectIdx == -1) //a section with Idx = -1 does not exist
                 {
                     Section newSection = new Section(newSectName);
                     newSection.addBlock(blockInfo);
                     mSections.Add(newSection);
                     mnumSections++;
                 }
-                else
+                else //if the section exists
                 {
-                    mSections[sectionIDX].addBlock(blockInfo);
+                    mSections[sectIdx].addBlock(blockInfo);
                 }
             }
         }
 
+        
         int mnumSections;
         int mnumBlocks;
         string mnameLine;

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrackModel_v0._1"
         mc:Ignorable="d"
-        Title="TrackModelTestWindow" Height="450" Width="800">
+        Title="TrackModelTestWindow" Height="300" Width="300">
     <Grid>
         
     </Grid>

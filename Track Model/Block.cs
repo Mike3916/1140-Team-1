@@ -19,15 +19,18 @@ namespace TrackModel_v0._1
             mblockNum = Int32.Parse(blockInfo[2]);
             mLength = Convert.ToDouble(blockInfo[3]);
             mGrade = Convert.ToDouble(blockInfo[4]);
-            mspeedLimit = Int32.Parse(blockInfo[5]);
+            mspeedLimit = Convert.ToDouble(blockInfo[5]);
             mInfrastructure = blockInfo[6];
             mstationSide = blockInfo[7];
             mElevation = Convert.ToDouble(blockInfo[8]);
             mcumElevation = Convert.ToDouble(blockInfo[9]);
 
             mblockInfo = blockInfo;
+
+            readInfrastructure();
         }
 
+        //getters
         int getNextBlock()
         {
             return 0;  
@@ -43,24 +46,137 @@ namespace TrackModel_v0._1
             return mblockNum;
         }
 
+        public List<int> getmblockSwitch()
+        {
+            return mblockSwitches;
+        }
+
+        public bool getmOccupied()
+        {
+            return mOccupied;
+        }
+        public bool getmtrackRail()
+        {
+            return mtrackRail;
+        }
+        public bool getmtrackCircuit()
+        {
+            return mtrackCircuit;
+        }
+        public bool getmPower()
+        {
+            return mPower;
+        }
+        
+        //setters
+        public void setmLength(double info)
+        {
+            mLength = info;
+            mblockInfo[3] = info + "";
+        }
+
+        public void setmGrade(double info)
+        {
+            mGrade = info;
+            mblockInfo[4] = info + "";
+        }
+
+        public void setmspeedLimit(double info)
+        {
+            mspeedLimit = info;
+            mblockInfo[5] = info + "";
+        }
+
+        public void setmElevation(double info)
+        {
+            mElevation = info;
+            if (mElevation > info)
+            {
+                mcumElevation -= info;
+            }
+            else
+            {
+                mcumElevation += info;
+            }
+            mblockInfo[8] = mElevation + "";
+            mblockInfo[9] = mcumElevation + "";
+        }
+        public void setmOccupied(bool info)
+        {
+            mOccupied = info;
+        }
+        public void setmtrackRail(bool state)
+        {
+            mtrackRail = state;
+        }
+        public void setmtrackCircuit(bool state)
+        {
+            mtrackCircuit = state;
+        }
+        public void setmPower(bool state)
+        {
+            mPower = state;
+        }
+        public void setNextBlock(int nextBlockNum)
+        {
+            this.mnextBlockNum = nextBlockNum;
+        }
+        
+        //reads infrastructure data
         private void readInfrastructure()
         {
-            //if (mInfrastructure.Contains("switch"))
+            string[] infraString = mInfrastructure.Split(';');
+
+            foreach (string partInfra in infraString)
+            {
+                if (partInfra.ToLower().Contains("switch"))
+                {
+                    string[] switches = partInfra.Substring(8, partInfra.IndexOf(')') - 8).Split(':');
+
+                    foreach(string sw in switches)
+                    {
+                        string[] connections = sw.Split('-');
+                        if (Int32.Parse(connections[0]) != mblockNum)
+                        {
+                            AddSwitch(Int32.Parse(connections[0]));
+                        }
+                        else
+                        {
+                            AddSwitch(Int32.Parse(connections[1]));
+                        }
+                    }
+                }
+            }
+        }
+
+        //via readInfrastructure adds switches to block obj
+        void AddSwitch(int blockNum)
+        {
+            mblockSwitches.Add(blockNum);
+
+            if (mblockSwitches.Count == 1)
+                setNextBlock(blockNum);
         }
 
         string mlineName;
         string msectionName;
         int mblockNum;
-        double mLength;
-        double mGrade;
-        int mspeedLimit;
+        int mnextBlockNum; 
+        double mLength;         //param = 0
+        double mGrade;          //param = 1
+        double mspeedLimit;     //param = 2
         string mInfrastructure;
         string mstationSide;
-        double mElevation;
-        double mcumElevation;
+        double mElevation;      //param = 3
+        double mcumElevation;   //should NOT be mutable
 
-        bool mOccupied;
+        bool mOccupied;         //param = 0
+        bool mtrackRail;        //param = 1
+        bool mtrackCircuit;     //param = 2
+        bool mPower;            //param = 3
 
         string[] mblockInfo;
+        List<int> mblockSwitches = new List<int>();
+
     }
 }
