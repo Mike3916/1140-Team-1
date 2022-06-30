@@ -94,6 +94,7 @@ namespace TrainController
         {
             if (sender == AutoMode)
             {
+                //UI Element Controls:
                 AutoMode.IsEnabled = false;
                 ManualMode.IsEnabled = true;
 
@@ -111,9 +112,12 @@ namespace TrainController
                 SetSpeedBox.Text = mSetSpeed.ToString();
 
                 mAutoMode = true;
+
+
             }
             else if (sender == ManualMode)
             {
+                // UI Element Controls:
                 ManualMode.IsEnabled = false;
                 AutoMode.IsEnabled = true;
 
