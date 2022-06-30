@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ereij\\Documents\\PITT2227\\ECE 1140\\Track Model\\TrackModel_v0.1\\TrackModel_v0.1.csproj": {}
+    "C:\\Users\\Jordan\\source\\repos\\Mike3916\\1140-Team-1\\TrackModel_v0.1\\TrackModel_v0.1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ereij\\Documents\\PITT2227\\ECE 1140\\Track Model\\TrackModel_v0.1\\TrackModel_v0.1.csproj": {
+    "C:\\Users\\Jordan\\source\\repos\\Mike3916\\1140-Team-1\\TrackModel_v0.1\\TrackModel_v0.1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ereij\\Documents\\PITT2227\\ECE 1140\\Track Model\\TrackModel_v0.1\\TrackModel_v0.1.csproj",
+        "projectUniqueName": "C:\\Users\\Jordan\\source\\repos\\Mike3916\\1140-Team-1\\TrackModel_v0.1\\TrackModel_v0.1.csproj",
         "projectName": "TrackModel_v0.1",
-        "projectPath": "C:\\Users\\ereij\\Documents\\PITT2227\\ECE 1140\\Track Model\\TrackModel_v0.1\\TrackModel_v0.1.csproj",
-        "packagesPath": "C:\\Users\\ereij\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ereij\\Documents\\PITT2227\\ECE 1140\\Track Model\\TrackModel_v0.1\\obj\\",
+        "projectPath": "C:\\Users\\Jordan\\source\\repos\\Mike3916\\1140-Team-1\\TrackModel_v0.1\\TrackModel_v0.1.csproj",
+        "packagesPath": "C:\\Users\\Jordan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jordan\\source\\repos\\Mike3916\\1140-Team-1\\TrackModel_v0.1\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ereij\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Jordan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -57,7 +61,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

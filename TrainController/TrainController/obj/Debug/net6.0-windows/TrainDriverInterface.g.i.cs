@@ -173,7 +173,7 @@ namespace TrainController {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/TrainController;V1.0.0.0;component/traindriverinterface.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/TrainController;component/traindriverinterface.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\TrainDriverInterface.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

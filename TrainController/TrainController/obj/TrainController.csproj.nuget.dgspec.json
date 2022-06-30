@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jordan\\Source\\Repos\\Mike3916\\1140-Team-1\\TrainController\\TrainController\\TrainController.csproj": {}
+    "C:\\Users\\Jordan\\source\\repos\\Mike3916\\1140-Team-1\\TrainController\\TrainController\\TrainController.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jordan\\Source\\Repos\\Mike3916\\1140-Team-1\\TrainController\\TrainController\\TrainController.csproj": {
+    "C:\\Users\\Jordan\\source\\repos\\Mike3916\\1140-Team-1\\TrainController\\TrainController\\TrainController.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jordan\\Source\\Repos\\Mike3916\\1140-Team-1\\TrainController\\TrainController\\TrainController.csproj",
+        "projectUniqueName": "C:\\Users\\Jordan\\source\\repos\\Mike3916\\1140-Team-1\\TrainController\\TrainController\\TrainController.csproj",
         "projectName": "TrainController",
-        "projectPath": "C:\\Users\\Jordan\\Source\\Repos\\Mike3916\\1140-Team-1\\TrainController\\TrainController\\TrainController.csproj",
+        "projectPath": "C:\\Users\\Jordan\\source\\repos\\Mike3916\\1140-Team-1\\TrainController\\TrainController\\TrainController.csproj",
         "packagesPath": "C:\\Users\\Jordan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jordan\\Source\\Repos\\Mike3916\\1140-Team-1\\TrainController\\TrainController\\obj\\",
+        "outputPath": "C:\\Users\\Jordan\\source\\repos\\Mike3916\\1140-Team-1\\TrainController\\TrainController\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

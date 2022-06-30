@@ -16,3 +16,21 @@ C:\Users\Michael\source\repos\Track Controller Solution 1.1\Track Controller 1.1
 C:\Users\Michael\source\repos\Track Controller Solution 1.1\Track Controller 1.1\obj\Debug\net6.0-windows\Track Controller 1.1.pdb
 C:\Users\Michael\source\repos\Track Controller Solution 1.1\Track Controller 1.1\obj\Debug\net6.0-windows\Track Controller 1.1.genruntimeconfig.cache
 C:\Users\Michael\source\repos\Track Controller Solution 1.1\Track Controller 1.1\obj\Debug\net6.0-windows\ref\Track Controller 1.1.dll
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\bin\Debug\net6.0-windows\Track Controller 1.1.exe
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\bin\Debug\net6.0-windows\Track Controller 1.1.deps.json
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\bin\Debug\net6.0-windows\Track Controller 1.1.runtimeconfig.json
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\bin\Debug\net6.0-windows\Track Controller 1.1.dll
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\bin\Debug\net6.0-windows\Track Controller 1.1.pdb
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\obj\Debug\net6.0-windows\Track Controller 1.1.csproj.AssemblyReference.cache
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\obj\Debug\net6.0-windows\Track_Controller_1._02.Form_WC.resources
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\obj\Debug\net6.0-windows\Track_Controller_1._02.Properties.Resources.resources
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\obj\Debug\net6.0-windows\Track Controller 1.1.csproj.GenerateResource.cache
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\obj\Debug\net6.0-windows\Track Controller 1.1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\obj\Debug\net6.0-windows\Track Controller 1.1.AssemblyInfoInputs.cache
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\obj\Debug\net6.0-windows\Track Controller 1.1.AssemblyInfo.cs
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\obj\Debug\net6.0-windows\Track Controller 1.1.csproj.CoreCompileInputs.cache
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\obj\Debug\net6.0-windows\Track Controller 1.1.dll
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\obj\Debug\net6.0-windows\refint\Track Controller 1.1.dll
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\obj\Debug\net6.0-windows\Track Controller 1.1.pdb
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\obj\Debug\net6.0-windows\Track Controller 1.1.genruntimeconfig.cache
+C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\Track Controller Solution 1.1\Track Controller 1.1\obj\Debug\net6.0-windows\ref\Track Controller 1.1.dll
