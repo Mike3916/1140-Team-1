@@ -155,6 +155,7 @@ namespace TrainController
                     mEmergencyBrakeStatus = true;
                     EmergencyBrake.Content = "Emergency Brake\n         (ON)";
                     EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
+                    MessageBox.Show("Emergency Brake Activated");
                 }
 
                 // Hardware Controls:
@@ -638,7 +639,13 @@ namespace TrainController
                 }
                 else
                 {
+                    mCmdSpeed = 0;
+                    CmdSpeed.Text = "Cmd Speed:\n" + mCmdSpeed + " mph";
+                    mSetSpeed = 0;
+                    SetSpeedBox.Text = mSetSpeed.ToString();
+
                     mCurSpeed -= 1; // TODO: Replace with emergency brake deceleration!
+                    CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
                 }
             }
             else if (mAutoMode)

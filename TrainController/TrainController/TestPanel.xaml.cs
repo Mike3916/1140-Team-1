@@ -211,7 +211,7 @@ namespace TrainController
                 else if (sender == CurPower)
                 {
                     ((MainWindow)Application.Current.MainWindow).setPower(int.Parse(CurPower.Text));
-                    ((MainWindow)Application.Current.MainWindow).Power.Text = ((MainWindow)Application.Current.MainWindow).mCurPower + " kW";
+                    ((MainWindow)Application.Current.MainWindow).CurPower.Text = "Power: " + ((MainWindow)Application.Current.MainWindow).mCurPower + " kW";
                 }
             }
         }
