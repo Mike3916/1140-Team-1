@@ -31,6 +31,8 @@ class serialConnect
 		int mCurPower=0;
 		int fd;
 		
+		string mCurBeacon="-";
+		
 		serialConnect()
 		{
 			if((fd=serialOpen("/dev/ttyS0",115200))<0)
@@ -39,7 +41,7 @@ class serialConnect
 			}
 		}
 		
-		void displayValues()
+		const char* displayValues()
 		{
 			cout << "\n\n-------------------------------------------------------\n"
 				 << "mEmergencyBrakeStatus = " << mEmergencyBrakeStatus << "\n"
@@ -57,10 +59,13 @@ class serialConnect
 				 << "mCurSpeed = " << mCurSpeed << "\n"
 				 << "mCurPower = " << mCurPower << "\n"
 				 << "mCmdAuthority = " << mCmdAuthority << "\n"
-				 << "mCurAuthority = " << mCurAuthority << "\n-------------------------------------------------------\n\n";
+				 << "mCurAuthority = " << mCurAuthority << "\n"
+				 << "mCurBeacon = " << mCurBeacon << "\n-------------------------------------------------------\n\n";
+				 
+			return "\n";
 		}
 		
-		void resetValues()
+		const char* resetValues()
 		{
 			// Vital bools:
 			mEmergencyBrakeStatus = false;
@@ -86,6 +91,11 @@ class serialConnect
 			// Authority:
 			mCmdAuthority = 0;
 			mCurAuthority = 0;
+			
+			// Beacon:
+			mCurBeacon = "-";
+			
+			return "\n";
 		}
 		
 		const char* toggleBool(bool &status,char identifier)
@@ -117,10 +127,10 @@ class serialConnect
 			{
 				case 'h':
 					value++;
-					return "Temp_Increased\n";
+					return "tempIncreased\n";
 				case 'c':
 					value--;
-					return "Temp_Decreased\n";
+					return "tempDecreased\n";
 			}
 			return ""; 
 		}
@@ -130,17 +140,41 @@ class serialConnect
 			int numChar; 
 			string str;
 					
-			for (int i=0;i<4;i++)
+			for (int i=0;i<5;i++)
 			{
 				numChar = serialGetchar(fd);
 				
-				if(numChar>47 && numChar <58)
+				if(numChar>47 && numChar<58)
 				{
 					str += numChar;
 				}
 			}
 				
 			return stoi(str);
+		}
+		
+		string getString(int fd)
+		{
+			int count=0,numChar;
+			string str = "";
+			
+			// Get first '\n' char to flush stream, then get first char:
+			numChar = serialGetchar(fd);
+			numChar = serialGetchar(fd);
+					
+			while(numChar != 10)
+			{
+				str += numChar;
+				
+				// Update stream char, and increment count:
+				numChar = serialGetchar(fd);
+				count++;
+			}
+			
+			/*cout << "\n size: " << str.size();
+			cout << "\n string: " << str;*/
+				
+			return str+"\n";
 		}
 };
 
@@ -245,18 +279,21 @@ int main ()
 		else if(input == 'j')
 		{
 			comm.mKp = comm.getValue(comm.fd);
+			serialPrintf(comm.fd,"valueReceived\n");
 		}
 		
 		// Accept Ki:
 		else if(input == 'k')
 		{			
 			comm.mKi = comm.getValue(comm.fd);
+			serialPrintf(comm.fd,"valueReceived\n");
 		}
 		
 		// Accept Commanded Speed:
 		else if(input == 'v')
 		{			
 			comm.mCmdSpeed = comm.getValue(comm.fd);
+			serialPrintf(comm.fd,"valueReceived\n");
 		}
 		
 		// Accept Set Speed:
@@ -273,31 +310,41 @@ int main ()
 				comm.mSetSpeed = compare;
 				serialPrintf(comm.fd,"good\n");
 			}
-			comm.mSetSpeed = comm.getValue(comm.fd);
 		}
 		
 		// Accept Current Speed:
 		else if(input == 'n')
 		{			
 			comm.mCurSpeed = comm.getValue(comm.fd);
+			serialPrintf(comm.fd,"valueReceived\n");
 		}
 		
 		// Accept Set Power:
 		else if(input == 'p')
 		{			
 			comm.mCurPower = comm.getValue(comm.fd);
+			serialPrintf(comm.fd,"valueReceived\n");
 		}
 		
 		// Accept Commanded Authority:
 		else if(input == 's')
 		{			
 			comm.mCmdAuthority = comm.getValue(comm.fd);
+			serialPrintf(comm.fd,"valueReceived\n");
 		}
 		
 		// Accept Current Authority:
 		else if(input == 'd')
 		{			
 			comm.mCurAuthority = comm.getValue(comm.fd);
+			serialPrintf(comm.fd,"valueReceived\n");
+		}
+		
+		// Accept Current Beacon:
+		else if(input == 'f')
+		{
+			comm.mCurBeacon = comm.getString(comm.fd);
+			serialPrintf(comm.fd,comm.mCurBeacon.c_str());
 		}
 	}
 }
