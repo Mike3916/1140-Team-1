@@ -66,8 +66,6 @@ namespace TrainController
             InteriorLights.IsEnabled = false;
             ExteriorLights.IsEnabled = false;
 
-            mAutoMode = false;
-
             InitTimer();
 
             HW_SW selectType = new HW_SW();
@@ -94,6 +92,7 @@ namespace TrainController
         {
             if (sender == AutoMode)
             {
+                //UI Element Controls:
                 AutoMode.IsEnabled = false;
                 ManualMode.IsEnabled = true;
 
@@ -107,13 +106,21 @@ namespace TrainController
                 SetSpeedBox.IsEnabled = false;
 
                 SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0x30, 0, 0, 0));
-                mSetSpeed = mCmdSpeed;
                 SetSpeedBox.Text = mSetSpeed.ToString();
 
+                mSetSpeed = mCmdSpeed;
                 mAutoMode = true;
+
+                // Hardware Controls:
+                if (mControlType)
+                {
+                    pi.WriteLine("m");
+                    string output = pi.ReadLine();
+                }
             }
             else if (sender == ManualMode)
             {
+                // UI Element Controls:
                 ManualMode.IsEnabled = false;
                 AutoMode.IsEnabled = true;
 
@@ -129,96 +136,188 @@ namespace TrainController
                 SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xDF, 0x20));
 
                 mAutoMode = false;
+
+                // Hardware Controls:
+                if (mControlType)
+                {
+                    pi.WriteLine("m");
+                    string output = pi.ReadLine();
+                }
             }
             else if (sender == EmergencyBrake)
             {
-                // Software controller:
-                if (mControlType == false)
+                if (!mEmergencyBrakeStatus)
                 {
-                    if (!mEmergencyBrakeStatus)
-                    {
-                        mEmergencyBrakeStatus = true;
-                        EmergencyBrake.Content = "Emergency Brake\n         (ON)";
-                        EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
-                    }
+                    mEmergencyBrakeStatus = true;
+                    EmergencyBrake.Content = "Emergency Brake\n         (ON)";
+                    EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
                 }
 
-                // Hardware controller:
-                else
+                // Hardware Controls:
+                if (mControlType)
                 {
-                    if (!mEmergencyBrakeStatus)
-                    {
-                        mEmergencyBrakeStatus = true;
-                        pi.WriteLine("e");
-                        string brakeStatus = pi.ReadLine();
-                        EmergencyBrake.Content = "Emergency Brake\n         (ON)";
-                        EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
-                    }
+                    pi.WriteLine("e");
+                    string output = pi.ReadLine();
                 }
             }
             else if (sender == LeftDoors)
             {
-                if (!mLeftDoorsStatus)
+                if (!mControlType)
                 {
-                    mLeftDoorsStatus = true;
-                    LeftDoors.Content = "Doors - Left\n    (OPEN)";
+                    if (!mLeftDoorsStatus)
+                    {
+                        mLeftDoorsStatus = true;
+                        LeftDoors.Content = "Doors - Left\n    (OPEN)";
+                    }
+                    else
+                    {
+                        mLeftDoorsStatus = false;
+                        LeftDoors.Content = "Doors - Left\n   (CLOSED)";
+                    }
                 }
                 else
                 {
-                    mLeftDoorsStatus = false;
-                    LeftDoors.Content = "Doors - Left\n   (CLOSED)";
+                    pi.WriteLine("l");
+                    string output = pi.ReadLine();
+
+                    if (output == "Open")
+                    {
+                        mLeftDoorsStatus = true;
+                        LeftDoors.Content = "Doors - Left\n    (OPEN)";
+                    }
+                    else
+                    {
+                        mLeftDoorsStatus = false;
+                        LeftDoors.Content = "Doors - Left\n   (CLOSED)";
+                    }
                 }
             }
             else if (sender == RightDoors)
             {
-                if (!mRightDoorsStatus)
+                if (!mControlType)
                 {
-                    mRightDoorsStatus = true;
-                    RightDoors.Content = "Doors - Right\n     (OPEN)";
+                    if (!mRightDoorsStatus)
+                    {
+                        mRightDoorsStatus = true;
+                        RightDoors.Content = "Doors - Right\n    (OPEN)";
+                    }
+                    else
+                    {
+                        mRightDoorsStatus = false;
+                        RightDoors.Content = "Doors - Right\n   (CLOSED)";
+                    }
                 }
                 else
                 {
-                    mRightDoorsStatus = false;
-                    RightDoors.Content = "Doors - Right\n   (CLOSED)";
+                    pi.WriteLine("r");
+                    string output = pi.ReadLine();
+
+                    if (output == "Open")
+                    {
+                        mRightDoorsStatus = true;
+                        RightDoors.Content = "Doors - Right\n    (OPEN)";
+                    }
+                    else
+                    {
+                        mRightDoorsStatus = false;
+                        RightDoors.Content = "Doors - Right\n   (CLOSED)";
+                    }
                 }
             }
             else if (sender == InteriorLights)
             {
-                if (!mInteriorLightsStatus)
+                if (!mControlType)
                 {
-                    mInteriorLightsStatus = true;
-                    InteriorLights.Content = "Lights - Interior\n        (ON)";
+                    if (!mInteriorLightsStatus)
+                    {
+                        mInteriorLightsStatus = true;
+                        InteriorLights.Content = "Lights - Interior\n        (ON)";
+                    }
+                    else
+                    {
+                        mInteriorLightsStatus = false;
+                        InteriorLights.Content = "Lights - Interior\n        (OFF)";
+                    }
                 }
                 else
                 {
-                    mInteriorLightsStatus = false;
-                    InteriorLights.Content = "Lights - Interior\n        (OFF)";
+                    pi.WriteLine("i");
+                    string output = pi.ReadLine();
+
+                    if (output == "On")
+                    {
+                        mInteriorLightsStatus = true;
+                        InteriorLights.Content = "Lights - Interior\n        (ON)";
+                    }
+                    else
+                    {
+                        mInteriorLightsStatus = false;
+                        InteriorLights.Content = "Lights - Interior\n        (OFF)";
+                    }
                 }
             }
             else if (sender == ExteriorLights)
             {
-                if (!mExteriorLightsStatus)
+                if (!mControlType)
                 {
-                    mExteriorLightsStatus = true;
-                    ExteriorLights.Content = "Lights - Exterior\n        (ON)";
+                    if (!mExteriorLightsStatus)
+                    {
+                        mExteriorLightsStatus = true;
+                        ExteriorLights.Content = "Lights - Exterior\n        (ON)";
+                    }
+                    else
+                    {
+                        mExteriorLightsStatus = false;
+                        ExteriorLights.Content = "Lights - Exterior\n        (OFF)";
+                    }
                 }
                 else
                 {
-                    mExteriorLightsStatus = false;
-                    ExteriorLights.Content = "Lights - Exterior\n        (OFF)";
+                    pi.WriteLine("x");
+                    string output = pi.ReadLine();
+
+                    if (output == "On")
+                    {
+                        mExteriorLightsStatus = true;
+                        ExteriorLights.Content = "Lights - Exterior\n        (ON)";
+                    }
+                    else
+                    {
+                        mExteriorLightsStatus = false;
+                        ExteriorLights.Content = "Lights - Exterior\n        (OFF)";
+                    }
                 }
             }
             else if (sender == Announcements)
             {
-                if (!mAnnouncementsStatus)
+                if (!mControlType)
                 {
-                    mAnnouncementsStatus = true;
-                    Announcements.Content = "Announcements\n        (ON)";
+                    if (!mAnnouncementsStatus)
+                    {
+                        mAnnouncementsStatus = true;
+                        Announcements.Content = "Announcements\n        (ON)";
+                    }
+                    else
+                    {
+                        mAnnouncementsStatus = false;
+                        Announcements.Content = "Announcements\n        (OFF)";
+                    }
                 }
                 else
                 {
-                    mAnnouncementsStatus = false;
-                    Announcements.Content = "Announcements\n        (OFF)";
+                    pi.WriteLine("a");
+                    string output = pi.ReadLine();
+
+                    if (output == "On")
+                    {
+                        mAnnouncementsStatus = true;
+                        Announcements.Content = "Announcements\n        (ON)";
+                    }
+                    else
+                    {
+                        mAnnouncementsStatus = false;
+                        Announcements.Content = "Announcements\n        (OFF)";
+                    }
                 }
             }
             else if (sender == TempIncrease)
