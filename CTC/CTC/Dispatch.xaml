@@ -9,7 +9,6 @@
       Title="Dispatch">
 
     <Grid Background="White" Margin="0,0,188,0" Width="352" Height="400">
-        <Button x:Name="Back" Content="Back" Command="NavigationCommands.BrowseBack" HorizontalAlignment="Left" Margin="24,28,0,0" VerticalAlignment="Top" Click="Back_Click" />
         <TextBox HorizontalAlignment="Left" Margin="133,161,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
         <Label Content="Destination:" HorizontalAlignment="Left" Margin="54,157,0,0" VerticalAlignment="Top"/>
         <Label Content="ETA:" HorizontalAlignment="Left" Margin="54,196,0,0" VerticalAlignment="Top"/>

@@ -10,6 +10,8 @@
 
     <Grid Background="White">
         <Button Content="Maintenance Request" HorizontalAlignment="Left" Margin="120,102,0,0" VerticalAlignment="Top"/>
+        <Button Content="Brake Failure" HorizontalAlignment="Left" Margin="120,142,0,0" VerticalAlignment="Top"/>
+        <Button Content="Engine Failure" HorizontalAlignment="Left" Margin="120,178,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Page>

@@ -26,6 +26,8 @@
         <Frame x:Name="Frame" Content="" Grid.RowSpan="2" NavigationUIVisibility="Hidden" Visibility="Visible" Grid.Column="1" Margin="203,24,245,10" ContentRendered="Frame_ContentRendered"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="560,97,0,0" Grid.RowSpan="2" TextWrapping="Wrap" Text="Enter Block Code:" VerticalAlignment="Top" Height="17" Width="122"/>
         <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="670,97,0,0" Grid.RowSpan="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyDown="TextBox_KeyDown" Height="18"/>
+        <Button x:Name="Test" Content="Test" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,409,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="Test_Click"/>
+        <Button x:Name="Clear" Content="Clear" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="68,409,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="Clear_Click"/>
 
     </Grid>
 </Window>

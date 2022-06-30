@@ -12,7 +12,7 @@
         <Label Content="Destination:" HorizontalAlignment="Left" Margin="140,114,0,0" VerticalAlignment="Top"/>
         <Label Content="ETA:" HorizontalAlignment="Left" Margin="181,145,0,0" VerticalAlignment="Top"/>
         <Label Content="Authority:" HorizontalAlignment="Left" Margin="151,176,0,0" VerticalAlignment="Top"/>
-        <Label Content="GG30" HorizontalAlignment="Left" Margin="218,114,0,0" VerticalAlignment="Top"/>
+        <Label Content="GA30" HorizontalAlignment="Left" Margin="218,114,0,0" VerticalAlignment="Top"/>
         <Label Content="13:00" HorizontalAlignment="Left" Margin="218,145,0,0" VerticalAlignment="Top"/>
         <Label Content="20 Blocks" HorizontalAlignment="Left" Margin="218,176,0,0" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="118,207,0,0" TextWrapping="Wrap" Text="Suggested Speed:" VerticalAlignment="Top"/>
