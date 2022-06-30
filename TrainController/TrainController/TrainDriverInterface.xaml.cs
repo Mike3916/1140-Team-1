@@ -74,7 +74,10 @@ namespace TrainController
             selectType.Topmost = true;
             selectType.Show();
             selectType.Activate();
+        }
 
+        public void setupHardware()
+        {
             // Setup serial port information: 
             pi.PortName = "COM3";
             pi.BaudRate = 115200;
@@ -84,11 +87,10 @@ namespace TrainController
             pi.Handshake = Handshake.None;
 
             pi.WriteTimeout = 500;
-
             pi.Open();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void Button_Click(object sender, RoutedEventArgs e)
         {
             if (sender == AutoMode)
             {
@@ -130,7 +132,8 @@ namespace TrainController
             }
             else if (sender == EmergencyBrake)
             {
-                if (!mControlType)
+                // Software controller:
+                if (mControlType == false)
                 {
                     if (!mEmergencyBrakeStatus)
                     {
@@ -139,6 +142,8 @@ namespace TrainController
                         EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
                     }
                 }
+
+                // Hardware controller:
                 else
                 {
                     if (!mEmergencyBrakeStatus)
@@ -146,7 +151,8 @@ namespace TrainController
                         mEmergencyBrakeStatus = true;
                         pi.WriteLine("e");
                         string brakeStatus = pi.ReadLine();
-                        EmergencyBrake.Content = "Emergency Brake (ON)";
+                        EmergencyBrake.Content = "Emergency Brake\n         (ON)";
+                        EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
                     }
                 }
             }
@@ -317,7 +323,7 @@ namespace TrainController
             }
         }
 
-        private void KeyDownButton(object sender, KeyEventArgs e)
+        public void KeyDownButton(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
@@ -336,7 +342,7 @@ namespace TrainController
             }
         }
 
-        private void InitTimer()
+        public void InitTimer()
         {
             DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(SpeedUpdate);
@@ -344,7 +350,7 @@ namespace TrainController
             dispatcherTimer.Start();
         }
 
-        private void SpeedUpdate(object sender, EventArgs e)
+        public void SpeedUpdate(object sender, EventArgs e)
         {
             if (mEmergencyBrakeStatus)
             {

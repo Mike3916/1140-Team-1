@@ -26,8 +26,8 @@
         <TextBlock HorizontalAlignment="Left" Margin="333,277,0,0" TextWrapping="Wrap" Text="Set Ki:" VerticalAlignment="Top" Height="36" Width="134" Background="Gainsboro" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="333,320,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="48" Width="106" Background="Gainsboro" TextAlignment="Center"><Run Text="Current Power"/><LineBreak/><Run Text="(in kW):"/></TextBlock>
 
-        <Button x:Name="EmergencyBrakes" Content="OFF" HorizontalAlignment="Left" Margin="198,30,0,0" VerticalAlignment="Top" Height="28" Width="120" Click="Button_Click" ClickMode="Press" Background="#FFFF5050"/>
-        <Button x:Name="ServiceBrakes" Content="OFF" HorizontalAlignment="Left" Margin="198,71,0,0" VerticalAlignment="Top" Height="28" Width="120" Click="Button_Click" ClickMode="Press" Background="#FFFF5050"/>
+        <Button x:Name="EmergencyBrake" Content="OFF" HorizontalAlignment="Left" Margin="198,30,0,0" VerticalAlignment="Top" Height="28" Width="120" Click="Button_Click" ClickMode="Press" Background="#FFFF5050"/>
+        <Button x:Name="ServiceBrake" Content="OFF" HorizontalAlignment="Left" Margin="198,71,0,0" VerticalAlignment="Top" Height="28" Width="120" Click="Button_Click" ClickMode="Press" Background="#FFFF5050"/>
         <Button x:Name="LeftDoors" Content="CLOSED" HorizontalAlignment="Left" Margin="198,112,0,0" VerticalAlignment="Top" Height="28" Width="120" Click="Button_Click" ClickMode="Press" Background="#FFFF5050"/>
         <Button x:Name="RightDoors" Content="CLOSED" HorizontalAlignment="Left" Margin="198,153,0,0" VerticalAlignment="Top" Height="28" Width="120" Click="Button_Click" ClickMode="Press" Background="#FFFF5050"/>
         <Button x:Name="InteriorLights" Content="CLOSED" HorizontalAlignment="Left" Margin="198,194,0,0" VerticalAlignment="Top" Height="28" Width="120" Click="Button_Click" ClickMode="Press" Background="#FFFF5050"/>
