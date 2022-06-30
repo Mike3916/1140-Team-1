@@ -26,16 +26,10 @@ namespace TrainController
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (sender == EmergencyBrakes)
+            if (sender == EmergencyBrake)
             {
-                /*if ()
-                {
-
-                }
-                else
-                {
-
-                }*/
+                ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).EmergencyBrake, e);
+                EmergencyBrake.Content = "ON";
             }
             else if (sender == LeftDoors)
             {

@@ -81,6 +81,9 @@ namespace TrainController
                 ((MainWindow)Application.Current.MainWindow).InteriorLights.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).ExteriorLights.IsEnabled = true;
 
+                // Setup hardware controller port information:
+                ((MainWindow)Application.Current.MainWindow).setupHardware();
+
                 // Disable both controller type buttons and exit to main window:
                 SoftwareController.IsEnabled = false;
                 HardwareController.IsEnabled = false;
