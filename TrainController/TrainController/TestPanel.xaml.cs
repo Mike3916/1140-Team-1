@@ -207,12 +207,11 @@ namespace TrainController
                 else if (sender == CurBeacon)
                 {
                     ((MainWindow)Application.Current.MainWindow).setBeacon(CurBeacon.Text);
-                    ((MainWindow)Application.Current.MainWindow).Beacon.Text = "Nearest Beacon:\n" + ((MainWindow)Application.Current.MainWindow).mBeacon;
                 }
                 else if (sender == CurPower)
                 {
                     ((MainWindow)Application.Current.MainWindow).setPower(int.Parse(CurPower.Text));
-                    ((MainWindow)Application.Current.MainWindow).Power.Text = ((MainWindow)Application.Current.MainWindow).mCurPower + " kW";
+                    ((MainWindow)Application.Current.MainWindow).CurPower.Text = "Power: " + ((MainWindow)Application.Current.MainWindow).mCurPower + " kW";
                 }
             }
         }
