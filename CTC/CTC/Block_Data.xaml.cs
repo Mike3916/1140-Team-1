@@ -22,5 +22,29 @@ namespace CTC
         {
             InitializeComponent();
         }
+
+        private void Right_Click(object sender, RoutedEventArgs e)
+        {
+            Right.Background = Brushes.Green;
+            Left.Background = Brushes.Gray;
+        }
+
+        private void Left_Click(object sender, RoutedEventArgs e)
+        {
+            Left.Background = Brushes.Green;
+            Right.Background = Brushes.Gray;
+        }
+
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+            Open.Background = Brushes.Green;
+            Close.Background = Brushes.Gray;
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Close.Background = Brushes.Green;
+            Open.Background = Brushes.Gray;
+        }
     }
 }

@@ -67,6 +67,19 @@ namespace CTC
             Frame.NavigationService.Navigate(page); ///Set the frame area to go to the dispatch_page
         }
 
-       
+        private void TextBox_KeyDown(object sender, KeyEventArgs e) ///After the user types the block code in and hits the enter key
+        {
+            if (e.Key == Key.Return)
+            {
+                //enter key is down
+                Block_Data page = new Block_Data();
+                Frame.NavigationService.Navigate(page);
+            }
+        }
+
+        private void Frame_ContentRendered(object sender, EventArgs e) ///Every time the frame changes, it readjusts to fit. Without this code, the page that is sent to the frame gets cut off. Not sure if this is the best implimentation because it causes the entire window to resize a bit, look into later.
+        {
+            this.SizeToContent = SizeToContent.WidthAndHeight;
+        }
     }
 }

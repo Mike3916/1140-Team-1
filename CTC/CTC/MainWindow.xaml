@@ -7,19 +7,25 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="0*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock HorizontalAlignment="Center" Margin="0,3,0,0" TextWrapping="Wrap" Text="CTC" VerticalAlignment="Top" Height="16" Grid.Row="1" Width="20"/>
-        <Image HorizontalAlignment="Left" Height="240" Margin="41,0,0,0" VerticalAlignment="Center" Width="253" Source="/Red &amp; Green Line.png" Grid.Row="1"/>
-        <Button x:Name="LoadSchedule" Content="Load Schedule" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="LoadFile_Click" Height="20" Grid.Row="1" Width="81"/>
-        <Button x:Name="Dispatch" Content="Dispatch New Train" HorizontalAlignment="Left" Margin="679,288,0,0" VerticalAlignment="Top" Click="Dispatch_Click" Grid.Row="1" Height="20" Width="106"/>
-        <ComboBox x:Name="SelectTrain" HorizontalAlignment="Left" Margin="583,7,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="SelectTrain_SelectionChanged" IsDropDownOpen="False" Height="22" Grid.Row="1">
+        <TextBlock HorizontalAlignment="Center" Margin="0,3,0,0" TextWrapping="Wrap" Text="CTC" VerticalAlignment="Top" Height="16" Grid.Row="1" Width="26" Grid.Column="1"/>
+        <Image HorizontalAlignment="Left" Height="240" Margin="9,0,0,0" VerticalAlignment="Center" Width="253" Source="/Red &amp; Green Line.png" Grid.Row="1" Grid.Column="1"/>
+        <Button x:Name="LoadSchedule" Content="Load Schedule" HorizontalAlignment="Left" Margin="5,10,0,0" VerticalAlignment="Top" Click="LoadFile_Click" Height="20" Grid.Row="1" Width="81" Grid.Column="1"/>
+        <Button x:Name="Dispatch" Content="Dispatch New Train" HorizontalAlignment="Left" Margin="684,404,0,0" VerticalAlignment="Top" Click="Dispatch_Click" Grid.Row="1" Height="20" Width="106" Grid.Column="1"/>
+        <ComboBox x:Name="SelectTrain" HorizontalAlignment="Left" Margin="652,24,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="SelectTrain_SelectionChanged" IsDropDownOpen="False" Height="22" Grid.Row="1" Grid.Column="1">
             <Image Height="100" Width="100"/>
         </ComboBox>
-        <CheckBox x:Name="Mode" Content="Manual Mode" HorizontalAlignment="Left" Margin="517,288,0,0" VerticalAlignment="Top" Checked="Set_Checked" Grid.Row="1" Height="15" Width="94"/>
-        <Frame x:Name="Frame" Content="" Grid.RowSpan="2" Height="Auto" Width="Auto" NavigationUIVisibility="Hidden" Visibility="Hidden"/>
+        <CheckBox x:Name="Mode" Content="Manual Mode" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Background}" HorizontalAlignment="Left" Margin="683,377,0,0" VerticalAlignment="Top" Checked="Set_Checked" Grid.Row="1" Height="15" Width="94" Grid.Column="1"/>
+        <Frame x:Name="Frame" Content="" Grid.RowSpan="2" NavigationUIVisibility="Hidden" Visibility="Visible" Grid.Column="1" Margin="203,24,245,10" ContentRendered="Frame_ContentRendered"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="560,97,0,0" Grid.RowSpan="2" TextWrapping="Wrap" Text="Enter Block Code:" VerticalAlignment="Top" Height="17" Width="122"/>
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="670,97,0,0" Grid.RowSpan="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyDown="TextBox_KeyDown" Height="18"/>
 
     </Grid>
 </Window>
