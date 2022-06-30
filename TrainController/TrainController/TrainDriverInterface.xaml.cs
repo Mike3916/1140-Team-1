@@ -45,6 +45,7 @@ namespace TrainController
         public int mCmdAuthority = 0;
         public int mCurAuthority = 0;
         public string mBeacon = "-";
+        public int mCurPower = 0;
 
         public MainWindow()
         {
@@ -65,8 +66,6 @@ namespace TrainController
             RightDoors.IsEnabled = false;
             InteriorLights.IsEnabled = false;
             ExteriorLights.IsEnabled = false;
-
-            mAutoMode = false;
 
             InitTimer();
 
@@ -94,6 +93,7 @@ namespace TrainController
         {
             if (sender == AutoMode)
             {
+                //UI Element Controls:
                 AutoMode.IsEnabled = false;
                 ManualMode.IsEnabled = true;
 
@@ -107,13 +107,21 @@ namespace TrainController
                 SetSpeedBox.IsEnabled = false;
 
                 SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0x30, 0, 0, 0));
-                mSetSpeed = mCmdSpeed;
                 SetSpeedBox.Text = mSetSpeed.ToString();
 
+                mSetSpeed = mCmdSpeed;
                 mAutoMode = true;
+
+                // Hardware Controls:
+                if (mControlType)
+                {
+                    pi.WriteLine("m");
+                    string output = pi.ReadLine();
+                }
             }
             else if (sender == ManualMode)
             {
+                // UI Element Controls:
                 ManualMode.IsEnabled = false;
                 AutoMode.IsEnabled = true;
 
@@ -129,115 +137,225 @@ namespace TrainController
                 SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xDF, 0x20));
 
                 mAutoMode = false;
+
+                // Hardware Controls:
+                if (mControlType)
+                {
+                    pi.WriteLine("m");
+                    string output = pi.ReadLine();
+                }
             }
+
             else if (sender == EmergencyBrake)
             {
-                // Software controller:
-                if (mControlType == false)
+                if (!mEmergencyBrakeStatus)
                 {
-                    if (!mEmergencyBrakeStatus)
-                    {
-                        mEmergencyBrakeStatus = true;
-                        EmergencyBrake.Content = "Emergency Brake\n         (ON)";
-                        EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
-                    }
+                    mEmergencyBrakeStatus = true;
+                    EmergencyBrake.Content = "Emergency Brake\n         (ON)";
+                    EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
                 }
 
-                // Hardware controller:
-                else
+                // Hardware Controls:
+                if (mControlType)
                 {
-                    if (!mEmergencyBrakeStatus)
-                    {
-                        mEmergencyBrakeStatus = true;
-                        pi.WriteLine("e");
-                        string brakeStatus = pi.ReadLine();
-                        EmergencyBrake.Content = "Emergency Brake\n         (ON)";
-                        EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
-                    }
+                    pi.WriteLine("e");
+                    string output = pi.ReadLine();
                 }
             }
+
             else if (sender == LeftDoors)
             {
-                if (!mLeftDoorsStatus)
+                if (!mControlType)
                 {
-                    mLeftDoorsStatus = true;
-                    LeftDoors.Content = "Doors - Left\n    (OPEN)";
+                    if (!mLeftDoorsStatus)
+                    {
+                        mLeftDoorsStatus = true;
+                        LeftDoors.Content = "Doors - Left\n    (OPEN)";
+                    }
+                    else
+                    {
+                        mLeftDoorsStatus = false;
+                        LeftDoors.Content = "Doors - Left\n   (CLOSED)";
+                    }
                 }
                 else
                 {
-                    mLeftDoorsStatus = false;
-                    LeftDoors.Content = "Doors - Left\n   (CLOSED)";
+                    pi.WriteLine("l");
+                    string output = pi.ReadLine();
+
+                    if (output == "Open")
+                    {
+                        mLeftDoorsStatus = true;
+                        LeftDoors.Content = "Doors - Left\n    (OPEN)";
+                    }
+                    else
+                    {
+                        mLeftDoorsStatus = false;
+                        LeftDoors.Content = "Doors - Left\n   (CLOSED)";
+                    }
                 }
             }
             else if (sender == RightDoors)
             {
-                if (!mRightDoorsStatus)
+                if (!mControlType)
                 {
-                    mRightDoorsStatus = true;
-                    RightDoors.Content = "Doors - Right\n     (OPEN)";
+                    if (!mRightDoorsStatus)
+                    {
+                        mRightDoorsStatus = true;
+                        RightDoors.Content = "Doors - Right\n    (OPEN)";
+                    }
+                    else
+                    {
+                        mRightDoorsStatus = false;
+                        RightDoors.Content = "Doors - Right\n   (CLOSED)";
+                    }
                 }
                 else
                 {
-                    mRightDoorsStatus = false;
-                    RightDoors.Content = "Doors - Right\n   (CLOSED)";
+                    pi.WriteLine("r");
+                    string output = pi.ReadLine();
+
+                    if (output == "Open")
+                    {
+                        mRightDoorsStatus = true;
+                        RightDoors.Content = "Doors - Right\n    (OPEN)";
+                    }
+                    else
+                    {
+                        mRightDoorsStatus = false;
+                        RightDoors.Content = "Doors - Right\n   (CLOSED)";
+                    }
                 }
             }
+
             else if (sender == InteriorLights)
             {
-                if (!mInteriorLightsStatus)
+                if (!mControlType)
                 {
-                    mInteriorLightsStatus = true;
-                    InteriorLights.Content = "Lights - Interior\n        (ON)";
+                    if (!mInteriorLightsStatus)
+                    {
+                        mInteriorLightsStatus = true;
+                        InteriorLights.Content = "Lights - Interior\n        (ON)";
+                    }
+                    else
+                    {
+                        mInteriorLightsStatus = false;
+                        InteriorLights.Content = "Lights - Interior\n        (OFF)";
+                    }
                 }
                 else
                 {
-                    mInteriorLightsStatus = false;
-                    InteriorLights.Content = "Lights - Interior\n        (OFF)";
+                    pi.WriteLine("i");
+                    string output = pi.ReadLine();
+
+                    if (output == "On")
+                    {
+                        mInteriorLightsStatus = true;
+                        InteriorLights.Content = "Lights - Interior\n        (ON)";
+                    }
+                    else
+                    {
+                        mInteriorLightsStatus = false;
+                        InteriorLights.Content = "Lights - Interior\n        (OFF)";
+                    }
                 }
             }
             else if (sender == ExteriorLights)
             {
-                if (!mExteriorLightsStatus)
+                if (!mControlType)
                 {
-                    mExteriorLightsStatus = true;
-                    ExteriorLights.Content = "Lights - Exterior\n        (ON)";
+                    if (!mExteriorLightsStatus)
+                    {
+                        mExteriorLightsStatus = true;
+                        ExteriorLights.Content = "Lights - Exterior\n        (ON)";
+                    }
+                    else
+                    {
+                        mExteriorLightsStatus = false;
+                        ExteriorLights.Content = "Lights - Exterior\n        (OFF)";
+                    }
                 }
                 else
                 {
-                    mExteriorLightsStatus = false;
-                    ExteriorLights.Content = "Lights - Exterior\n        (OFF)";
+                    pi.WriteLine("x");
+                    string output = pi.ReadLine();
+
+                    if (output == "On")
+                    {
+                        mExteriorLightsStatus = true;
+                        ExteriorLights.Content = "Lights - Exterior\n        (ON)";
+                    }
+                    else
+                    {
+                        mExteriorLightsStatus = false;
+                        ExteriorLights.Content = "Lights - Exterior\n        (OFF)";
+                    }
                 }
             }
+
             else if (sender == Announcements)
             {
-                if (!mAnnouncementsStatus)
+                if (!mControlType)
                 {
-                    mAnnouncementsStatus = true;
-                    Announcements.Content = "Announcements\n        (ON)";
+                    if (!mAnnouncementsStatus)
+                    {
+                        mAnnouncementsStatus = true;
+                        Announcements.Content = "Announcements\n        (ON)";
+                    }
+                    else
+                    {
+                        mAnnouncementsStatus = false;
+                        Announcements.Content = "Announcements\n        (OFF)";
+                    }
                 }
                 else
                 {
-                    mAnnouncementsStatus = false;
-                    Announcements.Content = "Announcements\n        (OFF)";
+                    pi.WriteLine("a");
+                    string output = pi.ReadLine();
+
+                    if (output == "On")
+                    {
+                        mAnnouncementsStatus = true;
+                        Announcements.Content = "Announcements\n        (ON)";
+                    }
+                    else
+                    {
+                        mAnnouncementsStatus = false;
+                        Announcements.Content = "Announcements\n        (OFF)";
+                    }
                 }
             }
+
             else if (sender == TempIncrease)
             {
                 mTemperature++;
                 Temperature.Text = "Temperature: " + mTemperature.ToString() + "°F";
+
+                if (mControlType)
+                {
+                    pi.WriteLine("h");
+                    string output = pi.ReadLine();
+                }
             }
             else if (sender == TempDecrease)
             {
                 mTemperature--;
                 Temperature.Text = "Temperature: " + mTemperature.ToString() + "°F";
+
+                if (mControlType)
+                {
+                    pi.WriteLine("c");
+                    string output = pi.ReadLine();
+                }
             }
+
             else if (sender == EngineerPanel)
             {
                 EngineerPanel ePan = new EngineerPanel();
                 ePan.Owner = this;
 
-                ePan.DisplayKp.Text = mKp.ToString();
-                ePan.DisplayKi.Text = mKi.ToString();
+                ePan.Kp.Text = mKp.ToString();
+                ePan.Ki.Text = mKi.ToString();
 
                 ePan.Show();
             }
@@ -290,6 +408,17 @@ namespace TrainController
                     tPan.ExteriorLights.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
                 }
 
+                if (mAnnouncementsStatus)
+                {
+                    tPan.Announcements.Content = "ON";
+                    tPan.Announcements.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
+                }
+                else
+                {
+                    tPan.Announcements.Content = "OFF";
+                    tPan.Announcements.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                }
+
                 tPan.Temperature.Text = mTemperature.ToString();
 
                 tPan.SetKp.Text = mKp.ToString();
@@ -323,21 +452,141 @@ namespace TrainController
             }
         }
 
+        public void setKp(int value)
+        {
+            mKp = value;
+
+            // Hardware Controls:
+            if(mControlType)
+            {
+                pi.WriteLine("j");
+                pi.Write(mKp.ToString());
+            }
+        }
+
+        public void setKi(int value)
+        {
+            mKi = value;
+
+            // Hardware Controls:
+            if (mControlType)
+            {
+                pi.WriteLine("k");
+                pi.Write(mKi.ToString());
+            }
+        }
+
+        public void setCmdSpeed(int value)
+        {
+            mCmdSpeed = value;
+
+            // Hardware Controls:
+            if (mControlType)
+            {
+                pi.WriteLine("v");
+                pi.Write(mCmdSpeed.ToString());
+            }
+        }
+
+        public void setSetSpeed(int value)
+        {
+            if (!mControlType)
+            {
+                if (value > mCmdSpeed)
+                {
+                    MessageBox.Show("Set Speed Shall Not Exceed Commanded Speed");
+                }
+                else
+                {
+                    mSetSpeed = value;
+                    SetSpeedBox.Text = mSetSpeed.ToString();
+                }
+            }
+            else
+            {
+                pi.WriteLine("b");
+                pi.Write(value.ToString());
+                string output = pi.ReadLine();
+
+                if (output == "tooHigh")
+                {
+                    MessageBox.Show("Set Speed Shall Not Exceed Commanded Speed");
+                }
+                else
+                {
+                    mSetSpeed = value;
+                    SetSpeedBox.Text = mSetSpeed.ToString();
+                }
+            }
+        }
+
+        public void setCurSpeed(int value)
+        {
+            mCurSpeed = value;
+
+            // Hardware Controls:
+            if (mControlType)
+            {
+                pi.WriteLine("n");
+                pi.Write(mCurSpeed.ToString());
+            }
+        }
+
+        public void setCmdAuthority(int value)
+        {
+            mCmdAuthority = value;
+
+            // Hardware Controls:
+            if (mControlType)
+            {
+                pi.WriteLine("s");
+                pi.Write(mCmdAuthority.ToString());
+            }
+        }
+
+        public void setCurAuthority(int value)
+        {
+            mCurAuthority = value;
+
+            // Hardware Controls:
+            if (mControlType)
+            {
+                pi.WriteLine("d");
+                pi.Write(mCurAuthority.ToString());
+            }
+        }
+
+        public void setBeacon(string value)
+        {
+            mBeacon = value;
+
+            // Hardware Controls:
+            if (mControlType)
+            {
+                pi.WriteLine("f");
+                pi.Write(mBeacon);
+            }
+        }
+
+        public void setPower(int value)
+        {
+            mCurPower = value;
+
+            //Hardware Controls:
+            if (mControlType)
+            {
+                pi.WriteLine("p");
+                pi.Write(mCurPower.ToString());
+            }
+        }
+
         public void KeyDownButton(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
                 if (sender == SetSpeedBox)
                 {
-                    if (int.Parse(SetSpeedBox.Text) > mCmdSpeed)
-                    {
-                        SetSpeedBox.Text = mSetSpeed.ToString();
-                        MessageBox.Show("Set Speed Shall Not Exceed Commanded Speed");
-                    }
-                    else
-                    {
-                        mSetSpeed = int.Parse(SetSpeedBox.Text);
-                    }
+                    setSetSpeed(int.Parse(SetSpeedBox.Text));
                 }
             }
         }
