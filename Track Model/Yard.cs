@@ -12,6 +12,10 @@ namespace TrackModel_v0._1
 
         }
 
+        //public MakeTrain(int blockNum)
+        //{
+
+        //}
         int mblockNum;
         string mInfrastructure;
 

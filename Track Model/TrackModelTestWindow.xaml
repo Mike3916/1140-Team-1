@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrackModel_v0._1"
         mc:Ignorable="d"
-        Title="TrackModelTestWindow" Height="450" Width="800">
+        Title="TrackModelTestWindow" Height="300" Width="300">
     <Grid>
-        
+        <ComboBox x:Name="DestinationBox" HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="DestinationBox_SelectionChanged"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,4,0,0" TextWrapping="Wrap" Text="Destination" VerticalAlignment="Top" Width="79"/>
+        <TextBox x:Name="AuthorityBox" HorizontalAlignment="Left" Margin="10,70,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" TextChanged="AuthorityBox_TextChanged"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,49,0,0" TextWrapping="Wrap" Text="Authority(blocks)" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="SpeedBox" HorizontalAlignment="Left" Margin="10,107,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" TextChanged="SpeedBox_TextChanged"/>
+        <TextBlock x:Name="Speed_km_hr" HorizontalAlignment="Left" Margin="10,89,0,0" TextWrapping="Wrap" Text="Commanded Speed(km/hr)" VerticalAlignment="Top" Width="162"/>
+        <Button x:Name="TrainButton" Content="Send Train!" HorizontalAlignment="Left" Margin="10,142,0,0" VerticalAlignment="Top" Click="TrainButton_Click"/>
+
     </Grid>
 </Window>
