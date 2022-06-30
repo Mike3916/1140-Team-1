@@ -24,21 +24,17 @@ namespace TrainController
             InitializeComponent();
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-        }
-
         private void KeyDownButton(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                if (sender == DisplayKp)
+                if (sender == Kp)
                 {
-                    ((MainWindow)Application.Current.MainWindow).mKp = int.Parse(DisplayKp.Text);
+                    ((MainWindow)Application.Current.MainWindow).setKp(int.Parse(Kp.Text));
                 }
-                else if (sender == DisplayKi)
+                else if (sender == Ki)
                 {
-                    ((MainWindow)Application.Current.MainWindow).mKi = int.Parse(DisplayKi.Text);
+                    ((MainWindow)Application.Current.MainWindow).setKi(int.Parse(Ki.Text));
                 }
             }
         }

@@ -360,3 +360,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 Train Model/TrainModel/obj/Debug/net6.0-windows/TrainModel.GeneratedMSBuildEditorConfig.editorconfig
+Train Model/TrainModel/obj/Debug/net6.0-windows/TrainModel.AssemblyInfo.cs
+Train Model/TrainModel/obj/Debug/net6.0-windows/TrainModel.AssemblyInfo.cs
+Train Model/TrainModel/obj/Debug/net6.0-windows/TrainModel.AssemblyInfoInputs.cache
+Train Model/TrainModel/obj/Debug/net6.0-windows/TrainModel.csproj.AssemblyReference.cache
+Train Model/TrainModel/obj/Debug/net6.0-windows/TrainModel.GeneratedMSBuildEditorConfig.editorconfig
