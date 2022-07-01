@@ -95,5 +95,11 @@ namespace CTC
             Default_Page page = new Default_Page();
             Frame.NavigationService.Navigate(page);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Block_Data page = new Block_Data();
+            Frame.NavigationService.Navigate(page);
+        }
     }
 }
