@@ -75,6 +75,7 @@ namespace TrainController
             {
                 ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).EmergencyBrake, e);
                 EmergencyBrake.Content = "ON";
+                EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
             }
 
             else if (sender == LeftDoors)
@@ -163,6 +164,22 @@ namespace TrainController
                     ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).Announcements, e);
                     Announcements.Content = "OFF";
                     Announcements.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                }
+            }
+
+            else if (sender == ServiceBrake)
+            {
+                if (!((MainWindow)Application.Current.MainWindow).mServiceBrakeStatus)
+                {
+                    ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).ServiceBrake, e);
+                    ServiceBrake.Content = "ON";
+                    ServiceBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
+                }
+                else
+                {
+                    ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).ServiceBrake, e);
+                    ServiceBrake.Content = "OFF";
+                    ServiceBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
                 }
             }
         }

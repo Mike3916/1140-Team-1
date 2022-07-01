@@ -161,7 +161,6 @@ namespace TrainController
                     mEmergencyBrakeStatus = true;
                     EmergencyBrake.Content = "Emergency Brake\n         (ON)";
                     EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
-                    MessageBox.Show("Emergency Brake Activated");
                 }
 
                 // Hardware Controls:
@@ -490,6 +489,28 @@ namespace TrainController
                     tPan.AutoMode.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
                 }
 
+                if (mEmergencyBrakeStatus)
+                {
+                    tPan.EmergencyBrake.Content = "ON";
+                    tPan.EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
+                }
+                else
+                {
+                    tPan.EmergencyBrake.Content = "OFF";
+                    tPan.EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                }
+
+                if (mServiceBrakeStatus)
+                {
+                    tPan.ServiceBrake.Content = "ON";
+                    tPan.ServiceBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
+                }
+                else
+                {
+                    tPan.ServiceBrake.Content = "OFF";
+                    tPan.ServiceBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                }
+
                 tPan.CmdAuthority.Text = mCmdAuthority.ToString();
                 tPan.CurAuthority.Text = mCurAuthority.ToString();
 
@@ -612,7 +633,7 @@ namespace TrainController
                 Beacon.Text = "Nearest Beacon:\n" + value;
             }
 
-            // Hard Controls:
+            // Hardware Controls:
             else
             {
                 pi.WriteLine("f");
