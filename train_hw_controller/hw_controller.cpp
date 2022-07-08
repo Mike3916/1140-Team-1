@@ -11,6 +11,7 @@ class serialConnect
 {
 	public:
 		bool mEmergencyBrakeStatus=false;
+		bool mServiceBrakeStatus=false;
 		bool mAutoMode=false;
 		bool mLeftDoors=false;
 		bool mRightDoors=false;
@@ -31,6 +32,10 @@ class serialConnect
 		int mCurPower=0;
 		int fd;
 		
+		const float mMaxP=120000;
+		float mUk=0;
+		int T=250; // 250 ms
+		
 		string mCurBeacon="-";
 		
 		serialConnect()
@@ -45,6 +50,7 @@ class serialConnect
 		{
 			cout << "\n\n-------------------------------------------------------\n"
 				 << "mEmergencyBrakeStatus = " << mEmergencyBrakeStatus << "\n"
+				 << "mServiceBrakeStatus = " << mServiceBrakeStatus << "\n"
 				 << "mAutoMode = " << mAutoMode << "\n"
 				 << "mLeftDoors = " << mLeftDoors << "\n"
 				 << "mRightDoors = " << mRightDoors << "\n"
@@ -69,6 +75,7 @@ class serialConnect
 		{
 			// Vital bools:
 			mEmergencyBrakeStatus = false;
+			mServiceBrakeStatus = false;
 			mAutoMode = false;
 			
 			// Non-vital bools:
@@ -82,6 +89,7 @@ class serialConnect
 			mTemperature = 72;
 			mKp = 0;
 			mKi = 0;
+			mUk = 0;
 			
 			// Speed:
 			mCmdSpeed = 0;
@@ -105,6 +113,8 @@ class serialConnect
 			{
 				case 'e': 
 					return status==false ? "Off\n" : "On\n";
+				case 'u':
+					return status==false ? "Off\n" : "On\n";
 				case 'm':
 					return status==true ? "Auto\n" : "Manual\n";
 				case 'l':
@@ -112,11 +122,11 @@ class serialConnect
 				case 'r':
 					return status==true ? "Open\n" : "Closed\n";
 				case 'i':
-					return status==true ? "On\n" : "Closed\n";
+					return status==true ? "On\n" : "Off\n";
 				case 'x':
-					return status==true ? "On\n" : "Closed\n";
+					return status==true ? "On\n" : "Off\n";
 				case 'a':
-					return status==true ? "On\n" : "Closed\n";
+					return status==true ? "On\n" : "Off\n";
 			}
 			return "";
 		}
@@ -195,7 +205,7 @@ int main ()
 		if(input == '?')
 		{
 			comm.resetValues();
-		}	
+		}
 				
 		// Display all current values:
 		else if(input == '`')
@@ -207,6 +217,14 @@ int main ()
 		else if(input == 'e')
 		{
 			output = comm.toggleBool(comm.mEmergencyBrakeStatus,'e');
+			serialPrintf(comm.fd,output);
+			//printf(output);
+		}
+		
+		// Toggle Service Brakes:
+		else if(input == 'u')
+		{
+			output = comm.toggleBool(comm.mServiceBrakeStatus,'u');
 			serialPrintf(comm.fd,output);
 			//printf(output);
 		}
@@ -353,16 +371,9 @@ int main ()
 			comm.mCurPower = comm.getValue(comm.fd);
 		}
 		
-		// Accept Commanded Authority:
-		else if(input == 's')
-		{			
-			comm.mCmdAuthority = comm.getValue(comm.fd);
-		}
-		
-		// Accept Current Authority:
-		else if(input == 'd')
-		{			
-			comm.mCurAuthority = comm.getValue(comm.fd);
+		else
+		{
+			cout << "No Effect: '" << input << "'\n";
 		}
 	}
 }
