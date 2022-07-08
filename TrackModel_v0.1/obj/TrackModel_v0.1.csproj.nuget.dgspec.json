@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jordan\\source\\repos\\Mike3916\\1140-Team-1\\TrackModel_v0.1\\TrackModel_v0.1.csproj": {}
+    "C:\\Users\\Jordan\\source\\repos\\1140-Team-1\\TrackModel_v0.1\\TrackModel_v0.1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jordan\\source\\repos\\Mike3916\\1140-Team-1\\TrackModel_v0.1\\TrackModel_v0.1.csproj": {
+    "C:\\Users\\Jordan\\source\\repos\\1140-Team-1\\TrackModel_v0.1\\TrackModel_v0.1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jordan\\source\\repos\\Mike3916\\1140-Team-1\\TrackModel_v0.1\\TrackModel_v0.1.csproj",
+        "projectUniqueName": "C:\\Users\\Jordan\\source\\repos\\1140-Team-1\\TrackModel_v0.1\\TrackModel_v0.1.csproj",
         "projectName": "TrackModel_v0.1",
-        "projectPath": "C:\\Users\\Jordan\\source\\repos\\Mike3916\\1140-Team-1\\TrackModel_v0.1\\TrackModel_v0.1.csproj",
+        "projectPath": "C:\\Users\\Jordan\\source\\repos\\1140-Team-1\\TrackModel_v0.1\\TrackModel_v0.1.csproj",
         "packagesPath": "C:\\Users\\Jordan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jordan\\source\\repos\\Mike3916\\1140-Team-1\\TrackModel_v0.1\\obj\\",
+        "outputPath": "C:\\Users\\Jordan\\source\\repos\\1140-Team-1\\TrackModel_v0.1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

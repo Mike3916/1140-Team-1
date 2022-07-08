@@ -25,3 +25,10 @@ C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\TrackModel_v0.1\obj\Debug\netc
 C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\TrackModel_v0.1\obj\Debug\netcoreapp3.1\TrackModel_v0.1_MarkupCompile.lref
 C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\TrackModel_v0.1\obj\Debug\netcoreapp3.1\TrackModel_v0.1.dll
 C:\Users\Jordan\source\repos\Mike3916\1140-Team-1\TrackModel_v0.1\obj\Debug\netcoreapp3.1\TrackModel_v0.1.pdb
+C:\Users\Jordan\source\repos\1140-Team-1\TrackModel_v0.1\obj\Debug\netcoreapp3.1\TrackModel_v0.1.csproj.AssemblyReference.cache
+C:\Users\Jordan\source\repos\1140-Team-1\TrackModel_v0.1\obj\Debug\netcoreapp3.1\MainWindow.g.cs
+C:\Users\Jordan\source\repos\1140-Team-1\TrackModel_v0.1\obj\Debug\netcoreapp3.1\App.g.cs
+C:\Users\Jordan\source\repos\1140-Team-1\TrackModel_v0.1\obj\Debug\netcoreapp3.1\TrackModel_v0.1_MarkupCompile.cache
+C:\Users\Jordan\source\repos\1140-Team-1\TrackModel_v0.1\obj\Debug\netcoreapp3.1\TrackModel_v0.1_MarkupCompile.lref
+C:\Users\Jordan\source\repos\1140-Team-1\TrackModel_v0.1\obj\Debug\netcoreapp3.1\TrackModel_v0.1.dll
+C:\Users\Jordan\source\repos\1140-Team-1\TrackModel_v0.1\obj\Debug\netcoreapp3.1\TrackModel_v0.1.pdb

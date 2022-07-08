@@ -84,11 +84,6 @@ namespace CTC
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
 
-        private void Test_Click(object sender, RoutedEventArgs e)
-        {
-            Test_Window page = new Test_Window();
-            Frame.NavigationService.Navigate(page);
-        }
 
         private void Clear_Click(object sender, RoutedEventArgs e)
         {

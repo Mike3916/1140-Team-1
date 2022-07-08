@@ -33,7 +33,6 @@
                     <TranslateTransform/>
                 </TransformGroup>
             </TextBlock.RenderTransform></TextBlock>
-        <Button x:Name="Test" Content="Test" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,409,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="Test_Click"/>
         <Button x:Name="Clear" Content="Clear" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="68,409,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="Clear_Click"/>
         <TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="572,27,0,0" Grid.RowSpan="2" TextWrapping="Wrap" Text="Select Train:" VerticalAlignment="Top"/>
         <Button Content="See Block" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="736,146,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="Button_Click"/>
