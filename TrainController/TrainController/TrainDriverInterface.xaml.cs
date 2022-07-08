@@ -84,7 +84,7 @@ namespace TrainController
         public void setupHardware()
         {
             // Setup serial port information: 
-            pi.PortName = "COM4";
+            pi.PortName = "COM3";
             pi.BaudRate = 115200;
             pi.Parity = Parity.None;
             pi.DataBits = 8;
@@ -173,23 +173,40 @@ namespace TrainController
 
             else if (sender == ServiceBrake)
             {
-                if (!mServiceBrakeStatus)
+                if(!mControlType)
                 {
-                    mServiceBrakeStatus = true;
-                    ServiceBrake.Content = "Service Brake\n      (ON)";
-                    ServiceBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
-                }
-                else
-                {
-                    mServiceBrakeStatus = false;
-                    ServiceBrake.Content = "Service Brake\n      (OFF)";
-                    ServiceBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5A5A"));
+                    if (!mServiceBrakeStatus)
+                    {
+                        mServiceBrakeStatus = true;
+                        ServiceBrake.Content = "Service Brake\n      (ON)";
+                        ServiceBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
+                    }
+                    else
+                    {
+                        mServiceBrakeStatus = false;
+                        ServiceBrake.Content = "Service Brake\n      (OFF)";
+                        ServiceBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5A5A"));
+                    }
                 }
 
                 // Hardware  Controls:
-                if (mControlType)
+                else
                 {
-                    // Thomas stuff
+                    pi.WriteLine("u");
+                    string output = pi.ReadLine();
+
+                    if (output == "On")
+                    {
+                        mServiceBrakeStatus = true;
+                        ServiceBrake.Content = "Service Brake\n      (ON)";
+                        ServiceBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
+                    }
+                    else
+                    {
+                        mServiceBrakeStatus = false;
+                        ServiceBrake.Content = "Service Brake\n      (OFF)";
+                        ServiceBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5A5A"));
+                    }
                 }
             }
 
@@ -225,6 +242,7 @@ namespace TrainController
                     }
                 }
             }
+
             else if (sender == RightDoors)
             {
                 if (!mControlType)
@@ -290,6 +308,7 @@ namespace TrainController
                     }
                 }
             }
+
             else if (sender == ExteriorLights)
             {
                 if (!mControlType)
@@ -375,6 +394,7 @@ namespace TrainController
 
                 Temperature.Text = "Temperature: " + mTemperature.ToString() + "°F";
             }
+
             else if (sender == TempDecrease)
             {
                 if (!mControlType)
@@ -405,6 +425,7 @@ namespace TrainController
 
                 ePan.Show();
             }
+
             else if (sender == TestPanel)
             {
                 TestPanel tPan = new TestPanel();
@@ -671,12 +692,15 @@ namespace TrainController
         public void InitTimer()
         {
             DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(SpeedUpdate);
+            
+            if (!mControlType) dispatcherTimer.Tick += new EventHandler(SpeedUpdateSW);
+            else dispatcherTimer.Tick += new EventHandler(SpeedUpdateHW);
+
             dispatcherTimer.Interval = new TimeSpan(0,0,0,0,T);
             dispatcherTimer.Start();
         }
 
-        public void SpeedUpdate(object sender, EventArgs e)
+        public void SpeedUpdateSW(object sender, EventArgs e)
         {
             if (mEmergencyBrakeStatus)
             {
@@ -722,6 +746,125 @@ namespace TrainController
 
                     mCurPower = mKp * mCmdSpeed + mKi * Uk;
                     CurPower.Text = "Power: " + mCurPower/1000 + " kW";
+
+                    CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                }
+                else if (mCurSpeed > mCmdSpeed)
+                {
+                    mCurSpeed--;    // TODO: Replace with deceleration!
+
+                    if (mCurPower < Pmax)
+                    {
+                        Uk = Uk + (T / 1000) / 2 * (mCmdSpeed + mCurSpeed);
+                    }
+                    else
+                    {
+                        Uk = Uk;
+                    }
+
+                    mCurPower = -1 * (mKp * mCmdSpeed + mKi * Uk);
+                    CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
+
+                    CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                }
+                else
+                {
+                    mCurPower = 0;
+                    CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
+                }
+            }
+            else
+            {
+                if (mCurSpeed < mSetSpeed)
+                {
+                    mCurSpeed++;    // TODO: Replace with acceleration!
+
+                    if (mCurPower < Pmax)
+                    {
+                        Uk = Uk + (T / 1000) / 2 * (mSetSpeed + mCurSpeed);
+                    }
+                    else
+                    {
+                        Uk = Uk;
+                    }
+
+                    mCurPower = mKp * mSetSpeed + mKi * Uk;
+                    CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
+
+                    CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                }
+                else if (mCurSpeed > mSetSpeed)
+                {
+                    mCurSpeed--;    // TODO: Replace with deceleration!
+
+                    if (mCurPower < Pmax)
+                    {
+                        Uk = Uk + (T / 1000) / 2 * (mSetSpeed + mCurSpeed);
+                    }
+                    else
+                    {
+                        Uk = Uk;
+                    }
+
+                    mCurPower = -1 * (mKp * mSetSpeed + mKi * Uk);
+                    CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
+
+                    CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                }
+                else
+                {
+                    mCurPower = 0;
+                    CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
+                }
+            }
+        }
+
+        public void SpeedUpdateHW(object sender, EventArgs e)
+        {
+            if (mEmergencyBrakeStatus)
+            {
+                if (mCurSpeed == 0)
+                {
+                    mEmergencyBrakeStatus = false;
+                    EmergencyBrake.Content = "Emergency Brake\n         (OFF)";
+                    EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5A5A"));
+                }
+                else
+                {
+                    mCmdSpeed = 0;
+                    CmdSpeed.Text = "Cmd Speed:\n" + mCmdSpeed + " mph";
+                    mSetSpeed = 0;
+                    SetSpeedBox.Text = mSetSpeed.ToString();
+
+                    mCurSpeed -= 1; // TODO: Replace with emergency brake deceleration!
+                    CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                }
+            }
+            else if (mServiceBrakeStatus)
+            {
+                if (mCurSpeed > 0)
+                {
+                    mCurSpeed--;  // TODO: Replace with service brake deceleration!
+                    CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                }
+            }
+            else if (mAutoMode)
+            {
+                if (mCurSpeed < mCmdSpeed)
+                {
+                    mCurSpeed++;    // TODO: Replace with acceleration!
+
+                    if (mCurPower < Pmax)
+                    {
+                        Uk = Uk + (T / 1000) / 2 * (mCmdSpeed + mCurSpeed);
+                    }
+                    else
+                    {
+                        Uk = Uk;
+                    }
+
+                    mCurPower = mKp * mCmdSpeed + mKi * Uk;
+                    CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
 
                     CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
                 }
