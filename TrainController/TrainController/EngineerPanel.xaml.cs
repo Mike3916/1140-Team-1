@@ -30,11 +30,11 @@ namespace TrainController
             {
                 if (sender == Kp)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setKp(int.Parse(Kp.Text));
+                    ((MainWindow)Application.Current.MainWindow).mSelectedTrain.setKp(int.Parse(Kp.Text));
                 }
                 else if (sender == Ki)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setKi(int.Parse(Ki.Text));
+                    ((MainWindow)Application.Current.MainWindow).mSelectedTrain.setKi(int.Parse(Ki.Text));
                 }
             }
         }

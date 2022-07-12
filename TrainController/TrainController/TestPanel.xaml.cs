@@ -46,8 +46,9 @@ namespace TrainController
                 ((MainWindow)Application.Current.MainWindow).TempDecrease.IsEnabled = false;
                 ((MainWindow)Application.Current.MainWindow).SetSpeedBox.IsEnabled = false;
                 ((MainWindow)Application.Current.MainWindow).SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0x30, 0, 0, 0));
-                ((MainWindow)Application.Current.MainWindow).mAutoMode = true;
+                ((MainWindow)Application.Current.MainWindow).mSelectedTrain.setAutoMode();
             }
+
             else if (sender == ManualMode)
             {
                 ManualMode.Content = "ON";
@@ -68,7 +69,7 @@ namespace TrainController
                 ((MainWindow)Application.Current.MainWindow).TempDecrease.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).SetSpeedBox.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xDF, 0x20));
-                ((MainWindow)Application.Current.MainWindow).mAutoMode = false;
+                ((MainWindow)Application.Current.MainWindow).mSelectedTrain.setManualMode();
             }
 
             else if (sender == EmergencyBrake)
@@ -80,7 +81,7 @@ namespace TrainController
 
             else if (sender == LeftDoors)
             {
-                if (!((MainWindow)Application.Current.MainWindow).mLeftDoorsStatus)
+                if (!((MainWindow)Application.Current.MainWindow).mSelectedTrain.mLeftDoorsStatus)
                 {
                     ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).LeftDoors, e);
                     LeftDoors.Content = "OPEN";
@@ -93,9 +94,10 @@ namespace TrainController
                     LeftDoors.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
                 }
             }
+
             else if (sender == RightDoors)
             {
-                if (!((MainWindow)Application.Current.MainWindow).mRightDoorsStatus)
+                if (!((MainWindow)Application.Current.MainWindow).mSelectedTrain.mRightDoorsStatus)
                 {
                     ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).RightDoors, e);
                     RightDoors.Content = "OPEN";
@@ -111,7 +113,7 @@ namespace TrainController
 
             else if (sender == InteriorLights)
             {
-                if (!((MainWindow)Application.Current.MainWindow).mInteriorLightsStatus)
+                if (!((MainWindow)Application.Current.MainWindow).mSelectedTrain.mInteriorLightsStatus)
                 {
                     ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).InteriorLights, e);
                     InteriorLights.Content = "ON";
@@ -124,9 +126,10 @@ namespace TrainController
                     InteriorLights.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
                 }
             }
+
             else if (sender == ExteriorLights)
             {
-                if (!((MainWindow)Application.Current.MainWindow).mExteriorLightsStatus)
+                if (!((MainWindow)Application.Current.MainWindow).mSelectedTrain.mExteriorLightsStatus)
                 {
                     ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).ExteriorLights, e);
                     ExteriorLights.Content = "ON";
@@ -143,17 +146,18 @@ namespace TrainController
             else if (sender == TempIncrease)
             {
                 ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).TempIncrease, e);
-                Temperature.Text = ((MainWindow)Application.Current.MainWindow).mTemperature.ToString();
+                Temperature.Text = ((MainWindow)Application.Current.MainWindow).mSelectedTrain.mTemperature.ToString();
             }
+
             else if (sender == TempDecrease)
             {
                 ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).TempDecrease, e);
-                Temperature.Text = ((MainWindow)Application.Current.MainWindow).mTemperature.ToString();
+                Temperature.Text = ((MainWindow)Application.Current.MainWindow).mSelectedTrain.mTemperature.ToString();
             }
 
             else if (sender == Announcements)
             {
-                if (!((MainWindow)Application.Current.MainWindow).mAnnouncementsStatus)
+                if (!((MainWindow)Application.Current.MainWindow).mSelectedTrain.mAnnouncementsStatus)
                 {
                     ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).Announcements, e);
                     Announcements.Content = "ON";
@@ -169,7 +173,7 @@ namespace TrainController
 
             else if (sender == ServiceBrake)
             {
-                if (!((MainWindow)Application.Current.MainWindow).mServiceBrakeStatus)
+                if (!((MainWindow)Application.Current.MainWindow).mSelectedTrain.mServiceBrakeStatus)
                 {
                     ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).ServiceBrake, e);
                     ServiceBrake.Content = "ON";
@@ -190,45 +194,45 @@ namespace TrainController
             {
                 if (sender == SetKp)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setKp(int.Parse(SetKp.Text));
+                    ((MainWindow)Application.Current.MainWindow).mSelectedTrain.setKp(int.Parse(SetKp.Text));
                 }
                 else if (sender == SetKi)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setKi(int.Parse(SetKi.Text));
+                    ((MainWindow)Application.Current.MainWindow).mSelectedTrain.setKi(int.Parse(SetKi.Text));
                 }
                 else if (sender == CmdSpeed)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setCmdSpeed(int.Parse(CmdSpeed.Text));
-                    ((MainWindow)Application.Current.MainWindow).CmdSpeed.Text = "Cmd Speed:\n" + ((MainWindow)Application.Current.MainWindow).mCmdSpeed.ToString() + " mph";
+                    ((MainWindow)Application.Current.MainWindow).mSelectedTrain.setCmdSpeed(int.Parse(CmdSpeed.Text));
+                    ((MainWindow)Application.Current.MainWindow).CmdSpeed.Text = "Cmd Speed:\n" + ((MainWindow)Application.Current.MainWindow).mSelectedTrain.mCmdSpeed.ToString() + " mph";
                 }
                 else if (sender == SetSpeed)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setSetSpeed(int.Parse(SetSpeed.Text));
-                    SetSpeed.Text = ((MainWindow)Application.Current.MainWindow).mSetSpeed.ToString();
+                    ((MainWindow)Application.Current.MainWindow).mSelectedTrain.setSetSpeed(int.Parse(SetSpeed.Text));
+                    SetSpeed.Text = ((MainWindow)Application.Current.MainWindow).mSelectedTrain.mSetSpeed.ToString();
                 }
                 else if (sender == CurSpeed)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setCurSpeed(int.Parse(CurSpeed.Text));
-                    ((MainWindow)Application.Current.MainWindow).CurSpeed.Text = "Current Speed:\n" + ((MainWindow)Application.Current.MainWindow).mCurSpeed.ToString() + " mph";
+                    ((MainWindow)Application.Current.MainWindow).mSelectedTrain.setCurSpeed(int.Parse(CurSpeed.Text));
+                    ((MainWindow)Application.Current.MainWindow).CurSpeed.Text = "Current Speed:\n" + ((MainWindow)Application.Current.MainWindow).mSelectedTrain.mCurSpeed.ToString() + " mph";
                 }
                 else if (sender == CmdAuthority)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setCmdAuthority(int.Parse(CmdAuthority.Text));
-                    ((MainWindow)Application.Current.MainWindow).CmdAuthority.Text = "Commanded Authority:\n" + ((MainWindow)Application.Current.MainWindow).mCmdAuthority + " blocks";
+                    ((MainWindow)Application.Current.MainWindow).mSelectedTrain.setCmdAuthority(int.Parse(CmdAuthority.Text));
+                    ((MainWindow)Application.Current.MainWindow).CmdAuthority.Text = "Commanded Authority:\n" + ((MainWindow)Application.Current.MainWindow).mSelectedTrain.mCmdAuthority + " blocks";
                 }
                 else if (sender == CurAuthority)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setCurAuthority(int.Parse(CurAuthority.Text));
-                    ((MainWindow)Application.Current.MainWindow).CurAuthority.Text = "Current Authority:\n" + ((MainWindow)Application.Current.MainWindow).mCurAuthority + " blocks";
+                    ((MainWindow)Application.Current.MainWindow).mSelectedTrain.setCurAuthority(int.Parse(CurAuthority.Text));
+                    ((MainWindow)Application.Current.MainWindow).CurAuthority.Text = "Current Authority:\n" + ((MainWindow)Application.Current.MainWindow).mSelectedTrain.mCurAuthority + " blocks";
                 }
                 else if (sender == CurBeacon)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setBeacon(CurBeacon.Text);
+                    ((MainWindow)Application.Current.MainWindow).mSelectedTrain.setBeacon(CurBeacon.Text);
                 }
                 else if (sender == CurPower)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setPower(int.Parse(CurPower.Text));
-                    ((MainWindow)Application.Current.MainWindow).CurPower.Text = "Power: " + ((MainWindow)Application.Current.MainWindow).mCurPower + " kW";
+                    ((MainWindow)Application.Current.MainWindow).mSelectedTrain.setPower(int.Parse(CurPower.Text));
+                    ((MainWindow)Application.Current.MainWindow).CurPower.Text = "Power: " + ((MainWindow)Application.Current.MainWindow).mSelectedTrain.mCurPower + " kW";
                 }
             }
         }

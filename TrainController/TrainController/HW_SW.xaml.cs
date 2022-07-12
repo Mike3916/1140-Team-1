@@ -29,27 +29,29 @@ namespace TrainController
             if (sender == SoftwareController)
             {
                 // Set controller type to software, and show on main window:
-                ((MainWindow)Application.Current.MainWindow).mControlType = false;
+                ((MainWindow)Application.Current.MainWindow).mSelectedTrain.mControlType = false;
                 ((MainWindow)Application.Current.MainWindow).SelectType.Text = "Software Controller";
                 ((MainWindow)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0xDF, 0x20));
 
-                // Controller enters manual mode by default
-                ((MainWindow)Application.Current.MainWindow).ManualMode.IsEnabled = false;
+                // Controller enters automatic mode by default:
+                ((MainWindow)Application.Current.MainWindow).ManualMode.IsEnabled = true;
 
-                // Enable all manual mode buttons on main window:
-                ((MainWindow)Application.Current.MainWindow).AutoMode.IsEnabled = true;
+                // Enable all brake buttons and outer panel buttons:
                 ((MainWindow)Application.Current.MainWindow).ServiceBrake.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).EmergencyBrake.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).SetSpeedBox.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).EngineerPanel.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).TestPanel.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).TempIncrease.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).TempDecrease.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).Announcements.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).LeftDoors.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).RightDoors.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).InteriorLights.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).ExteriorLights.IsEnabled = true;
+
+                // Disable all automatic mode buttons on main window:
+                ((MainWindow)Application.Current.MainWindow).AutoMode.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).SetSpeedBox.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).TempIncrease.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).TempDecrease.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).Announcements.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).LeftDoors.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).RightDoors.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).InteriorLights.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).ExteriorLights.IsEnabled = false;
 
                 // Disable both controller type buttons and exit to main window:
                 SoftwareController.IsEnabled = false;
@@ -59,30 +61,32 @@ namespace TrainController
             else
             {
                 // Set controller type to hardware, and show on main window:
-                ((MainWindow)Application.Current.MainWindow).mControlType = true;
+                ((MainWindow)Application.Current.MainWindow).mSelectedTrain.mControlType = true;
                 ((MainWindow)Application.Current.MainWindow).SelectType.Text = "Hardware Controller";
                 ((MainWindow)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0x5F, 0xA0));
 
-                // Controller enters manual mode by default
-                ((MainWindow)Application.Current.MainWindow).ManualMode.IsEnabled = false;
+                // Controller enters automatic mode by default:
+                ((MainWindow)Application.Current.MainWindow).ManualMode.IsEnabled = true;
 
-                // Enable all manual mode buttons on main window:
-                ((MainWindow)Application.Current.MainWindow).AutoMode.IsEnabled = true;
+                // Enable all brake buttons and outer panel buttons:
                 ((MainWindow)Application.Current.MainWindow).ServiceBrake.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).EmergencyBrake.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).SetSpeedBox.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).EngineerPanel.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).TestPanel.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).TempIncrease.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).TempDecrease.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).Announcements.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).LeftDoors.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).RightDoors.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).InteriorLights.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).ExteriorLights.IsEnabled = true;
+
+                // Disable all automatic mode buttons on main window:
+                ((MainWindow)Application.Current.MainWindow).AutoMode.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).SetSpeedBox.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).TempIncrease.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).TempDecrease.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).Announcements.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).LeftDoors.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).RightDoors.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).InteriorLights.IsEnabled = false;
+                ((MainWindow)Application.Current.MainWindow).ExteriorLights.IsEnabled = false;
 
                 // Setup hardware controller port information:
-                ((MainWindow)Application.Current.MainWindow).setupHardware();
+                ((MainWindow)Application.Current.MainWindow).mSelectedTrain.setupHardware();
 
                 // Disable both controller type buttons and exit to main window:
                 SoftwareController.IsEnabled = false;
