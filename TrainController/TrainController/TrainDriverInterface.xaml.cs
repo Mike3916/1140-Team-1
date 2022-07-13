@@ -54,6 +54,8 @@ namespace TrainController
             selectType.Topmost = true;
             selectType.Show();
             selectType.Activate();
+
+            InitTimer();
         }
 
         public void Button_Click(object sender, RoutedEventArgs e)

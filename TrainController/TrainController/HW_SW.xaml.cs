@@ -35,6 +35,7 @@ namespace TrainController
 
                 // Controller enters automatic mode by default:
                 ((MainWindow)Application.Current.MainWindow).ManualMode.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).mSelectedTrain.mAutoMode = true;
 
                 // Enable all brake buttons and outer panel buttons:
                 ((MainWindow)Application.Current.MainWindow).ServiceBrake.IsEnabled = true;
@@ -67,6 +68,7 @@ namespace TrainController
 
                 // Controller enters automatic mode by default:
                 ((MainWindow)Application.Current.MainWindow).ManualMode.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).mSelectedTrain.mAutoMode = true;
 
                 // Enable all brake buttons and outer panel buttons:
                 ((MainWindow)Application.Current.MainWindow).ServiceBrake.IsEnabled = true;
