@@ -361,6 +361,10 @@ namespace TrainController
                 {
                     MessageBox.Show("Set Speed Shall Not Exceed Commanded Speed");
                 }
+                else if (value < 0)
+                {
+                    MessageBox.Show("Set Speed Shall Not Be Less Than Zero");
+                }
                 else
                 {
                     mSetSpeed = value;
@@ -375,6 +379,10 @@ namespace TrainController
                 if (output == "tooHigh")
                 {
                     MessageBox.Show("Set Speed Shall Not Exceed Commanded Speed");
+                }
+                else if (value < 0)
+                {
+                    MessageBox.Show("Set Speed Shall Not Be Less Than Zero");
                 }
                 else
                 {
