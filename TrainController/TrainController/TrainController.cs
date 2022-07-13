@@ -40,6 +40,7 @@ namespace TrainController
 
         public const float Pmax = 120000; // 120 kW
         public float Uk = 0;
+        public float Ek = 0,Ek_prev = 0;
         public int T = 250; // 250 ms
 
         public Controller()
@@ -464,23 +465,29 @@ namespace TrainController
 
         public void SpeedUpdateSW(object sender, EventArgs e)
         {
+            if (mAutoMode)
+            {
+                Ek_prev = Ek;
+                Ek = mCmdSpeed - mCurSpeed;
+            }
+            else
+            {
+                Ek_prev = Ek;
+                Ek = mSetSpeed - mCurSpeed;
+            }
+
             if (mEmergencyBrakeStatus)
             {
                 if (mCurSpeed == 0)
                 {
                     mEmergencyBrakeStatus = false;
-                    //EmergencyBrake.Content = "Emergency Brake\n         (OFF)";
-                    //EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5A5A"));
                 }
                 else
                 {
                     mCmdSpeed = 0;
-                    //CmdSpeed.Text = "Cmd Speed:\n" + mCmdSpeed + " mph";
                     mSetSpeed = 0;
-                    //SetSpeedBox.Text = mSetSpeed.ToString();
 
                     mCurSpeed -= 1; // TODO: Replace with emergency brake deceleration!
-                    //CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
                 }
             }
             else if (mServiceBrakeStatus)
@@ -488,7 +495,6 @@ namespace TrainController
                 if (mCurSpeed > 0)
                 {
                     mCurSpeed--;  // TODO: Replace with service brake deceleration!
-                    //CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
                 }
             }
             else if (mAutoMode)
@@ -499,17 +505,14 @@ namespace TrainController
 
                     if (mCurPower < Pmax)
                     {
-                        Uk = Uk + (T / 1000) / 2 * (mCmdSpeed + mCurSpeed);
+                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
                     }
                     else
                     {
                         Uk = Uk;
                     }
 
-                    mCurPower = mKp * mCmdSpeed + mKi * Uk;
-                    //CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
-
-                    //CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                    mCurPower = (mKp * Ek) + (mKi * Uk);
                 }
                 else if (mCurSpeed > mCmdSpeed)
                 {
@@ -517,22 +520,18 @@ namespace TrainController
 
                     if (mCurPower < Pmax)
                     {
-                        Uk = Uk + (T / 1000) / 2 * (mCmdSpeed + mCurSpeed);
+                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
                     }
                     else
                     {
                         Uk = Uk;
                     }
 
-                    mCurPower = -1 * (mKp * mCmdSpeed + mKi * Uk);
-                    //CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
-
-                    //CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                    mCurPower = (mKp * Ek) + (mKi * Uk);
                 }
                 else
                 {
                     mCurPower = 0;
-                    //CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
                 }
             }
             else
@@ -543,17 +542,14 @@ namespace TrainController
 
                     if (mCurPower < Pmax)
                     {
-                        Uk = Uk + (T / 1000) / 2 * (mSetSpeed + mCurSpeed);
+                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
                     }
                     else
                     {
                         Uk = Uk;
                     }
 
-                    mCurPower = mKp * mSetSpeed + mKi * Uk;
-                    //CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
-
-                    //CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                    mCurPower = (mKp * Ek) + (mKi * Uk);
                 }
                 else if (mCurSpeed > mSetSpeed)
                 {
@@ -561,45 +557,48 @@ namespace TrainController
 
                     if (mCurPower < Pmax)
                     {
-                        Uk = Uk + (T / 1000) / 2 * (mSetSpeed + mCurSpeed);
+                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
                     }
                     else
                     {
                         Uk = Uk;
                     }
 
-                    mCurPower = -1 * (mKp * mSetSpeed + mKi * Uk);
-                    //CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
-
-                    //CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                    mCurPower = (mKp * Ek) + (mKi * Uk);
                 }
                 else
                 {
                     mCurPower = 0;
-                    //CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
                 }
             }
         }
 
         public void SpeedUpdateHW(object sender, EventArgs e)
         {
+            if(mAutoMode)
+            {
+                Ek_prev = Ek;
+                Ek = mCmdSpeed - mCurSpeed;
+            }
+            else
+            {
+                Ek_prev = Ek;
+                Ek = mSetSpeed - mCurSpeed;
+            }
+            
+
             if (mEmergencyBrakeStatus)
             {
                 if (mCurSpeed == 0)
                 {
                     mEmergencyBrakeStatus = false;
-                    //EmergencyBrake.Content = "Emergency Brake\n         (OFF)";
-                    //EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5A5A"));
                 }
                 else
                 {
                     mCmdSpeed = 0;
-                    //CmdSpeed.Text = "Cmd Speed:\n" + mCmdSpeed + " mph";
                     mSetSpeed = 0;
-                    //SetSpeedBox.Text = mSetSpeed.ToString();
 
                     mCurSpeed -= 1; // TODO: Replace with emergency brake deceleration!
-                    //CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
                 }
             }
             else if (mServiceBrakeStatus)
@@ -607,7 +606,6 @@ namespace TrainController
                 if (mCurSpeed > 0)
                 {
                     mCurSpeed--;  // TODO: Replace with service brake deceleration!
-                    //CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
                 }
             }
             else if (mAutoMode)
@@ -618,17 +616,14 @@ namespace TrainController
 
                     if (mCurPower < Pmax)
                     {
-                        Uk = Uk + (T / 1000) / 2 * (mCmdSpeed + mCurSpeed);
+                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
                     }
                     else
                     {
                         Uk = Uk;
                     }
 
-                    mCurPower = mKp * mCmdSpeed + mKi * Uk;
-                    //CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
-
-                    //CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                    mCurPower = (mKp * Ek) + (mKi * Uk);
                 }
                 else if (mCurSpeed > mCmdSpeed)
                 {
@@ -636,22 +631,18 @@ namespace TrainController
 
                     if (mCurPower < Pmax)
                     {
-                        Uk = Uk + (T / 1000) / 2 * (mCmdSpeed + mCurSpeed);
+                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
                     }
                     else
                     {
                         Uk = Uk;
                     }
 
-                    mCurPower = -1 * (mKp * mCmdSpeed + mKi * Uk);
-                    //CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
-
-                    //CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                    mCurPower = (mKp * Ek) + (mKi * Uk);
                 }
                 else
                 {
                     mCurPower = 0;
-                    //CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
                 }
             }
             else
@@ -662,17 +653,14 @@ namespace TrainController
 
                     if (mCurPower < Pmax)
                     {
-                        Uk = Uk + (T / 1000) / 2 * (mSetSpeed + mCurSpeed);
+                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
                     }
                     else
                     {
                         Uk = Uk;
                     }
 
-                    mCurPower = mKp * mSetSpeed + mKi * Uk;
-                    //CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
-
-                    //CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                    mCurPower = (mKp * Ek) + (mKi * Uk);
                 }
                 else if (mCurSpeed > mSetSpeed)
                 {
@@ -680,22 +668,18 @@ namespace TrainController
 
                     if (mCurPower < Pmax)
                     {
-                        Uk = Uk + (T / 1000) / 2 * (mSetSpeed + mCurSpeed);
+                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
                     }
                     else
                     {
                         Uk = Uk;
                     }
 
-                    mCurPower = -1 * (mKp * mSetSpeed + mKi * Uk);
-                    //CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
-
-                    //CurSpeed.Text = "Current Speed:\n" + mCurSpeed + " mph";
+                    mCurPower = (mKp * Ek) + (mKi * Uk);
                 }
                 else
                 {
                     mCurPower = 0;
-                    //CurPower.Text = "Power: " + mCurPower / 1000 + " kW";
                 }
             }
         }

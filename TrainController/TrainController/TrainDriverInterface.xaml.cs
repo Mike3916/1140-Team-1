@@ -22,7 +22,8 @@ namespace TrainController
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<Controller> mTrainSet;
+        //public List<Controller> mTrainSet;
+        public Controller[] mTrainSet = new Controller[20];
         public Controller mSelectedTrain;
 
         public int T = 250; // 250 ms
@@ -32,7 +33,7 @@ namespace TrainController
             InitializeComponent();
 
             mSelectedTrain = new Controller();
-            //mTrainSet[0] = mSelectedTrain;
+            mTrainSet[0] = mSelectedTrain;
 
             // Disable all buttons on main window until a HW_SW window option is selected:
             ManualMode.IsEnabled = false;
