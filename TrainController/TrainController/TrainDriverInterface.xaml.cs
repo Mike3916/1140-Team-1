@@ -23,7 +23,7 @@ namespace TrainController
     public partial class MainWindow : Window
     {
         //public List<Controller> mTrainSet;
-        public Controller[] mTrainSet = new Controller[20];
+        public Controller[] mTrainSet = new Controller[30];
         public Controller mSelectedTrain;
 
         public int T = 250; // 250 ms
