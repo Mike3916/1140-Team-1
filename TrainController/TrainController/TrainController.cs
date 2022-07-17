@@ -741,7 +741,7 @@ namespace TrainController
                 // Update current speed in Pi storage:
                 pi.WriteLine("n");
                 pi.WriteLine(mCurSpeed.ToString() + "\n");
-                pi.ReadLine();
+                pi.ReadLine(); //*/
 
                 // Calculate current speed from Pi storage:
                 pi.WriteLine("o");
