@@ -44,7 +44,7 @@ namespace TrainController
         public int mCmdAuthority = 0;
         public int mCurAuthority = 0;
         public string mBeacon = "-";
-        public float mCurPower = 0;
+        public double mCurPower = 0;
 
         public const float Pmax = 120000; // 120 kW
         public float Uk = 0;
@@ -368,6 +368,7 @@ namespace TrainController
             {
                 pi.WriteLine("c");
                 string output = pi.ReadLine();
+                MessageBox.Show(output);
 
                 if (output == "tempDecreased")
                 {
@@ -388,6 +389,7 @@ namespace TrainController
             {
                 pi.WriteLine("j");
                 pi.WriteLine(mKp.ToString() + "\n");
+                pi.ReadLine();
             }
 
             dispatcherTimer.Start();
@@ -403,6 +405,7 @@ namespace TrainController
             {
                 pi.WriteLine("k");
                 pi.WriteLine(mKi.ToString() + "\n");
+                pi.ReadLine();
             }
 
             dispatcherTimer.Start();
@@ -418,6 +421,7 @@ namespace TrainController
             {
                 pi.WriteLine("v");
                 pi.WriteLine(mCmdSpeed.ToString() + "\n");
+                pi.ReadLine();
             }
 
             dispatcherTimer.Start();
@@ -477,6 +481,7 @@ namespace TrainController
             {
                 pi.WriteLine("n");
                 pi.WriteLine(mCurSpeed.ToString() + "\n");
+                pi.ReadLine();
             }
 
             dispatcherTimer.Start();
@@ -492,6 +497,7 @@ namespace TrainController
             {
                 pi.WriteLine("s");
                 pi.WriteLine(mCmdAuthority.ToString() + "\n");
+                pi.ReadLine();
             }
 
             dispatcherTimer.Start();
@@ -507,6 +513,7 @@ namespace TrainController
             {
                 pi.WriteLine("d");
                 pi.WriteLine(mCurAuthority.ToString() + "\n");
+                pi.ReadLine();
             }
 
             dispatcherTimer.Start();
@@ -726,14 +733,42 @@ namespace TrainController
 
         public void CalculatePowerHW(object sender, EventArgs e)
         {
-            // Update current speed in Pi storage:
-            pi.WriteLine("n");
-            pi.WriteLine(mCurSpeed.ToString() + "\n");
-            pi.ReadLine();
+            string output;
+            double[] powerOutput = new double[3];
 
-            // Calculate current speed from Pi storage:
-            pi.WriteLine("o");
-            pi.ReadLine();
+            for (int i = 0; i < 3; i++)
+            {
+                // Update current speed in Pi storage:
+                pi.WriteLine("n");
+                pi.WriteLine(mCurSpeed.ToString() + "\n");
+                pi.ReadLine();
+
+                // Calculate current speed from Pi storage:
+                pi.WriteLine("o");
+                output = pi.ReadLine();
+
+                powerOutput[i] = Double.Parse(output);
+            }
+
+            // Any pair of outputs are equal (Modal calc):
+            if (powerOutput[0] == powerOutput[1])
+                mCurPower = powerOutput[0];
+
+            else if (powerOutput[0] == powerOutput[2])
+                mCurPower = powerOutput[0];
+
+            else if (powerOutput[1] == powerOutput[2])
+                mCurPower = powerOutput[1];
+
+            // No outputs match, choose smallest:
+            else if (powerOutput[0] <= powerOutput[1] && powerOutput[0] <= powerOutput[2])
+                mCurPower = powerOutput[0];
+
+            else if (powerOutput[1] <= powerOutput[0] && powerOutput[1] <= powerOutput[2])
+                mCurPower = powerOutput[1];
+
+            else
+                mCurPower = powerOutput[2];
         }
     }
 }
