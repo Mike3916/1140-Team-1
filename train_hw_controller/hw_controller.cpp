@@ -191,7 +191,7 @@ class serialConnect
 			return str+"\n";
 		}
 		
-		void calculatePower()
+		const char* calculatePower()
 		{
 			if(mAutoMode)
             {
@@ -262,6 +262,10 @@ class serialConnect
                     mCurPower = 0;
                 }
             }
+            
+            string power = to_string(mCurPower) + "\n";
+
+            return power.c_str();
 		}
 };
 
@@ -455,9 +459,9 @@ int main ()
 		// Calculate Power:
 		else if(input == 'o')
 		{
-			comm.calculatePower();
-			serialPrintf(comm.fd,"powerUpdated\n");
-			//printf("powerUpdated\n");
+			output = comm.calculatePower();
+			serialPrintf(comm.fd,output);
+			//printf(output);
 		}
 	}
 }
