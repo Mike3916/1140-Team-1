@@ -12,7 +12,7 @@ class serialConnect
 	public:
 		bool mEmergencyBrakeStatus=false;
 		bool mServiceBrakeStatus=false;
-		bool mAutoMode=false;
+		bool mAutoMode=true;
 		bool mLeftDoors=false;
 		bool mRightDoors=false;
 		bool mInteriorLights=false;
@@ -32,8 +32,10 @@ class serialConnect
 		int mCurPower=0;
 		int fd;
 		
-		const float mMaxP=120000;
-		float mUk=0;
+		const float Pmax=120000;
+		float Uk=0;
+		float Ek=0;
+		float Ek_prev=0;
 		int T=250; // 250 ms
 		
 		string mCurBeacon="-";
@@ -76,7 +78,7 @@ class serialConnect
 			// Vital bools:
 			mEmergencyBrakeStatus = false;
 			mServiceBrakeStatus = false;
-			mAutoMode = false;
+			mAutoMode = true;
 			
 			// Non-vital bools:
 			mLeftDoors = false;
@@ -85,11 +87,13 @@ class serialConnect
 			mExteriorLights = false;
 			mAnnouncementsStatus = false;
 			
-			// Misc Ints:
+			// Misc Value:
 			mTemperature = 72;
 			mKp = 0;
 			mKi = 0;
-			mUk = 0;
+			Uk = 0;
+			Ek = 0;
+			Ek_prev = 0;
 			
 			// Speed:
 			mCmdSpeed = 0;
@@ -185,6 +189,79 @@ class serialConnect
 			cout << "\n string: " << str;*/
 				
 			return str+"\n";
+		}
+		
+		void calculatePower()
+		{
+			if(mAutoMode)
+            {
+                Ek_prev = Ek;
+                Ek = mCmdSpeed - mCurSpeed;
+            }
+            else
+            {
+                Ek_prev = Ek;
+                Ek = mSetSpeed - mCurSpeed;
+            }
+            
+            if (mAutoMode)
+            {
+                if (mCurSpeed < mCmdSpeed)
+                {
+                    if (mCurPower < Pmax)
+                    {
+                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                    }
+
+                    mCurPower = (mKp * Ek) + (mKi * Uk);
+                }
+                else if (mCurSpeed > mCmdSpeed)
+                {
+                    if (mCurPower < Pmax)
+                    {
+                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                    }
+
+                    mCurPower = (mKp * Ek) + (mKi * Uk);
+                }
+                else
+                {
+                    mCurPower = 0;
+                }
+            }
+            else
+            {
+                if (mCurSpeed < mSetSpeed)
+                {
+                    if (mCurPower < Pmax)
+                    {
+                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                    }
+                    else
+                    {
+                        Uk = Uk;
+                    }
+
+                    mCurPower = (mKp * Ek) + (mKi * Uk);
+                }
+                else if (mCurSpeed > mSetSpeed)
+                {
+                    if (mCurPower < Pmax)
+                    {
+                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                    }
+                    else
+                    {
+                        Uk = Uk;
+                    }
+
+                    mCurPower = (mKp * Ek) + (mKi * Uk);
+                }
+                else
+                {
+                    mCurPower = 0;
+                }
+            }
 		}
 };
 
@@ -298,6 +375,7 @@ int main ()
 		{
 			comm.mKp = comm.getValue(comm.fd);
 			serialPrintf(comm.fd,"valueReceived\n");
+			//printf("valueReceived\n");
 		}
 		
 		// Accept Ki:
@@ -305,6 +383,7 @@ int main ()
 		{			
 			comm.mKi = comm.getValue(comm.fd);
 			serialPrintf(comm.fd,"valueReceived\n");
+			//printf("valueReceived\n");
 		}
 		
 		// Accept Commanded Speed:
@@ -312,6 +391,7 @@ int main ()
 		{			
 			comm.mCmdSpeed = comm.getValue(comm.fd);
 			serialPrintf(comm.fd,"valueReceived\n");
+			//printf("valueReceived\n");
 		}
 		
 		// Accept Set Speed:
@@ -322,11 +402,13 @@ int main ()
 			if(compare>comm.mCmdSpeed)
 			{
 				serialPrintf(comm.fd,"tooHigh\n");
+				//printf("tooHigh\n");
 			}
 			else
 			{
 				comm.mSetSpeed = compare;
 				serialPrintf(comm.fd,"good\n");
+				//printf("good\n");
 			}
 		}
 		
@@ -335,6 +417,7 @@ int main ()
 		{			
 			comm.mCurSpeed = comm.getValue(comm.fd);
 			serialPrintf(comm.fd,"valueReceived\n");
+			//printf("valueReceived\n");
 		}
 		
 		// Accept Set Power:
@@ -342,6 +425,7 @@ int main ()
 		{			
 			comm.mCurPower = comm.getValue(comm.fd);
 			serialPrintf(comm.fd,"valueReceived\n");
+			//printf("valueReceived\n");
 		}
 		
 		// Accept Commanded Authority:
@@ -349,6 +433,7 @@ int main ()
 		{			
 			comm.mCmdAuthority = comm.getValue(comm.fd);
 			serialPrintf(comm.fd,"valueReceived\n");
+			//printf("valueReceived\n");
 		}
 		
 		// Accept Current Authority:
@@ -356,6 +441,7 @@ int main ()
 		{			
 			comm.mCurAuthority = comm.getValue(comm.fd);
 			serialPrintf(comm.fd,"valueReceived\n");
+			//printf("valueReceived\n");
 		}
 		
 		// Accept Current Beacon:
@@ -363,17 +449,15 @@ int main ()
 		{
 			comm.mCurBeacon = comm.getString(comm.fd);
 			serialPrintf(comm.fd,comm.mCurBeacon.c_str());
+			//printf("comm.mCurBeacon\n");
 		}
 		
-		// Accept Set Power:
-		else if(input == 'p')
-		{			
-			comm.mCurPower = comm.getValue(comm.fd);
-		}
-		
-		else
+		// Calculate Power:
+		else if(input == 'o')
 		{
-			cout << "No Effect: '" << input << "'\n";
+			comm.calculatePower();
+			serialPrintf(comm.fd,"powerUpdated\n");
+			//printf("powerUpdated\n");
 		}
 	}
 }
