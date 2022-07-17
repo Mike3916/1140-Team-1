@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -14,9 +15,16 @@ namespace TrainController
         // Serial port for connecting to Raspberry Pi:
         SerialPort pi = new SerialPort();
 
+        // Dispatcher timers for power calculation and speed updating:
+        DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        DispatcherTimer updateSpeed = new DispatcherTimer();
+
         // Boolean for switching between auto and manual driving modes:
         // 'false' is software controller, 'true' is hardware controller:
         public bool mControlType;
+
+        // Boolean for controlling hardware functionality:
+        public bool mSerialAccepted = true;
 
         public bool mAutoMode = false;
         public bool mLeftDoorsStatus = false;
@@ -40,12 +48,13 @@ namespace TrainController
 
         public const float Pmax = 120000; // 120 kW
         public float Uk = 0;
-        public float Ek = 0,Ek_prev = 0;
+        public float Ek = 0;
+        public float Ek_prev = 0;
         public int T = 250; // 250 ms
 
         public Controller()
         {
-            InitTimer();
+
         }
 
         public void setupHardware()
@@ -66,6 +75,7 @@ namespace TrainController
 
         public void setAutoMode()
         {
+            dispatcherTimer.Stop();
             mSetSpeed = mCmdSpeed;
             mAutoMode = true;
 
@@ -75,10 +85,13 @@ namespace TrainController
                 pi.WriteLine("m");
                 string output = pi.ReadLine();
             }
+
+            dispatcherTimer.Start();
         }
 
         public void setManualMode()
         {
+            dispatcherTimer.Stop();
             mAutoMode = false;
 
             // Hardware Controls:
@@ -87,10 +100,14 @@ namespace TrainController
                 pi.WriteLine("m");
                 string output = pi.ReadLine();
             }
+
+            dispatcherTimer.Start();
         }
 
         public void setEmergencyBrake()
         {
+            dispatcherTimer.Stop();
+
             mEmergencyBrakeStatus = true;
 
             // Hardware Controls:
@@ -99,10 +116,14 @@ namespace TrainController
                 pi.WriteLine("e");
                 string output = pi.ReadLine();
             }
+
+            dispatcherTimer.Start();
         }
 
         public void setServiceBrake()
         {
+            dispatcherTimer.Stop();
+
             if (!mControlType)
             {
                 if (!mServiceBrakeStatus)
@@ -130,10 +151,14 @@ namespace TrainController
                     mServiceBrakeStatus = false;
                 }
             }
+
+            dispatcherTimer.Start();
         }
 
         public void setLeftDoors()
         {
+            dispatcherTimer.Stop();
+
             if (!mControlType)
             {
                 if (!mLeftDoorsStatus)
@@ -161,10 +186,14 @@ namespace TrainController
                     mLeftDoorsStatus = false;
                 }
             }
+
+            dispatcherTimer.Start();
         }
 
         public void setRightDoors()
         {
+            dispatcherTimer.Stop();
+
             if (!mControlType)
             {
                 if (!mRightDoorsStatus)
@@ -192,10 +221,14 @@ namespace TrainController
                     mRightDoorsStatus = false;
                 }
             }
+
+            dispatcherTimer.Start();
         }
 
         public void setInteriorLights()
         {
+            dispatcherTimer.Stop();
+
             if (!mControlType)
             {
                 if (!mInteriorLightsStatus)
@@ -207,6 +240,8 @@ namespace TrainController
                     mInteriorLightsStatus = false;
                 }
             }
+
+            // Hardware controls:
             else
             {
                 pi.WriteLine("i");
@@ -221,10 +256,14 @@ namespace TrainController
                     mInteriorLightsStatus = false;
                 }
             }
+
+            dispatcherTimer.Start();
         }
 
         public void setExteriorLights()
         {
+            dispatcherTimer.Stop();
+
             if (!mControlType)
             {
                 if (!mExteriorLightsStatus)
@@ -236,6 +275,8 @@ namespace TrainController
                     mExteriorLightsStatus = false;
                 }
             }
+
+            // Hardware controls:
             else
             {
                 pi.WriteLine("x");
@@ -250,10 +291,14 @@ namespace TrainController
                     mExteriorLightsStatus = false;
                 }
             }
+
+            dispatcherTimer.Start();
         }
 
         public void setAnnouncements()
         {
+            dispatcherTimer.Stop();
+
             if (!mControlType)
             {
                 if (!mAnnouncementsStatus)
@@ -265,6 +310,8 @@ namespace TrainController
                     mAnnouncementsStatus = false;
                 }
             }
+
+            // Hardware controls:
             else
             {
                 pi.WriteLine("a");
@@ -279,14 +326,20 @@ namespace TrainController
                     mAnnouncementsStatus = false;
                 }
             }
+
+            dispatcherTimer.Start();
         }
 
         public void tempIncrease()
         {
+            dispatcherTimer.Stop();
+
             if (!mControlType)
             {
                 mTemperature++;
             }
+
+            // Hardware controls:
             else
             {
                 pi.WriteLine("h");
@@ -297,14 +350,20 @@ namespace TrainController
                     mTemperature++;
                 }
             }
+
+            dispatcherTimer.Start();
         }
 
         public void tempDecrease()
         {
+            dispatcherTimer.Stop();
+
             if (!mControlType)
             {
                 mTemperature--;
             }
+
+            //Hardware controls:
             else
             {
                 pi.WriteLine("c");
@@ -315,10 +374,13 @@ namespace TrainController
                     mTemperature--;
                 }
             }
+
+            dispatcherTimer.Start();
         }
 
         public void setKp(int value)
         {
+            dispatcherTimer.Stop();
             mKp = value;
 
             // Hardware Controls:
@@ -327,10 +389,13 @@ namespace TrainController
                 pi.WriteLine("j");
                 pi.WriteLine(mKp.ToString() + "\n");
             }
+
+            dispatcherTimer.Start();
         }
 
         public void setKi(int value)
         {
+            dispatcherTimer.Stop();
             mKi = value;
 
             // Hardware Controls:
@@ -339,10 +404,13 @@ namespace TrainController
                 pi.WriteLine("k");
                 pi.WriteLine(mKi.ToString() + "\n");
             }
+
+            dispatcherTimer.Start();
         }
 
         public void setCmdSpeed(int value)
         {
+            dispatcherTimer.Stop();
             mCmdSpeed = value;
 
             // Hardware Controls:
@@ -351,10 +419,14 @@ namespace TrainController
                 pi.WriteLine("v");
                 pi.WriteLine(mCmdSpeed.ToString() + "\n");
             }
+
+            dispatcherTimer.Start();
         }
 
         public void setSetSpeed(int value)
         {
+            dispatcherTimer.Stop();
+
             if (!mControlType)
             {
                 if (value > mCmdSpeed)
@@ -370,6 +442,8 @@ namespace TrainController
                     mSetSpeed = value;
                 }
             }
+
+            // Hardware controls:
             else
             {
                 pi.WriteLine("b");
@@ -389,10 +463,13 @@ namespace TrainController
                     mSetSpeed = value;
                 }
             }
+
+            dispatcherTimer.Start();
         }
 
         public void setCurSpeed(int value)
         {
+            dispatcherTimer.Stop();
             mCurSpeed = value;
 
             // Hardware Controls:
@@ -401,10 +478,13 @@ namespace TrainController
                 pi.WriteLine("n");
                 pi.WriteLine(mCurSpeed.ToString() + "\n");
             }
+
+            dispatcherTimer.Start();
         }
 
         public void setCmdAuthority(int value)
         {
+            dispatcherTimer.Stop();
             mCmdAuthority = value;
 
             // Hardware Controls:
@@ -413,10 +493,13 @@ namespace TrainController
                 pi.WriteLine("s");
                 pi.WriteLine(mCmdAuthority.ToString() + "\n");
             }
+
+            dispatcherTimer.Start();
         }
 
         public void setCurAuthority(int value)
         {
+            dispatcherTimer.Stop();
             mCurAuthority = value;
 
             // Hardware Controls:
@@ -425,15 +508,18 @@ namespace TrainController
                 pi.WriteLine("d");
                 pi.WriteLine(mCurAuthority.ToString() + "\n");
             }
+
+            dispatcherTimer.Start();
         }
 
         public void setBeacon(string value)
         {
+            dispatcherTimer.Stop();
+
             // Software Controls:
             if (!mControlType)
             {
                 mBeacon = value;
-                //Beacon.Text = "Nearest Beacon:\n" + value;
             }
 
             // Hardware Controls:
@@ -444,13 +530,17 @@ namespace TrainController
                 string output = pi.ReadLine();
 
                 mBeacon = output;
-                //Beacon.Text = "Nearest Beacon:\n" + output;
             }
+
+            dispatcherTimer.Start();
         }
 
         public void setPower(int value)
         {
+            dispatcherTimer.Stop();
             mCurPower = value;
+
+            mSerialAccepted = false;
 
             if (mControlType)
             {
@@ -458,21 +548,74 @@ namespace TrainController
                 pi.WriteLine(value + "\n");
                 string output = pi.ReadLine();
             }
+
+            dispatcherTimer.Start();
         }
 
         public void InitTimer()
         {
-            DispatcherTimer dispatcherTimer = new DispatcherTimer();
-
-            if (!mControlType) dispatcherTimer.Tick += new EventHandler(SpeedUpdateSW);
-            else dispatcherTimer.Tick += new EventHandler(SpeedUpdateHW);
+            if (!mControlType) dispatcherTimer.Tick += new EventHandler(CalculatePowerSW);
+            else dispatcherTimer.Tick += new EventHandler(CalculatePowerHW);
 
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, T);
             dispatcherTimer.Start();
+
+            updateSpeed.Tick += new EventHandler(UpdateSpeed);
+
+            updateSpeed.Interval = new TimeSpan(0, 0, 0, 0, T);
+            updateSpeed.Start();
         }
 
-        public void SpeedUpdateSW(object sender, EventArgs e)
+        public void UpdateSpeed(object sender, EventArgs e)
         {
+            if (mEmergencyBrakeStatus)
+            {
+                if (mCurSpeed == 0)
+                {
+                    mEmergencyBrakeStatus = false;
+                }
+                else
+                {
+                    mCmdSpeed = 0;
+                    mSetSpeed = 0;
+
+                    mCurSpeed -= 1;
+                }
+            }
+            else if (mServiceBrakeStatus)
+            {
+                if (mCurSpeed > 0)
+                {
+                    mCurSpeed--;
+                }
+            }
+            else if (mAutoMode)
+            {
+                if (mCurSpeed < mCmdSpeed)
+                {
+                    mCurSpeed++;
+                }
+                else if (mCurSpeed > mCmdSpeed)
+                {
+                    mCurSpeed--;
+                }
+            }
+            else
+            {
+                if (mCurSpeed < mSetSpeed)
+                {
+                    mCurSpeed++;
+                }
+                else if (mCurSpeed > mSetSpeed)
+                {
+                    mCurSpeed--;
+                }
+            }
+        }
+
+        public void CalculatePowerSW(object sender, EventArgs e)
+        {
+            MessageBox.Show("Hello!");
             if (mAutoMode)
             {
                 Ek_prev = Ek;
@@ -581,115 +724,16 @@ namespace TrainController
             }
         }
 
-        public void SpeedUpdateHW(object sender, EventArgs e)
+        public void CalculatePowerHW(object sender, EventArgs e)
         {
-            if(mAutoMode)
-            {
-                Ek_prev = Ek;
-                Ek = mCmdSpeed - mCurSpeed;
-            }
-            else
-            {
-                Ek_prev = Ek;
-                Ek = mSetSpeed - mCurSpeed;
-            }
-            
+            // Update current speed in Pi storage:
+            pi.WriteLine("n");
+            pi.WriteLine(mCurSpeed.ToString() + "\n");
+            pi.ReadLine();
 
-            if (mEmergencyBrakeStatus)
-            {
-                if (mCurSpeed == 0)
-                {
-                    mEmergencyBrakeStatus = false;
-                }
-                else
-                {
-                    mCmdSpeed = 0;
-                    mSetSpeed = 0;
-
-                    mCurSpeed -= 1; // TODO: Replace with emergency brake deceleration!
-                }
-            }
-            else if (mServiceBrakeStatus)
-            {
-                if (mCurSpeed > 0)
-                {
-                    mCurSpeed--;  // TODO: Replace with service brake deceleration!
-                }
-            }
-            else if (mAutoMode)
-            {
-                if (mCurSpeed < mCmdSpeed)
-                {
-                    mCurSpeed++;    // TODO: Replace with acceleration!
-
-                    if (mCurPower < Pmax)
-                    {
-                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
-                    }
-                    else
-                    {
-                        Uk = Uk;
-                    }
-
-                    mCurPower = (mKp * Ek) + (mKi * Uk);
-                }
-                else if (mCurSpeed > mCmdSpeed)
-                {
-                    mCurSpeed--;    // TODO: Replace with deceleration!
-
-                    if (mCurPower < Pmax)
-                    {
-                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
-                    }
-                    else
-                    {
-                        Uk = Uk;
-                    }
-
-                    mCurPower = (mKp * Ek) + (mKi * Uk);
-                }
-                else
-                {
-                    mCurPower = 0;
-                }
-            }
-            else
-            {
-                if (mCurSpeed < mSetSpeed)
-                {
-                    mCurSpeed++;    // TODO: Replace with acceleration!
-
-                    if (mCurPower < Pmax)
-                    {
-                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
-                    }
-                    else
-                    {
-                        Uk = Uk;
-                    }
-
-                    mCurPower = (mKp * Ek) + (mKi * Uk);
-                }
-                else if (mCurSpeed > mSetSpeed)
-                {
-                    mCurSpeed--;    // TODO: Replace with deceleration!
-
-                    if (mCurPower < Pmax)
-                    {
-                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
-                    }
-                    else
-                    {
-                        Uk = Uk;
-                    }
-
-                    mCurPower = (mKp * Ek) + (mKi * Uk);
-                }
-                else
-                {
-                    mCurPower = 0;
-                }
-            }
+            // Calculate current speed from Pi storage:
+            pi.WriteLine("o");
+            pi.ReadLine();
         }
     }
 }

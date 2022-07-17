@@ -187,6 +187,8 @@ namespace TrainController
 
             else if (sender == Announcements)
             {
+                mSelectedTrain.setAnnouncements();
+
                 if (mSelectedTrain.mAnnouncementsStatus)
                 {
                     Announcements.Content = "Announcements\n        (ON)";
@@ -370,7 +372,7 @@ namespace TrainController
 
             // Update Speed display:
             CmdSpeed.Text = "Cmd Speed:\n" + mSelectedTrain.mCmdSpeed + " mph";
-            SetSpeedBox.Text = mSelectedTrain.mSetSpeed.ToString();
+            //SetSpeedBox.Text = mSelectedTrain.mSetSpeed.ToString();
             CurSpeed.Text = "Current Speed:\n" + mSelectedTrain.mCurSpeed + " mph";
 
             // Update Power display:

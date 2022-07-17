@@ -57,6 +57,10 @@ namespace TrainController
                 // Disable both controller type buttons and exit to main window:
                 SoftwareController.IsEnabled = false;
                 HardwareController.IsEnabled = false;
+
+                // Begin initTimer() for selected train controller:
+                ((MainWindow)Application.Current.MainWindow).mSelectedTrain.InitTimer();
+
                 this.Close();
             }
             else
@@ -93,6 +97,10 @@ namespace TrainController
                 // Disable both controller type buttons and exit to main window:
                 SoftwareController.IsEnabled = false;
                 HardwareController.IsEnabled = false;
+
+                // Begin initTimer() for selected train controller:
+                ((MainWindow)Application.Current.MainWindow).mSelectedTrain.InitTimer();
+
                 this.Close();
             }
         }
