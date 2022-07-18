@@ -12,12 +12,12 @@
 
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="26,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text=""/>
-        <ComboBox x:Name="Select_a_Line" Text ="Select a Line" HorizontalAlignment="Left" Margin="40,20,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="Select_a_Line_SelectionChanged" IsReadOnly="True">
+        <ComboBox x:Name="Select_a_Line" Text ="Select a Line" HorizontalAlignment="Left" Margin="43,38,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="Select_a_Line_SelectionChanged" IsReadOnly="True">
             <ComboBoxItem Content="Red Line"/>
             <ComboBoxItem Content="Blue Line"/>
             <ComboBoxItem Content="Green Line"/>
         </ComboBox>
-        <ComboBox x:Name="Select_a_Train" Text ="Select a Train" HorizontalAlignment="Left" Margin="180,20,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="Select_a_Train_SelectionChanged" IsReadOnly="True"  IsEnabled="False">
+        <ComboBox x:Name="Select_a_Train" Text ="Select a Train" HorizontalAlignment="Left" Margin="185,38,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="Select_a_Train_SelectionChanged" IsReadOnly="True"  IsEnabled="False">
             <ComboBoxItem Content="Train 1"/>
         </ComboBox>
         <Label Content="Position" HorizontalAlignment="Left" Margin="60,69,0,0" VerticalAlignment="Top" Background="White" Foreground="Black" Panel.ZIndex="2" Height="10" Width="29" Padding="0,0,0,0" FontSize="8"/>
@@ -75,6 +75,8 @@
             </Border.Effect>
             <TextBlock x:Name="Passed_Through_Variables1" HorizontalAlignment="Left" Margin="6,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="273" Foreground="Black" Text="Beacon Announcements would be displayed here as the train passes over them"/>
         </Border>
+        <TextBlock HorizontalAlignment="Left" Margin="43,20,0,0" TextWrapping="Wrap" Text="Select a line" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="185,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Select a train"/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
 
 
 
