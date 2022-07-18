@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -65,6 +66,12 @@ namespace TrackModel_v0._1
         private void DestinationBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             destination = DestinationBox.SelectedIndex;
+        }
+
+        private void TestWindowClosed(object sender, EventArgs e)
+        {
+            //this.Visibility = Visibility.Collapsed;
+            
         }
     }
 }
