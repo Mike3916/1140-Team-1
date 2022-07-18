@@ -39,7 +39,7 @@
         <Button x:Name="TestPanel" Click="Button_Click" ClickMode="Press" Content="Open Test Panel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="540,426,0,0" Height="28" Width="220" FontSize="16"/>
 
         <TextBox x:Name="SetSpeedBox" HorizontalAlignment="Left" Margin="422,336,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="41" TextAlignment="Center" KeyDown="KeyDownButton"/>
-        <ComboBox x:Name="SelectTrain" HorizontalAlignment="Left" Margin="390,24,0,0" VerticalAlignment="Top" Width="130" SelectionChanged="SelectTrain_SelectionChanged"/>
+        <ComboBox x:Name="mControllerList" HorizontalAlignment="Left" Margin="390,24,0,0" VerticalAlignment="Top" Width="130" SelectionChanged="SelectTrain_SelectionChanged"/>
         <Label x:Name="SelectTrainLabel" Content="Select Train:" HorizontalAlignment="Left" Margin="280,20,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Width="100" FontSize="15" HorizontalContentAlignment="Center" Height="30"/>
     </Grid>
 </Window>

@@ -186,6 +186,11 @@ namespace TrainController
                     ServiceBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
                 }
             }
+
+            else if (sender == AddTrain)
+            {
+                ((MainWindow)Application.Current.MainWindow).addController();
+            }    
         }
 
         private void KeyDownButton(object sender, KeyEventArgs e)

@@ -26,7 +26,7 @@ namespace TrainController
         // Boolean for controlling hardware functionality:
         public bool mSerialAccepted = true;
 
-        public bool mAutoMode = false;
+        public bool mAutoMode = true;
         public bool mLeftDoorsStatus = false;
         public bool mRightDoorsStatus = false;
         public bool mInteriorLightsStatus = false;
