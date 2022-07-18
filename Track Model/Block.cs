@@ -13,7 +13,12 @@ namespace TrackModel_v0._1
         public Block(string[] blockInfo)
         {
             mOccupied = false;
-
+            mhasCross = false;
+            mcrossDown = false;
+            mUnderground = false;
+            mLeft = false;
+            mRight = false;
+            
             mlineName = blockInfo[0];
             msectionName = blockInfo[1];
             mblockNum = Int32.Parse(blockInfo[2]);
@@ -28,6 +33,9 @@ namespace TrackModel_v0._1
             mblockInfo = blockInfo;
 
             mtrackTemp = 32;
+
+            mstationName = "";
+            mStation = false;
 
             readInfrastructure();
         }
@@ -152,6 +160,14 @@ namespace TrackModel_v0._1
         {
             mswitchPos = pos;
         }
+        public bool toggleCrossbar()
+        {
+            return mcrossDown = !mcrossDown;
+        }
+        public bool crossbarDown()
+        {
+            return mcrossDown;
+        }
         
         //reads infrastructure data
         private void readInfrastructure()
@@ -164,20 +180,35 @@ namespace TrackModel_v0._1
                 {
                     string[] switches = partInfra.Substring(8, partInfra.IndexOf(')') - 8).Split(':');
 
-                    foreach(string sw in switches)
+                    foreach (string sw in switches)
                     {
                         string[] connections = sw.Split('-');
+
                         if (Int32.Parse(connections[0]) != mblockNum)
-                        {
                             AddSwitch(Int32.Parse(connections[0]));
-                        }
                         else
-                        {
                             AddSwitch(Int32.Parse(connections[1]));
-                        }
                     }
                 }
+                else if (partInfra.ToLower().Contains("station"))
+                {
+                    mstationName = infraString[1];
+                    Random r = new Random();
+                    mPop = r.Next(0, 222); //randomly initializes station between 1 and 222
+                    mStation = true;
+                }
+
+                else if (partInfra.ToLower().Contains("railway crossing"))
+                    mhasCross = true;
+
+                else if (partInfra.ToLower().Contains("railway crossing"))
+                    mUnderground = true;
             }
+            if (mstationSide.ToLower().Contains("left"))
+                mLeft = true;
+
+            else if (mstationSide.ToLower().Contains("right"))
+                mRight = true;
         }
 
         //via readInfrastructure adds switches to block obj
@@ -189,27 +220,41 @@ namespace TrackModel_v0._1
                 setNextBlock(blockNum);
         }
 
-        string mlineName;
-        string msectionName;
-        int mblockNum;
-        int mswitchPos;
-        int mnextBlockNum; 
-        double mLength;         //param = 0
-        double mGrade;          //param = 1
-        double mspeedLimit;     //param = 2
+        void PopulateStation()
+        {
+
+        }
+
+        public string mlineName;
+        public string msectionName;
+        public int mblockNum;
+        public string mstationName;
+        public int mswitchPos;
+        public int mnextBlockNum; 
+        public double mLength;         //param = 0
+        public double mGrade;          //param = 1
+        public double mspeedLimit;     //param = 2
         string mInfrastructure;
-        string mstationSide;
-        double mElevation;      //param = 3
-        double mcumElevation;   //should NOT be mutable
-        double mtrackTemp;
+        public  string mstationSide;
+        public double mElevation;      //param = 3
+        public double mcumElevation;   //should NOT be mutable
+        public double mtrackTemp;
 
         public bool mOccupied;         //param = 0
-        bool mtrackRail;        //param = 1
-        bool mtrackCircuit;     //param = 2
-        bool mPower;            //param = 3
+        public bool mtrackRail;        //param = 1
+        public bool mtrackCircuit;     //param = 2
+        public bool mPower;            //param = 3
+        public bool mStation;
+        public bool mhasCross;
+        public bool mcrossDown;
+        public bool mUnderground;
+        public bool mLeft;
+        public bool mRight;
 
-        string[] mblockInfo;
-        List<int> mblockSwitches = new List<int>();
+        public int mPop;
+
+        public string[] mblockInfo;
+        public List<int> mblockSwitches = new List<int>();
 
     }
 }

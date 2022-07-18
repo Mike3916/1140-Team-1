@@ -66,6 +66,10 @@ namespace TrackModel_v0._1
                     mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackTemp(currentTemp+1);
                     HeatBox.Text = (currentTemp + 1).ToString();
                 }
+                else if (currentTemp == 32)
+                {
+                    //do nothing 
+                }
                 else
                 {
                     mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackTemp(currentTemp - 1);
@@ -87,7 +91,6 @@ namespace TrackModel_v0._1
 
 
                     mLines[trainLine].mSections[trainSect].mBlocks[mtrainPos].mOccupied = false;
-                    mtrainPos = mLines[trainLine].MoveTrain(mauth, mspeed, mdest);
                     mLines[mlineIdx].mSections[msectIdx].mBlocks[mtrainPos].mOccupied = true;
                     OccupiedBlock.Text = mLines[trainLine].mSections[trainSect].mBlocks[mblockIdx].mOccupied + "";
                 }
@@ -115,7 +118,6 @@ namespace TrackModel_v0._1
             lineData.Columns.Add("Infrastructure");
             lineData.Columns.Add("Station Side");
             lineData.Columns.Add("Elevation");
-            lineData.Columns.Add("Cumalative Elevation");
 
             List<DataRow> blockData = new List<DataRow>(); //List of DataRow entries
 
@@ -123,7 +125,7 @@ namespace TrackModel_v0._1
             for (int blockIdx = 0; blockIdx < mLines[lineIdx].getmnumBlocks(); blockIdx++)
             {
                 blockData.Add(lineData.NewRow());
-                for (int valueIdx = 0; valueIdx < 10; valueIdx++)
+                for (int valueIdx = 0; valueIdx < 9; valueIdx++)
                 {
                     blockData[blockIdx][valueIdx] = newlineInfo[blockIdx][valueIdx]; //add data to row
                 }
@@ -162,13 +164,32 @@ namespace TrackModel_v0._1
             ElevationBox.IsReadOnly = false;
             HeatBox.IsReadOnly = false;
 
+            StationName.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mstationName;
             OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
             InfrastructureBlock.Text = blockInfo[6];
             SpeedBox.Text = blockInfo[5];
             LengthBox.Text = blockInfo[3];
             GradeBox.Text = blockInfo[4];
             ElevationBox.Text = blockInfo[8];
-            CumElevationBlock.Text = blockInfo[9];
+
+            if (mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mhasCross)
+            {
+                ToggleCrossbar.Visibility = Visibility.Visible;
+                if (mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mcrossDown)
+                    ToggleCrossbar.Content = "Down";
+                else
+                    ToggleCrossbar.Content = "Up";
+            }
+            else
+                ToggleCrossbar.Visibility = Visibility.Collapsed;
+
+            if (mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mPop > 0)
+            {
+                Population.Visibility = Visibility.Visible;
+                Population.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mPop + "";
+            }
+            else
+                Population.Visibility = Visibility.Collapsed;
 
         }
         private void ResetBlockInfo()
@@ -179,8 +200,10 @@ namespace TrackModel_v0._1
             LengthBox.Text = "N/A";
             GradeBox.Text = "N/A";
             ElevationBox.Text = "N/A";
-            CumElevationBlock.Text = "N/A";
             HeatBox.Text = "32";
+
+            ToggleCrossbar.Visibility = Visibility.Collapsed;
+            Population.Visibility = Visibility.Collapsed;
         }
 
         private void UpdateCurrentRow()
@@ -193,18 +216,6 @@ namespace TrackModel_v0._1
 
             mLineData[mlineIdx].Select()[mblockIdx].EndEdit();
             mLineData[mlineIdx].Select()[mblockIdx].AcceptChanges();
-        }
-        private void UpdateCumElevation()
-        {            
-            for (int blockIdx = 0; blockIdx < mLines[mlineIdx].getmnumBlocks(); blockIdx++)
-            {
-                mLineData[mlineIdx].Select()[blockIdx].BeginEdit();
-
-                mLineData[mlineIdx].Select()[mblockIdx][9] = mLines[mlineIdx].getlineInfo()[blockIdx][9];
-
-                mLineData[mlineIdx].Select()[blockIdx].EndEdit();
-                mLineData[mlineIdx].Select()[blockIdx].AcceptChanges();
-            }
         }
 
         private void sendTrain(int authority, double speed, int destination)
@@ -250,6 +261,8 @@ namespace TrackModel_v0._1
                 LineDataGrid.ItemsSource = mLineData[mLineData.Count - 1].DefaultView;
                 LineCombo.Items.Add(mLines[mLines.Count - 1].getmnameLine());
             }
+            else
+                MessageBox.Show("File not found :(");
         }
 
         private void TextBoc_Focus(object sender, KeyboardFocusChangedEventArgs e)
@@ -304,16 +317,19 @@ namespace TrackModel_v0._1
         {
             if (BlockCombo.Items.Count > 0)
             {
-                int lineIdx = LineCombo.SelectedIndex;
-                int sectionIdx = SectionCombo.SelectedIndex;
-                int blockIdx = BlockCombo.SelectedIndex;
-                string[] blockInfo = mLines[lineIdx].getBlockInfo(sectionIdx, blockIdx);
-                SetBlockInfo(blockInfo);
+                if (BlockCombo.SelectedIndex != -1)
+                {
+                    int lineIdx = LineCombo.SelectedIndex;
+                    int sectionIdx = SectionCombo.SelectedIndex;
+                    int blockIdx = BlockCombo.SelectedIndex;
+                    string[] blockInfo = mLines[lineIdx].mSections[sectionIdx].mBlocks[blockIdx].mblockInfo;
+                    SetBlockInfo(blockInfo);
 
-                List<int> switchList = mLines[lineIdx].getmblockSwitch(sectionIdx, blockIdx);
-                foreach (int sw in switchList)
-                    SwitchCombo.Items.Add(sw);
-                SwitchCombo.SelectedIndex = 0;
+                    List<int> switchList = mLines[lineIdx].getmblockSwitch(sectionIdx, blockIdx);
+                    foreach (int sw in switchList)
+                        SwitchCombo.Items.Add(sw);
+                    SwitchCombo.SelectedIndex = 0;
+                }
             }
         }
 
@@ -409,9 +425,7 @@ namespace TrackModel_v0._1
                     if (currentElevation > info)
                         dif *= -1;
                     mLines[mlineIdx].setBlockInfo(msectIdx, mblockIdx, 3, info);
-                    mLines[mlineIdx].UpdateCumElevation(msectIdx, mblockIdx, dif);
-                    UpdateCurrentRow();
-                    UpdateCumElevation();                    
+                    UpdateCurrentRow();              
                 }
                 else
                     MessageBox.Show("Only numbers PLEASE");

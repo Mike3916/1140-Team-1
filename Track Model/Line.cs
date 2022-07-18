@@ -10,39 +10,12 @@ namespace TrackModel_v0._1
         {
             mnumSections = 0;
             mSections = new List<Section>();
-            BuildRoute();
         }
         public Line(string newName)
         {
             mnameLine = newName;
             mnumSections = 0;
             mSections = new List<Section>();
-            BuildRoute();
-        }
-
-        public void BuildRoute()
-        {
-            routeB.Push(9);
-            routeB.Push(8);
-            routeB.Push(7);
-            routeB.Push(6);
-            routeB.Push(5);
-            routeB.Push(4);
-            routeB.Push(3);
-            routeB.Push(2);
-            routeB.Push(1);
-            routeB.Push(0);
-
-            routeC.Push(14);
-            routeC.Push(13);
-            routeC.Push(12);
-            routeC.Push(11);
-            routeC.Push(10);
-            routeC.Push(4);
-            routeC.Push(3);
-            routeC.Push(2);
-            routeC.Push(1);
-            routeC.Push(0);
         }
 
         //getters
@@ -137,19 +110,6 @@ namespace TrackModel_v0._1
             }
         }
 
-        public int MoveTrain(int authority, double speed, int destination)
-        {
-            if (destination == 0)
-            {
-                return routeB.Pop();
-            }
-                //mSections[0].mBlocks[4].set
-            else
-            {
-                return routeC.Pop();
-            }
-        }
-
         //adds a section to the line
         public void addSections(string[] lineInfo)
         {
@@ -188,8 +148,6 @@ namespace TrackModel_v0._1
             }
         }
 
-        Stack<int> routeB = new Stack<int>();
-        Stack<int> routeC = new Stack<int>();
         int mnumSections;
         int mnumBlocks;
         string mnameLine;
