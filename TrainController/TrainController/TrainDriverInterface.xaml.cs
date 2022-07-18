@@ -22,18 +22,24 @@ namespace TrainController
     /// </summary>
     public partial class MainWindow : Window
     {
-        //public List<Controller> mTrainSet;
+        // Train controller objects/values:
         public Controller[] mTrainSet = new Controller[30];
         public Controller mSelectedTrain;
+        public int mTrainCount = 0;
 
+        // Dispatch timer period (while in testing):
         public int T = 250; // 250 ms
+
+        public ComboBox mControllerList = new ComboBox();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            mSelectedTrain = new Controller();
-            mTrainSet[0] = mSelectedTrain;
+            mTrainSet[mTrainCount] = new Controller();
+            mSelectedTrain = mTrainSet[mTrainCount];
+            mControllerList.Items.Insert(mTrainCount,"Hello!");
+            mTrainCount++;
 
             // Disable all buttons on main window until a HW_SW window option is selected:
             ManualMode.IsEnabled = false;
@@ -377,6 +383,58 @@ namespace TrainController
 
             // Update Power display:
             CurPower.Text = "Power: " + mSelectedTrain.mCurPower / 1000 + " kW";
+        }
+
+        public void SelectTrain_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            /*// Set controller type to hardware, and show on main window:
+            ((MainWindow)Application.Current.MainWindow).mSelectedTrain.mControlType = true;
+            ((MainWindow)Application.Current.MainWindow).SelectType.Text = "Hardware Controller";
+            ((MainWindow)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0x5F, 0xA0));
+
+            // Controller enters automatic mode by default:
+            ((MainWindow)Application.Current.MainWindow).ManualMode.IsEnabled = true;
+            ((MainWindow)Application.Current.MainWindow).mSelectedTrain.mAutoMode = true;
+
+            // Enable all brake buttons and outer panel buttons:
+            ((MainWindow)Application.Current.MainWindow).ServiceBrake.IsEnabled = true;
+            ((MainWindow)Application.Current.MainWindow).EmergencyBrake.IsEnabled = true;
+            ((MainWindow)Application.Current.MainWindow).EngineerPanel.IsEnabled = true;
+            ((MainWindow)Application.Current.MainWindow).TestPanel.IsEnabled = true;
+
+            // Disable all automatic mode buttons on main window:
+            ((MainWindow)Application.Current.MainWindow).AutoMode.IsEnabled = false;
+            ((MainWindow)Application.Current.MainWindow).SetSpeedBox.IsEnabled = false;
+            ((MainWindow)Application.Current.MainWindow).TempIncrease.IsEnabled = false;
+            ((MainWindow)Application.Current.MainWindow).TempDecrease.IsEnabled = false;
+            ((MainWindow)Application.Current.MainWindow).Announcements.IsEnabled = false;
+            ((MainWindow)Application.Current.MainWindow).LeftDoors.IsEnabled = false;
+            ((MainWindow)Application.Current.MainWindow).RightDoors.IsEnabled = false;
+            ((MainWindow)Application.Current.MainWindow).InteriorLights.IsEnabled = false;
+            ((MainWindow)Application.Current.MainWindow).ExteriorLights.IsEnabled = false;
+
+            // Setup hardware controller port information:
+            ((MainWindow)Application.Current.MainWindow).mSelectedTrain.setupHardware();
+
+            // Disable both controller type buttons and exit to main window:
+            SoftwareController.IsEnabled = false;
+            HardwareController.IsEnabled = false;
+
+            // Begin initTimer() for selected train controller:
+            ((MainWindow)Application.Current.MainWindow).mSelectedTrain.InitTimer();*/
+        }
+
+        public void addController()
+        {
+            mTrainSet[mTrainCount] = new Controller();
+            mSelectedTrain = mTrainSet[mTrainCount];
+            mControllerList.Items.Insert(mTrainCount, mTrainCount);
+            mTrainCount++;
+
+            HW_SW selectType = new HW_SW();
+            selectType.Topmost = true;
+            selectType.Show();
+            selectType.Activate();
         }
     }
 }
