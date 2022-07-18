@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Track Model\TrackModel_v0.1.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="TrackModel_v0.1">
+      <HintPath>..\..\Track Model\obj\Debug\netcoreapp3.1\TrackModel_v0.1.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
