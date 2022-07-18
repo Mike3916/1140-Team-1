@@ -26,16 +26,11 @@ namespace CTC
     /// 
     public partial class MainWindow : Window
     {
-        List<Train> TrainList = new List<Train>(); //Global TrainList variable
+        public List<Train> TrainList = new List<Train>(); //Global TrainList variable
 
         public MainWindow()
         {
             InitializeComponent(); ///Default code
-            /*
-            SelectTrain.Items.Add("Train_1"); ///Creating placeholder trains
-            SelectTrain.Items.Add("Train_2");
-            SelectTrain.Items.Add("Train_3");
-            */
             Default_Page page = new Default_Page();
             Frame.NavigationService.Navigate(page);
         }    

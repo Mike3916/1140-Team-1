@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 
 using CTC;
 using Backend;
+using MainWindow = CTC.MainWindow;
 
 namespace CTC
 {
@@ -26,5 +27,12 @@ namespace CTC
             InitializeComponent();
         }
 
+ 
+
+        private void Dest_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int i = ((MainWindow)Application.Current.MainWindow).SelectTrain.SelectedIndex;
+            Dest.Text = ((MainWindow)Application.Current.MainWindow).TrainList[i].destination.ToString();
+        }
     }
 }
