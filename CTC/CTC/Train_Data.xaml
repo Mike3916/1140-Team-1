@@ -17,6 +17,7 @@
         <Label Content="20 Blocks" HorizontalAlignment="Left" Margin="218,176,0,0" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="118,207,0,0" TextWrapping="Wrap" Text="Suggested Speed:" VerticalAlignment="Top"/>
         <Label Content="17 mph" HorizontalAlignment="Left" Margin="218,202,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="312,114,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Page>

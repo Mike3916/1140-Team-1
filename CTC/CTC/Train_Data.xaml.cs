@@ -11,6 +11,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using CTC;
+using Backend;
+
 namespace CTC
 {
     /// <summary>
@@ -22,5 +25,6 @@ namespace CTC
         {
             InitializeComponent();
         }
+
     }
 }
