@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace TrackModel_v0._1
 {
@@ -15,10 +17,14 @@ namespace TrackModel_v0._1
             mnumSections = 0;
             mSections = new List<Section>();
         }
+
+        //getters
+
         public int getmnumSections()
         {
             return mnumSections;
         }
+
         public int getmnumBlocks()
         {
             int blockSum = 0;
@@ -29,10 +35,12 @@ namespace TrackModel_v0._1
             mnumBlocks = blockSum;
             return mnumBlocks;
         }
+
         public string getmnameLine()
         {
             return mnameLine;
         }
+
         public List<string[]> getlineInfo()
         {
             List<string[]> lineInfo = new List<string[]>();
@@ -51,6 +59,10 @@ namespace TrackModel_v0._1
         {
             return mSections[sectIdx].getmblockInfo(blockIdx);
         }
+        public List<int> getmblockSwitch(int sectIdx, int blockIdx)
+        {
+            return mSections[sectIdx].getmblockSwitch(blockIdx);
+        }
 
         public List<string> getSectionNames()
         {
@@ -61,42 +73,77 @@ namespace TrackModel_v0._1
             }
             return sectNames;
         }
+
         public List<string> getSectBlockNum(int sectIdx)
         {
             return mSections[sectIdx].getBlockNum();
         }
+
         public void setmnameLine(string newName)
         {
             mnameLine = newName;
         }
 
-        public void addSection(string[] lineInfo)
+        //setters
+        //sets info of param with type double
+        public void setBlockInfo(int sectIdx, int blockIdx, int param, double info)
         {
+            mSections[sectIdx].setBlockInfo(blockIdx, param, info);
+        }
+        //sets info of param with type bool
+        public void setBlockInfo(int sectIdx, int blockIdx, int param, bool info)
+        {
+            mSections[sectIdx].setBlockInfo(blockIdx, param, info);
+        }
+        //if elevation is changed, call this
+        public void UpdateCumElevation(int sectIdx, int blockIdx, double dif)
+        {
+
+            for (int idx = 0; idx < mSections.Count; idx++)
+            {
+                for (int jdx = 0; jdx < mSections[idx].getmnumBlocks(); jdx++)
+                {
+                    if (sectIdx == idx && blockIdx == jdx) //if it's the block we just updated, don't even bother.
+                        continue;
+                    mSections[sectIdx].mBlocks[idx].UpdateCumElevation(dif);
+                }
+            }
+        }
+
+        //adds a section to the line
+        public void addSections(string[] lineInfo)
+        {
+            //foreach block entry in lineInfo:
+            //  1.check if the block's section exists:
+            //      if yes -> add block to section
+            //      else -> add a section w/ the block in it
+
             for (int i = 0; i < lineInfo.Length; i++)
             {
                 string[] blockInfo = lineInfo[i].Split(',');
                 string newSectName = blockInfo[1];
 
-                int sectionIDX = -1;
+                //gets Idx of section
+                int sectIdx = -1;
                 for (int j = 0; j < mSections.Count; j++)
                 {
                     if (mSections[j].getmnameSection() == newSectName)
                     {
-                        sectionIDX = j;
+                        sectIdx = j;
                         break;
                     }
                 }
 
-                if (sectionIDX == -1)
+                if (sectIdx == -1) //a section with Idx = -1 does not exist
                 {
                     Section newSection = new Section(newSectName);
                     newSection.addBlock(blockInfo);
                     mSections.Add(newSection);
                     mnumSections++;
                 }
-                else
+                else //if the section exists
                 {
-                    mSections[sectionIDX].addBlock(blockInfo);
+                    mSections[sectIdx].addBlock(blockInfo);
                 }
             }
         }
@@ -104,6 +151,6 @@ namespace TrackModel_v0._1
         int mnumSections;
         int mnumBlocks;
         string mnameLine;
-        List<Section> mSections;
+        public List<Section> mSections;
     }
 }
