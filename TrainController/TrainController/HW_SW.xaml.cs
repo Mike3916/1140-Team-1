@@ -19,9 +19,39 @@ namespace TrainController
     /// </summary>
     public partial class HW_SW : Window
     {
+        ControlPanel main;
         public HW_SW()
         {
             InitializeComponent();
+
+            // Controller enters automatic mode by default:
+            ((ControlPanel)Application.Current.MainWindow).ManualMode.IsEnabled = true;
+            ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mAutoMode = true;
+
+            // Enable all brake buttons and outer panel buttons:
+            ((ControlPanel)Application.Current.MainWindow).ServiceBrake.IsEnabled = true;
+            ((ControlPanel)Application.Current.MainWindow).EmergencyBrake.IsEnabled = true;
+            ((ControlPanel)Application.Current.MainWindow).EngineerPanel.IsEnabled = true;
+            ((ControlPanel)Application.Current.MainWindow).TestPanel.IsEnabled = true;
+
+            // Disable all automatic mode buttons on main window:
+            ((ControlPanel)Application.Current.MainWindow).AutoMode.IsEnabled = false;
+            ((ControlPanel)Application.Current.MainWindow).SetSpeedBox.IsEnabled = false;
+            ((ControlPanel)Application.Current.MainWindow).SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0x30, 0, 0, 0));
+            ((ControlPanel)Application.Current.MainWindow).TempIncrease.IsEnabled = false;
+            ((ControlPanel)Application.Current.MainWindow).TempDecrease.IsEnabled = false;
+            ((ControlPanel)Application.Current.MainWindow).Announcements.IsEnabled = false;
+            ((ControlPanel)Application.Current.MainWindow).LeftDoors.IsEnabled = false;
+            ((ControlPanel)Application.Current.MainWindow).RightDoors.IsEnabled = false;
+            ((ControlPanel)Application.Current.MainWindow).InteriorLights.IsEnabled = false;
+            ((ControlPanel)Application.Current.MainWindow).ExteriorLights.IsEnabled = false;
+        }
+        public HW_SW(ControlPanel win)
+        {
+            InitializeComponent();
+
+            main = win;
+            Application.Current.MainWindow = main;
 
             // Controller enters automatic mode by default:
             ((ControlPanel)Application.Current.MainWindow).ManualMode.IsEnabled = true;
@@ -85,6 +115,11 @@ namespace TrainController
 
                 this.Close();
             }
+        }
+
+        private void HW_SWActive(object sender, EventArgs e)
+        {
+            Application.Current.MainWindow = main;
         }
     }
 }

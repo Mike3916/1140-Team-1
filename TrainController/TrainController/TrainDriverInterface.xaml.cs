@@ -57,7 +57,7 @@ namespace TrainController
             InteriorLights.IsEnabled = false;
             ExteriorLights.IsEnabled = false;
 
-            HW_SW selectType = new HW_SW();
+            HW_SW selectType = new HW_SW(this);
             selectType.Topmost = true;
             selectType.Show();
             selectType.Activate();
@@ -508,7 +508,7 @@ namespace TrainController
             mControllerList.SelectedIndex = mTrainCount;
             mTrainCount++;
 
-            HW_SW selectType = new HW_SW();
+            HW_SW selectType = new HW_SW(this);
             selectType.Topmost = true;
             selectType.Show();
             selectType.Activate();
