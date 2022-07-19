@@ -633,33 +633,10 @@ namespace TrainController
                 Ek = mSetSpeed - mCurSpeed;
             }
 
-            if (mEmergencyBrakeStatus)
-            {
-                if (mCurSpeed == 0)
-                {
-                    mEmergencyBrakeStatus = false;
-                }
-                else
-                {
-                    mCmdSpeed = 0;
-                    mSetSpeed = 0;
-
-                    mCurSpeed -= 1; // TODO: Replace with emergency brake deceleration!
-                }
-            }
-            else if (mServiceBrakeStatus)
-            {
-                if (mCurSpeed > 0)
-                {
-                    mCurSpeed--;  // TODO: Replace with service brake deceleration!
-                }
-            }
-            else if (mAutoMode)
+            if (mAutoMode)
             {
                 if (mCurSpeed < mCmdSpeed)
                 {
-                    mCurSpeed++;    // TODO: Replace with acceleration!
-
                     if (mCurPower < Pmax)
                     {
                         Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
@@ -673,8 +650,6 @@ namespace TrainController
                 }
                 else if (mCurSpeed > mCmdSpeed)
                 {
-                    mCurSpeed--;    // TODO: Replace with deceleration!
-
                     if (mCurPower < Pmax)
                     {
                         Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
@@ -695,8 +670,6 @@ namespace TrainController
             {
                 if (mCurSpeed < mSetSpeed)
                 {
-                    mCurSpeed++;    // TODO: Replace with acceleration!
-
                     if (mCurPower < Pmax)
                     {
                         Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
@@ -710,8 +683,6 @@ namespace TrainController
                 }
                 else if (mCurSpeed > mSetSpeed)
                 {
-                    mCurSpeed--;    // TODO: Replace with deceleration!
-
                     if (mCurPower < Pmax)
                     {
                         Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);

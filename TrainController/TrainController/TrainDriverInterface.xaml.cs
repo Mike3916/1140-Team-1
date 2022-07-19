@@ -20,7 +20,7 @@ namespace TrainController
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ControlPanel : Window
     {
         // Train controller objects/values:
         public Controller[] mTrainSet = new Controller[30];
@@ -30,7 +30,7 @@ namespace TrainController
         // Dispatch timer period (while in testing):
         public int T = 250; // 250 ms
 
-        public MainWindow()
+        public ControlPanel()
         {
             InitializeComponent();
 

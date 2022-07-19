@@ -24,26 +24,26 @@ namespace TrainController
             InitializeComponent();
 
             // Controller enters automatic mode by default:
-            ((MainWindow)Application.Current.MainWindow).ManualMode.IsEnabled = true;
-            ((MainWindow)Application.Current.MainWindow).mSelectedTrain.mAutoMode = true;
+            ((ControlPanel)Application.Current.MainWindow).ManualMode.IsEnabled = true;
+            ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mAutoMode = true;
 
             // Enable all brake buttons and outer panel buttons:
-            ((MainWindow)Application.Current.MainWindow).ServiceBrake.IsEnabled = true;
-            ((MainWindow)Application.Current.MainWindow).EmergencyBrake.IsEnabled = true;
-            ((MainWindow)Application.Current.MainWindow).EngineerPanel.IsEnabled = true;
-            ((MainWindow)Application.Current.MainWindow).TestPanel.IsEnabled = true;
+            ((ControlPanel)Application.Current.MainWindow).ServiceBrake.IsEnabled = true;
+            ((ControlPanel)Application.Current.MainWindow).EmergencyBrake.IsEnabled = true;
+            ((ControlPanel)Application.Current.MainWindow).EngineerPanel.IsEnabled = true;
+            ((ControlPanel)Application.Current.MainWindow).TestPanel.IsEnabled = true;
 
             // Disable all automatic mode buttons on main window:
-            ((MainWindow)Application.Current.MainWindow).AutoMode.IsEnabled = false;
-            ((MainWindow)Application.Current.MainWindow).SetSpeedBox.IsEnabled = false;
-            ((MainWindow)Application.Current.MainWindow).SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0x30, 0, 0, 0));
-            ((MainWindow)Application.Current.MainWindow).TempIncrease.IsEnabled = false;
-            ((MainWindow)Application.Current.MainWindow).TempDecrease.IsEnabled = false;
-            ((MainWindow)Application.Current.MainWindow).Announcements.IsEnabled = false;
-            ((MainWindow)Application.Current.MainWindow).LeftDoors.IsEnabled = false;
-            ((MainWindow)Application.Current.MainWindow).RightDoors.IsEnabled = false;
-            ((MainWindow)Application.Current.MainWindow).InteriorLights.IsEnabled = false;
-            ((MainWindow)Application.Current.MainWindow).ExteriorLights.IsEnabled = false;
+            ((ControlPanel)Application.Current.MainWindow).AutoMode.IsEnabled = false;
+            ((ControlPanel)Application.Current.MainWindow).SetSpeedBox.IsEnabled = false;
+            ((ControlPanel)Application.Current.MainWindow).SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0x30, 0, 0, 0));
+            ((ControlPanel)Application.Current.MainWindow).TempIncrease.IsEnabled = false;
+            ((ControlPanel)Application.Current.MainWindow).TempDecrease.IsEnabled = false;
+            ((ControlPanel)Application.Current.MainWindow).Announcements.IsEnabled = false;
+            ((ControlPanel)Application.Current.MainWindow).LeftDoors.IsEnabled = false;
+            ((ControlPanel)Application.Current.MainWindow).RightDoors.IsEnabled = false;
+            ((ControlPanel)Application.Current.MainWindow).InteriorLights.IsEnabled = false;
+            ((ControlPanel)Application.Current.MainWindow).ExteriorLights.IsEnabled = false;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -51,35 +51,35 @@ namespace TrainController
             if (sender == SoftwareController)
             {
                 // Set controller type to software, and show on main window:
-                ((MainWindow)Application.Current.MainWindow).mSelectedTrain.mControlType = false;
-                ((MainWindow)Application.Current.MainWindow).SelectType.Text = "Software Controller";
-                ((MainWindow)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0xDF, 0x20));
+                ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mControlType = false;
+                ((ControlPanel)Application.Current.MainWindow).SelectType.Text = "Software Controller";
+                ((ControlPanel)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0xDF, 0x20));
 
                 // Disable both controller type buttons and exit to main window:
                 SoftwareController.IsEnabled = false;
                 HardwareController.IsEnabled = false;
 
                 // Begin initTimer() for selected train controller:
-                ((MainWindow)Application.Current.MainWindow).mSelectedTrain.InitTimer();
+                ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.InitTimer();
 
                 this.Close();
             }
             else
             {
                 // Set controller type to hardware, and show on main window:
-                ((MainWindow)Application.Current.MainWindow).mSelectedTrain.mControlType = true;
-                ((MainWindow)Application.Current.MainWindow).SelectType.Text = "Hardware Controller";
-                ((MainWindow)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0x5F, 0xA0));
+                ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mControlType = true;
+                ((ControlPanel)Application.Current.MainWindow).SelectType.Text = "Hardware Controller";
+                ((ControlPanel)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0x5F, 0xA0));
 
                 // Setup hardware controller port information:
-                ((MainWindow)Application.Current.MainWindow).mSelectedTrain.setupHardware();
+                ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setupHardware();
 
                 // Disable both controller type buttons and exit to main window:
                 SoftwareController.IsEnabled = false;
                 HardwareController.IsEnabled = false;
 
                 // Begin initTimer() for selected train controller:
-                ((MainWindow)Application.Current.MainWindow).mSelectedTrain.InitTimer();
+                ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.InitTimer();
 
                 this.Close();
             }
