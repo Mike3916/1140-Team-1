@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gog", "Gog.csproj", "{BB8E2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackModel_v0.1", "..\..\Track Model\TrackModel_v0.1.csproj", "{7B21778D-C528-4188-A321-77EB1E2663DE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrainModel", "..\..\Train Model\TrainModel\TrainModel.csproj", "{88A22B49-278B-49A9-9780-03E162B106EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7B21778D-C528-4188-A321-77EB1E2663DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B21778D-C528-4188-A321-77EB1E2663DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B21778D-C528-4188-A321-77EB1E2663DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88A22B49-278B-49A9-9780-03E162B106EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88A22B49-278B-49A9-9780-03E162B106EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88A22B49-278B-49A9-9780-03E162B106EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88A22B49-278B-49A9-9780-03E162B106EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
