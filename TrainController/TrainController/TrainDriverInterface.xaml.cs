@@ -141,11 +141,11 @@ namespace TrainController
 
                 if (mSelectedTrain.mLeftDoorsStatus)
                 {
-                    LeftDoors.Content = "Doors - Left\n    (OPEN)";
+                    LeftDoors.Content = "Doors - Left\n   (OPEN)";
                 }
                 else
                 {
-                    LeftDoors.Content = "Doors - Left\n   (CLOSED)";
+                    LeftDoors.Content = "Doors - Left\n  (CLOSED)";
                 }
             }
 
@@ -390,6 +390,78 @@ namespace TrainController
             mSelectedTrain = mTrainSet[mControllerList.SelectedIndex];
 
             // Update Service brake/Emergency brake:
+            if (mSelectedTrain.mEmergencyBrakeStatus)
+            {
+                EmergencyBrake.Content = "Emergency Brake\n         (ON)";
+                EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
+            }
+            else
+            {
+                EmergencyBrake.Content = "Emergency Brake\n         (OFF)";
+                EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5A5A"));
+            }
+
+            // Update Service brake/Emergency brake:
+            if (mSelectedTrain.mServiceBrakeStatus)
+            {
+                ServiceBrake.Content = "Service Brake\n      (ON)";
+                ServiceBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
+            }
+            else
+            {
+                ServiceBrake.Content = "Service Brake\n      (OFF)";
+                ServiceBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5A5A"));
+            }
+
+            // Update Left Doors status:
+            if (mSelectedTrain.mLeftDoorsStatus)
+            {
+                LeftDoors.Content = "Doors - Left\n   (OPEN)";
+            }
+            else
+            {
+                LeftDoors.Content = "Doors - Left\n  (CLOSED)";
+            }
+
+            // Update Right Doors status:
+            if (mSelectedTrain.mRightDoorsStatus)
+            {
+                RightDoors.Content = "Doors - Right\n   (OPEN)";
+            }
+            else
+            {
+                RightDoors.Content = "Doors - Right\n  (CLOSED)";
+            }
+
+            // Update Interior Lights status:
+            if (mSelectedTrain.mInteriorLightsStatus)
+            {
+                InteriorLights.Content = "Lights - Interior\n        (ON)";
+            }
+            else
+            {
+                InteriorLights.Content = "Lights - Interior\n        (OFF)";
+            }
+
+            // Update Exterior Lights status:
+            if (mSelectedTrain.mExteriorLightsStatus)
+            {
+                ExteriorLights.Content = "Lights - Exterior\n        (ON)";
+            }
+            else
+            {
+                ExteriorLights.Content = "Lights - Exterior\n        (OFF)";
+            }
+
+            // Update Announcements status:
+            if (mSelectedTrain.mAnnouncementsStatus)
+            {
+                Announcements.Content = "Announcements\n        (ON)";
+            }
+            else
+            {
+                Announcements.Content = "Announcements\n        (OFF)";
+            }
 
             // Update HW/SW indicator box:
             if (!mSelectedTrain.mControlType)
