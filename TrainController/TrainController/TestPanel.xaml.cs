@@ -19,9 +19,17 @@ namespace TrainController
     /// </summary>
     public partial class TestPanel : Window
     {
+        ControlPanel main;
         public TestPanel()
         {
             InitializeComponent();
+        }
+        public TestPanel(ControlPanel win)
+        {
+            InitializeComponent();
+
+            main = win;
+            Application.Current.MainWindow = main;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -241,6 +249,11 @@ namespace TrainController
                     ((ControlPanel)Application.Current.MainWindow).CurPower.Text = "Power: " + ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mCurPower + " kW";
                 }
             }
+        }
+
+        private void TestPanelActive(object sender, EventArgs e)
+        {
+            Application.Current.MainWindow = main;
         }
     }
 }

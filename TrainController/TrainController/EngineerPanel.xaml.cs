@@ -19,8 +19,15 @@ namespace TrainController
     /// </summary>
     public partial class EngineerPanel : Window
     {
+        ControlPanel main;
         public EngineerPanel()
         {
+            InitializeComponent();
+        }
+        public EngineerPanel(ControlPanel win)
+        {
+            main = win;
+            Application.Current.MainWindow = main;
             InitializeComponent();
         }
 
@@ -37,6 +44,11 @@ namespace TrainController
                     ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setKi(int.Parse(Ki.Text));
                 }
             }
+        }
+
+        private void EngineersPanelActive(object sender, EventArgs e)
+        {
+            Application.Current.MainWindow = main;
         }
     }
 }

@@ -221,7 +221,7 @@ namespace TrainController
 
             else if (sender == EngineerPanel)
             {
-                EngineerPanel ePan = new EngineerPanel();
+                EngineerPanel ePan = new EngineerPanel(this);
                 ePan.Owner = this;
 
                 ePan.Kp.Text = mSelectedTrain.mKp.ToString();
@@ -232,7 +232,7 @@ namespace TrainController
 
             else if (sender == TestPanel)
             {
-                TestPanel tPan = new TestPanel();
+                TestPanel tPan = new TestPanel(this);
                 tPan.Owner = this;
 
                 if (mSelectedTrain.mLeftDoorsStatus)
