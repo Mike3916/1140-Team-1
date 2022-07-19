@@ -369,25 +369,19 @@ namespace TrainController
 
         public void checkUpdatedValues(object sender, EventArgs e)
         {
-            // Check for Emergency Brakes turned back off:
-            if(!mSelectedTrain.mEmergencyBrakeStatus)
-            {
-                EmergencyBrake.Content = "Emergency Brake\n         (OFF)";
-                EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5A5A"));
-            }
-
             // Update Speed display:
             CmdSpeed.Text = "Cmd Speed:\n" + mSelectedTrain.mCmdSpeed + " mph";
-            //SetSpeedBox.Text = mSelectedTrain.mSetSpeed.ToString();
             CurSpeed.Text = "Current Speed:\n" + mSelectedTrain.mCurSpeed + " mph";
 
             // Update Power display:
             CurPower.Text = "Power: " + mSelectedTrain.mCurPower / 1000 + " kW";
-        }
 
-        public void SelectTrain_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            mSelectedTrain = mTrainSet[mControllerList.SelectedIndex];
+            // Update Temperature value:
+            Temperature.Text = "Temperature: " + mSelectedTrain.mTemperature.ToString() + "°F";
+
+            // Update Commanded and Current Authority values:
+            CmdAuthority.Text = "Commanded Authority:\n" + mSelectedTrain.mCmdAuthority + " blocks";
+            CurAuthority.Text = "Current Authority:\n" + mSelectedTrain.mCurAuthority + " blocks";
 
             // Update Service brake/Emergency brake:
             if (mSelectedTrain.mEmergencyBrakeStatus)
@@ -426,11 +420,11 @@ namespace TrainController
             // Update Right Doors status:
             if (mSelectedTrain.mRightDoorsStatus)
             {
-                RightDoors.Content = "Doors - Right\n   (OPEN)";
+                RightDoors.Content = "Doors - Right\n    (OPEN)";
             }
             else
             {
-                RightDoors.Content = "Doors - Right\n  (CLOSED)";
+                RightDoors.Content = "Doors - Right\n   (CLOSED)";
             }
 
             // Update Interior Lights status:
@@ -463,13 +457,16 @@ namespace TrainController
                 Announcements.Content = "Announcements\n        (OFF)";
             }
 
+            // Update Beacon:
+            Beacon.Text = "Nearest Beacon:\n" + mSelectedTrain.mBeacon;
+
             // Update HW/SW indicator box:
-            if (!mSelectedTrain.mControlType)
+            if (!mSelectedTrain.mControlType && mSelectedTrain.mSetControlType)
             {
                 SelectType.Text = "Software Controller";
                 SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0xDF, 0x20));
             }
-            else if (mSelectedTrain.mControlType)
+            else if (mSelectedTrain.mControlType && mSelectedTrain.mSetControlType)
             {
                 SelectType.Text = "Hardware Controller";
                 SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0x5F, 0xA0));
@@ -496,6 +493,11 @@ namespace TrainController
             RightDoors.IsEnabled = !mSelectedTrain.mAutoMode;
             InteriorLights.IsEnabled = !mSelectedTrain.mAutoMode;
             ExteriorLights.IsEnabled = !mSelectedTrain.mAutoMode;
+        }
+
+        public void SelectTrain_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            mSelectedTrain = mTrainSet[mControllerList.SelectedIndex];
         }
 
         public void addController()

@@ -52,6 +52,7 @@ namespace TrainController
             {
                 // Set controller type to software, and show on main window:
                 ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mControlType = false;
+                ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mSetControlType = true;
                 ((ControlPanel)Application.Current.MainWindow).SelectType.Text = "Software Controller";
                 ((ControlPanel)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0xDF, 0x20));
 
@@ -68,6 +69,7 @@ namespace TrainController
             {
                 // Set controller type to hardware, and show on main window:
                 ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mControlType = true;
+                ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mSetControlType = true;
                 ((ControlPanel)Application.Current.MainWindow).SelectType.Text = "Hardware Controller";
                 ((ControlPanel)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0x5F, 0xA0));
 

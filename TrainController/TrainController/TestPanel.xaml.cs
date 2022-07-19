@@ -233,6 +233,7 @@ namespace TrainController
                 else if (sender == CurBeacon)
                 {
                     ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setBeacon(CurBeacon.Text);
+                    ((ControlPanel)Application.Current.MainWindow).Beacon.Text = "Nearest Beacon:\n" + ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mBeacon;
                 }
                 else if (sender == CurPower)
                 {
