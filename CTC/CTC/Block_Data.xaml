@@ -28,6 +28,6 @@
                 </TransformGroup>
             </Rectangle.RenderTransform>
         </Rectangle>
-        <Label Content="3" HorizontalAlignment="Left" Margin="154,228,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.254,-0.055"/>
+        <TextBlock HorizontalAlignment="Left" Margin="151,234,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top"/>
     </Grid>
 </Page>
