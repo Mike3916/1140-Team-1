@@ -17,6 +17,7 @@ using System.Globalization;
 using CTCObject= Backend.CTCObject;
 using Train = Backend.Train;
 using Backend;
+using Train_Data = CTC.Train_Data;
 
 namespace CTC
 {
@@ -89,9 +90,10 @@ namespace CTC
                 Track.Visibility = Visibility.Visible;
         }
 
-        private void Set_Checked(object sender, RoutedEventArgs e) ///The checkbox to put CTC in manual mode is checked
+        private void CheckBoxChanged(object sender, RoutedEventArgs e) ///The checkbox to put CTC in manual mode is checked
         {
-            
+           
+
         }
 
         private void Dispatch_Click(object sender, RoutedEventArgs e) ///Dispatch train button selected, switch to the dispatch page

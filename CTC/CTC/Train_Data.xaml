@@ -15,8 +15,8 @@
         <Label Content="20 Blocks" HorizontalAlignment="Left" Margin="218,176,0,0" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="118,207,0,0" TextWrapping="Wrap" Text="Suggested Speed:" VerticalAlignment="Top"/>
         <Label Content="17 mph" HorizontalAlignment="Left" Margin="218,202,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Dest" HorizontalAlignment="Left" Margin="218,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="Dest_TextChanged"/>
-        <TextBox HorizontalAlignment="Left" Margin="218,149,0,0" TextWrapping="Wrap" Text="13:00" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="Dest" HorizontalAlignment="Left" Margin="218,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Loaded="Dest_Loaded"/>
+        <TextBox x:Name="ETA" HorizontalAlignment="Left" Margin="218,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Loaded="ETA_Loaded"/>
 
     </Grid>
 </Page>

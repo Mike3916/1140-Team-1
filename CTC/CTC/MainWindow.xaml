@@ -22,7 +22,7 @@
         <ComboBox x:Name="SelectTrain" HorizontalAlignment="Left" Margin="652,24,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="SelectTrain_SelectionChanged" IsDropDownOpen="False" Height="22" Grid.Row="1" Grid.Column="1">
             <Image Height="100" Width="100"/>
         </ComboBox>
-        <CheckBox x:Name="Mode" Content="Manual Mode" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Background}" HorizontalAlignment="Left" Margin="683,377,0,0" VerticalAlignment="Top" Checked="Set_Checked" Grid.Row="1" Height="15" Width="94" Grid.Column="1"/>
+        <CheckBox x:Name="Mode" Content="Manual Mode" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Background}" HorizontalAlignment="Left" Margin="683,377,0,0" VerticalAlignment="Top" Grid.Row="1" Height="15" Width="94" Grid.Column="1" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
         <Frame x:Name="Frame" Content="" Grid.RowSpan="2" NavigationUIVisibility="Hidden" Visibility="Visible" Grid.Column="1" Margin="203,24,245,10" ContentRendered="Frame_ContentRendered"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="560,97,0,0" Grid.RowSpan="2" TextWrapping="Wrap" VerticalAlignment="Top" Height="37" Width="122" RenderTransformOrigin="0.5,0.5" Text="Enter Block Line &amp; Number:&#xD;&#xA;">
             <TextBlock.RenderTransform>
