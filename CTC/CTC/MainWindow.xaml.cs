@@ -92,7 +92,17 @@ namespace CTC
 
         private void CheckBoxChanged(object sender, RoutedEventArgs e) ///The checkbox to put CTC in manual mode is checked
         {
-           
+            if (Mode.IsChecked==true) //This means system is in manual mode and the schedule can be loaded
+            {
+                LoadSchedule.IsEnabled = true; //enabled the load schedule button
+                Dispatch.IsEnabled = true; //enable dispatch new train button
+
+            }
+            else //This means the system is NOT in manual mode so the schedule should not be able to be loaded
+            {
+                LoadSchedule.IsEnabled = false; //disables the load schedule button
+                Dispatch.IsEnabled = false; //disable dispath new train button
+            }
 
         }
 
