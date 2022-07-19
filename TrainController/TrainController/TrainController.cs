@@ -22,6 +22,7 @@ namespace TrainController
         // Boolean for switching between auto and manual driving modes:
         // 'false' is software controller, 'true' is hardware controller:
         public bool mControlType;
+        public bool mSetControlType = false;
 
         // Boolean for controlling hardware functionality:
         public bool mSerialAccepted = true;
