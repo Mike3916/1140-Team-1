@@ -1,0 +1,65 @@
+﻿<Window x:Class="TrackModel_v0._1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TrackModel_v0._1"
+        mc:Ignorable="d"
+        Title="Track Model" WindowState="Normal" ResizeMode="NoResize" KeyDown="MainWindow_KeyDown" Width ="960" Height="639" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="41*"/>
+            <RowDefinition Height="593*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="16*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="315*"/>
+            <ColumnDefinition Width="140*"/>
+            <ColumnDefinition Width="167"/>
+            <ColumnDefinition Width="178*"/>
+            <ColumnDefinition Width="109*"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Grid.Column="8" HorizontalAlignment="Left" Height="99" Margin="48,461,0,0" Grid.Row="1" Stroke="Black" VerticalAlignment="Top" Width="224" Grid.ColumnSpan="2" Fill="#FFD8D8D8"/>
+
+        <ComboBox x:Name="LineCombo" Grid.Column="8" HorizontalAlignment="Left" Margin="47,18,0,0" Width="224" Text="Select a Line:" SelectionChanged="LineCombo_SelectionChanged" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="SectionCombo" Grid.Column="8" HorizontalAlignment="Left" Margin="47,4,0,0" VerticalAlignment="Top" Width="224" Text="Select a Line:" SelectionChanged="SectionCombo_SelectionChanged" Grid.Row="1" Grid.ColumnSpan="2" DropDownClosed="SectionCombo_Close" Height="22" />
+        <ComboBox x:Name="BlockCombo" Grid.Column="8" HorizontalAlignment="Left" Margin="47,30,0,0" VerticalAlignment="Top" Width="224" Text="Select a Line:" SelectionChanged="BlockCombo_SelectionChanged" Grid.Row="1" Grid.ColumnSpan="2" DropDownClosed="BlockCombo_Close" Height="22" />
+        <Rectangle Grid.Column="8" HorizontalAlignment="Left" Height="378" Margin="47,67,0,0" Stroke="Black" VerticalAlignment="Top" Width="224" Fill="Gray" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Button x:Name ="UploadCSV" Grid.Column="5" Content="Upload CSV" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Click="UploadCSV_Click" Height="20" Width="67"/>
+        <TextBox x:Name="FileText" Grid.Column="1" HorizontalAlignment="Left" Margin="14,30,0,0" Grid.RowSpan="2" TextWrapping="Wrap" Text="Input File Name" VerticalAlignment="Top" Width="286" TextChanged="FileTextBox_TextChanged" Grid.ColumnSpan="5" Height="17" KeyDown="FileText_KeyDown" GotKeyboardFocus="TextBoc_Focus"/>
+        <DataGrid x:Name ="LineDataGrid" Grid.Column="3" Grid.Row="1" d:ItemsSource="{Binding}" Margin="0,23,133,10" Grid.ColumnSpan="6" IsReadOnly="True"/>
+        <Button x:Name ="BrowseFile" Grid.Column="1" Content="Browse" HorizontalAlignment="Left" Margin="14,5,0,0" VerticalAlignment="Top" Click="BrowseFile_Click" Grid.ColumnSpan="4" Height="20" Width="42"/>
+        <TextBlock x:Name="Info_Text" Grid.Column="8" HorizontalAlignment="Left" Margin="50,55,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.204,-0.249" Grid.ColumnSpan="2" Height="388" Width="145" Foreground="#FFD4D1D1" TextAlignment="Left" LineHeight="6" ><Run/><LineBreak/><Run Text="Station:"/><LineBreak/><Run/><LineBreak/><Run Text="Occupied:"/><LineBreak/><Run/><LineBreak/><Run Text="Infrastructure:"/><LineBreak/><Run/><LineBreak/><Run Text="Speed Limit:"/><LineBreak/><Run/><LineBreak/><Run Text="Length:"/><LineBreak/><Run/><LineBreak/><Run Text="Grade:"/><LineBreak/><Run/><LineBreak/><Run Text="Elevation:"/><LineBreak/><LineBreak/><Run Text="Crossbar:"/><LineBreak/><LineBreak/><Run Text="Population:"/><LineBreak/><Run/><LineBreak/><Run Text="Signal:"/><LineBreak/><Run/><LineBreak/><Run Text="Switch:"/><LineBreak/><Run/><LineBreak/><Run Text="Track Heaters"/><LineBreak/><Run/></TextBlock>
+        <TextBlock x:Name="BlockText" Grid.Column="8" HorizontalAlignment="Left" Margin="49,52,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Block Information" VerticalAlignment="Top" Width="125" Height="16"/>
+        <TextBox x:Name="SpeedBox" Grid.Column="8" HorizontalAlignment="Left" Margin="158,168,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="86" TextAlignment="Right" Height="18" TextChanged="SpeedBox_TextChanged" Grid.ColumnSpan="2" />
+        <TextBox x:Name="LengthBox" Grid.Column="8" HorizontalAlignment="Left" Margin="158,199,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="86" TextAlignment="Right" Height="18" TextChanged="LengthBox_TextChanged" Grid.ColumnSpan="2" />
+        <TextBox x:Name="GradeBox" Grid.Column="8" HorizontalAlignment="Left" Margin="158,229,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="86" TextAlignment="Right" Height="18" TextChanged="GradeBox_TextChanged" Grid.ColumnSpan="2" />
+        <TextBox x:Name="ElevationBox" Grid.Column="8" HorizontalAlignment="Left" Margin="158,262,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="86" TextAlignment="Right" Height="18" TextChanged="ElevationBox_TextChanged" Grid.ColumnSpan="2" />
+        <TextBox x:Name="HeatBox" Grid.Column="8" HorizontalAlignment="Left" Margin="156,422,0,0" Grid.Row="1" TextWrapping="Wrap" Text="32" VerticalAlignment="Top" Width="86" TextAlignment="Right" Height="18" Grid.ColumnSpan="2" TextChanged="HeatBox_TextChanged" />
+        <TextBlock x:Name="OccupiedBlock" Grid.Column="8" HorizontalAlignment="Left" Margin="139,104,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="128" TextAlignment="Right" Height="16"/>
+        <TextBlock x:Name="InfrastructureBlock" Grid.Column="8" HorizontalAlignment="Left" Margin="139,133,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="129" Height="30" Grid.ColumnSpan="2" TextAlignment="Right"/>
+        <TextBlock x:Name="mph" Grid.Column="9" HorizontalAlignment="Left" Margin="71,169,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="32" Height="16" TextAlignment="Left"><Run Text="mph"/><LineBreak/><Run/></TextBlock>
+        <TextBlock x:Name="length" Grid.Column="9" HorizontalAlignment="Left" Margin="72,199,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="32" Height="16" TextAlignment="Left"><Run Text="feet"/><LineBreak/><Run/></TextBlock>
+        <TextBlock x:Name="grade" Grid.Column="9" HorizontalAlignment="Left" Margin="73,231,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="32" Height="16" TextAlignment="Left"><Run Text="%"/><LineBreak/><Run/></TextBlock>
+        <TextBlock x:Name="elev" Grid.Column="9" HorizontalAlignment="Left" Margin="72,264,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="32" Height="16" TextAlignment="Left"><Run Text="feet"/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
+        <ComboBox x:Name="SwitchCombo" Grid.Column="8" HorizontalAlignment="Left" Margin="157,390,0,0" Grid.Row="1" VerticalAlignment="Top" Width="86" Height="22" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="BlockText_Copy" Grid.Column="8" HorizontalAlignment="Left" Margin="52,445,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Murphy Zone" VerticalAlignment="Top" Width="125" Height="16" Grid.ColumnSpan="2"/>
+        <TextBlock Grid.Column="8" HorizontalAlignment="Left" Margin="52,466,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="Black" Height="94" Width="114"><Run Text="Track Rail"/><LineBreak/><Run/><LineBreak/><Run Text="Track Circuit"/><LineBreak/><Run/><LineBreak/><Run Text="Power"/></TextBlock>
+        <Button x:Name="FixTrackButton" Grid.Column="9" Content="Fix" HorizontalAlignment="Left" Margin="5,466,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20" Click="FixTrackButton_Click"/>
+        <Button x:Name="BreakTrackButton" Grid.Column="9" Content="Break" HorizontalAlignment="Left" Margin="49,466,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20" Click="BreakTrackButton_Click"/>
+        <Button x:Name="FixCircuitButton" Grid.Column="9" Content="Fix" HorizontalAlignment="Left" Margin="5,496,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20" Click="FixCircuitButton_Click"/>
+        <Button x:Name="BreakCircuitButton" Grid.Column="9" Content="Break" HorizontalAlignment="Left" Margin="49,496,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20" Click="BreakCircuitButton_Click"/>
+        <Button x:Name="FixPowerButton" Grid.Column="9" Content="Fix" HorizontalAlignment="Left" Margin="5,528,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20" Click="FixPowerButton_Click"/>
+        <Button x:Name="BreakPowerButton" Grid.Column="9" Content="Break" HorizontalAlignment="Left" Margin="49,528,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" Height="20" Click="BreakPowerButton_Click"/>
+        <TextBlock x:Name="temp" Grid.Column="9" HorizontalAlignment="Left" Margin="72,422,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="32" Height="16" TextAlignment="Left" Text="F&#xD;&#xA;"/>
+        <TextBlock x:Name="Select_Line_Section_Block" Grid.Column="8" HorizontalAlignment="Left" Margin="47,2,0,0" TextWrapping="Wrap" Text="Select Line/Section/Block" VerticalAlignment="Top" Width="153" Height="16" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="StationName" Grid.Column="8" HorizontalAlignment="Left" Margin="139,73,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="128" TextAlignment="Right" Height="16"/>
+        <Button x:Name="ToggleCrossbar" Grid.Column="8" Content="Button" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="159,292,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.463,-0.385" Width="85"/>
+        <TextBlock x:Name="Population" Grid.Column="8" HorizontalAlignment="Left" Margin="138,328,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="128" TextAlignment="Right" Height="16"/>
+
+    </Grid>
+</Window>

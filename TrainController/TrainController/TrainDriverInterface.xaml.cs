@@ -394,36 +394,36 @@ namespace TrainController
             // Update HW/SW indicator box:
             if (!mSelectedTrain.mControlType)
             {
-                ((MainWindow)Application.Current.MainWindow).SelectType.Text = "Software Controller";
-                ((MainWindow)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0xDF, 0x20));
+                SelectType.Text = "Software Controller";
+                SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0xDF, 0x20));
             }
             else if (mSelectedTrain.mControlType)
             {
-                ((MainWindow)Application.Current.MainWindow).SelectType.Text = "Hardware Controller";
-                ((MainWindow)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0x5F, 0xA0));
+                SelectType.Text = "Hardware Controller";
+                SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0x5F, 0xA0));
             }
             else
             {
-                ((MainWindow)Application.Current.MainWindow).SelectType.Text = "Select Controller Type";
-                ((MainWindow)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xDA, 0xDA, 0xDA));
+                SelectType.Text = "Select Controller Type";
+                SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xDA, 0xDA, 0xDA));
             }
 
             // Enable/Disable controls if selected train is in auto mode or manual mode:
-            ((MainWindow)Application.Current.MainWindow).AutoMode.IsEnabled = !mSelectedTrain.mAutoMode;
-            ((MainWindow)Application.Current.MainWindow).ManualMode.IsEnabled = mSelectedTrain.mAutoMode;
-            ((MainWindow)Application.Current.MainWindow).SetSpeedBox.IsEnabled = !mSelectedTrain.mAutoMode;
+            AutoMode.IsEnabled = !mSelectedTrain.mAutoMode;
+            ManualMode.IsEnabled = mSelectedTrain.mAutoMode;
+            SetSpeedBox.IsEnabled = !mSelectedTrain.mAutoMode;
 
             if (mSelectedTrain.mAutoMode) SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0x30, 0, 0, 0));
             else SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xDF, 0x20));
 
-            ((MainWindow)Application.Current.MainWindow).SetSpeed.IsEnabled = !mSelectedTrain.mAutoMode;
-            ((MainWindow)Application.Current.MainWindow).TempIncrease.IsEnabled = !mSelectedTrain.mAutoMode;
-            ((MainWindow)Application.Current.MainWindow).TempDecrease.IsEnabled = !mSelectedTrain.mAutoMode;
-            ((MainWindow)Application.Current.MainWindow).Announcements.IsEnabled = !mSelectedTrain.mAutoMode;
-            ((MainWindow)Application.Current.MainWindow).LeftDoors.IsEnabled = !mSelectedTrain.mAutoMode;
-            ((MainWindow)Application.Current.MainWindow).RightDoors.IsEnabled = !mSelectedTrain.mAutoMode;
-            ((MainWindow)Application.Current.MainWindow).InteriorLights.IsEnabled = !mSelectedTrain.mAutoMode;
-            ((MainWindow)Application.Current.MainWindow).ExteriorLights.IsEnabled = !mSelectedTrain.mAutoMode;
+            SetSpeed.IsEnabled = !mSelectedTrain.mAutoMode;
+            TempIncrease.IsEnabled = !mSelectedTrain.mAutoMode;
+            TempDecrease.IsEnabled = !mSelectedTrain.mAutoMode;
+            Announcements.IsEnabled = !mSelectedTrain.mAutoMode;
+            LeftDoors.IsEnabled = !mSelectedTrain.mAutoMode;
+            RightDoors.IsEnabled = !mSelectedTrain.mAutoMode;
+            InteriorLights.IsEnabled = !mSelectedTrain.mAutoMode;
+            ExteriorLights.IsEnabled = !mSelectedTrain.mAutoMode;
         }
 
         public void addController()

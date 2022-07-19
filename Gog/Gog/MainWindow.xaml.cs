@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using TrackModel_v0._1;
 
 namespace Gog
 {
@@ -26,7 +25,9 @@ namespace Gog
         {
             InitializeComponent();
             TrackModel_v0._1.MainWindow track = new TrackModel_v0._1.MainWindow();
-            track.Show();
+            //TrainController.MainWindow trainCtrl = new TrainController.MainWindow();
+            TrainModel.MainWindow trains = new TrainModel.MainWindow();
+            //trainCtrl.Show();
         }
     }
 }

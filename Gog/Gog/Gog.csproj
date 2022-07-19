@@ -1,18 +1,25 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Track Model\TrackModel_v0.1.csproj" />
+    <PackageReference Include="System.IO.Ports" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="TrackModel_v0.1">
-      <HintPath>..\..\Track Model\obj\Debug\netcoreapp3.1\TrackModel_v0.1.dll</HintPath>
+    <Reference Include="Track Model">
+      <HintPath>..\..\Track Model\Track Model\bin\Release\net6.0-windows\Track Model.dll</HintPath>
+    </Reference>
+    <Reference Include="TrainController">
+      <HintPath>..\..\TrainController\TrainController\bin\Release\net6.0-windows\TrainController.dll</HintPath>
+    </Reference>
+    <Reference Include="TrainModel">
+      <HintPath>..\..\Train Model\TrainModel\bin\Release\net6.0-windows\TrainModel.dll</HintPath>
     </Reference>
   </ItemGroup>
 
