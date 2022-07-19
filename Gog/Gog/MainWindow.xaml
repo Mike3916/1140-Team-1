@@ -1,12 +1,19 @@
-﻿<Window x:Class="Gog.MainWindow"
+﻿<Window x:Name="StartUp" x:Class="Gog.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gog"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Activated="StartUpActivated" Deactivated="StartUpInactive">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="689*"/>
+            <ColumnDefinition Width="111*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="TrackModelButton" Content="Track Model" HorizontalAlignment="Left" Margin="109,112,0,0" VerticalAlignment="Top" Click="TrackModelButton_Click"/>
+        <Button x:Name="TrainModelButton" Content="Train Model" HorizontalAlignment="Left" Margin="335,122,0,0" VerticalAlignment="Top" Click="TrainModelButton_Click"/>
+        <Button x:Name="TrainCtrlButton" Content="Train Controller" HorizontalAlignment="Left" Margin="177,282,0,0" VerticalAlignment="Top" Click="TrainCtrlButton_Click"/>
 
     </Grid>
 </Window>

@@ -439,5 +439,10 @@ namespace TrainController
             selectType.Show();
             selectType.Activate();
         }
+
+        private void TrainControllerActive(object sender, EventArgs e)
+        {
+            Application.Current.MainWindow = this;
+        }
     }
 }
