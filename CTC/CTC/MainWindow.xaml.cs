@@ -33,7 +33,7 @@ namespace CTC
         Dispatch dispatch = new Dispatch();
         Train_Data train_data = new Train_Data();
         Block_Data block_data = new Block_Data();
-        List<Line> mLines;
+        public List<Line> mLines;
 
 
 
