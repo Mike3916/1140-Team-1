@@ -61,7 +61,7 @@ namespace Track_Controller_1._02
         //<mPort>: integer representing the TCP port to be used to communicate with the server
         //<mMessage>: integer array of data to send.
         //</int[]>: returns server response
-        public int[] MessageSender(string mIP, int mPort, int[] mMessage)
+        public string MessageSender(string mIP, int mPort, string mMessage)
         {
         connection:
             try
@@ -73,37 +73,25 @@ namespace Track_Controller_1._02
                 //Creates a buffer (byte array) and encodes int array into Bytes
                 int mByteCount = mMessage.Length * sizeof(int);
                 byte[] mSendData = new byte[mByteCount];
-                Buffer.BlockCopy(mMessage, 0, mSendData, 0, mSendData.Length);
-                
-      
+                mSendData = Encoding.ASCII.GetBytes(mMessage);
+
+
                 //Writes data to the server
                 mStream = mClient.GetStream();
                 mStream.Write(mSendData, 0, mSendData.Length);
 
                 //Reads data from the server
-                mBReader = new BinaryReader(mStream);
-                byte[] mByteResponse = mBReader.ReadBytes((int)mBReader.BaseStream.Length);
-                int[] result = Array.ConvertAll(mByteResponse, Convert.ToInt32);
-
-                string4 = "";
-
-                foreach (int i in result)
-                {
-                    //string3 += test1[i].ToString();
-                    string4 += result[i].ToString();
-                }
-                MessageBox.Show("Hardware Returns " + string4);
+                StreamReader sr = new StreamReader(mStream);
+                string response = sr.ReadLine();
 
                 //returns integer response
-                return result;
+                return response;
             }
             catch (Exception e)
             {
                 //returns a single element array with 0 value on connection failure
-                int[] fail = new int[1];
-                fail[0] = 0;
 
-                return fail;
+                return "";
             }
         }
 
