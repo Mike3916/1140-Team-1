@@ -49,7 +49,7 @@ namespace CTC
             Frame.NavigationService.Navigate(train_data);
         }
 
-      
+        
 
         private void LoadFile_Click(object sender, RoutedEventArgs e)
         {

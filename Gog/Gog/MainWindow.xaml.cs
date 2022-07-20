@@ -77,13 +77,14 @@ namespace Gog
 
         private void CTC_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (ctc==null)
+            if (ctc == null)
             {
                 Application.Current.MainWindow = ctc;
                 ctc = new CTC.MainWindow();
                 ctc.Show();
-          
-
+            }
+            else
+                ctc.Activate();
         }
 
         private void StartUpActivated(object sender, EventArgs e)
@@ -118,18 +119,6 @@ namespace Gog
             {
 
             }
-        }
-
-        private void CTCButton_Clikc(object sender, RoutedEventArgs e)
-        {
-            if (ctc == null)
-            {
-                Application.Current.MainWindow = ctc;
-                ctc = new CTC.MainWindow();
-                ctc.Show();
-            }
-            else
-                ctc.Activate();
         }
 
         
