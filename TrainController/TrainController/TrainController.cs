@@ -621,8 +621,21 @@ namespace TrainController
             }
         }
 
+        /*public void UpdateNonVitals(bool trainUnderground, bool trainLeftDoors, bool trainRightDoors)
+        {
+            if (mAutoMode)
+            {
+                mInteriorLightsStatus = trainUnderground;
+                mExteriorLightsStatus = trainUnderground;
+                mLeftDoorsStatus = trainLeftDoors;
+                mRightDoorsStatus = trainRightDoors;
+            }
+        }*/
+
         public void CalculatePowerSW(object sender, EventArgs e)
         {
+            double powerCheck = 0;
+
             if (mAutoMode)
             {
                 Ek_prev = Ek;
@@ -647,7 +660,7 @@ namespace TrainController
                         Uk = Uk;
                     }
 
-                    mCurPower = (mKp * Ek) + (mKi * Uk);
+                    powerCheck = (mKp * Ek) + (mKi * Uk);
                 }
                 else if (mCurSpeed > mCmdSpeed)
                 {
@@ -660,7 +673,7 @@ namespace TrainController
                         Uk = Uk;
                     }
 
-                    mCurPower = (mKp * Ek) + (mKi * Uk);
+                    powerCheck = (mKp * Ek) + (mKi * Uk);
                 }
                 else
                 {
@@ -680,7 +693,7 @@ namespace TrainController
                         Uk = Uk;
                     }
 
-                    mCurPower = (mKp * Ek) + (mKi * Uk);
+                    powerCheck = (mKp * Ek) + (mKi * Uk);
                 }
                 else if (mCurSpeed > mSetSpeed)
                 {
@@ -693,12 +706,26 @@ namespace TrainController
                         Uk = Uk;
                     }
 
-                    mCurPower = (mKp * Ek) + (mKi * Uk);
+                    powerCheck = (mKp * Ek) + (mKi * Uk);
                 }
                 else
                 {
                     mCurPower = 0;
                 }
+            }
+
+            // Check calculate power not above max
+            if (powerCheck > Pmax)
+            {
+                mCurPower = Pmax;
+            }
+            else if (powerCheck < -Pmax)
+            {
+                mCurPower = -Pmax;
+            }
+            else
+            {
+                mCurPower = powerCheck;
             }
         }
 
@@ -706,6 +733,7 @@ namespace TrainController
         {
             string output;
             double[] powerOutput = new double[3];
+            double powerCheck = 0;
 
             for (int i = 0; i < 3; i++)
             {
@@ -723,23 +751,37 @@ namespace TrainController
 
             // Any pair of outputs are equal (Modal calc):
             if (powerOutput[0] == powerOutput[1])
-                mCurPower = powerOutput[0];
+                powerCheck = powerOutput[0];
 
             else if (powerOutput[0] == powerOutput[2])
-                mCurPower = powerOutput[0];
+                powerCheck = powerOutput[0];
 
             else if (powerOutput[1] == powerOutput[2])
-                mCurPower = powerOutput[1];
+                powerCheck = powerOutput[1];
 
             // No outputs match, choose smallest:
             else if (powerOutput[0] <= powerOutput[1] && powerOutput[0] <= powerOutput[2])
-                mCurPower = powerOutput[0];
+                powerCheck = powerOutput[0];
 
             else if (powerOutput[1] <= powerOutput[0] && powerOutput[1] <= powerOutput[2])
-                mCurPower = powerOutput[1];
+                powerCheck = powerOutput[1];
 
             else
-                mCurPower = powerOutput[2];
+                powerCheck = powerOutput[2];
+
+            // Check calculate power not above max
+            if (powerCheck > Pmax)
+            {
+                mCurPower = Pmax;
+            }
+            else if (powerCheck < -Pmax)
+            {
+                mCurPower = -Pmax;
+            }
+            else
+            {
+                mCurPower = powerCheck;
+            }
         }
     }
 }

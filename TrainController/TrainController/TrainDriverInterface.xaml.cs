@@ -30,7 +30,7 @@ namespace TrainController
         // Dispatch timer period (while in testing):
         public int T = 250; // 250 ms
 
-        private bool actualClose = false;
+        public bool actualClose = false;
 
         public ControlPanel()
         {

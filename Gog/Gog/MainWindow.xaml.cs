@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,9 +28,11 @@ namespace Gog
         TrainModel.MainWindow trains;
         CTC.MainWindow ctc;
 
+        //Controller trackController = new Controller();
+        //trackController.CTCRead(ctc.commandedAuthority)
+
         DispatcherTimer mGlobalTimer;
         int mIterationMultiplier = 1;
-
 
         public MainWindow()
         {
@@ -120,7 +123,12 @@ namespace Gog
 
             }
         }
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            // TODO: Add for every module
 
-        
+            trainCtrl.actualClose = true;
+            trainCtrl.Close();
+        }
     }
 }
