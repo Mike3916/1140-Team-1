@@ -39,8 +39,8 @@
         <Button x:Name="TestPanel" Click="Button_Click" ClickMode="Press" Content="Open Test Panel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="540,426,0,0" Height="28" Width="220" FontSize="16"/>
 
         <TextBox x:Name="SetSpeedBox" HorizontalAlignment="Left" Margin="422,336,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="41" TextAlignment="Center" KeyDown="KeyDownButton"/>
-        <ComboBox x:Name="mControllerList" HorizontalAlignment="Left" Margin="151,20,0,0" VerticalAlignment="Top" Width="130" SelectionChanged="SelectTrain_SelectionChanged"/>
-        <Label x:Name="SelectTrainLabel" Content="Select Train:" HorizontalAlignment="Left" Margin="41,16,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Width="100" FontSize="15" HorizontalContentAlignment="Center" Height="30"/>
-        <Button x:Name="CloseButton" Click="Button_Click" ClickMode="Press" Content="Close Controller" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="631,20,0,0" Height="26" Width="129" Background="#FFFF5A5A" FontSize="15"/>
+        <ComboBox x:Name="mControllerList" HorizontalAlignment="Left" Margin="627,22,0,0" VerticalAlignment="Top" Width="130" SelectionChanged="SelectTrain_SelectionChanged"/>
+        <Label x:Name="SelectTrainLabel" Content="Select Train:" HorizontalAlignment="Left" Margin="516,18,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Width="97" FontSize="15" HorizontalContentAlignment="Center" Height="30"/>
+        <Button x:Name="CloseButton" Click="Button_Click" ClickMode="Press" Content="Close Controller" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="41,20,0,0" Height="26" Width="129" Background="#FFFF5A5A" FontSize="15"/>
     </Grid>
 </Window>

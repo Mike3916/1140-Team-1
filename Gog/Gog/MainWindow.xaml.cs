@@ -122,8 +122,14 @@ namespace Gog
             for (int i = 0; i < mIterationMultiplier; i++)
             {
                 //trainCtrl.checkUpdatedValues();
-                ctc.SetTrackData(track.);
-                track.GetT
+                //ctc.SetTrackData(track.);
+                //track.GetT
+
+                /*for (int i = 0; i < trains.trainList.Count; i++)
+                {
+                    trains.UpdateValues(trainCtrl.mTrainSetList[i],i);
+                    trainCtrl.UpdateValues(trains.mTrainList[i],i);
+                }*/
             }
         }
         protected override void OnClosing(CancelEventArgs e)
