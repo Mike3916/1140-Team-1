@@ -107,8 +107,16 @@ namespace CTC
 =======
                 train_data.Dest.IsEnabled = true; //on the train_data page, enable editing of the Destination box if the user is in manual mode
                 train_data.ETA.IsEnabled = true; // on the train_data page, enable editing of the ETA box
+<<<<<<< Updated upstream
                 
 >>>>>>> CTC
+=======
+                block_data.Left.IsEnabled = true; //on block_data page, enable editing of left/right switch buttons
+                block_data.Right.IsEnabled = true;
+                block_data.Close.IsEnabled = true; //on block_data page, disabled editing of close/open block status
+                block_data.Open.IsEnabled = true;
+
+>>>>>>> Stashed changes
 
             }
             else //This means the system is NOT in manual mode so the schedule should not be able to be loaded
@@ -119,7 +127,14 @@ namespace CTC
 =======
                 train_data.Dest.IsEnabled = false; //on the train_data page, disable editing of the Destination box
                 train_data.ETA.IsEnabled = false; //on the train_data page, disable the editing of the ETA box
+<<<<<<< Updated upstream
 >>>>>>> CTC
+=======
+                block_data.Left.IsEnabled = false; //on block_data page, disable editing of left/right switch buttons
+                block_data.Right.IsEnabled = false;
+                block_data.Close.IsEnabled = false; //on block_data page, disabled editing of close/open block status
+                block_data.Open.IsEnabled = false;
+>>>>>>> Stashed changes
             }
 
         }
