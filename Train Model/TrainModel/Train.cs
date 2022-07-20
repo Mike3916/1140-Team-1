@@ -31,6 +31,7 @@ namespace TrainObject
         private bool doorR;
         private bool doorL;
         private int temperature=74;
+        private double timeTillNextBlock;
 
         private double blockDist;
         private double currDist;
@@ -47,7 +48,7 @@ namespace TrainObject
         private const double decelerationLimitEmergency = -2.73;
         private const double velocityLimit = 19.4444;
 
-        private const double samplePeriod = 0.002;
+        private const double samplePeriod = 0.001;
 
         private const double frictionCoefficient = 0.01;
 
@@ -216,20 +217,17 @@ namespace TrainObject
             }
             else if (serviceBrake && !emergencyBrake)
             {
-                if (Math.Abs(accelerationCalc) + decelerationLimitService>0)
-                {if (accelerationCalc < 0)
-                        return accelerationCalc - decelerationLimitService;
-                    else
+                powerCmd = 0;
+                if (Math.Abs(accelerationCalc) + decelerationLimitService > 0)
+                {
+                    if (accelerationCalc > 0)
+                    {
                         return accelerationCalc + decelerationLimitService;
+                    }
+                    else
+                        return accelerationCalc - decelerationLimitService;
                 }
-                else if(accelerationCalc>0)
-                {
-                    return decelerationLimitService;
-                }
-                else
-                {
-                    return -decelerationLimitService;
-                }
+                else return decelerationLimitService;
             }
             else if (emergencyBrake)
             {
@@ -250,7 +248,7 @@ namespace TrainObject
 
         public double getVelocity()
         {
-            double velocityCalc = currentSpeed + ((samplePeriod / 2) * (getAcceleration() + previousAcceleration));
+            double velocityCalc = currentSpeed + ((samplePeriod ) * (getAcceleration() + previousAcceleration));
 
             if (velocityCalc > velocityLimit)
                 return velocityLimit;
@@ -264,8 +262,16 @@ namespace TrainObject
         {
             previousAcceleration = getAcceleration();
             currentSpeed = getVelocity();
+            currDist += currentSpeed * samplePeriod;
+            timeTillNextBlock = (blockDist - currDist)/currentSpeed;
+
+
         }
 
+        public double getTimeTillNextBlock()
+        {
+            return timeTillNextBlock;
+        }
 
 
 
@@ -368,7 +374,6 @@ namespace TrainObject
         {
             if (currDist < blockDist)
             {
-                currDist += currentSpeed * samplePeriod;
                 return false;
             }
             else
