@@ -634,85 +634,104 @@ namespace TrainController
 
         public void CalculatePowerSW(object sender, EventArgs e)
         {
+            double[] powerOutput = new double[3];
             double powerCheck = 0;
 
-            if (mAutoMode)
+            for (int i = 0; i < 3; i++)
             {
-                Ek_prev = Ek;
-                Ek = mCmdSpeed - mCurSpeed;
-            }
-            else
-            {
-                Ek_prev = Ek;
-                Ek = mSetSpeed - mCurSpeed;
-            }
-
-            if (mAutoMode)
-            {
-                if (mCurSpeed < mCmdSpeed)
+                if (mAutoMode)
                 {
-                    if (mCurPower < Pmax)
+                    Ek_prev = Ek;
+                    Ek = mCmdSpeed - mCurSpeed;
+
+                    if (mCurSpeed < mCmdSpeed)
                     {
-                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else if (mCurSpeed > mCmdSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
                     }
                     else
                     {
-                        Uk = Uk;
+                        mCurPower = 0;
                     }
-
-                    powerCheck = (mKp * Ek) + (mKi * Uk);
-                }
-                else if (mCurSpeed > mCmdSpeed)
-                {
-                    if (mCurPower < Pmax)
-                    {
-                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
-                    }
-                    else
-                    {
-                        Uk = Uk;
-                    }
-
-                    powerCheck = (mKp * Ek) + (mKi * Uk);
                 }
                 else
                 {
-                    mCurPower = 0;
+                    Ek_prev = Ek;
+                    Ek = mSetSpeed - mCurSpeed;
+
+                    if (mCurSpeed < mSetSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else if (mCurSpeed > mSetSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else
+                    {
+                        mCurPower = 0;
+                    }
                 }
             }
+
+            // Any pair of outputs are equal (Modal calc):
+            if (powerOutput[0] == powerOutput[1])
+                powerCheck = powerOutput[0];
+
+            else if (powerOutput[0] == powerOutput[2])
+                powerCheck = powerOutput[0];
+
+            else if (powerOutput[1] == powerOutput[2])
+                powerCheck = powerOutput[1];
+
+            // No outputs match, choose smallest:
+            else if (powerOutput[0] <= powerOutput[1] && powerOutput[0] <= powerOutput[2])
+                powerCheck = powerOutput[0];
+
+            else if (powerOutput[1] <= powerOutput[0] && powerOutput[1] <= powerOutput[2])
+                powerCheck = powerOutput[1];
+
             else
-            {
-                if (mCurSpeed < mSetSpeed)
-                {
-                    if (mCurPower < Pmax)
-                    {
-                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
-                    }
-                    else
-                    {
-                        Uk = Uk;
-                    }
-
-                    powerCheck = (mKp * Ek) + (mKi * Uk);
-                }
-                else if (mCurSpeed > mSetSpeed)
-                {
-                    if (mCurPower < Pmax)
-                    {
-                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
-                    }
-                    else
-                    {
-                        Uk = Uk;
-                    }
-
-                    powerCheck = (mKp * Ek) + (mKi * Uk);
-                }
-                else
-                {
-                    mCurPower = 0;
-                }
-            }
+                powerCheck = powerOutput[2];
 
             // Check calculate power not above max
             if (powerCheck > Pmax)

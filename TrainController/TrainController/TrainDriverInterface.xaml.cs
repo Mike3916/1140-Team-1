@@ -28,7 +28,7 @@ namespace TrainController
         public Controller mSelectedTrain;
 
         // Dispatch timer period (while in testing):
-        public int T = 250; // 250 ms
+        public int T = 1; // 1 ms
 
         public bool actualClose = false;
 
