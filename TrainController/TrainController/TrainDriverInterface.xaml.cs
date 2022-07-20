@@ -23,9 +23,8 @@ namespace TrainController
     public partial class ControlPanel : Window
     {
         // Train controller objects/values:
-        public Controller[] mTrainSet = new Controller[30];
+        public List<Controller> mTrainSetList = new List<Controller>();
         public Controller mSelectedTrain;
-        public int mTrainCount = 0;
 
         // Dispatch timer period (while in testing):
         public int T = 250; // 250 ms
@@ -34,11 +33,10 @@ namespace TrainController
         {
             InitializeComponent();
 
-            mTrainSet[mTrainCount] = new Controller();
-            mSelectedTrain = mTrainSet[mTrainCount];
-            mControllerList.Items.Insert(mTrainCount,"Train " + mTrainCount);
-            mControllerList.SelectedIndex = mTrainCount;
-            mTrainCount++;
+            mSelectedTrain = new Controller();
+            mTrainSetList.Add(mSelectedTrain);
+            mControllerList.Items.Insert((mTrainSetList.Count - 1),"Train " + (mTrainSetList.Count - 1));
+            mControllerList.SelectedIndex = (mTrainSetList.Count - 1);
 
             // Disable all buttons on main window until a HW_SW window option is selected:
             ManualMode.IsEnabled = false;
@@ -497,16 +495,15 @@ namespace TrainController
 
         public void SelectTrain_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            mSelectedTrain = mTrainSet[mControllerList.SelectedIndex];
+            mSelectedTrain = mTrainSetList[mControllerList.SelectedIndex];
         }
 
         public void addController()
         {
-            mTrainSet[mTrainCount] = new Controller();
-            mSelectedTrain = mTrainSet[mTrainCount];
-            mControllerList.Items.Insert(mTrainCount,"Train " + mTrainCount);
-            mControllerList.SelectedIndex = mTrainCount;
-            mTrainCount++;
+            mSelectedTrain = new Controller();
+            mTrainSetList.Add(mSelectedTrain);
+            mControllerList.Items.Insert((mTrainSetList.Count - 1), "Train " + (mTrainSetList.Count - 1));
+            mControllerList.SelectedIndex = (mTrainSetList.Count - 1);
 
             HW_SW selectType = new HW_SW(this);
             selectType.Topmost = true;
