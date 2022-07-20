@@ -33,7 +33,7 @@ namespace CTC
         Dispatch dispatch = new Dispatch();
         Train_Data train_data = new Train_Data();
         Block_Data block_data = new Block_Data();
-
+        List<Line> mLines;
 
 
 
@@ -134,6 +134,10 @@ namespace CTC
             Frame.NavigationService.Navigate(dispatch); ///Set the frame area to go to the dispatch_page
         }
 
+        public void SetTrackData(List<Line> data)
+        {
+            mLines = data;
+        }
         private void TextBox_KeyDown(object sender, KeyEventArgs e) ///After the user types the block code in and hits the enter key
         {
             if (e.Key == Key.Return)
