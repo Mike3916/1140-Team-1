@@ -27,19 +27,26 @@ namespace CTC
     /// 
     public partial class MainWindow : Window
     {
-        public List<Train> TrainList = new List<Train>(); //Global TrainList variable
+        public List<Train> TrainList = new List<Train>(); //Global TrainList
+                                                          
+        Default_Page default_page = new Default_Page(); //Create the center-pane windows that will be switched between
+        Dispatch dispatch = new Dispatch();
+        Train_Data train_data = new Train_Data();
+        Block_Data block_data = new Block_Data();
+
+
+
 
         public MainWindow()
         {
             InitializeComponent(); ///Default code
-            Default_Page page = new Default_Page();
-            Frame.NavigationService.Navigate(page);
+            Frame.NavigationService.Navigate(default_page);
         }    
 
         private void SelectTrain_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Train_Data page = new Train_Data();
-            Frame.NavigationService.Navigate(page);
+
+            Frame.NavigationService.Navigate(train_data);
         }
 
       
@@ -96,20 +103,31 @@ namespace CTC
             {
                 LoadSchedule.IsEnabled = true; //enabled the load schedule button
                 Dispatch.IsEnabled = true; //enable dispatch new train button
+<<<<<<< HEAD
+=======
+                train_data.Dest.IsEnabled = true; //on the train_data page, enable editing of the Destination box if the user is in manual mode
+                train_data.ETA.IsEnabled = true; // on the train_data page, enable editing of the ETA box
+                
+>>>>>>> CTC
 
             }
             else //This means the system is NOT in manual mode so the schedule should not be able to be loaded
             {
                 LoadSchedule.IsEnabled = false; //disables the load schedule button
                 Dispatch.IsEnabled = false; //disable dispath new train button
+<<<<<<< HEAD
+=======
+                train_data.Dest.IsEnabled = false; //on the train_data page, disable editing of the Destination box
+                train_data.ETA.IsEnabled = false; //on the train_data page, disable the editing of the ETA box
+>>>>>>> CTC
             }
 
         }
 
         private void Dispatch_Click(object sender, RoutedEventArgs e) ///Dispatch train button selected, switch to the dispatch page
         {
-            Dispatch page = new Dispatch();
-            Frame.NavigationService.Navigate(page); ///Set the frame area to go to the dispatch_page
+            
+            Frame.NavigationService.Navigate(dispatch); ///Set the frame area to go to the dispatch_page
         }
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e) ///After the user types the block code in and hits the enter key
@@ -117,8 +135,7 @@ namespace CTC
             if (e.Key == Key.Return)
             {
                 //enter key is down
-                Block_Data page = new Block_Data();
-                Frame.NavigationService.Navigate(page);
+                Frame.NavigationService.Navigate(block_data);
             }
         }
 
@@ -130,14 +147,12 @@ namespace CTC
 
         private void Clear_Click(object sender, RoutedEventArgs e)
         {
-            Default_Page page = new Default_Page();
-            Frame.NavigationService.Navigate(page);
+            Frame.NavigationService.Navigate(default_page);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Block_Data page = new Block_Data();
-            Frame.NavigationService.Navigate(page);
+            Frame.NavigationService.Navigate(block_data);
         }
     }
 }
