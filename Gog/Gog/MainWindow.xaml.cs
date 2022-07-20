@@ -69,6 +69,9 @@ namespace Gog
             else
                 trainCtrl.Activate();
 
+            trainCtrl.mTrainSet[0].T = 300;
+            MessageBox.Show(trainCtrl.mTrainSet[0].T.ToString());
+
         }
 
         private void StartUpActivated(object sender, EventArgs e)

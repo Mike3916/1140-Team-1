@@ -38,17 +38,34 @@ namespace Track_Controller_1._02
         //port as an array of integers.
         //<[]mPacket>: contains the block states to be written to the PLC
         //<int[]> returns the block command states to be written to the track
-        public int[] SendPacket(int[] mPacket )
+        public int[] SendPacket(int[] mPacket, string mVarName1, string mVarName2 )
         {
 
-            hvar = ads.CreateVariableHandle("GVL.mInputArray");
+            hvar = ads.CreateVariableHandle(mVarName1);
             ads.WriteAny(hvar, mPacket);
-            hvar = ads.CreateVariableHandle("GVL.mOutputArray");
-            mPacket = (int[])ads.ReadAny(hvar, typeof(int[]), new int[] { 75 });
+            hvar = ads.CreateVariableHandle(mVarName2);
+            mPacket = (int[])ads.ReadAny(hvar, typeof(int[]), new int[] { mPacket.Length });
 
             return mPacket;
         }
 
-       
+        //CTCSend: Calls the sendpacket function with specified variable names to read/write
+        //<mPacket>: integer array of values to send to PLC
+        //<int[]>: integer array of values returned from the PLC
+        public int[] CTCSend(int[] mPacket)
+        {
+            int[] temp = SendPacket(mPacket, "GVL.mInFromCTC", "GVL.mOutToCTC");
+            return temp;
+        }
+
+        //TrackSend: Calls the sendpacket function with specified variable names to read/write
+        //<mPacket>: integer array of values to send to PLC
+        //<int[]>: integer array of values returned from the PLC
+        public int[] TrackSend(int[] mPacket)
+        {
+            int[] temp = SendPacket(mPacket, "GVL.mInFromTrack", "GVL.mOutToTrack");
+            return temp;
+        }
+
     }
 }
