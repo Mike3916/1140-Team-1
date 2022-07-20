@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -38,6 +39,8 @@ namespace TrackModel
         int trainLine = 0,
             trainSect = 0,
             trainBlock = 0;
+
+        public bool actualClose = false;
 
         int[] mredRoute = {0, 9, 8, 7, 6, 5, 4, 3, 2, 1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 76, 75,
                                 74, 73, 72, 33, 34, 35, 36, 37, 38, 71, 70, 69, 68, 67, 44, 45, 46, 47, 48, 49, 50, 51,
@@ -534,7 +537,15 @@ namespace TrackModel
                 FixCircuitButton.Background = Brushes.Gray;
             }
         }
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (!actualClose)
+            {
+                e.Cancel = true;
+                this.WindowState = WindowState.Minimized;
+            }
+        }
 
-       
+
     }
 }

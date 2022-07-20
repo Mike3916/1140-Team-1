@@ -25,6 +25,7 @@ namespace Gog
         TrackModel.MainWindow track;
         TrainController.ControlPanel trainCtrl;
         TrainModel.MainWindow trains;
+        CTC.MainWindow ctc;
 
         DispatcherTimer globalTimer;
 
@@ -77,6 +78,7 @@ namespace Gog
             Application.Current.MainWindow = trainCtrl;
             Application.Current.MainWindow = trains;
             Application.Current.MainWindow = track;
+            Application.Current.MainWindow = ctc;
         }
 
         private void StartUpInactive(object sender, EventArgs e)
@@ -100,6 +102,18 @@ namespace Gog
         private void updateTick(object sender, EventArgs e)
         {
 
+        }
+
+        private void CTCButton_Clikc(object sender, RoutedEventArgs e)
+        {
+            if (ctc == null)
+            {
+                Application.Current.MainWindow = ctc;
+                ctc = new CTC.MainWindow();
+                ctc.Show();
+            }
+            else
+                ctc.Activate();
         }
     }
 }
