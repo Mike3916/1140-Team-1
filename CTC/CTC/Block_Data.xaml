@@ -29,5 +29,9 @@
             </Rectangle.RenderTransform>
         </Rectangle>
         <TextBlock HorizontalAlignment="Left" Margin="151,236,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top"/>
+        <Rectangle Fill="LightGray" HorizontalAlignment="Left" Height="42" Margin="235,104,0,0" Stroke="Black" VerticalAlignment="Top" Width="78"/>
+        <TextBlock HorizontalAlignment="Left" Margin="242,117,0,0" TextWrapping="Wrap" Text="Signal Light" VerticalAlignment="Top"/>
+        <Rectangle Fill="LightGray" HorizontalAlignment="Left" Height="42" Margin="228,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="92"/>
+        <TextBlock HorizontalAlignment="Left" Margin="232,0,0,0" TextWrapping="Wrap" Text="Crossing Status" VerticalAlignment="Center"/>
     </Grid>
 </Page>

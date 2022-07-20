@@ -131,7 +131,6 @@ namespace CTC
 
         private void Dispatch_Click(object sender, RoutedEventArgs e) ///Dispatch train button selected, switch to the dispatch page
         {
-            
             Frame.NavigationService.Navigate(dispatch); ///Set the frame area to go to the dispatch_page
         }
 
