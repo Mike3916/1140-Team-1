@@ -120,7 +120,12 @@ namespace TrackModel
                 sendTrain(testWindow.authority, testWindow.speed, testWindow.destination);
         }
 
-
+        public List<Line> GetTrackData()
+        {
+            if (mnumLines != 2)
+                return null;
+            return mLines;
+        }
 
         private DataTable MakeLineDataTable(int lineIdx)
         {
