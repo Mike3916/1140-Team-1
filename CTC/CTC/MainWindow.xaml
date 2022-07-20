@@ -27,9 +27,9 @@
         <Button x:Name="Clear" Content="Clear" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="68,409,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="Clear_Click"/>
         <TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="572,27,0,0" Grid.RowSpan="2" TextWrapping="Wrap" Text="Select Train:" VerticalAlignment="Top"/>
         <Button Content="See Block" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="685,180,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="Button_Click"/>
-        <ComboBox x:Name="Line" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="685,78,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="54"/>
-        <ComboBox Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="685,105,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="54"/>
-        <ComboBox x:Name="Block" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="686,132,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="54"/>
+        <ComboBox x:Name="LineCombo" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="685,78,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="54"/>
+        <ComboBox x:Name="SectionCombo" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="685,105,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="54"/>
+        <ComboBox x:Name="BlockCombo" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="686,132,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="54"/>
         <TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="654,81,0,0" Grid.RowSpan="2" TextWrapping="Wrap" Text="Line" VerticalAlignment="Top"/>
         <TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="640,108,0,0" Grid.RowSpan="2" TextWrapping="Wrap" Text="Section" VerticalAlignment="Top"/>
         <TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="651,135,0,0" Grid.RowSpan="2" TextWrapping="Wrap" Text="Block" VerticalAlignment="Top"/>

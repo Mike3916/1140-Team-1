@@ -104,13 +104,13 @@ namespace Gog
             }
         }
 
-        private void InitTimer()
+        private void InitTimer()    
         {
             mGlobalTimer = new DispatcherTimer();
 
             mGlobalTimer.Tick += new EventHandler(updateTick);
 
-            mGlobalTimer.Interval = new TimeSpan(0, 0, 0, 0, 1);
+            mGlobalTimer.Interval = new TimeSpan(0, 0, 0, 0, 1); //1 millisecond
             mGlobalTimer.Start();
         }
 
@@ -119,8 +119,8 @@ namespace Gog
             for (int i = 0; i < mIterationMultiplier; i++)
             {
                 //trainCtrl.checkUpdatedValues();
-                ctc.setTrackData(track.GetTrackData());
-
+                ctc.SetTrackData(track.);
+                track.GetT
             }
         }
 

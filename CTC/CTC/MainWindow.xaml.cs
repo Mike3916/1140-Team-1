@@ -84,8 +84,9 @@ namespace CTC
                     
                     int numTrains = trackLine.Count; //The number of trains 
                     Train.numTrains = numTrains;    //Save to Train static member variable
-                   
+
                     //Create List of trains
+                    SelectTrain.Items.Clear(); //Clears the default item pre-loaded into combo-box
                     for (i=0; i < numTrains; i++)
                     {
                         TrainList.Add(new Train {line = trackLine[i], name = name[i], destination = destination[i], ETA = ETA[i] });
@@ -127,10 +128,7 @@ namespace CTC
             }
 
         }
-        public void SetTrackData(List<object> data)
-        {
 
-        }
         private void Dispatch_Click(object sender, RoutedEventArgs e) ///Dispatch train button selected, switch to the dispatch page
         {
             
