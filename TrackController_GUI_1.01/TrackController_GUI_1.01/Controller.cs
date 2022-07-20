@@ -27,25 +27,32 @@ namespace Track_Controller_1._02
             }
         }
 
-        public int[] SendPacket(int[] mPacket)
+        public int[] SendCTC(int[] mPacket)
         {
             if(mHardPLC == false)
             {
-                MessageBox.Show("Sending Software");
-                string string1 = "";
-
-                mPacket = mADS.SendPacket(mPacket);
-
-                foreach (int i in mPacket)
-                {
-                    string1 += mPacket[i].ToString();
-                }
-                MessageBox.Show(string1);
+             
+                mPacket = mADS.CTCSend(mPacket);
+             
             }
             else
             {
-                MessageBox.Show("Sending Hardware");
-                mPacket = mTCP.MessageSender(mIP,mPort,mPacket);
+               //What to communicate if there is a hardware controller.
+            }
+            return mPacket;
+        }
+
+        public int[] SendTrack(int[] mPacket)
+        {
+            if (mHardPLC == false)
+            {
+
+                mPacket = mADS.TrackSend(mPacket);
+                
+            }
+            else
+            {
+                //What to communicate if there is a hardware controller
             }
             return mPacket;
         }
