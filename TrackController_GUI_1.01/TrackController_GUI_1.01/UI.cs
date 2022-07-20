@@ -204,7 +204,7 @@ namespace Track_Controller_1._02
 
 
             //int[] test3 = mPLC1.SendPacket(test1);
-            int[] test4 = mPLC2.SendPacket(test2);
+            int[] test4 = mPLC2.SendTrack(test2);
 
             //string string3 = "";
             string string4 = "";
