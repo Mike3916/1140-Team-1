@@ -15,6 +15,7 @@ namespace TrainObject
         private double previousAcceleration;
         private double commandedSpeed;
         private double mass = 56.7 * 2000;
+        private double resistance;
         private double powerCmd;
         public static double powerMax = 120000;
         private bool emergencyBrake;
@@ -30,8 +31,12 @@ namespace TrainObject
         private bool doorR;
         private bool doorL;
         private int temperature=74;
-   
-        
+
+        private double blockDist;
+        private double currDist;
+        private double gradient;
+
+
 
 
 
@@ -42,8 +47,9 @@ namespace TrainObject
         private const double decelerationLimitEmergency = -2.73;
         private const double velocityLimit = 19.4444;
 
-        private const double samplePeriod = 2;
+        private const double samplePeriod = 0.002;
 
+        private const double frictionCoefficient = 0.01;
 
         /* self.MAX_FORCE = 18551.9333
             self.GRAVITY = 9.8
@@ -66,6 +72,7 @@ namespace TrainObject
             currentSpeed = 0;
             previousAcceleration = 0;
             lights = false;
+          
 
 
         }
@@ -170,23 +177,33 @@ namespace TrainObject
 
         public double getForce()
         {
+            double force=0;
             if (engineFailure)
             {
-                powerCmd = 0;
+                force = 0;
             }
 
             if(currentSpeed!=0)
             {
-                return powerCmd / currentSpeed;
+                force= powerCmd / currentSpeed;
             }
             else if (powerCmd == 0)
             {
-                return 0;
+                force= 0;
             }
             else
             {
-                return 1000;
+                force= 1000;
             }
+
+            force -= (mass * 9.81 * Math.Sin(gradient));//gravitational force
+
+            if (currentSpeed > 0)
+            {
+                force -= (mass * 9.81 * Math.Cos(gradient)) * frictionCoefficient;//friction force
+            }
+            
+            return force;
         }
 
         public double getAcceleration()
@@ -199,7 +216,20 @@ namespace TrainObject
             }
             else if (serviceBrake && !emergencyBrake)
             {
-                return decelerationLimitService;
+                if (Math.Abs(accelerationCalc) + decelerationLimitService>0)
+                {if (accelerationCalc < 0)
+                        return accelerationCalc - decelerationLimitService;
+                    else
+                        return accelerationCalc + decelerationLimitService;
+                }
+                else if(accelerationCalc>0)
+                {
+                    return decelerationLimitService;
+                }
+                else
+                {
+                    return -decelerationLimitService;
+                }
             }
             else if (emergencyBrake)
             {
@@ -312,8 +342,45 @@ namespace TrainObject
         {
             temperature = t;
         }
-        
-        
+
+        public void setBlockInfo(double dist, double grad, int passengerCount)
+        {
+            blockDist = dist;
+            gradient = grad;
+            if (passengerCount > 0)
+            {
+                int min =  passengers/4;
+                int max = 3*passengers/4;
+                Random r = new Random();
+                int leaveCount = r.Next(min,max);
+                passengers -= leaveCount;
+
+            }
+            passengers += passengerCount;
+           
+            mass = 56.7 * 2000 + 65 * passengers + 65 * crew;
+            resistance = grad * (mass / 2000) * 20 + (mass / 2000) * 5; //grad might not be correct here? I am not sure, it also is reliant on train going uphill
+
+            currDist = 0;
+        }
+
+        public bool askForInfo()
+        {
+            if (currDist < blockDist)
+            {
+                currDist += currentSpeed * samplePeriod;
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+
     }
 
-}
+
+
+    }
+
