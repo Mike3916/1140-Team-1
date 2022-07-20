@@ -374,7 +374,7 @@ namespace TrainController
             CurSpeed.Text = "Current Speed:\n" + mSelectedTrain.mCurSpeed + " mph";
 
             // Update Power display:
-            CurPower.Text = "Power: " + mSelectedTrain.mCurPower / 1000 + " kW";
+            CurPower.Text = "Power: " + (mSelectedTrain.mCurPower / 1000).ToString("F4") + " kW";
 
             // Update Temperature value:
             Temperature.Text = "Temperature: " + mSelectedTrain.mTemperature.ToString() + "°F";
