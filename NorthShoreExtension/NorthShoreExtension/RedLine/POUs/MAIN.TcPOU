@@ -1,0 +1,359 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="MAIN" Id="{fa45f2f2-925a-467e-8b80-1fe2692585de}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	
+//Variable arrays for each parameter received from the CTC
+mCTCInSpeedSuggested : ARRAY[0..75] OF DINT;
+mCTCInAuthority : ARRAY[0..75] OF DINT;
+mCTCInMaintenanceMode : ARRAY[0..75] OF DINT;
+mCTCInSwitchPosition : ARRAY[0..75] OF DINT;
+
+//Variable arrays for each parameter received from the Track
+mTrackInMaintenanceMode : ARRAY[0..75] OF DINT;
+mTrackInSwitchPosition : ARRAY[0..75] OF DINT;
+mTrackInOccupancy : ARRAY[0..75] OF DINT;
+mTrackInCrossing : ARRAY[0..75] OF DINT;
+mTrackInRightTransit : ARRAY[0..75] OF DINT;
+mTrackInLeftTransit : ARRAY[0..75] OF DINT;
+mTrackOutSpeedSuggested : ARRAY[0..75] OF DINT;
+mTrackOutAuthority : ARRAY[0..75] OF DINT;
+
+//Output variables after PLC execution
+mOutMaintenanceMode : ARRAY[0..75] OF DINT;
+mOutSwitchPosition : ARRAY[0..75] OF DINT;
+mOutOccupancy : ARRAY[0..75] OF DINT;
+mOutCrossing : ARRAY[0..75] OF DINT;
+mOutRightTransit : ARRAY[0..75] OF DINT;
+mOutLeftTransit : ARRAY[0..75] OF DINT;
+
+//Checks for mismatch between this and redundant PLCs
+mPLC2MismatchCounter : DINT :=0;
+mPLC3MismatchCounter : DINT :=0;
+mPLC2MismatchFlag : BOOL := 0;
+mPLC3MismatchFlag : BOOL := 0;
+
+	inc1: INT;
+	
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[FOR inc1 := 0 TO 75 DO
+
+mCTCInSpeedSuggested[inc1] := GVL.mInFromCTC[inc1+0];
+mCTCInAuthority[inc1] := GVL.mInFromCTC[inc1+76];
+mCTCInMaintenanceMode[inc1] := GVL.mInFromCTC[inc1+152];
+mCTCInSwitchPosition[inc1] := GVL.mInFromCTC[inc1+228];
+
+mOutMaintenanceMode[inc1] := GVL.mInFromTrack[inc1+0];
+mOutSwitchPosition[inc1] := GVL.mInFromTrack[inc1+76];
+mOutOccupancy[inc1] := GVL.mInFromTrack[inc1+152];
+mOutCrossing[inc1] := GVL.mInFromTrack[inc1+228];
+mOutRightTransit[inc1] := GVL.mInFromTrack[inc1+304];
+mOutLeftTransit[inc1] := GVL.mInFromTrack[inc1+380];
+
+END_FOR
+
+//This starts the main track logic section
+
+//Switch Logic default is to always send cars to the left track segment.
+//Cars coming from the right segment will wait until the two way track section is clear
+IF mCTCInMaintenanceMode[8] = 1 THEN
+    mOutSwitchPosition[8] := mCTCInSwitchPosition[8];
+END_IF
+IF mCTCInMaintenanceMode[15] = 1 THEN
+    mOutSwitchPosition[15] := mCTCInSwitchPosition[15];
+ELSE
+    IF mTrackInOccupancy[14] = 0 THEN
+    FOR inc1 := 16 TO 26 DO 
+        IF mTrackInOccupancy[inc1] = 0 THEN
+            mOutSwitchPosition[15] := 0;
+            Exit;
+        ELSE 
+            mOutSwitchPosition[15] := 1;
+        END_IF
+    END_FOR
+END_IF
+END_IF
+IF mCTCInMaintenanceMode[26] = 1 THEN
+    mOutSwitchPosition[26] := mCTCInSwitchPosition[26];
+ELSE
+    IF mTrackInOccupancy[75] = 0 THEN
+    FOR inc1 := 16 TO 26 DO
+        IF mTrackInOccupancy[inc1] = 0 THEN
+            mOutSwitchPosition[26] := 0;
+            Exit;
+        ELSE 
+            mOutSwitchPosition[26] := 1;
+        END_IF
+    END_FOR
+END_IF
+END_IF  
+IF mCTCInMaintenanceMode[32] = 1 THEN
+    mOutSwitchPosition[32] := mCTCInSwitchPosition[32];
+ELSE
+    IF mTrackInOccupancy[31] = 0 THEN
+    FOR inc1 := 32 TO 37 DO
+        IF mTrackInOccupancy[inc1] = 0 THEN
+            mOutSwitchPosition[32] := 0;
+            Exit;
+        ELSE 
+            mOutSwitchPosition[32] := 1;
+        END_IF
+    END_FOR
+END_IF
+END_IF  
+IF mCTCInMaintenanceMode[37] = 1 THEN
+    mOutSwitchPosition[37] := mCTCInSwitchPosition[37];
+ELSE
+    IF mTrackInOccupancy[71] = 0 THEN
+    FOR inc1 := 32 TO 37 DO
+        IF mTrackInOccupancy[inc1] = 0 THEN
+            mOutSwitchPosition[37] := 0;
+            Exit;
+        ELSE 
+            mOutSwitchPosition[37] := 1;
+        END_IF
+    END_FOR
+END_IF
+END_IF  
+IF mCTCInMaintenanceMode[43] = 1 THEN
+    mOutSwitchPosition[43] := mCTCInSwitchPosition[43];
+ELSE
+    IF mTrackInOccupancy[42] = 0 THEN
+    FOR inc1 := 43 TO 51 DO
+        IF mTrackInOccupancy[inc1] = 0 THEN
+            mOutSwitchPosition[43] := 0;
+            Exit;
+        ELSE 
+            mOutSwitchPosition[43] := 1;
+        END_IF
+    END_FOR
+    END_IF
+END_IF  
+IF mCTCInMaintenanceMode[51] = 1 THEN
+    mOutSwitchPosition[51] := mCTCInSwitchPosition[51];
+ELSE
+    IF mTrackInOccupancy[65] = 0 THEN
+    FOR inc1 := 43 TO 51 DO
+        IF mTrackInOccupancy[inc1] = 0 THEN
+            mOutSwitchPosition[65] := 0;
+            Exit;
+        ELSE 
+            mOutSwitchPosition[65] := 1;
+        END_IF
+    END_FOR
+    END_IF
+END_IF  
+
+
+//This section prepares for sending the outputs
+FOR inc1 := 0 TO 75 DO
+
+IF GVL.mWriteEnable = 1 THEN
+GVL.mOutToTrack[inc1+0] := mCTCInSpeedSuggested[inc1];
+GVL.mOutToTrack[inc1+76] := mCTCInAuthority[inc1]; 
+GVL.mOutToTrack[inc1+152] := mOutMaintenanceMode[inc1];
+GVL.mOutToTrack[inc1+228] := mOutSwitchPosition[inc1] ;
+GVL.mOutToTrack[inc1+304] := mOutCrossing[inc1];
+GVL.mOutToTrack[inc1+380] := mOutRightTransit[inc1];
+GVL.mOutToTrack[inc1+456] := mOutLeftTransit[inc1];
+
+GVL.mOutToCTC[inc1+0] := mOutMaintenanceMode[inc1];
+GVL.mOutToCTC[inc1+76] := mOutSwitchPosition[inc1] ;
+GVL.mOutToCTC[inc1+152] := mOutOccupancy[inc1];
+GVL.mOutToCTC[inc1+228] := mOutCrossing[inc1];
+GVL.mOutToCTC[inc1+304] := mOutRightTransit[inc1];
+GVL.mOutToCTC[inc1+380] := mOutLeftTransit[inc1];
+
+IF GVL.mOutToTrack[inc1+0] <> GVL.mPLC2TrackWrites[inc1+0] THEN
+    mPLC2MismatchFlag := mPLC2MismatchFlag OR 1;
+END_IF
+IF GVL.mOutToTrack[inc1+76] <> GVL.mPLC2TrackWrites[inc1+76] THEN
+    mPLC2MismatchFlag := mPLC2MismatchFlag OR 1;
+END_IF
+IF GVL.mOutToTrack[inc1+152] <> GVL.mPLC2TrackWrites[inc1+152] THEN
+    mPLC2MismatchFlag := mPLC2MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToTrack[inc1+228] <> GVL.mPLC2TrackWrites[inc1+228] THEN
+    mPLC2MismatchFlag := mPLC2MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToTrack[inc1+304] <> GVL.mPLC2TrackWrites[inc1+304] THEN
+    mPLC2MismatchFlag := mPLC2MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToTrack[inc1+380] <> GVL.mPLC2TrackWrites[inc1+380] THEN
+    mPLC2MismatchFlag := mPLC2MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToTrack[inc1+456] <> GVL.mPLC2TrackWrites[inc1+456] THEN
+    mPLC2MismatchFlag := mPLC2MismatchFlag OR 1;
+	END_IF
+
+IF GVL.mOutToCTC[inc1+0] <> GVL.mPLC2CTCWrites[inc1+0] THEN
+    mPLC2MismatchFlag := mPLC2MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToCTC[inc1+76] <> GVL.mPLC2CTCWrites[inc1+76] THEN
+    mPLC2MismatchFlag := mPLC2MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToCTC[inc1+152] <> GVL.mPLC2CTCWrites[inc1+152] THEN
+    mPLC2MismatchFlag := mPLC2MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToCTC[inc1+228] <> GVL.mPLC2CTCWrites[inc1+228] THEN
+    mPLC2MismatchFlag := mPLC2MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToCTC[inc1+304] <> GVL.mPLC2CTCWrites[inc1+304] THEN
+    mPLC2MismatchFlag := mPLC2MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToCTC[inc1+380] <> GVL.mPLC2CTCWrites[inc1+380] THEN
+    mPLC2MismatchFlag := mPLC2MismatchFlag OR 1;
+	END_IF
+
+IF GVL.mOutToTrack[inc1+0] <> GVL.mPLC3TrackWrites[inc1+0] THEN
+    mPLC3MismatchFlag := mPLC3MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToTrack[inc1+76] <> GVL.mPLC3TrackWrites[inc1+76] THEN
+    mPLC3MismatchFlag := mPLC3MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToTrack[inc1+152] <> GVL.mPLC3TrackWrites[inc1+152] THEN
+    mPLC3MismatchFlag := mPLC3MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToTrack[inc1+228] <> GVL.mPLC3TrackWrites[inc1+228] THEN
+    mPLC3MismatchFlag := mPLC3MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToTrack[inc1+304] <> GVL.mPLC3TrackWrites[inc1+304] THEN
+    mPLC3MismatchFlag := mPLC3MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToTrack[inc1+380] <> GVL.mPLC3TrackWrites[inc1+380] THEN
+    mPLC3MismatchFlag := mPLC3MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToTrack[inc1+456] <> GVL.mPLC3TrackWrites[inc1+456] THEN
+    mPLC3MismatchFlag := mPLC3MismatchFlag OR 1;
+	END_IF
+
+IF GVL.mOutToCTC[inc1+0] <> GVL.mPLC3CTCWrites[inc1+0] THEN
+    mPLC3MismatchFlag := mPLC3MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToCTC[inc1+76] <> GVL.mPLC3CTCWrites[inc1+76] THEN
+    mPLC3MismatchFlag := mPLC3MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToCTC[inc1+152] <> GVL.mPLC3CTCWrites[inc1+152] THEN
+    mPLC3MismatchFlag := mPLC3MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToCTC[inc1+228] <> GVL.mPLC3CTCWrites[inc1+228] THEN
+    mPLC3MismatchFlag := mPLC3MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToCTC[inc1+304] <> GVL.mPLC2CTCWrites[inc1+304] THEN
+    mPLC3MismatchFlag := mPLC3MismatchFlag OR 1;
+	END_IF
+IF GVL.mOutToCTC[inc1+380] <> GVL.mPLC3CTCWrites[inc1+380] THEN
+    mPLC3MismatchFlag := mPLC3MismatchFlag OR 1;
+	END_IF
+	
+ELSE
+GVL.mOutToTrack[inc1+0] := 0;
+GVL.mOutToTrack[inc1+76] := 0; 
+GVL.mOutToTrack[inc1+152] := 0;
+GVL.mOutToTrack[inc1+228] := 0 ;
+GVL.mOutToTrack[inc1+304] := 0;
+GVL.mOutToTrack[inc1+380] := 0;
+GVL.mOutToTrack[inc1+456] := 0;
+
+GVL.mOutToCTC[inc1+0] := 0;
+GVL.mOutToCTC[inc1+76] := 0;
+GVL.mOutToCTC[inc1+152] := 0;
+GVL.mOutToCTC[inc1+228] := 0;
+GVL.mOutToCTC[inc1+304] := 0;
+GVL.mOutToCTC[inc1+380] := 0;
+END_IF
+
+END_FOR
+
+(*
+IF mPLC2MismatchFlag = 1 THEN
+    mPLC2MismatchCounter := mPLC2MismatchCounter + 1;
+ELSE
+    mPLC2MismatchCounter := 0;
+END_IF
+IF mPLC3MismatchFlag = 1 THEN
+    mPLC3MismatchCounter := mPLC3MismatchCounter + 1;
+ELSE
+    mPLC3MismatchCounter := 0;
+END_IF
+
+
+IF mPLC2MismatchCounter > 10 THEN
+    mPLC2MismatchFlag := 1;
+    GVL.mPLC2Failure := 1;
+END_IF
+IF mPLC3MismatchCounter > 10 THEN
+    mPLC3MismatchFlag := 1;
+    GVL.mPLC3Failure := 1;
+END_IF
+
+IF GVL.mPLC2Failure AND GVL.mPLC3Failure Then
+    GVL.mWriteEnable := 0;
+END_IF;
+*)]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="39" Count="106" />
+      <LineId Id="150" Count="22" />
+      <LineId Id="270" Count="0" />
+      <LineId Id="173" Count="1" />
+      <LineId Id="272" Count="0" />
+      <LineId Id="175" Count="1" />
+      <LineId Id="273" Count="0" />
+      <LineId Id="177" Count="1" />
+      <LineId Id="274" Count="0" />
+      <LineId Id="179" Count="1" />
+      <LineId Id="275" Count="0" />
+      <LineId Id="181" Count="1" />
+      <LineId Id="276" Count="0" />
+      <LineId Id="183" Count="1" />
+      <LineId Id="277" Count="0" />
+      <LineId Id="185" Count="2" />
+      <LineId Id="278" Count="0" />
+      <LineId Id="188" Count="1" />
+      <LineId Id="279" Count="0" />
+      <LineId Id="190" Count="1" />
+      <LineId Id="280" Count="0" />
+      <LineId Id="192" Count="1" />
+      <LineId Id="281" Count="0" />
+      <LineId Id="194" Count="1" />
+      <LineId Id="282" Count="0" />
+      <LineId Id="196" Count="1" />
+      <LineId Id="283" Count="0" />
+      <LineId Id="198" Count="2" />
+      <LineId Id="284" Count="0" />
+      <LineId Id="201" Count="1" />
+      <LineId Id="285" Count="0" />
+      <LineId Id="203" Count="1" />
+      <LineId Id="286" Count="0" />
+      <LineId Id="205" Count="1" />
+      <LineId Id="287" Count="0" />
+      <LineId Id="207" Count="1" />
+      <LineId Id="288" Count="0" />
+      <LineId Id="209" Count="1" />
+      <LineId Id="289" Count="0" />
+      <LineId Id="211" Count="1" />
+      <LineId Id="290" Count="0" />
+      <LineId Id="213" Count="2" />
+      <LineId Id="291" Count="0" />
+      <LineId Id="216" Count="1" />
+      <LineId Id="292" Count="0" />
+      <LineId Id="218" Count="1" />
+      <LineId Id="293" Count="0" />
+      <LineId Id="220" Count="1" />
+      <LineId Id="294" Count="0" />
+      <LineId Id="222" Count="1" />
+      <LineId Id="295" Count="0" />
+      <LineId Id="224" Count="1" />
+      <LineId Id="296" Count="1" />
+      <LineId Id="226" Count="15" />
+      <LineId Id="298" Count="0" />
+      <LineId Id="242" Count="26" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
