@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -120,6 +121,8 @@ namespace Gog
         {
             for (int i = 0; i < mIterationMultiplier; i++)
             {
+                //trainCtrl.checkUpdatedValues();
+                ctc.setTrackData(track.GetTrackData());
 
             }
         }
