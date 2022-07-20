@@ -25,6 +25,8 @@ namespace Gog
         TrackModel_v0._1.MainWindow track;
         TrainController.ControlPanel trainCtrl;
         TrainModel.MainWindow trains;
+        CTC.MainWindow ctc;
+
 
 
         public MainWindow()
@@ -71,6 +73,17 @@ namespace Gog
 
         }
 
+        private void CTC_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (ctc==null)
+            {
+                Application.Current.MainWindow = ctc;
+                ctc = new CTC.MainWindow();
+                ctc.Show();
+          
+
+        }
+
         private void StartUpActivated(object sender, EventArgs e)
         {
             Application.Current.MainWindow = trainCtrl;
@@ -85,5 +98,7 @@ namespace Gog
                 Application.Current.MainWindow = trainCtrl;
             }
         }
+
+        
     }
 }

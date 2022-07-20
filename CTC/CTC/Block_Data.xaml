@@ -28,10 +28,7 @@
                 </TransformGroup>
             </Rectangle.RenderTransform>
         </Rectangle>
-<<<<<<< HEAD
         <TextBlock HorizontalAlignment="Left" Margin="151,236,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top"/>
-=======
         <TextBlock HorizontalAlignment="Left" Margin="151,234,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top"/>
->>>>>>> CTC
     </Grid>
 </Page>
