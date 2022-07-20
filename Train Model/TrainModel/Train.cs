@@ -231,7 +231,17 @@ namespace TrainObject
             }
             else if (emergencyBrake)
             {
-                return decelerationLimitEmergency;
+                powerCmd = 0;
+                if (Math.Abs(accelerationCalc) + decelerationLimitEmergency > 0)
+                {
+                    if (accelerationCalc > 0)
+                    {
+                        return accelerationCalc + decelerationLimitEmergency;
+                    }
+                    else
+                        return accelerationCalc - decelerationLimitEmergency;
+                }
+                else return decelerationLimitEmergency;
             }
             else
             {
