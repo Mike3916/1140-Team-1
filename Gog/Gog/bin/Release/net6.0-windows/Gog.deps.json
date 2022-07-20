@@ -9,6 +9,7 @@
       "Gog/1.0.0": {
         "dependencies": {
           "System.IO.Ports": "6.0.0",
+          "CTC": "1.0.0.0",
           "Track Model": "1.0.0.0",
           "TrainController": "1.0.0.0",
           "TrainModel": "1.0.0.0"
@@ -96,6 +97,14 @@
           }
         }
       },
+      "CTC/1.0.0.0": {
+        "runtime": {
+          "CTC.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "Track Model/1.0.0.0": {
         "runtime": {
           "Track Model.dll": {
@@ -176,6 +185,11 @@
       "sha512": "sha512-dRyGI7fUESar5ZLIpiBOaaNLW7YyOBGftjj5Of+xcduC/Rjl7RjhEnWDvvNBmHuF3d0tdXoqdVI/yrVA8f00XA==",
       "path": "system.io.ports/6.0.0",
       "hashPath": "system.io.ports.6.0.0.nupkg.sha512"
+    },
+    "CTC/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
     },
     "Track Model/1.0.0.0": {
       "type": "reference",
