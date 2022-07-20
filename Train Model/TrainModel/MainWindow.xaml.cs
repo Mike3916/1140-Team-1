@@ -62,7 +62,7 @@ namespace TrainModel
         private void Select_a_Train_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Position.Text = "Current Block: 10\nAuthority: " + train.getAuthority().ToString() + " Blocks\nLast Station: Castle Shannon\nNext Station: Dormont";
-            Speed.Text = "Current Speed: " + Math.Round(train.getCurrentSpeedMPH(),2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(train.getCommandedSpeedMPH(),2).ToString() + "Mi/h\nCurrent Acceleration: " + train.getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: 7s";
+            Speed.Text = "Current Speed: " + Math.Round(train.getCurrentSpeedMPH(),2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(train.getCommandedSpeedMPH(),2).ToString() + "Mi/h\nCurrent Acceleration: " + train.getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: "+train.getTimeTillNextBlock()+"s";
             Passed_Through_Variables.Text = "Speed Limit: 50Mi/h\nCommanded Authority: 85 Blocks";
             eBrake.Foreground = Brushes.White;
             eBrake.Background = Brushes.Green;
@@ -177,7 +177,7 @@ namespace TrainModel
             
 
             physics.Text = "Power:\nCurrent Mass: " + train.getMass().ToString() + " tons\nForce (P/V): " + Math.Round(train.getForce(),2).ToString() + " N\nAcceleration (F/M): " + train.getAccelerationFPS().ToString() + " ft/s^2\nVelocity(V_(n - 1) + T / 2(A_n + A_(n - 1)): " + train.getCurrentSpeedMPH().ToString() + " Mi/h";
-            Speed.Text = "Current Speed: " + Math.Round(train.getCurrentSpeedMPH(), 2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(train.getCommandedSpeedMPH(), 2).ToString() + "Mi/h\nCurrent Acceleration: " + train.getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: 7s";
+            Speed.Text = "Current Speed: " + Math.Round(train.getCurrentSpeedMPH(), 2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(train.getCommandedSpeedMPH(), 2).ToString() + "Mi/h\nCurrent Acceleration: " + train.getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: "+train.getTimeTillNextBlock()+"s";
 
             }
         }
@@ -187,7 +187,7 @@ namespace TrainModel
 
             train.increment();
             physics.Text = "Power:\nCurrent Mass: " + train.getMass().ToString() + " tons\nForce (P/V): " + Math.Round(train.getForce(), 2).ToString() + " N\nAcceleration (F/M): " + train.getAccelerationFPS().ToString() + " ft/s^2\nVelocity(V_(n - 1) + T / 2(A_n + A_(n - 1)): " + train.getCurrentSpeedMPH().ToString() + " Mi/h";
-            Speed.Text = "Current Speed: " + Math.Round(train.getCurrentSpeedMPH(), 2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(train.getCommandedSpeedMPH(), 2).ToString() + "Mi/h\nCurrent Acceleration: " + train.getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: 7s";
+            Speed.Text = "Current Speed: " + Math.Round(train.getCurrentSpeedMPH(), 2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(train.getCommandedSpeedMPH(), 2).ToString() + "Mi/h\nCurrent Acceleration: " + train.getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: " + train.getTimeTillNextBlock() + "s";
             power.Text = train.getPowerCmd().ToString() + " kW";
         }
 
