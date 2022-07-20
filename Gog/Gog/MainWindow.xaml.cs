@@ -26,7 +26,8 @@ namespace Gog
         TrainController.ControlPanel trainCtrl;
         TrainModel.MainWindow trains;
 
-        DispatcherTimer globalTimer;
+        DispatcherTimer mGlobalTimer;
+        int mIterationMultiplier = 1;
 
         public MainWindow()
         {
@@ -89,17 +90,20 @@ namespace Gog
 
         private void InitTimer()
         {
-            globalTimer = new DispatcherTimer();
+            mGlobalTimer = new DispatcherTimer();
 
-            globalTimer.Tick += new EventHandler(updateTick);
+            mGlobalTimer.Tick += new EventHandler(updateTick);
 
-            globalTimer.Interval = new TimeSpan(0, 0, 0, 0, 1);
-            globalTimer.Start();
+            mGlobalTimer.Interval = new TimeSpan(0, 0, 0, 0, 1);
+            mGlobalTimer.Start();
         }
 
         private void updateTick(object sender, EventArgs e)
         {
+            for (int i = 0; i < mIterationMultiplier; i++)
+            {
 
+            }
         }
     }
 }
