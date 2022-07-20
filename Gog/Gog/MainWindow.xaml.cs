@@ -22,7 +22,7 @@ namespace Gog
     public partial class MainWindow : Window
     {
 
-        TrackModel_v0._1.MainWindow track;
+        TrackModel.MainWindow track;
         TrainController.ControlPanel trainCtrl;
         TrainModel.MainWindow trains;
 
@@ -38,7 +38,7 @@ namespace Gog
             if (track == null)
             {
                 Application.Current.MainWindow = track;
-                track = new TrackModel_v0._1.MainWindow();
+                track = new TrackModel.MainWindow();
                 track.Show();
             }
             else

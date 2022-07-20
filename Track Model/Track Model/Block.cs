@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TrackModel_v0._1
+namespace TrackModel
 {
-    class Block
+    public class Block
     {
         public Block()
         {
