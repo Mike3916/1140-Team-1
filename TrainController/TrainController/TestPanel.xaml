@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrainController"
         mc:Ignorable="d"
-        Title="Test Panel" Height="515" Width="676">
+        Title="Test Panel" Height="515" Width="676" Activated="TestPanelActive">
     <Grid Margin="0,0,10,15">
         <TextBlock HorizontalAlignment="Left" Margin="49,26,0,0" TextWrapping="Wrap" Text="Emergency Brakes:" VerticalAlignment="Top" Height="36" Width="134" Background="Gainsboro" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="49,67,0,0" TextWrapping="Wrap" Text="Service Brakes:" VerticalAlignment="Top" Height="36" Width="134" Background="Gainsboro" TextAlignment="Center"/>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrainController"
         mc:Ignorable="d"
-        Title="Train Driver Interface" Height="513" Width="801">
+        Title="Train Driver Interface" Height="513" Width="801" Activated="TrainControllerActive">
     <Grid Margin="0,0,0,-6">
         <Label Content="Authority and Brakes" HorizontalAlignment="Left" Margin="41,64,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Width="218" FontSize="15" HorizontalContentAlignment="Center"/>
         <Label Content="Controls" HorizontalAlignment="Left" Margin="280,64,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Width="238" FontSize="15" HorizontalContentAlignment="Center"/>

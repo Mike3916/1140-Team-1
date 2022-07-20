@@ -57,7 +57,7 @@ namespace TrainController
             InteriorLights.IsEnabled = false;
             ExteriorLights.IsEnabled = false;
 
-            HW_SW selectType = new HW_SW();
+            HW_SW selectType = new HW_SW(this);
             selectType.Topmost = true;
             selectType.Show();
             selectType.Activate();
@@ -221,7 +221,7 @@ namespace TrainController
 
             else if (sender == EngineerPanel)
             {
-                EngineerPanel ePan = new EngineerPanel();
+                EngineerPanel ePan = new EngineerPanel(this);
                 ePan.Owner = this;
 
                 ePan.Kp.Text = mSelectedTrain.mKp.ToString();
@@ -232,7 +232,7 @@ namespace TrainController
 
             else if (sender == TestPanel)
             {
-                TestPanel tPan = new TestPanel();
+                TestPanel tPan = new TestPanel(this);
                 tPan.Owner = this;
 
                 if (mSelectedTrain.mLeftDoorsStatus)
@@ -508,10 +508,15 @@ namespace TrainController
             mControllerList.SelectedIndex = mTrainCount;
             mTrainCount++;
 
-            HW_SW selectType = new HW_SW();
+            HW_SW selectType = new HW_SW(this);
             selectType.Topmost = true;
             selectType.Show();
             selectType.Activate();
+        }
+
+        private void TrainControllerActive(object sender, EventArgs e)
+        {
+            Application.Current.MainWindow = this;
         }
     }
 }

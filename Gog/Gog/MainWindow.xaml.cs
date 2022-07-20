@@ -21,13 +21,69 @@ namespace Gog
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        TrackModel_v0._1.MainWindow track;
+        TrainController.ControlPanel trainCtrl;
+        TrainModel.MainWindow trains;
+
+
         public MainWindow()
         {
             InitializeComponent();
-            TrackModel_v0._1.MainWindow track = new TrackModel_v0._1.MainWindow();
-            //TrainController.MainWindow trainCtrl = new TrainController.MainWindow();
-            TrainModel.MainWindow trains = new TrainModel.MainWindow();
-            //trainCtrl.Show();
+        }
+
+        //events 
+        private void TrackModelButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (track == null)
+            {
+                Application.Current.MainWindow = track;
+                track = new TrackModel_v0._1.MainWindow();
+                track.Show();
+            }
+            else
+                track.Activate();
+        }
+
+
+        private void TrainModelButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (trains == null)
+            {
+                Application.Current.MainWindow = trains;
+                trains = new TrainModel.MainWindow();
+                trains.Show();
+            }
+            else
+                trains.Activate();
+        }
+
+        private void TrainCtrlButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (trainCtrl == null)
+            {
+                Application.Current.MainWindow = trainCtrl;
+                trainCtrl = new TrainController.ControlPanel();
+                trainCtrl.Show();
+            }
+            else
+                trainCtrl.Activate();
+
+        }
+
+        private void StartUpActivated(object sender, EventArgs e)
+        {
+            Application.Current.MainWindow = trainCtrl;
+            Application.Current.MainWindow = trains;
+            Application.Current.MainWindow = track;
+        }
+
+        private void StartUpInactive(object sender, EventArgs e)
+        {
+            if (trainCtrl != null && trainCtrl.IsActive)
+            {
+                Application.Current.MainWindow = trainCtrl;
+            }
         }
     }
 }
