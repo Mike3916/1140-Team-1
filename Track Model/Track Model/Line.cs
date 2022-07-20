@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TrackModel_v0._1
+namespace TrackModel
 {
-    internal class Line
+    public class Line
     {
         public Line()
         {

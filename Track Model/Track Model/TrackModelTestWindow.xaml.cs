@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace TrackModel_v0._1
+namespace TrackModel
 {
     /// <summary>
     /// Interaction logic for TrackModelTestWindow.xaml
