@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,9 +29,11 @@ namespace Gog
         TrainModel.MainWindow trains;
         CTC.MainWindow ctc;
 
+        //Controller trackController = new Controller();
+        //trackController.CTCRead(ctc.commandedAuthority)
+
         DispatcherTimer mGlobalTimer;
         int mIterationMultiplier = 1;
-
 
         public MainWindow()
         {
@@ -104,13 +107,13 @@ namespace Gog
             }
         }
 
-        private void InitTimer()
+        private void InitTimer()    
         {
             mGlobalTimer = new DispatcherTimer();
 
             mGlobalTimer.Tick += new EventHandler(updateTick);
 
-            mGlobalTimer.Interval = new TimeSpan(0, 0, 0, 0, 1);
+            mGlobalTimer.Interval = new TimeSpan(0, 0, 0, 0, 1); //1 millisecond
             mGlobalTimer.Start();
         }
 
@@ -118,14 +121,23 @@ namespace Gog
         {
             for (int i = 0; i < mIterationMultiplier; i++)
             {
-                if (track != null)
-                {
-                    ctc.SetTrackData(track.GetTrackData());
-                }
-            }
-            
-        }
+                //trainCtrl.checkUpdatedValues();
+                //ctc.SetTrackData(track.);
+                //track.GetT
 
-        
+                /*for (int i = 0; i < trains.trainList.Count; i++)
+                {
+                    trains.UpdateValues(trainCtrl.mTrainSetList[i],i);
+                    trainCtrl.UpdateValues(trains.mTrainList[i],i);
+                }*/
+            }
+        }
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            // TODO: Add for every module
+
+            trainCtrl.actualClose = true;
+            trainCtrl.Close();
+        }
     }
 }

@@ -32,13 +32,13 @@ namespace CTC
         private void Dest_Loaded(object sender, RoutedEventArgs e) //Display the saved destination data for the selected train
         {
   
-            int i = ((MainWindow)Application.Current.MainWindow).SelectTrain.SelectedIndex - 1; //Right now, the combobox index 0 is blank, so the first train (w/ index zero) appears at index 1. Therefore, subtract 1 to get the correct train
+            int i = ((MainWindow)Application.Current.MainWindow).SelectTrain.SelectedIndex; //Right now, the combobox index 0 is blank, so the first train (w/ index zero) appears at index 1. Therefore, subtract 1 to get the correct train
             Dest.Text = ((MainWindow)Application.Current.MainWindow).TrainList[i].destination.ToString();
         }
 
         private void ETA_Loaded(object sender, RoutedEventArgs e) //Display the saved ETA data for the selected train
         {
-            int i = ((MainWindow)Application.Current.MainWindow).SelectTrain.SelectedIndex - 1; //Right now, the combobox index 0 is blank, so the first train (w/ index zero) appears at index 1. Therefore, subtract 1 to get the correct train
+            int i = ((MainWindow)Application.Current.MainWindow).SelectTrain.SelectedIndex; //Right now, the combobox index 0 is blank, so the first train (w/ index zero) appears at index 1. Therefore, subtract 1 to get the correct train
             ETA.Text = ((MainWindow)Application.Current.MainWindow).TrainList[i].ETA.ToString();
         }
 
