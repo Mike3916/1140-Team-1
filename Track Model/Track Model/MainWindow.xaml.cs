@@ -120,7 +120,7 @@ namespace TrackModel
                 sendTrain(testWindow.authority, testWindow.speed, testWindow.destination);
         }
 
-        public List<Line> GetTrackData()
+        public List<TrackModel.Line> GetTrackData()
         {
             if (mnumLines != 2)
                 return null;

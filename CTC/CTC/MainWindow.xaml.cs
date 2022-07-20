@@ -33,12 +33,12 @@ namespace CTC
         Dispatch dispatch = new Dispatch();
         Train_Data train_data = new Train_Data();
         Block_Data block_data = new Block_Data();
-        public List<Line> mLines;
-
+        public List<TrackModel.Line> mLines;
 
 
         public MainWindow()
         {
+            MessageBox.Show("poo!");
             InitializeComponent(); ///Default code
             Frame.NavigationService.Navigate(default_page);
         }    
@@ -137,7 +137,7 @@ namespace CTC
             Frame.NavigationService.Navigate(dispatch); ///Set the frame area to go to the dispatch_page
         }
 
-        public void SetTrackData(List<Line> data)
+        public void SetTrackData(List<TrackModel.Line> data)
         {
             mLines = data;
         }

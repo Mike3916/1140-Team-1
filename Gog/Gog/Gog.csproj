@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <Reference Include="CTC">
-      <HintPath>..\..\CTC\CTC\bin\Release\netcoreapp3.1\CTC.dll</HintPath>
+      <HintPath>..\..\CTC\CTC\bin\Release\net6.0-windows\CTC.dll</HintPath>
     </Reference>
     <Reference Include="Track Model">
       <HintPath>..\..\Track Model\Track Model\bin\Release\net6.0-windows\Track Model.dll</HintPath>

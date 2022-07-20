@@ -118,10 +118,12 @@ namespace Gog
         {
             for (int i = 0; i < mIterationMultiplier; i++)
             {
-                //trainCtrl.checkUpdatedValues();
-                ctc.setTrackData(track.GetTrackData());
-
+                if (track != null)
+                {
+                    ctc.SetTrackData(track.GetTrackData());
+                }
             }
+            
         }
 
         
