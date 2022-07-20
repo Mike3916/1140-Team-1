@@ -217,20 +217,17 @@ namespace TrainObject
             }
             else if (serviceBrake && !emergencyBrake)
             {
-                if (Math.Abs(accelerationCalc) + decelerationLimitService>0)
-                {if (accelerationCalc < 0)
-                        return accelerationCalc - decelerationLimitService;
-                    else
+                powerCmd = 0;
+                if (Math.Abs(accelerationCalc) + decelerationLimitService > 0)
+                {
+                    if (accelerationCalc > 0)
+                    {
                         return accelerationCalc + decelerationLimitService;
+                    }
+                    else
+                        return accelerationCalc - decelerationLimitService;
                 }
-                else if(accelerationCalc>0)
-                {
-                    return decelerationLimitService;
-                }
-                else
-                {
-                    return -decelerationLimitService;
-                }
+                else return decelerationLimitService;
             }
             else if (emergencyBrake)
             {
