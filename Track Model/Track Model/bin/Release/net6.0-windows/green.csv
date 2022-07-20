@@ -1,4 +1,5 @@
 Line,Section,Block Number,Block Length (m),Block Grade (%),Speed Limit (Km/Hr),Infrastructure,Station Side,ELEVATION (M),CUMALTIVE ELEVATION (M)
+Green,0,0,0,0,100,YARD; SWITCH (0-58:0-62),,0,0
 Green,A,1,100,0.5,45,,,0.5,0.5
 Green,A,2,100,1,45,STATION; PIONEER,Left,1,1.5
 Green,A,3,100,1.5,45,,,1.5,3
@@ -10,7 +11,7 @@ Green,C,8,100,0,45,,,0,17
 Green,C,9,100,-5,45,STATION; EDGEBROOK,Left,-5,12
 Green,C,10,100,-4.5,45,,,-4.5,7.5
 Green,C,11,100,-4,45,,,-4,3.5
-Green,C,12,100,-3,45,SWITCH (12-13: 1-13),,-3,0.5
+Green,C,12,100,-3,45,SWITCH (12-13:1-13),,-3,0.5
 Green,D,13,150,0,70,,,0,0.5
 Green,D,14,150,0,70,,,0,0.5
 Green,D,15,150,0,70,,,0,0.5
@@ -27,7 +28,7 @@ Green,F,25,200,0,70,,,0,0.5
 Green,F,26,100,0,70,,,0,0.5
 Green,F,27,50,0,30,,,0,0.5
 Green,F,28,50,0,30,,,0,0.5
-Green,G,29,50,0,30,SWITCH (29-30: 29-150),,0,0.5
+Green,G,29,50,0,30,SWITCH (29-30:29-150),,0,0.5
 Green,G,30,50,0,30,,,0,0.5
 Green,G,31,50,0,30,STATION; SOUTH BANK,Left,0,0.5
 Green,G,32,50,0,30,,,0,0.5

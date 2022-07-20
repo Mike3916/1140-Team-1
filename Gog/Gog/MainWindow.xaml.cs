@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Windows.Threading;
 
 namespace Gog
 {
@@ -22,16 +22,19 @@ namespace Gog
     public partial class MainWindow : Window
     {
 
-        TrackModel_v0._1.MainWindow track;
+        TrackModel.MainWindow track;
         TrainController.ControlPanel trainCtrl;
         TrainModel.MainWindow trains;
         CTC.MainWindow ctc;
 
+        DispatcherTimer mGlobalTimer;
+        int mIterationMultiplier = 1;
 
 
         public MainWindow()
         {
             InitializeComponent();
+            InitTimer();
         }
 
         //events 
@@ -40,7 +43,7 @@ namespace Gog
             if (track == null)
             {
                 Application.Current.MainWindow = track;
-                track = new TrackModel_v0._1.MainWindow();
+                track = new TrackModel.MainWindow();
                 track.Show();
             }
             else
@@ -70,7 +73,6 @@ namespace Gog
             }
             else
                 trainCtrl.Activate();
-
         }
 
         private void CTC_Button_Click(object sender, RoutedEventArgs e)
@@ -89,6 +91,7 @@ namespace Gog
             Application.Current.MainWindow = trainCtrl;
             Application.Current.MainWindow = trains;
             Application.Current.MainWindow = track;
+            Application.Current.MainWindow = ctc;
         }
 
         private void StartUpInactive(object sender, EventArgs e)
@@ -97,6 +100,36 @@ namespace Gog
             {
                 Application.Current.MainWindow = trainCtrl;
             }
+        }
+
+        private void InitTimer()
+        {
+            mGlobalTimer = new DispatcherTimer();
+
+            mGlobalTimer.Tick += new EventHandler(updateTick);
+
+            mGlobalTimer.Interval = new TimeSpan(0, 0, 0, 0, 1);
+            mGlobalTimer.Start();
+        }
+
+        private void updateTick(object sender, EventArgs e)
+        {
+            for (int i = 0; i < mIterationMultiplier; i++)
+            {
+
+            }
+        }
+
+        private void CTCButton_Clikc(object sender, RoutedEventArgs e)
+        {
+            if (ctc == null)
+            {
+                Application.Current.MainWindow = ctc;
+                ctc = new CTC.MainWindow();
+                ctc.Show();
+            }
+            else
+                ctc.Activate();
         }
 
         

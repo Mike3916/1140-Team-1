@@ -1,7 +1,9 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace TrackModel_v0._1
+namespace TrackModel
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -17,11 +19,11 @@ namespace TrackModel_v0._1
     public partial class MainWindow : Window
     {
         //global var
-        TrackModelTestWindow testWindow = new TrackModelTestWindow();
+        public TrackModelTestWindow testWindow = new TrackModelTestWindow();
         DispatcherTimer timer = new DispatcherTimer();
 
-        List<Line> mLines = new List<Line>();
-        List<DataTable> mLineData = new List<DataTable>();
+        public List<Line> mLines = new List<Line>();
+        public List<DataTable> mLineData = new List<DataTable>();
 
         int mnumLines;
         int mlineIdx, msectIdx, mblockIdx;
@@ -33,10 +35,28 @@ namespace TrackModel_v0._1
         int mauth;
         double mspeed;
         int mdest;
-
+        static int pos = 0;
         int trainLine = 0,
             trainSect = 0,
             trainBlock = 0;
+
+        public bool actualClose = false;
+
+        int[] mredRoute = {0, 9, 8, 7, 6, 5, 4, 3, 2, 1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 76, 75,
+                                74, 73, 72, 33, 34, 35, 36, 37, 38, 71, 70, 69, 68, 67, 44, 45, 46, 47, 48, 49, 50, 51,
+                                52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 52, 51, 50, 49, 48, 47, 46,
+                                45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24,
+                                23, 22, 21, 20, 19, 18, 17, 16, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
+
+        int[] mgreenRoute = {0, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
+                                82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 85, 84,
+                                83, 82, 81, 80, 79, 78, 77, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111,
+                                112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128,
+                                129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145,
+                                146, 147, 148, 149, 150, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15,
+                                14, 13, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+                                22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
+                                43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 0 };
 
         public MainWindow()
         {
@@ -94,7 +114,7 @@ namespace TrackModel_v0._1
                     mLines[mlineIdx].mSections[msectIdx].mBlocks[mtrainPos].mOccupied = true;
                     OccupiedBlock.Text = mLines[trainLine].mSections[trainSect].mBlocks[mblockIdx].mOccupied + "";
                 }
-
+                
             }
             if (testWindow.traingo == true)
                 sendTrain(testWindow.authority, testWindow.speed, testWindow.destination);
@@ -201,6 +221,7 @@ namespace TrackModel_v0._1
             GradeBox.Text = "N/A";
             ElevationBox.Text = "N/A";
             HeatBox.Text = "32";
+            StationName.Text = "";
 
             ToggleCrossbar.Visibility = Visibility.Collapsed;
             Population.Visibility = Visibility.Collapsed;
@@ -462,6 +483,13 @@ namespace TrackModel_v0._1
             }
         }
 
+        private void TrackModelClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //e.Cancel = true;
+            //this.Visibility = Visibility.Visible;
+
+        }
+
         private void BreakPowerButton_Click(object sender, RoutedEventArgs e)
         {
             if (!(mblockIdx == -1) && mLines.Count != 0)
@@ -509,7 +537,15 @@ namespace TrackModel_v0._1
                 FixCircuitButton.Background = Brushes.Gray;
             }
         }
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (!actualClose)
+            {
+                e.Cancel = true;
+                this.WindowState = WindowState.Minimized;
+            }
+        }
 
-       
+
     }
 }
