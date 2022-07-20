@@ -127,7 +127,10 @@ namespace CTC
             }
 
         }
+        public void SetTrackData(List<object> data)
+        {
 
+        }
         private void Dispatch_Click(object sender, RoutedEventArgs e) ///Dispatch train button selected, switch to the dispatch page
         {
             
