@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <GVL Name="GVL" Id="{e83f1d91-3314-4dd2-bed5-ae558a840b06}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+
+mInFromCTC : ARRAY[0..599] OF DINT;
+mOutToCTC : ARRAY[0..899] OF DINT;
+mInFromTrack : ARRAY[0..899] OF DINT;
+mOutToTrack : ARRAY[0..1199] OF DINT;
+
+mPLC2CTCWrites : ARRAY[0..899] OF DINT;
+mPLC3CTCWrites : ARRAY[0..899] OF DINT;
+mPLC2TrackWrites : ARRAY[0..1199] OF DINT;
+mPLC3TrackWrites : ARRAY[0..1199] OF DINT;
+
+mPLC2Failure : BOOL := 0;
+mPLC3Failure : BOOL := 0;
+
+mWriteEnable : BOOL := 1;
+
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

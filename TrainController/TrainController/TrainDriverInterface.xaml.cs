@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -23,22 +24,22 @@ namespace TrainController
     public partial class ControlPanel : Window
     {
         // Train controller objects/values:
-        public Controller[] mTrainSet = new Controller[30];
+        public List<Controller> mTrainSetList = new List<Controller>();
         public Controller mSelectedTrain;
-        public int mTrainCount = 0;
 
         // Dispatch timer period (while in testing):
         public int T = 250; // 250 ms
+
+        private bool actualClose = false;
 
         public ControlPanel()
         {
             InitializeComponent();
 
-            mTrainSet[mTrainCount] = new Controller();
-            mSelectedTrain = mTrainSet[mTrainCount];
-            mControllerList.Items.Insert(mTrainCount,"Train " + mTrainCount);
-            mControllerList.SelectedIndex = mTrainCount;
-            mTrainCount++;
+            mSelectedTrain = new Controller();
+            mTrainSetList.Add(mSelectedTrain);
+            mControllerList.Items.Insert((mTrainSetList.Count - 1),"Train " + (mTrainSetList.Count - 1));
+            mControllerList.SelectedIndex = (mTrainSetList.Count - 1);
 
             // Disable all buttons on main window until a HW_SW window option is selected:
             ManualMode.IsEnabled = false;
@@ -343,6 +344,12 @@ namespace TrainController
 
                 tPan.Show();
             }
+
+            else if (sender == CloseButton)
+            {
+                actualClose = true;
+                this.Close();
+            }
         }
 
         public void KeyDownButton(object sender, KeyEventArgs e)
@@ -374,7 +381,7 @@ namespace TrainController
             CurSpeed.Text = "Current Speed:\n" + mSelectedTrain.mCurSpeed + " mph";
 
             // Update Power display:
-            CurPower.Text = "Power: " + mSelectedTrain.mCurPower / 1000 + " kW";
+            CurPower.Text = "Power: " + (mSelectedTrain.mCurPower / 1000).ToString("F4") + " kW";
 
             // Update Temperature value:
             Temperature.Text = "Temperature: " + mSelectedTrain.mTemperature.ToString() + "°F";
@@ -497,16 +504,15 @@ namespace TrainController
 
         public void SelectTrain_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            mSelectedTrain = mTrainSet[mControllerList.SelectedIndex];
+            mSelectedTrain = mTrainSetList[mControllerList.SelectedIndex];
         }
 
         public void addController()
         {
-            mTrainSet[mTrainCount] = new Controller();
-            mSelectedTrain = mTrainSet[mTrainCount];
-            mControllerList.Items.Insert(mTrainCount,"Train " + mTrainCount);
-            mControllerList.SelectedIndex = mTrainCount;
-            mTrainCount++;
+            mSelectedTrain = new Controller();
+            mTrainSetList.Add(mSelectedTrain);
+            mControllerList.Items.Insert((mTrainSetList.Count - 1), "Train " + (mTrainSetList.Count - 1));
+            mControllerList.SelectedIndex = (mTrainSetList.Count - 1);
 
             HW_SW selectType = new HW_SW(this);
             selectType.Topmost = true;
@@ -517,6 +523,16 @@ namespace TrainController
         private void TrainControllerActive(object sender, EventArgs e)
         {
             Application.Current.MainWindow = this;
+        }
+
+        // Minimize when X is pressed.
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (!actualClose)
+            {
+                e.Cancel = true;
+                this.WindowState = WindowState.Minimized;
+            }
         }
     }
 }

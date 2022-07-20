@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <GVL Name="GVL" Id="{e116494b-008e-4148-a200-cfa04c206013}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	
+//Communication is sent/received through these vars
+mInFromCTC : ARRAY[0..303] OF DINT;
+mOutToCTC : ARRAY[0..455] OF DINT;
+mInFromTrack : ARRAY[0..455] OF DINT;
+mOutToTrack : ARRAY[0..531] OF DINT;
+
+//These receive the outputs from redundant PLC2 and PLC3
+mPLC2CTCWrites : ARRAY[0..455] OF DINT;
+mPLC3CTCWrites : ARRAY[0..455] OF DINT;
+mPLC2TrackWrites : ARRAY[0..531] OF DINT;
+mPLC3TrackWrites : ARRAY[0..531] OF DINT;
+
+//These flags go high on a mismatch between PLC outputs
+mPLC2Failure : BOOL := 0;
+mPLC3Failure : BOOL := 0;
+
+//This enables/disables this PLCs output if both redundancies vote it down
+mWriteEnable : BOOL := 1;
+
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

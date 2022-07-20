@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Windows.Threading;
 
 namespace Gog
 {
@@ -26,10 +26,12 @@ namespace Gog
         TrainController.ControlPanel trainCtrl;
         TrainModel.MainWindow trains;
 
+        DispatcherTimer globalTimer;
 
         public MainWindow()
         {
             InitializeComponent();
+            InitTimer();
         }
 
         //events 
@@ -68,7 +70,6 @@ namespace Gog
             }
             else
                 trainCtrl.Activate();
-
         }
 
         private void StartUpActivated(object sender, EventArgs e)
@@ -84,6 +85,21 @@ namespace Gog
             {
                 Application.Current.MainWindow = trainCtrl;
             }
+        }
+
+        private void InitTimer()
+        {
+            globalTimer = new DispatcherTimer();
+
+            globalTimer.Tick += new EventHandler(updateTick);
+
+            globalTimer.Interval = new TimeSpan(0, 0, 0, 0, 1);
+            globalTimer.Start();
+        }
+
+        private void updateTick(object sender, EventArgs e)
+        {
+
         }
     }
 }
