@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,8 @@ namespace TrainController
 
         // Dispatch timer period (while in testing):
         public int T = 250; // 250 ms
+
+        private bool actualClose = false;
 
         public ControlPanel()
         {
@@ -343,6 +346,12 @@ namespace TrainController
 
                 tPan.Show();
             }
+
+            else if (sender == CloseButton)
+            {
+                actualClose = true;
+                this.Close();
+            }
         }
 
         public void KeyDownButton(object sender, KeyEventArgs e)
@@ -517,6 +526,16 @@ namespace TrainController
         private void TrainControllerActive(object sender, EventArgs e)
         {
             Application.Current.MainWindow = this;
+        }
+
+        // Minimize when X is pressed.
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (!actualClose)
+            {
+                e.Cancel = true;
+                this.WindowState = WindowState.Minimized;
+            }
         }
     }
 }
