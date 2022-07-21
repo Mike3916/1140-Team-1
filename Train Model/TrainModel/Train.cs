@@ -11,6 +11,8 @@ namespace TrainObject
 {
     public class Train
     {
+        static int nextID = 0;
+        private int ID;
         private double currentSpeed;
         private double previousAcceleration;
         private double commandedSpeed;
@@ -39,6 +41,7 @@ namespace TrainObject
         private double blockDist;
         private double currDist;
         private double gradient;
+        int line;
 
 
 
@@ -69,6 +72,8 @@ namespace TrainObject
 
         public Train()
         {
+            ID = nextID;
+            nextID++;
             emergencyBrake = false;
             serviceBrake = false;
             engineFailure = false;
@@ -80,6 +85,22 @@ namespace TrainObject
             announcement = false;
             currAuthority = 0;
 
+        }
+
+        public Train(int authority, int line)
+        {
+            ID = nextID;
+            nextID++;
+            emergencyBrake = false;
+            serviceBrake = false;
+            engineFailure = false;
+            signalPickUp = false;
+            currentSpeed = 0;
+            previousAcceleration = 0;
+            interiorLights = false;
+            exteriorLights = false;
+            announcement = false;
+            cmdAuthority = authority;
         }
 
 
