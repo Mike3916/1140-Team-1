@@ -16,7 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-using Train = TrainObject.Train;
+//using Train = TrainObject.Train;
 
 namespace TrainController
 {
@@ -69,7 +69,7 @@ namespace TrainController
             InitTimer();
         }
 
-        public void UpdateValues(Train train, int i)
+   /*     public void UpdateValues(Train train, int i)
         {
             // Update commanded authority (only at instantiation of train):
             mSelectedTrain.setCmdAuthority(train.getAuthority());
@@ -77,7 +77,7 @@ namespace TrainController
             // Update commanded speed (speed limit):
             mSelectedTrain.setCmdSpeed(train.getCommandedSpeed());
         }
-
+   */
         public void Button_Click(object sender, RoutedEventArgs e)
         {
             if (sender == AutoMode)

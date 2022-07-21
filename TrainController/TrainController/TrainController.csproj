@@ -15,10 +15,4 @@
     <PackageReference Include="System.IO.Ports" Version="6.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="TrainModel">
-      <HintPath>..\..\Train Model\TrainModel\bin\Release\net6.0-windows\TrainModel.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
