@@ -221,7 +221,6 @@ namespace TrainController
                 else if (sender == SetSpeed)
                 {
                     ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setSetSpeed(double.Parse(SetSpeed.Text));
-                    //SetSpeed.Text = ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mSetSpeed.ToString();
                     ((ControlPanel)Application.Current.MainWindow).SetSpeedBox.Text = convertToImperial(((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mSetSpeed).ToString("F2");
                 }
                 else if (sender == CurSpeed)

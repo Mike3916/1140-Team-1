@@ -391,8 +391,6 @@ namespace TrainController
             {
                 if (sender == SetSpeedBox)
                 {
-                    //mSelectedTrain.setSetSpeed(int.Parse(SetSpeedBox.Text));
-                    //SetSpeedBox.Text = mSelectedTrain.mSetSpeed.ToString();
                     mSelectedTrain.setSetSpeed(double.Parse(SetSpeedBox.Text));
                     SetSpeedBox.Text = convertToImperial(mSelectedTrain.mSetSpeed).ToString("F2");
                 }
@@ -412,8 +410,6 @@ namespace TrainController
         public void checkUpdatedValues(object sender, EventArgs e)
         {
             // Update Speed display:
-            //CmdSpeed.Text = "Cmd Speed:\n" + mSelectedTrain.mCmdSpeed + " mph";
-            //CurSpeed.Text = "Current Speed:\n" + mSelectedTrain.mCurSpeed + " mph";
             CmdSpeed.Text = "Cmd Speed:\n" + convertToImperial(mSelectedTrain.mCmdSpeed).ToString("F2") + " mph";
             CurSpeed.Text = "Current Speed:\n" + convertToImperial(mSelectedTrain.mCurSpeed).ToString("F2") + " mph";
             

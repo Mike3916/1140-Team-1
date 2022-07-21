@@ -37,8 +37,8 @@ namespace TrainController
         public bool mEmergencyBrakeStatus = false;
 
         public int mTemperature = 72;
-        public int mKp = 0;
-        public int mKi = 0;
+        public int mKp = 250;
+        public int mKi = 100;
         public double mCurSpeed = 0;
         public double mCmdSpeed = 0;
         public double mSetSpeed = 0;
