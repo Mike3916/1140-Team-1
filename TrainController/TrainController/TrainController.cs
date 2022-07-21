@@ -640,17 +640,6 @@ namespace TrainController
             }
         }
 
-        /*public void UpdateNonVitals(bool trainUnderground, bool trainLeftDoors, bool trainRightDoors)
-        {
-            if (mAutoMode)
-            {
-                mInteriorLightsStatus = trainUnderground;
-                mExteriorLightsStatus = trainUnderground;
-                mLeftDoorsStatus = trainLeftDoors;
-                mRightDoorsStatus = trainRightDoors;
-            }
-        }*/
-
         public void CalculatePowerSW(object sender, EventArgs e)
         {
             double[] powerOutput = new double[3];
