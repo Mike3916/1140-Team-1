@@ -53,7 +53,7 @@ namespace Gog
 
 
         DispatcherTimer mGlobalTimer;
-        int mIterationMultiplier = 1, numTrains = 0, numTrainCtrls = 0;
+        int mIterationMultiplier = 100, numTrains = 0, numTrainCtrls = 0, iter = 0;
         bool newBlock;
 
         public MainWindow()
@@ -145,6 +145,7 @@ namespace Gog
         {
             for (int i = 0; i < mIterationMultiplier; i++)
             {
+                if (iter++ % 10 == 0) TimeBox.Text = (iter).ToString();
                 /*Mike's edits
                  * How this works is you will send arrays of all the blocks
                  * Track_Controller_1.SendMaintenance sends all the current block maintenance requests
@@ -185,8 +186,8 @@ namespace Gog
 
                 for (int j = 0; j < numTrains && j < numTrainCtrls; j++)
                 {
-                    newBlock=trains.UpdateValues(trainCtrl.mTrainSetList[i],i);
-                    trainCtrl.UpdateValues(trains.Trains[i].getCmdAuthority(), trains.Trains[i].getCurrAuthority(), trains.Trains[i].getCommandedSpeed(), trains.Trains[i].getVelocity(), trains.Trains[i].getBeacon(), trains.Trains[i].getUnderground(), trains.Trains[i].getDoorL(), trains.Trains[i].getDoorR(), i);
+                    newBlock=trains.UpdateValues(trainCtrl.mTrainSetList[j],j);
+                    trainCtrl.UpdateValues(trains.Trains[j].getCmdAuthority(), trains.Trains[j].getCurrAuthority(), trains.Trains[j].getCommandedSpeedMPH(), trains.Trains[j].getCurrentSpeedMPH(), trains.Trains[j].getBeacon(), trains.Trains[j].getUnderground(), trains.Trains[j].getDoorL(), trains.Trains[j].getDoorR(), j);
                                     
                     /*if(newBlock){
                         trains.updateBlock(trackModel.nextBlock(i)),i); //trackModel.nextBlock(i) moves the train to the next block on it's map and it returns the block info it moved to ***JOE TALK TO HOWARD FOR HELP HERE***
@@ -198,6 +199,8 @@ namespace Gog
 
             }
         }
+
+
         protected override void OnClosing(CancelEventArgs e)
         {
             // TODO: Add for every module
