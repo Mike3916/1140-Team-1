@@ -28,7 +28,7 @@ namespace TrackModel
         }
         public string[] getmblockInfo(int blockIdx)
         {
-            return mBlocks[blockIdx].getmblockInfo();
+            return mBlocks[blockIdx].GetmblockInfo();
         }
         public List<string> getBlockNum()
         {
@@ -36,18 +36,18 @@ namespace TrackModel
 
             foreach(Block block in mBlocks)
             {
-                blockNum.Add("" + block.getmblockNum());
+                blockNum.Add("" + block.GetmblockNum());
             }    
             return blockNum;
         }
         public List<int> getmblockSwitch(int blockIdx)
         {
-            return mBlocks[blockIdx].getmblockSwitch();
+            return mBlocks[blockIdx].GetmblockSwitch();
         }
 
         public double getmcumElevation(int blockIdx)
         {
-            return mBlocks[blockIdx].getmcumElevation();
+            return mBlocks[blockIdx].GetmcumElevation();
         }
 
         //setters
@@ -76,7 +76,7 @@ namespace TrackModel
                     mBlocks[blockIdx].setmspeedLimit(info);
                     break;
                 case 3:         //elevation
-                    double currentElevation = mBlocks[blockIdx].getmElevation();
+                    double currentElevation = mBlocks[blockIdx].GetmElevation();
                     mBlocks[blockIdx].setmElevation(info);
                     //for (int idx = 0; idx < mBlocks.Count; idx++)
                     //{

@@ -129,9 +129,9 @@ namespace TrackModel
 
         private DataTable MakeLineDataTable(int lineIdx)
         {
-            List<string[]> newlineInfo = mLines[lineIdx].getlineInfo();
+            List<string[]> newlineInfo = mLines[lineIdx].GetlineInfo();
 
-            DataTable lineData = new DataTable(mLines[lineIdx].getmnameLine());
+            DataTable lineData = new DataTable(mLines[lineIdx].GetmnameLine());
 
             //adds all columms
             lineData.Columns.Add("Line");
@@ -147,7 +147,7 @@ namespace TrackModel
             List<DataRow> blockData = new List<DataRow>(); //List of DataRow entries
 
             //foreach block entry, put data into a DataRow List entry and then add that to the lineData table
-            for (int blockIdx = 0; blockIdx < mLines[lineIdx].getmnumBlocks(); blockIdx++)
+            for (int blockIdx = 0; blockIdx < mLines[lineIdx].GetmnumBlocks(); blockIdx++)
             {
                 blockData.Add(lineData.NewRow());
                 for (int valueIdx = 0; valueIdx < 9; valueIdx++)
@@ -166,7 +166,7 @@ namespace TrackModel
             string lineName = (lineInfo[0].Split(','))[0]; //splits up just to get lineName
             Line newLine = new Line(lineName); 
 
-            newLine.addSections(lineInfo); //pawns off data processing to Line Class
+            newLine.AddSections(lineInfo); //pawns off data processing to Line Class
             mLines.Add(newLine);
         }
 
@@ -235,7 +235,7 @@ namespace TrackModel
         private void UpdateCurrentRow()
         {
             mLineData[mlineIdx].Select()[mblockIdx].BeginEdit();
-            string[] blockinfo = mLines[mlineIdx].getBlockInfo(msectIdx, mblockIdx);
+            string[] blockinfo = mLines[mlineIdx].GetBlockInfo(msectIdx, mblockIdx);
 
             for (int valueIdx = 0; valueIdx < mLineData[mlineIdx].Columns.Count; valueIdx++)
                 mLineData[mlineIdx].Select()[mblockIdx][valueIdx] = blockinfo[valueIdx];
@@ -285,7 +285,7 @@ namespace TrackModel
                 mLineData.Add(lineData);
 
                 LineDataGrid.ItemsSource = mLineData[mLineData.Count - 1].DefaultView;
-                LineCombo.Items.Add(mLines[mLines.Count - 1].getmnameLine());
+                LineCombo.Items.Add(mLines[mLines.Count - 1].GetmnameLine());
             }
             else
                 MessageBox.Show("File not found :(");
@@ -332,7 +332,7 @@ namespace TrackModel
             {
                 int lineIdx = LineCombo.SelectedIndex;
                 int sectionIdx = SectionCombo.SelectedIndex;
-                List<string> blockNumList = mLines[lineIdx].getSectBlockNum(sectionIdx);
+                List<string> blockNumList = mLines[lineIdx].GetSectBlockNum(sectionIdx);
 
                 foreach (string blockNum in blockNumList)
                     BlockCombo.Items.Add(blockNum);
@@ -351,7 +351,7 @@ namespace TrackModel
                     string[] blockInfo = mLines[lineIdx].mSections[sectionIdx].mBlocks[blockIdx].mblockInfo;
                     SetBlockInfo(blockInfo);
 
-                    List<int> switchList = mLines[lineIdx].getmblockSwitch(sectionIdx, blockIdx);
+                    List<int> switchList = mLines[lineIdx].GetmblockSwitch(sectionIdx, blockIdx);
                     foreach (int sw in switchList)
                         SwitchCombo.Items.Add(sw);
                     SwitchCombo.SelectedIndex = 0;
@@ -367,7 +367,7 @@ namespace TrackModel
 
             int lineIdx = LineCombo.SelectedIndex;
             LineDataGrid.ItemsSource = mLineData[lineIdx].DefaultView;
-            List<string> sectNames = mLines[lineIdx].getSectionNames();
+            List<string> sectNames = mLines[lineIdx].GetSectionNames();
 
             foreach (string name in sectNames)
                 SectionCombo.Items.Add(name);
@@ -401,7 +401,7 @@ namespace TrackModel
             {
                 if (double.TryParse(LengthBox.Text, out double info) == true)
                 {
-                    mLines[mlineIdx].setBlockInfo(msectIdx, mblockIdx, 0, info);
+                    mLines[mlineIdx].SetBlockInfo(msectIdx, mblockIdx, 0, info);
                     UpdateCurrentRow();
                 }
                 else
@@ -416,7 +416,7 @@ namespace TrackModel
             {
                 if (double.TryParse(GradeBox.Text, out double info) == true)
                 {
-                    mLines[mlineIdx].setBlockInfo(msectIdx, mblockIdx, 1, info);
+                    mLines[mlineIdx].SetBlockInfo(msectIdx, mblockIdx, 1, info);
                     UpdateCurrentRow();
                 }
                 else
@@ -431,7 +431,7 @@ namespace TrackModel
             {
                 if (double.TryParse(SpeedBox.Text, out double info) == true)
                 {
-                    mLines[mlineIdx].setBlockInfo(msectIdx, mblockIdx, 2, info);
+                    mLines[mlineIdx].SetBlockInfo(msectIdx, mblockIdx, 2, info);
                     UpdateCurrentRow();
                 }
                 else
@@ -446,11 +446,11 @@ namespace TrackModel
             {
                 if (double.TryParse(ElevationBox.Text, out double info) == true)
                 {
-                    double currentElevation = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].getmElevation();
+                    double currentElevation = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].GetmElevation();
                     double dif = Math.Abs(currentElevation - info);
                     if (currentElevation > info)
                         dif *= -1;
-                    mLines[mlineIdx].setBlockInfo(msectIdx, mblockIdx, 3, info);
+                    mLines[mlineIdx].SetBlockInfo(msectIdx, mblockIdx, 3, info);
                     UpdateCurrentRow();              
                 }
                 else

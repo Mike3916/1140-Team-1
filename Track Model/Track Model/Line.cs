@@ -18,14 +18,33 @@ namespace TrackModel
             mSections = new List<Section>();
         }
 
+        public struct Train
+        {
+            public int blockIdx;
+            public int trainID;
+
+            public Train()
+            {
+                blockIdx = 0;
+                trainID = 0;
+            }
+            public Train(int idx, int ID)
+            {
+                blockIdx = idx;
+                trainID = ID;
+            }
+        }
+
+
+
         //getters
 
-        public int getmnumSections()
+        public int GetmnumSections()
         {
             return mnumSections;
         }
 
-        public int getmnumBlocks()
+        public int GetmnumBlocks()
         {
             int blockSum = 0;
             foreach (Section sect in mSections)
@@ -36,15 +55,15 @@ namespace TrackModel
             return mnumBlocks;
         }
 
-        public string getmnameLine()
+        public string GetmnameLine()
         {
             return mnameLine;
         }
 
-        public List<string[]> getlineInfo()
+        public List<string[]> GetlineInfo()
         {
             List<string[]> lineInfo = new List<string[]>();
-            for (int sectIdx = 0; sectIdx < getmnumSections(); sectIdx++)
+            for (int sectIdx = 0; sectIdx < GetmnumSections(); sectIdx++)
             {
                 for (int blockIdx = 0; blockIdx < mSections[sectIdx].getmnumBlocks(); blockIdx++)
                 {
@@ -55,16 +74,16 @@ namespace TrackModel
             return lineInfo;
         }
 
-        public string[] getBlockInfo(int sectIdx, int blockIdx)
+        public string[] GetBlockInfo(int sectIdx, int blockIdx)
         {
             return mSections[sectIdx].getmblockInfo(blockIdx);
         }
-        public List<int> getmblockSwitch(int sectIdx, int blockIdx)
+        public List<int> GetmblockSwitch(int sectIdx, int blockIdx)
         {
             return mSections[sectIdx].getmblockSwitch(blockIdx);
         }
 
-        public List<string> getSectionNames()
+        public List<string> GetSectionNames()
         {
             List<string> sectNames = new List<string>();
             foreach(Section sect in mSections)
@@ -74,24 +93,24 @@ namespace TrackModel
             return sectNames;
         }
 
-        public List<string> getSectBlockNum(int sectIdx)
+        public List<string> GetSectBlockNum(int sectIdx)
         {
             return mSections[sectIdx].getBlockNum();
         }
 
-        public void setmnameLine(string newName)
+        public void SetmnameLine(string newName)
         {
             mnameLine = newName;
         }
 
         //setters
         //sets info of param with type double
-        public void setBlockInfo(int sectIdx, int blockIdx, int param, double info)
+        public void SetBlockInfo(int sectIdx, int blockIdx, int param, double info)
         {
             mSections[sectIdx].setBlockInfo(blockIdx, param, info);
         }
         //sets info of param with type bool
-        public void setBlockInfo(int sectIdx, int blockIdx, int param, bool info)
+        public void SetBlockInfo(int sectIdx, int blockIdx, int param, bool info)
         {
             mSections[sectIdx].setBlockInfo(blockIdx, param, info);
         }
@@ -111,7 +130,7 @@ namespace TrackModel
         }
 
         //adds a section to the line
-        public void addSections(string[] lineInfo)
+        public void AddSections(string[] lineInfo)
         {
             //foreach block entry in lineInfo:
             //  1.check if the block's section exists:
@@ -148,9 +167,37 @@ namespace TrackModel
             }
         }
 
+        public void AddTrain(int blockIdx, int trainID)
+        {
+            mtrainList.Add(new Train(blockIdx, trainID));
+        }
+        public void RemoveTrain(int trainID)
+        {
+            int idx = 0;
+            foreach (Train tr in mtrainList)
+            {
+                if (tr.trainID == trainID)
+                    break;
+                idx++;
+            }
+            mtrainList.RemoveAt(idx);
+        }
+        public void RemoveTrainAt(int blockIdx)
+        {
+            int idx = 0;
+            foreach (Train tr in mtrainList)
+            {
+                if (tr.blockIdx == blockIdx)
+                    break;
+                idx++;
+            }
+            mtrainList.RemoveAt(idx);
+        }
+
         int mnumSections;
         int mnumBlocks;
         string mnameLine;
         public List<Section> mSections;
+        public List<Train> mtrainList;
     }
 }
