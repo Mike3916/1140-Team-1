@@ -67,7 +67,7 @@ namespace TrainController
             InitTimer();
         }
 
-        public void UpdateValues(int cmdAuthority,int curAuthority,double curVelocity,double cmdVelocity,string beacon,bool trainUnderground,bool trainLeftDoors,bool trainRightDoors,int i)
+        public void UpdateValues(int cmdAuthority,int curAuthority,double cmdVelocity,double curVelocity,string beacon,bool trainUnderground,bool trainLeftDoors,bool trainRightDoors,int i)
         {
             // Update commanded authority (only at instantiation of train):
             mTrainSetList[i].setCmdAuthority(cmdAuthority);
