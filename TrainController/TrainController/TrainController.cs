@@ -37,8 +37,8 @@ namespace TrainController
         public bool mEmergencyBrakeStatus = false;
 
         public int mTemperature = 72;
-        public int mKp = 0;
-        public int mKi = 0;
+        public int mKp = 250;
+        public int mKi = 100;
         public double mCurSpeed = 0;
         public double mCmdSpeed = 0;
         public double mSetSpeed = 0;
@@ -412,10 +412,17 @@ namespace TrainController
             dispatcherTimer.Start();
         }
 
-        public void setCmdSpeed(double value)
+        public void setCmdSpeed(double imperialValue)
         {
             dispatcherTimer.Stop();
-            mCmdSpeed = value;
+
+            double metricValue = convertToMetric(imperialValue);
+            mCmdSpeed = metricValue;
+
+            if (mAutoMode)
+            {
+                mSetSpeed = mCmdSpeed;
+            }
 
             // Hardware Controls:
             if (mControlType)
@@ -428,23 +435,25 @@ namespace TrainController
             dispatcherTimer.Start();
         }
 
-        public void setSetSpeed(int value)
+        public void setSetSpeed(double imperialValue)
         {
             dispatcherTimer.Stop();
 
+            double metricValue = convertToMetric(imperialValue);
+
             if (!mControlType)
             {
-                if (value > mCmdSpeed)
+                if (metricValue > mCmdSpeed)
                 {
                     MessageBox.Show("Set Speed Shall Not Exceed Commanded Speed");
                 }
-                else if (value < 0)
+                else if (metricValue < 0)
                 {
                     MessageBox.Show("Set Speed Shall Not Be Less Than Zero");
                 }
                 else
                 {
-                    mSetSpeed = value;
+                    mSetSpeed = metricValue;
                 }
             }
 
@@ -452,30 +461,32 @@ namespace TrainController
             else
             {
                 pi.WriteLine("b");
-                pi.WriteLine(value.ToString() + "\n");
+                pi.WriteLine(metricValue.ToString() + "\n");
                 string output = pi.ReadLine();
 
                 if (output == "tooHigh")
                 {
                     MessageBox.Show("Set Speed Shall Not Exceed Commanded Speed");
                 }
-                else if (value < 0)
+                else if (metricValue < 0)
                 {
                     MessageBox.Show("Set Speed Shall Not Be Less Than Zero");
                 }
                 else
                 {
-                    mSetSpeed = value;
+                    mSetSpeed = metricValue;
                 }
             }
 
             dispatcherTimer.Start();
         }
 
-        public void setCurSpeed(int value)
+        public void setCurSpeed(double imperialValue)
         {
             dispatcherTimer.Stop();
-            mCurSpeed = value;
+
+            double metricValue = convertToMetric(imperialValue);
+            mCurSpeed = metricValue;
 
             // Hardware Controls:
             if (mControlType)
@@ -587,56 +598,54 @@ namespace TrainController
                     mCmdSpeed = 0;
                     mSetSpeed = 0;
 
-                    mCurSpeed -= 1;
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) - 1);
                 }
             }
             else if (mServiceBrakeStatus)
             {
                 if (mCurSpeed > 0)
                 {
-                    mCurSpeed--;
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) - 1);
                 }
             }
             else if (mAutoMode)
             {
-                if (mCurSpeed < mCmdSpeed)
+                if (Math.Abs(mCurSpeed - mCmdSpeed) < 0.5)
                 {
-                    mCurSpeed++;
+                    mCurSpeed = mCmdSpeed;
+                }
+                else if (mCurSpeed < mCmdSpeed)
+                {
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) + 1);
                 }
                 else if (mCurSpeed > mCmdSpeed)
                 {
-                    mCurSpeed--;
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) - 1);
                 }
             }
             else
             {
-                if (mCurSpeed < mSetSpeed)
+                if (Math.Abs(mCurSpeed - mSetSpeed) < 0.5)
                 {
-                    mCurSpeed++;
+                    mCurSpeed = mSetSpeed;
+                }
+                else if (mCurSpeed < mSetSpeed)
+                {
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) + 1);
                 }
                 else if (mCurSpeed > mSetSpeed)
                 {
-                    mCurSpeed--;
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) - 1);
                 }
             }
         }
-
-        /*public void UpdateNonVitals(bool trainUnderground, bool trainLeftDoors, bool trainRightDoors)
-        {
-            if (mAutoMode)
-            {
-                mInteriorLightsStatus = trainUnderground;
-                mExteriorLightsStatus = trainUnderground;
-                mLeftDoorsStatus = trainLeftDoors;
-                mRightDoorsStatus = trainRightDoors;
-            }
-        }*/
 
         public void CalculatePowerSW(object sender, EventArgs e)
         {
             double[] powerOutput = new double[3];
             double powerCheck = 0;
 
+            // calculate power three times for vitality
             for (int i = 0; i < 3; i++)
             {
                 if (mAutoMode)
@@ -801,6 +810,15 @@ namespace TrainController
             {
                 mCurPower = powerCheck;
             }
+        }
+
+        private double convertToImperial(double metricSpeed)
+        {
+            return metricSpeed * 2.236936;
+        }
+        private double convertToMetric(double imperialSpeed)
+        {
+            return imperialSpeed / 2.236936;
         }
     }
 }

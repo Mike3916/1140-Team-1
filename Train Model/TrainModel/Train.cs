@@ -11,6 +11,8 @@ namespace TrainObject
 {
     public class Train
     {
+        static int nextID = 0;
+        private int ID;
         private double currentSpeed;
         private double previousAcceleration;
         private double commandedSpeed;
@@ -21,7 +23,8 @@ namespace TrainObject
         private bool serviceBrake;
         private bool engineFailure;
         private bool signalPickUp;
-        private int authority;
+        private int cmdAuthority;
+        private int currAuthority;
         private int passengers=58;
         private int crew=6;
         private bool interiorLights;
@@ -33,10 +36,13 @@ namespace TrainObject
         private int temperature=74;
         private double timeTillNextBlock;
         private bool announcement;
+        private string beaconMessage = "No beacon";
+        private bool underground;
 
         private double blockDist;
         private double currDist;
         private double gradient;
+        int line;
 
 
 
@@ -67,6 +73,8 @@ namespace TrainObject
 
         public Train()
         {
+            ID = nextID;
+            nextID++;
             emergencyBrake = false;
             serviceBrake = false;
             engineFailure = false;
@@ -76,7 +84,26 @@ namespace TrainObject
             interiorLights = false;
             exteriorLights = false;
             announcement = false;
+            currAuthority = 0;
+            underground = false;
 
+        }
+
+        public Train(int authority, int line)
+        {
+            ID = nextID;
+            nextID++;
+            emergencyBrake = false;
+            serviceBrake = false;
+            engineFailure = false;
+            signalPickUp = false;
+            currentSpeed = 0;
+            previousAcceleration = 0;
+            interiorLights = false;
+            exteriorLights = false;
+            announcement = false;
+            cmdAuthority = authority;
+            underground = false;
         }
 
 
@@ -167,14 +194,29 @@ namespace TrainObject
             return Math.Round(currentSpeed * 2.23694,2);
         }
 
-        public void setAuthority(int a)
+        public void setCmdAuthority(int a)
         {
-            authority = a;
+            cmdAuthority = a;
         }
 
-        public int getAuthority()
+        public int getCmdAuthority()
         {
-            return authority;
+            return cmdAuthority;
+        }
+
+        public int getCurrAuthority()
+        {
+            return currAuthority;
+        }
+
+        public string getBeacon()
+        {
+            return beaconMessage;
+        }
+
+        public bool getUnderground()
+        {
+            return underground;
         }
 
         public double getForce()
@@ -383,7 +425,7 @@ namespace TrainObject
             announcement = a;
         }
 
-        public void setBlockInfo(double dist, double grad, int passengerCount)
+        public void setBlockInfo(double dist, double grad, int passengerCount, string beacon)
         {
             blockDist = dist;
             gradient = grad;
@@ -401,6 +443,16 @@ namespace TrainObject
             mass = 56.7 * 2000 + 65 * passengers + 65 * crew;
 
             currDist = 0;
+            currAuthority++;
+            
+            if (beacon != "")
+            {
+                beaconMessage = beacon;
+            }
+            else
+            {
+                beaconMessage = "No beacon";
+            }
         }
 
         public bool askForInfo()

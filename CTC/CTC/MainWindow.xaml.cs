@@ -34,7 +34,8 @@ namespace CTC
         Train_Data train_data = new Train_Data();
         Block_Data block_data = new Block_Data();
 
-        public List<TrackModel.Line> mLines;
+        public List<TrackModel.Line> mLines;    //Hold the track model
+        bool trackLoaded = false;               //Keep track of whether the track has been loaded or not
 
 
         public MainWindow()
@@ -141,6 +142,7 @@ namespace CTC
 
         public void SetTrackData(List<TrackModel.Line> data)
         {
+            trackLoaded = true;
             mLines = data;
         }
         private void TextBox_KeyDown(object sender, KeyEventArgs e) ///After the user types the block code in and hits the enter key

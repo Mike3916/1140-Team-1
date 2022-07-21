@@ -11,10 +11,11 @@
             <ColumnDefinition Width="689*"/>
             <ColumnDefinition Width="111*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="TrackModelButton" Content="Track Model" HorizontalAlignment="Left" Margin="109,112,0,0" VerticalAlignment="Top" Click="TrackModelButton_Click"/>
-        <Button x:Name="TrainModelButton" Content="Train Model" HorizontalAlignment="Left" Margin="335,122,0,0" VerticalAlignment="Top" Click="TrainModelButton_Click"/>
-        <Button x:Name="TrainCtrlButton" Content="Train Controller" HorizontalAlignment="Left" Margin="177,282,0,0" VerticalAlignment="Top" Click="TrainCtrlButton_Click"/>
-        <Button x:Name="CTC_Button" Content="CTC" HorizontalAlignment="Left" Margin="143,188,0,0" VerticalAlignment="Top" Click="CTC_Button_Click"/>
+        <Button x:Name="TrackModelButton" Content="Track Model" HorizontalAlignment="Left" Margin="298,187,0,0" VerticalAlignment="Top" Click="TrackModelButton_Click" Height="51" Width="85"/>
+        <Button x:Name="TrainModelButton" Content="Train Model" HorizontalAlignment="Left" Margin="426,187,0,0" VerticalAlignment="Top" Click="TrainModelButton_Click" Height="51" Width="83"/>
+        <Button x:Name="TrainCtrlButton" Content="Train Controller" HorizontalAlignment="Left" Margin="548,187,0,0" VerticalAlignment="Top" Click="TrainCtrlButton_Click" Height="51" Width="107"/>
+        <Button x:Name="CTC_Button" Content="CTC" HorizontalAlignment="Left" Margin="76,187,0,0" VerticalAlignment="Top" Click="CTC_Button_Click" RenderTransformOrigin="-1.47,0.613" Height="51" Width="31"/>
+        <Button Content="Track Controller" HorizontalAlignment="Left" Margin="147,187,0,0" VerticalAlignment="Top" Click="Button_Click" Height="51" Width="109"/>
 
     </Grid>
 </Window>

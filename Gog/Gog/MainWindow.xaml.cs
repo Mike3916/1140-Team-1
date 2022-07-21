@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Track_Controller_1;
+
 
 namespace Gog
 {
@@ -28,12 +30,31 @@ namespace Gog
         TrainController.ControlPanel trainCtrl;
         TrainModel.MainWindow trains;
         CTC.MainWindow ctc;
+        Track_Controller_1._02.Controller mRedline1 = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
+        Track_Controller_1._02.Controller mGreenLine1 = new Track_Controller_1._02.Controller(852, false, "127.0.0.1");
 
-        //Controller trackController = new Controller();
-        //trackController.CTCRead(ctc.commandedAuthority)
+        int[] mRedMaintenanceBlocks = new int[77];
+        int[] mRedOccupancies = new int[77];
+        int[] mRedSpeeds = new int[77];
+        int[] mRedAuthorities = new int[77];
+        int[] mRedCrossings = new int[77];
+        int[] mRedSwitches = new int[77];
+        int[] mRedLeftLights = new int[77];
+        int[] mRedRightLights = new int[77];
+
+        int[] mGreenMaintenanceBlocks = new int[151];
+        int[] mGreenOccupancies = new int[151];
+        int[] mGreenSpeeds = new int[151];
+        int[] mGreenAuthorities = new int[151];
+        int[] mGreenCrossings = new int[151];
+        int[] mGreenSwitches = new int[151];
+        int[] mGreenLeftLights = new int[151];
+        int[] mGreenRightLights = new int[151];
+
 
         DispatcherTimer mGlobalTimer;
-        int mIterationMultiplier = 1;
+        int mIterationMultiplier = 1, numTrains = 0, numTrainCtrls = 0;
+        bool newBlock;
 
         public MainWindow()
         {
@@ -62,6 +83,7 @@ namespace Gog
                 Application.Current.MainWindow = trains;
                 trains = new TrainModel.MainWindow();
                 trains.Show();
+                numTrains++;
             }
             else
                 trains.Activate();
@@ -74,6 +96,7 @@ namespace Gog
                 Application.Current.MainWindow = trainCtrl;
                 trainCtrl = new TrainController.ControlPanel();
                 trainCtrl.Show();
+                numTrainCtrls++;
             }
             else
                 trainCtrl.Activate();
@@ -115,26 +138,64 @@ namespace Gog
 
             mGlobalTimer.Interval = new TimeSpan(0, 0, 0, 0, 1); //1 millisecond
             mGlobalTimer.Start();
+
         }
 
         private void updateTick(object sender, EventArgs e)
         {
             for (int i = 0; i < mIterationMultiplier; i++)
             {
+                /*Mike's edits
+                 * How this works is you will send arrays of all the blocks
+                 * Track_Controller_1.SendMaintenance sends all the current block maintenance requests
+                 * and returns all the blocks placed under maintenance.
+                 * SendOccupancies sends all of the occupancies and returns the states of all the occupancies
+                 * so on and so forth.
+                 * */
+                try
+                {
+                    mRedMaintenanceBlocks = mRedline1.SendMaintenance(mRedMaintenanceBlocks);
+                    mRedOccupancies = mRedline1.SendOccupancies(mRedOccupancies);
+                    mRedSpeeds = mRedline1.SendSpeeds(mRedSpeeds);
+                    mRedAuthorities = mRedline1.SendAuthorities(mRedAuthorities);
+                    mRedCrossings = mRedline1.SendCrossings(mRedCrossings);
+                    mRedSwitches = mRedline1.SendSwitches(mRedSwitches);
+                    mRedLeftLights = mRedline1.SendLeftLights(mRedLeftLights);
+                    mRedRightLights = mRedline1.SendRightLights(mRedRightLights);
+
+                    mGreenMaintenanceBlocks = mGreenLine1.SendMaintenance(mGreenMaintenanceBlocks);
+                    mGreenOccupancies = mGreenLine1.SendOccupancies(mGreenOccupancies);
+                    mGreenSpeeds = mGreenLine1.SendSpeeds(mGreenSpeeds);
+                    mGreenAuthorities = mGreenLine1.SendAuthorities(mGreenAuthorities);
+                    mGreenCrossings = mGreenLine1.SendCrossings(mGreenCrossings);
+                    mGreenSwitches = mGreenLine1.SendSwitches(mGreenSwitches);
+                    mGreenLeftLights = mGreenLine1.SendLeftLights(mGreenLeftLights);
+                    mGreenRightLights = mGreenLine1.SendRightLights(mGreenRightLights);
+                }
+                catch
+                {
+
+                }
+
+                ctc.SetTrackData(track.mLines);
+
                 //trainCtrl.checkUpdatedValues();
                 //ctc.SetTrackData(track.);
                 //track.GetT
 
-                /*for (int i = 0; i < trains.trainList.Count; i++)
+                for (int j = 0; j < numTrains && j < numTrainCtrls; j++)
                 {
                     newBlock=trains.UpdateValues(trainCtrl.mTrainSetList[i],i);
-                    trainCtrl.UpdateValues(trains.mTrainList[i],i);
-                
-                    if(newBlock){
+                    trainCtrl.UpdateValues(trains.Trains[i].getCmdAuthority(), trains.Trains[i].getCurrAuthority(), trains.Trains[i].getCommandedSpeed(), trains.Trains[i].getVelocity(), trains.Trains[i].getBeacon(), trains.Trains[i].getUnderground(), trains.Trains[i].getDoorL(), trains.Trains[i].getDoorR(), i);
+                                    
+                    /*if(newBlock){
                         trains.updateBlock(trackModel.nextBlock(i)),i); //trackModel.nextBlock(i) moves the train to the next block on it's map and it returns the block info it moved to ***JOE TALK TO HOWARD FOR HELP HERE***
                     
-                    }
-                }*/
+                    }*/
+                }
+
+
+
             }
         }
         protected override void OnClosing(CancelEventArgs e)
@@ -143,6 +204,13 @@ namespace Gog
 
             trainCtrl.actualClose = true;
             trainCtrl.Close();
+            trains.actualClose = true;
+            trains.Close();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
