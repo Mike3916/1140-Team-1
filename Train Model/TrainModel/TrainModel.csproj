@@ -7,4 +7,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="TrainController">
+      <HintPath>..\..\TrainController\TrainController\bin\Release\net6.0-windows\TrainController.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

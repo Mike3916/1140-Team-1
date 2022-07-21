@@ -127,8 +127,13 @@ namespace Gog
 
                 /*for (int i = 0; i < trains.trainList.Count; i++)
                 {
-                    trains.UpdateValues(trainCtrl.mTrainSetList[i],i);
+                    newBlock=trains.UpdateValues(trainCtrl.mTrainSetList[i],i);
                     trainCtrl.UpdateValues(trains.mTrainList[i],i);
+                
+                    if(newBlock){
+                        trains.updateBlock(trackModel.nextBlock(i)),i); //trackModel.nextBlock(i) moves the train to the next block on it's map and it returns the block info it moved to ***JOE TALK TO HOWARD FOR HELP HERE***
+                    
+                    }
                 }*/
             }
         }

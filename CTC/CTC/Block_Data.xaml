@@ -10,12 +10,12 @@
 
     <Grid Background="White" Width="389" Height="395">
         <Button x:Name="Left" Content="Left" HorizontalAlignment="Left" Margin="79,88,0,0" VerticalAlignment="Top" Height="31" Width="32" Click="Left_Click"/>
-        <Button x:Name="Right" Content="Right" HorizontalAlignment="Left" Margin="137,88,0,0" VerticalAlignment="Top" Height="31" Width="33" Background="#FF53E216" Click="Right_Click"/>
-        <Button x:Name="Open" Content="Open" HorizontalAlignment="Left" Margin="137,144,0,0" VerticalAlignment="Top" Background="#FF27E340" Click="Open_Click"/>
+        <Button x:Name="Right" Content="Right" HorizontalAlignment="Left" Margin="137,88,0,0" VerticalAlignment="Top" Height="31" Width="33" Background="LightGreen" Click="Right_Click"/>
+        <Button x:Name="Open" Content="Open" HorizontalAlignment="Left" Margin="137,144,0,0" VerticalAlignment="Top" Background="LightGreen" Click="Open_Click"/>
         <Button x:Name="Close" Content="Close" HorizontalAlignment="Left" Margin="79,144,0,0" VerticalAlignment="Top" Click="Close_Click"/>
         <TextBlock HorizontalAlignment="Left" Margin="51,236,0,0" TextWrapping="Wrap" Text="Tickets per Hour:" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="79,39,0,0" TextWrapping="Wrap" Text="Block: G1" VerticalAlignment="Top"/>
-        <Rectangle HorizontalAlignment="Left" Height="30" Margin="51,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="68" Fill="#FF5BE831"/>
+        <Rectangle HorizontalAlignment="Left" Height="30" Margin="51,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="68" Fill="LightGreen"/>
         <TextBlock HorizontalAlignment="Left" Margin="53,0,0,0" TextWrapping="Wrap" Text="Unoccupied" VerticalAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Margin="132,0,0,0" TextWrapping="Wrap" Text="Occupied" VerticalAlignment="Center"/>
         <Rectangle HorizontalAlignment="Left" Height="30" Margin="126,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="68" RenderTransformOrigin="0.5,0.5">

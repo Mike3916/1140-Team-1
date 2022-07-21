@@ -15,7 +15,6 @@ namespace TrainObject
         private double previousAcceleration;
         private double commandedSpeed;
         private double mass = 56.7 * 2000;
-        private double resistance;
         private double powerCmd;
         public static double powerMax = 120000;
         private bool emergencyBrake;
@@ -25,13 +24,15 @@ namespace TrainObject
         private int authority;
         private int passengers=58;
         private int crew=6;
-        private bool lights;
+        private bool interiorLights;
+        private bool exteriorLights;
         private int cars = 5;
         private const int capacity = 74;
         private bool doorR;
         private bool doorL;
         private int temperature=74;
         private double timeTillNextBlock;
+        private bool announcement;
 
         private double blockDist;
         private double currDist;
@@ -72,9 +73,9 @@ namespace TrainObject
             signalPickUp = false;
             currentSpeed = 0;
             previousAcceleration = 0;
-            lights = false;
-          
-
+            interiorLights = false;
+            exteriorLights = false;
+            announcement = false;
 
         }
 
@@ -304,16 +305,34 @@ namespace TrainObject
             crew = c;
         }
 
-        public void toggleLights()
+        public void toggleInteriorLights()
         {
-            lights = !lights;
+            interiorLights = !interiorLights;
+        }
+
+        public bool getInteriorLights()
+        {
+            return interiorLights;
+        }
+
+        public void toggleExteriorLights()
+        {
+            exteriorLights = !exteriorLights;
+        }
+
+        public bool getExteriorLights()
+        {
+            return exteriorLights;
         }
 
         public bool getLights()
         {
-            return lights;
+            return false;
         }
-
+        
+        public void toggleLights(){
+            
+        }
         public int getCars()
         {
             return cars;
@@ -359,6 +378,11 @@ namespace TrainObject
             temperature = t;
         }
 
+        public void setAnnouncement(bool a)
+        {
+            announcement = a;
+        }
+
         public void setBlockInfo(double dist, double grad, int passengerCount)
         {
             blockDist = dist;
@@ -375,7 +399,6 @@ namespace TrainObject
             passengers += passengerCount;
            
             mass = 56.7 * 2000 + 65 * passengers + 65 * crew;
-            resistance = grad * (mass / 2000) * 20 + (mass / 2000) * 5; //grad might not be correct here? I am not sure, it also is reliant on train going uphill
 
             currDist = 0;
         }
