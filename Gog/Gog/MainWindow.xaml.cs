@@ -30,7 +30,7 @@ namespace Gog
         TrainController.ControlPanel trainCtrl;
         TrainModel.MainWindow trains;
         CTC.MainWindow ctc;
-        /*Track_Controller_1._02.Controller mRedline1 = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
+        Track_Controller_1._02.Controller mRedline1 = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
         Track_Controller_1._02.Controller mGreenLine1 = new Track_Controller_1._02.Controller(852, false, "127.0.0.1");
 
         int[] mRedMaintenanceBlocks = new int[77];
@@ -49,11 +49,11 @@ namespace Gog
         int[] mGreenCrossings = new int[151];
         int[] mGreenSwitches = new int[151];
         int[] mGreenLeftLights = new int[151];
-        int[] mGreenRightLights = new int[151];*/
+        int[] mGreenRightLights = new int[151];
 
 
         DispatcherTimer mGlobalTimer;
-        int mIterationMultiplier = 1;
+        int mIterationMultiplier = 1, numTrains = 0, numTrainCtrls = 0;
         bool newBlock;
 
         public MainWindow()
@@ -83,6 +83,7 @@ namespace Gog
                 Application.Current.MainWindow = trains;
                 trains = new TrainModel.MainWindow();
                 trains.Show();
+                numTrains++;
             }
             else
                 trains.Activate();
@@ -95,6 +96,7 @@ namespace Gog
                 Application.Current.MainWindow = trainCtrl;
                 trainCtrl = new TrainController.ControlPanel();
                 trainCtrl.Show();
+                numTrainCtrls++;
             }
             else
                 trainCtrl.Activate();
@@ -150,7 +152,7 @@ namespace Gog
                  * SendOccupancies sends all of the occupancies and returns the states of all the occupancies
                  * so on and so forth.
                  * */
-                /*try
+                try
                 {
                     mRedMaintenanceBlocks = mRedline1.SendMaintenance(mRedMaintenanceBlocks);
                     mRedOccupancies = mRedline1.SendOccupancies(mRedOccupancies);
@@ -173,21 +175,18 @@ namespace Gog
                 catch
                 {
 
-                }*/
-                
+                }
 
+                ctc.SetTrackData(track.mLines);
 
                 //trainCtrl.checkUpdatedValues();
-                /*if (TrackModel.TrackModelTestWindow == set)
-                {
-                    ctc.SetTrackData(track.)
-                }*/
+                //ctc.SetTrackData(track.);
                 //track.GetT
 
-                for (int j = 0; j < trains.Trains.Count; j++)
+                for (int j = 0; j < numTrains && j < numTrainCtrls; j++)
                 {
                     newBlock=trains.UpdateValues(trainCtrl.mTrainSetList[i],i);
-                    //trainCtrl.UpdateValues(trains.Trains[i].getCmdAuthority(), trains.Trains[i].getCurrAuthority(), trains.Trains[i].getCommandedSpeed(), trains.Trains[i].getVelocity(), trains.Trains[i].getBeacon(), trains.Trains[i]., trains.Trains[i].getDoorL, trains.Trains[i].getDoorR, i);
+                    trainCtrl.UpdateValues(trains.Trains[i].getCmdAuthority(), trains.Trains[i].getCurrAuthority(), trains.Trains[i].getCommandedSpeed(), trains.Trains[i].getVelocity(), trains.Trains[i].getBeacon(), trains.Trains[i].getUnderground(), trains.Trains[i].getDoorL(), trains.Trains[i].getDoorR(), i);
                                     
                     /*if(newBlock){
                         trains.updateBlock(trackModel.nextBlock(i)),i); //trackModel.nextBlock(i) moves the train to the next block on it's map and it returns the block info it moved to ***JOE TALK TO HOWARD FOR HELP HERE***
