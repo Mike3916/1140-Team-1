@@ -60,6 +60,6 @@
         <TextBlock x:Name="StationName" Grid.Column="8" HorizontalAlignment="Left" Margin="139,73,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="128" TextAlignment="Right" Height="16"/>
         <Button x:Name="ToggleCrossbar" Grid.Column="8" Content="Button" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="159,292,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.463,-0.385" Width="85"/>
         <TextBlock x:Name="Population" Grid.Column="8" HorizontalAlignment="Left" Margin="138,328,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="128" TextAlignment="Right" Height="16"/>
-
+        <Button x:Name="AddTrainButton" Grid.Column="8" Content="Add Train" HorizontalAlignment="Left" Margin="87,312,0,0" Grid.Row="1" VerticalAlignment="Top" Click="AddTrain_Click"/>
     </Grid>
 </Window>

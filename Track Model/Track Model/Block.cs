@@ -12,13 +12,13 @@ namespace TrackModel
         }
         public Block(string[] blockInfo)
         {
-            mOccupied = false;
-            mhasCross = false;
-            mcrossDown = false;
-            mUnderground = false;
-            mLeft = false;
-            mRight = false;
-            
+            mOccupied = false; //is occupied
+            mhasCross = false; //has rail crossing
+            mcrossDown = false; //rail crossing is down
+            mUnderground = false; //is underground
+            mLeft = false; //has station on left
+            mRight = false; //has station on right
+
             mlineName = blockInfo[0];
             msectionName = blockInfo[1];
             mblockNum = Int32.Parse(blockInfo[2]);
@@ -35,7 +35,7 @@ namespace TrackModel
             mtrackTemp = 32;
 
             mstationName = "";
-            mStation = false;
+            mStation = false; // has station
 
             readInfrastructure();
         }
@@ -240,18 +240,18 @@ namespace TrackModel
         public double mcumElevation;   //should NOT be mutable
         public double mtrackTemp;
 
-        public bool mOccupied;         //param = 0
-        public bool mtrackRail;        //param = 1
-        public bool mtrackCircuit;     //param = 2
-        public bool mPower;            //param = 3
-        public bool mStation;
-        public bool mhasCross;
-        public bool mcrossDown;
-        public bool mUnderground;
-        public bool mLeft;
-        public bool mRight;
+        public bool mOccupied;         //param = 0 is occupied
+        public bool mtrackRail;        //param = 1 track rail working
+        public bool mtrackCircuit;     //param = 2 track circuit working
+        public bool mPower;            //param = 3 power working
+        public bool mStation;   //has station
+        public bool mhasCross;  //has rail crossing
+        public bool mcrossDown; //crossbar down
+        public bool mUnderground;//is underground
+        public bool mLeft;      //station on left
+        public bool mRight;     //station on right
 
-        public int mPop;
+        public int mPop;        //population at station
 
         public string[] mblockInfo;
         public List<int> mblockSwitches = new List<int>();

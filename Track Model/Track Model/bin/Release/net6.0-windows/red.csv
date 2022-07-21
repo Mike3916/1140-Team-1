@@ -1,5 +1,4 @@
 Line,Section,Block Number,Block Length (m),Block Grade (%),Speed Limit (Km/Hr),Infrastructure,Station Side,ELEVATION (M),CUMALTIVE ELEVATION (M)
-Red,0,0,0,0,100,YARD; SWITCH(0-9),,0,0
 Red,A,1,50,0.5,40,,,0.25,0.25
 Red,A,2,50,1,40,,,0.5,0.75
 Red,A,3,50,1.5,40,,,0.75,1.5
@@ -8,7 +7,7 @@ Red,B,5,50,1.5,40,,,0.75,3.25
 Red,B,6,50,1,40,,,0.5,3.75
 Red,C,7,75,0.5,40,STATION; SHADYSIDE,Left/Right,0.38,4.13
 Red,C,8,75,0,40,,,0,4.13
-Red,C,9,75,0,40,SWITCH (9-0:9-10),,0,4.13
+Red,C,9,75,0,40,SWITCH (9-77:9-10),,0,4.13
 Red,D,10,75,0,40,,,0,4.13
 Red,D,11,75,-0.5,40,,,-0.38,3.75
 Red,D,12,75,-1,40,,,-0.75,3
@@ -76,3 +75,4 @@ Red,S,73,50,0,55,UNDERGROUND,,0,-1.24
 Red,S,74,50,0,55,UNDERGROUND,,0,-1.24
 Red,S,75,50,0,55,UNDERGROUND,,0,-1.24
 Red,T,76,50,0,55,UNDERGROUND,,0,-1.24
+Red,0,77,0,0,100,YARD,,0,0

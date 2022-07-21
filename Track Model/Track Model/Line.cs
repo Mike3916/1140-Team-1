@@ -18,23 +18,7 @@ namespace TrackModel
             mSections = new List<Section>();
         }
 
-        public struct Train
-        {
-            public int blockIdx;
-            public int trainID;
-
-            public Train()
-            {
-                blockIdx = 0;
-                trainID = 0;
-            }
-            public Train(int idx, int ID)
-            {
-                blockIdx = idx;
-                trainID = ID;
-            }
-        }
-
+       
 
 
         //getters
@@ -82,7 +66,18 @@ namespace TrackModel
         {
             return mSections[sectIdx].getmblockSwitch(blockIdx);
         }
-
+        public TrackModel.Block GetBlock(int blockNum)
+        {
+            for (int idx = 0; idx < mnumSections; idx++)
+            {
+                for (int jdx = 0; jdx < mSections[idx].getmnumBlocks(); jdx++)
+                {
+                    if (blockNum == this.mSections[idx].mBlocks[jdx].mblockNum)
+                        return this.mSections[idx].mBlocks[jdx];
+                }
+            }
+            return null;
+        }
         public List<string> GetSectionNames()
         {
             List<string> sectNames = new List<string>();
@@ -167,37 +162,34 @@ namespace TrackModel
             }
         }
 
-        public void AddTrain(int blockIdx, int trainID)
+        public bool OccupyBlock(int blockIdx)
         {
-            mtrainList.Add(new Train(blockIdx, trainID));
-        }
-        public void RemoveTrain(int trainID)
-        {
-            int idx = 0;
-            foreach (Train tr in mtrainList)
+            int sIdx;
+            int bIdx;
+            for (int i = 0; i < this.GetmnumSections(); i++)
             {
-                if (tr.trainID == trainID)
-                    break;
-                idx++;
+                for (int j = 0; j < this.mSections[i].getmnumBlocks(); j++)
+                {
+                    if (this.mSections[i].mBlocks[j].mblockNum == blockIdx)
+                    {
+                        if(this.mSections[i].mBlocks[j].mOccupied == true)
+                            return false;
+                        else if(this.mSections[i].mBlocks[j].mOccupied == false)
+                        {
+                            this.mSections[i].mBlocks[j].mOccupied = true;
+                            return true;
+                        }
+                    }
+                }
             }
-            mtrainList.RemoveAt(idx);
+            
+            return true;
         }
-        public void RemoveTrainAt(int blockIdx)
-        {
-            int idx = 0;
-            foreach (Train tr in mtrainList)
-            {
-                if (tr.blockIdx == blockIdx)
-                    break;
-                idx++;
-            }
-            mtrainList.RemoveAt(idx);
-        }
-
+        
+        
         int mnumSections;
-        int mnumBlocks;
+        public int mnumBlocks;
         string mnameLine;
         public List<Section> mSections;
-        public List<Train> mtrainList;
     }
 }
