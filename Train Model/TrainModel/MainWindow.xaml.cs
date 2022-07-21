@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,6 +41,9 @@ namespace TrainModel
 
         public List<Train> Trains = new List<Train>();
         public List<int> TrainIndices = new List<int>();
+        public bool actualClose = false;
+
+        
        
 
         public MainWindow()
@@ -47,7 +51,7 @@ namespace TrainModel
             InitializeComponent();
             Trains.Add(new Train());
             Trains[0] = new Train();
-            Trains[0].setAuthority(35);
+            Trains[0].setCmdAuthority(35);
             Trains[0].setCommandedSpeed(17.8816);
             Trains[0].setPowerCmd(0);
 
@@ -99,7 +103,7 @@ namespace TrainModel
 
         private void Select_a_Train_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Position.Text = "Current Block: 10\nAuthority: " + Trains[0].getAuthority().ToString() + " Blocks\nLast Station: Castle Shannon\nNext Station: Dormont";
+            Position.Text = "Current Block: 10\nAuthority: " + Trains[0].getCmdAuthority().ToString() + " Blocks\nLast Station: Castle Shannon\nNext Station: Dormont";
             Speed.Text = "Current Speed: " + Math.Round(Trains[0].getCurrentSpeedMPH(),2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(Trains[0].getCommandedSpeedMPH(),2).ToString() + "Mi/h\nCurrent Acceleration: " + Trains[0].getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: "+Trains[0].getTimeTillNextBlock()+"s";
             Passed_Through_Variables.Text = "Speed Limit: 50Mi/h\nCommanded Authority: 85 Blocks";
             eBrake.Foreground = Brushes.White;
@@ -227,6 +231,7 @@ namespace TrainModel
             physics.Text = "Power:\nCurrent Mass: " + Trains[0].getMass().ToString() + " tons\nForce (P/V): " + Math.Round(Trains[0].getForce(), 2).ToString() + " N\nAcceleration (F/M): " + Trains[0].getAccelerationFPS().ToString() + " ft/s^2\nVelocity(V_(n - 1) + T / 2(A_n + A_(n - 1)): " + Trains[0].getCurrentSpeedMPH().ToString() + " Mi/h";
             Speed.Text = "Current Speed: " + Math.Round(Trains[0].getCurrentSpeedMPH(), 2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(Trains[0].getCommandedSpeedMPH(), 2).ToString() + "Mi/h\nCurrent Acceleration: " + Trains[0].getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: " + Trains[0].getTimeTillNextBlock() + "s";
             power.Text = Trains[0].getPowerCmd().ToString() + " kW";
+            Beacon.Text = "Beacon: " + Trains[0].getBeacon();
         }
 
        private void Lights_Click(object sender, RoutedEventArgs e)
@@ -300,6 +305,15 @@ namespace TrainModel
             }
         }
 
-        
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (!actualClose)
+            {
+                e.Cancel = true;
+                this.WindowState = WindowState.Minimized;
+            }
+        }
+
+
     }
 }

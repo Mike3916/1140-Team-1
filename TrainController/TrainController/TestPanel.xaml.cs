@@ -216,17 +216,17 @@ namespace TrainController
                 else if (sender == CmdSpeed)
                 {
                     ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setCmdSpeed(double.Parse(CmdSpeed.Text));
-                    ((ControlPanel)Application.Current.MainWindow).CmdSpeed.Text = "Cmd Speed:\n" + ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mCmdSpeed.ToString() + " mph";
+                    ((ControlPanel)Application.Current.MainWindow).CmdSpeed.Text = "Cmd Speed:\n" + convertToImperial(((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mCmdSpeed).ToString("F2") + " mph";
                 }
                 else if (sender == SetSpeed)
                 {
                     ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setSetSpeed(double.Parse(SetSpeed.Text));
-                    ((ControlPanel)Application.Current.MainWindow).SetSpeedBox.Text = ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mSetSpeed.ToString();
+                    ((ControlPanel)Application.Current.MainWindow).SetSpeedBox.Text = convertToImperial(((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mSetSpeed).ToString("F2");
                 }
                 else if (sender == CurSpeed)
                 {
                     ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setCurSpeed(double.Parse(CurSpeed.Text));
-                    ((ControlPanel)Application.Current.MainWindow).CurSpeed.Text = "Current Speed:\n" + ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mCurSpeed.ToString() + " mph";
+                    ((ControlPanel)Application.Current.MainWindow).CurSpeed.Text = "Current Speed:\n" + convertToImperial(((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mCurSpeed).ToString("F2") + " mph";
                 }
                 else if (sender == CmdAuthority)
                 {
@@ -254,6 +254,15 @@ namespace TrainController
         private void TestPanelActive(object sender, EventArgs e)
         {
             Application.Current.MainWindow = main;
+        }
+        private double convertToImperial(double metricSpeed)
+        {
+            return metricSpeed * 2.236936;
+        }
+
+        private double convertToMetric(double imperialSpeed)
+        {
+            return imperialSpeed / 2.236936;
         }
     }
 }

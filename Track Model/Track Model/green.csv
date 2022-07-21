@@ -1,5 +1,4 @@
 Line,Section,Block Number,Block Length (m),Block Grade (%),Speed Limit (Km/Hr),Infrastructure,Station Side,ELEVATION (M),CUMALTIVE ELEVATION (M)
-Green,0,0,0,0,100,YARD; SWITCH (0-58:0-62),,0,0
 Green,A,1,100,0.5,45,,,0.5,0.5
 Green,A,2,100,1,45,STATION; PIONEER,Left,1,1.5
 Green,A,3,100,1.5,45,,,1.5,3
@@ -57,11 +56,11 @@ Green,I,54,50,0,30,UNDERGROUND,,0,0.5
 Green,I,55,50,0,30,UNDERGROUND,,0,0.5
 Green,I,56,50,0,30,UNDERGROUND,,0,0.5
 Green,I,57,50,0,30,STATION; OVERBROOK; UNDERGROUND,Right,0,0.5
-Green,J,58,50,0,30,SWITCH (58-0:58-57),,0,0.5
+Green,J,58,50,0,30,SWITCH (58-151:58-57),,0,0.5
 Green,J,59,50,0,30,,,0,0.5
 Green,J,60,50,0,30,,,0,0.5
 Green,J,61,50,0,30,,,0,0.5
-Green,J,62,50,0,30,SWITCH (62-0:62-63),,0,0.5
+Green,J,62,50,0,30,SWITCH (62-151:62-63),,0,0.5
 Green,K,63,100,0,70,,,0,0.5
 Green,K,64,100,0,70,,,0,0.5
 Green,K,65,200,0,70,STATION; GLENBURY,Right,0,0.5
@@ -150,3 +149,4 @@ Green,Y,147,50,0,20,,,0,0.5
 Green,Y,148,184,0,20,,,0,0.5
 Green,Y,149,40,0,20,,,0,0.5
 Green,Z,150,35,0,20,,,0,0.5
+Green,0,151,0,0,100,YARD,,0,0

@@ -73,7 +73,7 @@
             <Border.Effect>
                 <DropShadowEffect/>
             </Border.Effect>
-            <TextBlock x:Name="Passed_Through_Variables1" HorizontalAlignment="Left" Margin="6,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="273" Foreground="Black" Text="Beacon Announcements would be displayed here as the train passes over them"/>
+            <TextBlock x:Name="Beacon" HorizontalAlignment="Left" Margin="6,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="273" Foreground="Black" Text="Beacon Announcements would be displayed here as the train passes over them"/>
         </Border>
         <TextBlock HorizontalAlignment="Left" Margin="43,20,0,0" TextWrapping="Wrap" Text="Select a line" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="185,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Select a train"/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
