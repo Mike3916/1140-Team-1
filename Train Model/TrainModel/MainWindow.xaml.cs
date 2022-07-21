@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 
 
 using Train=TrainObject.Train;
+using TrainCtrl = TrainController.Controller;
 
 namespace TrainModel
 {
@@ -54,7 +55,42 @@ namespace TrainModel
         }
 
       
+        public bool UpdateValues(TrainCtrl ctrl, int i)
+        {
+            if (ctrl.mLeftDoorsStatus != Trains[i].getDoorL())
+            {
+                Trains[i].toggleDoorL();
+            }
+            if (ctrl.mRightDoorsStatus != Trains[i].getDoorR())
+            {
+                Trains[i].toggleDoorR();
+            }
+            if (ctrl.mInteriorLightsStatus != Trains[i].getInteriorLights())
+            {
+                Trains[i].toggleInteriorLights();
+            }
+            if (ctrl.mExteriorLightsStatus != Trains[i].getExteriorLights())
+            {
+                Trains[i].toggleExteriorLights();
+            }
+            Trains[i].setAnnouncement(ctrl.mAnnouncementsStatus);
+            if (ctrl.mServiceBrakeStatus != Trains[i].getServiceBrake())
+            {
+                Trains[i].toggleServiceBrake();
+            }
+            if (ctrl.mEmergencyBrakeStatus != Trains[i].getEmergencyBrake())
+            {
+                Trains[i].toggleEmergencyBrake();
+            }
+            Trains[i].setPowerCmd(ctrl.mCurPower);
+            Trains[i].setTemperature(ctrl.mTemperature);
+            Trains[i].increment();
+            
 
+
+            return Trains[i].askForInfo();
+
+        }
 
 
         private void Select_a_Line_SelectionChanged(object sender, SelectionChangedEventArgs e)
