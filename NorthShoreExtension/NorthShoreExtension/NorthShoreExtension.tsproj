@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.32">
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.29">
 	<Project ProjectGUID="{2EEB2563-6FD1-4293-B096-153BD5A24743}" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
-			<Settings MaxCpus="2"/>
+			<Settings MaxCpus="12" NonWinCpus="2"/>
 			<Tasks>
 				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
 					<Name>PlcTask</Name>
@@ -14,7 +14,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{B383DA3D-09B2-4775-8D8B-BC8114809C47}" Name="RedLine" PrjFilePath="RedLine\RedLine.plcproj" TmcFilePath="RedLine\RedLine.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="RedLine\RedLine.tmc" TmcHash="{67E5BBA9-1891-0998-5B1C-05126C97C864}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="RedLine\RedLine.tmc">
 					<Name>RedLine Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -34,7 +34,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{F3D54B79-0242-4DE4-862D-87A6AD8A200F}" Name="GreenLine" PrjFilePath="GreenLine\GreenLine.plcproj" TmcFilePath="GreenLine\GreenLine.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="GreenLine\GreenLine.tmc" TmcHash="{ABB9F510-C291-B62B-6156-18ADB50128D0}">
+				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="GreenLine\GreenLine.tmc">
 					<Name>GreenLine Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
