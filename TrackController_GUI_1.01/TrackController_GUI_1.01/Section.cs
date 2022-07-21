@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Track_Controller_1._02
 {
-    internal class Section
+    public class Section
     {
         public Section()
         {

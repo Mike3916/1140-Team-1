@@ -12,7 +12,7 @@ using TwinCAT.Ads;
 
 namespace Track_Controller_1._02
 {
-    internal class ADSClient
+    public class ADSClient
     {
 
         private TcAdsClient ads = new TcAdsClient();
