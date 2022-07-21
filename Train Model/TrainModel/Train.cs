@@ -37,6 +37,7 @@ namespace TrainObject
         private double timeTillNextBlock;
         private bool announcement;
         private string beaconMessage = "No beacon";
+        private bool underground;
 
         private double blockDist;
         private double currDist;
@@ -84,6 +85,7 @@ namespace TrainObject
             exteriorLights = false;
             announcement = false;
             currAuthority = 0;
+            underground = false;
 
         }
 
@@ -101,6 +103,7 @@ namespace TrainObject
             exteriorLights = false;
             announcement = false;
             cmdAuthority = authority;
+            underground = false;
         }
 
 
@@ -209,6 +212,11 @@ namespace TrainObject
         public string getBeacon()
         {
             return beaconMessage;
+        }
+
+        public bool getUnderground()
+        {
+            return underground;
         }
 
         public double getForce()

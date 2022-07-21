@@ -54,6 +54,7 @@ namespace Gog
 
         DispatcherTimer mGlobalTimer;
         int mIterationMultiplier = 1;
+        bool newBlock;
 
         public MainWindow()
         {
@@ -177,19 +178,19 @@ namespace Gog
                 ctc.SetTrackData(track.mLines);
 
                 //trainCtrl.checkUpdatedValues();
-                //ctc.SetTrackData(track.mLines);
+                //ctc.SetTrackData(track.);
                 //track.GetT
 
-                /*for (int i = 0; i < trains.trainList.Count; i++)
+                for (int j = 0; j < trains.Trains.Count; j++)
                 {
                     newBlock=trains.UpdateValues(trainCtrl.mTrainSetList[i],i);
-                    trainCtrl.UpdateValues(trains.Trains[i].cmdauth, trains.Trains[i].curauth, trains.Trains[i].getCommandedSpeed(), trains.Trains[i].getVelocity(), trains.Trains[i].beacon, trains.Trains[i].underground, trains.Trains[i].leftdoors, trains.Trains[i].rightdoors, i);
+                    //trainCtrl.UpdateValues(trains.Trains[i].getCmdAuthority(), trains.Trains[i].getCurrAuthority(), trains.Trains[i].getCommandedSpeed(), trains.Trains[i].getVelocity(), trains.Trains[i].getBeacon(), trains.Trains[i]., trains.Trains[i].getDoorL, trains.Trains[i].getDoorR, i);
                                     
-                    if(newBlock){
+                    /*if(newBlock){
                         trains.updateBlock(trackModel.nextBlock(i)),i); //trackModel.nextBlock(i) moves the train to the next block on it's map and it returns the block info it moved to ***JOE TALK TO HOWARD FOR HELP HERE***
                     
-                    }
-                }*/
+                    }*/
+                }
 
 
 
