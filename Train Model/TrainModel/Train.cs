@@ -214,6 +214,11 @@ namespace TrainObject
             return beaconMessage;
         }
 
+        public bool getUnderground()
+        {
+            return underground;
+        }
+
         public double getForce()
         {
             double force=0;
