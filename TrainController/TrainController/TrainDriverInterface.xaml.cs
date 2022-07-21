@@ -96,7 +96,8 @@ namespace TrainController
                 SetSpeedBox.IsEnabled = false;
 
                 SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0x30, 0, 0, 0));
-                SetSpeedBox.Text = mSelectedTrain.mSetSpeed.ToString();
+                mSelectedTrain.mSetSpeed = mSelectedTrain.mCmdSpeed;
+                SetSpeedBox.Text = convertToImperial(mSelectedTrain.mSetSpeed).ToString("F2");
 
                 mSelectedTrain.setAutoMode();
             }
@@ -308,9 +309,13 @@ namespace TrainController
                 tPan.SetKp.Text = mSelectedTrain.mKp.ToString();
                 tPan.SetKi.Text = mSelectedTrain.mKi.ToString();
 
-                tPan.CurSpeed.Text = mSelectedTrain.mCurSpeed.ToString();
+                /*tPan.CurSpeed.Text = mSelectedTrain.mCurSpeed.ToString();
                 tPan.CmdSpeed.Text = mSelectedTrain.mCmdSpeed.ToString();
-                tPan.SetSpeed.Text = mSelectedTrain.mSetSpeed.ToString();
+                tPan.SetSpeed.Text = mSelectedTrain.mSetSpeed.ToString();*/
+
+                //tPan.CurSpeed.Text = convertToMetric(mSelectedTrain.mCurSpeed).ToString();
+                //tPan.CmdSpeed.Text = convertToMetric(mSelectedTrain.mCmdSpeed).ToString();
+                //tPan.SetSpeed.Text = convertToMetric(mSelectedTrain.mSetSpeed).ToString();
 
                 if (mSelectedTrain.mAutoMode)
                 {
@@ -370,8 +375,10 @@ namespace TrainController
             {
                 if (sender == SetSpeedBox)
                 {
-                    mSelectedTrain.setSetSpeed(int.Parse(SetSpeedBox.Text));
-                    SetSpeedBox.Text = mSelectedTrain.mSetSpeed.ToString();
+                    //mSelectedTrain.setSetSpeed(int.Parse(SetSpeedBox.Text));
+                    //SetSpeedBox.Text = mSelectedTrain.mSetSpeed.ToString();
+                    mSelectedTrain.setSetSpeed(double.Parse(SetSpeedBox.Text));
+                    SetSpeedBox.Text = convertToImperial(mSelectedTrain.mSetSpeed).ToString("F2");
                 }
             }
         }
@@ -389,8 +396,15 @@ namespace TrainController
         public void checkUpdatedValues(object sender, EventArgs e)
         {
             // Update Speed display:
-            CmdSpeed.Text = "Cmd Speed:\n" + mSelectedTrain.mCmdSpeed + " mph";
-            CurSpeed.Text = "Current Speed:\n" + mSelectedTrain.mCurSpeed + " mph";
+            //CmdSpeed.Text = "Cmd Speed:\n" + mSelectedTrain.mCmdSpeed + " mph";
+            //CurSpeed.Text = "Current Speed:\n" + mSelectedTrain.mCurSpeed + " mph";
+            CmdSpeed.Text = "Cmd Speed:\n" + convertToImperial(mSelectedTrain.mCmdSpeed).ToString("F2") + " mph";
+            CurSpeed.Text = "Current Speed:\n" + convertToImperial(mSelectedTrain.mCurSpeed).ToString("F2") + " mph";
+            
+            if (mSelectedTrain.mAutoMode)
+            {
+                SetSpeedBox.Text = convertToImperial(mSelectedTrain.mSetSpeed).ToString("F2");
+            }            
 
             // Update Power display:
             CurPower.Text = "Power: " + (mSelectedTrain.mCurPower / 1000).ToString("F4") + " kW";
@@ -545,6 +559,16 @@ namespace TrainController
                 e.Cancel = true;
                 this.WindowState = WindowState.Minimized;
             }
+        }
+
+        private double convertToImperial(double metricSpeed)
+        {
+            return metricSpeed * 2.236936;
+        }
+
+        private double convertToMetric(double imperialSpeed)
+        {
+            return imperialSpeed / 2.236936;
         }
     }
 }
