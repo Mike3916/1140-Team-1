@@ -4,20 +4,22 @@
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
 
-mInFromCTC : ARRAY[0..599] OF DINT;
-mOutToCTC : ARRAY[0..899] OF DINT;
-mInFromTrack : ARRAY[0..899] OF DINT;
-mOutToTrack : ARRAY[0..1199] OF DINT;
-
-mPLC2CTCWrites : ARRAY[0..899] OF DINT;
-mPLC3CTCWrites : ARRAY[0..899] OF DINT;
-mPLC2TrackWrites : ARRAY[0..1199] OF DINT;
-mPLC3TrackWrites : ARRAY[0..1199] OF DINT;
-
-mPLC2Failure : BOOL := 0;
-mPLC3Failure : BOOL := 0;
-
-mWriteEnable : BOOL := 1;
+mInSwitch : ARRAY[0..150] OF DINT;
+mOutSwitch : ARRAY[0..150] OF DINT;
+mInOccupancies : ARRAY[0..150] OF DINT;
+mOutOccupancies : ARRAY[0..150] OF DINT;
+mInSpeeds : ARRAY[0..150] OF DINT;
+mOutSpeeds : ARRAY[0..150] OF DINT;
+mInAuthorities : ARRAY[0..150] OF DINT;
+mOutAuthorities : ARRAY[0..150] OF DINT;
+mInCrossings : ARRAY[0..150] OF DINT;
+mOutCrossings : ARRAY[0..150] OF DINT;
+mInLeftLights : ARRAY[0..150] OF DINT;
+mOutLeftLights : ARRAY[0..150] OF DINT;
+mInRightLights : ARRAY[0..150] OF DINT;
+mOutRightLights : ARRAY[0..150] OF DINT;
+mInMaintenance : ARRAY[0..150] OF DINT;
+mOutMaintenance : ARRAY[0..150] OF DINT;
 
 END_VAR]]></Declaration>
   </GVL>
