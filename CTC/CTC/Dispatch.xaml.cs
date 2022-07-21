@@ -24,8 +24,11 @@ namespace CTC
             LineCombo.Items.Clear();
             StationCombo.Items.Clear();
             
-            LineCombo.Items.Add(((MainWindow)Application.Current.MainWindow).mLines[((MainWindow)Application.Current.MainWindow).mLines.Count - 1].getmnameLine());
+        }
 
+        private void Grid_MouseMove(object sender, MouseEventArgs e)
+        {
+            LineCombo.Items.Add(((MainWindow)Application.Current.MainWindow).mLines[((MainWindow)Application.Current.MainWindow).mLines.Count - 1].getmnameLine());  //Don't do this in public Dispatch() above. This relies on data being loaded elsewhere for track data, so only do it when the dispatch page has been loaded
         }
 
         private void LineCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -52,6 +55,6 @@ namespace CTC
             this.NavigationService.GoBack();
         }
 
-       
+        
     }
 }
