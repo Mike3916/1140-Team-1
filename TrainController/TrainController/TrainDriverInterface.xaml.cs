@@ -67,15 +67,33 @@ namespace TrainController
             InitTimer();
         }
 
-   /*     public void UpdateValues(Train train, int i)
+        public void UpdateValues(int cmdAuthority,int curAuthority,double curVelocity,double cmdVelocity,string beacon,bool trainUnderground,bool trainLeftDoors,bool trainRightDoors,int i)
         {
             // Update commanded authority (only at instantiation of train):
-            mSelectedTrain.setCmdAuthority(train.getAuthority());
+            mTrainSetList[i].setCmdAuthority(cmdAuthority);
+
+            // Update current authority:
+            mTrainSetList[i].setCurAuthority(curAuthority);
 
             // Update commanded speed (speed limit):
-            mSelectedTrain.setCmdSpeed(train.getCommandedSpeed());
+            mTrainSetList[i].setCmdSpeed(cmdVelocity);
+
+            // Update current speed from train model:
+            mTrainSetList[i].setCurSpeed(curVelocity);
+
+            // Update beacon: 
+            mTrainSetList[i].setBeacon(beacon);
+
+            // Update doors/lights based on underground/station status:
+            if (mTrainSetList[i].mAutoMode)
+            {
+                mTrainSetList[i].mInteriorLightsStatus = trainUnderground;
+                mTrainSetList[i].mExteriorLightsStatus = trainUnderground;
+                mTrainSetList[i].mLeftDoorsStatus = trainLeftDoors;
+                mTrainSetList[i].mRightDoorsStatus = trainRightDoors;
+            }
         }
-   */
+
         public void Button_Click(object sender, RoutedEventArgs e)
         {
             if (sender == AutoMode)
@@ -368,7 +386,7 @@ namespace TrainController
             {
                 if (sender == SetSpeedBox)
                 {
-                    mSelectedTrain.setSetSpeed(int.Parse(SetSpeedBox.Text));
+                    mSelectedTrain.setSetSpeed(double.Parse(SetSpeedBox.Text));
                     SetSpeedBox.Text = mSelectedTrain.mSetSpeed.ToString();
                 }
             }

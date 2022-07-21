@@ -117,6 +117,7 @@ namespace Gog
 
             mGlobalTimer.Interval = new TimeSpan(0, 0, 0, 0, 1); //1 millisecond
             mGlobalTimer.Start();
+
         }
 
         private void updateTick(object sender, EventArgs e)
@@ -130,7 +131,7 @@ namespace Gog
                 /*for (int i = 0; i < trains.trainList.Count; i++)
                 {
                     newBlock=trains.UpdateValues(trainCtrl.mTrainSetList[i],i);
-                    trainCtrl.UpdateValues(trains.mTrainList[i],i);
+                    
                 
                     if(newBlock){
                         trains.updateBlock(trackModel.nextBlock(i)),i); //trackModel.nextBlock(i) moves the train to the next block on it's map and it returns the block info it moved to ***JOE TALK TO HOWARD FOR HELP HERE***
