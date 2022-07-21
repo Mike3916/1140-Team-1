@@ -33,6 +33,24 @@ namespace Gog
         Track_Controller_1._02.Controller mRedline1 = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
         Track_Controller_1._02.Controller mGreenLine1 = new Track_Controller_1._02.Controller(852, false, "127.0.0.1");
 
+        int[] mRedMaintenanceBlocks = new int[77];
+        int[] mRedOccupancies = new int[77];
+        int[] mRedSpeeds = new int[77];
+        int[] mRedAuthorities = new int[77];
+        int[] mRedCrossings = new int[77];
+        int[] mRedSwitches = new int[77];
+        int[] mRedLeftLights = new int[77];
+        int[] mRedRightLights = new int[77];
+
+        int[] mGreenMaintenanceBlocks = new int[151];
+        int[] mGreenOccupancies = new int[151];
+        int[] mGreenSpeeds = new int[151];
+        int[] mGreenAuthorities = new int[151];
+        int[] mGreenCrossings = new int[151];
+        int[] mGreenSwitches = new int[151];
+        int[] mGreenLeftLights = new int[151];
+        int[] mGreenRightLights = new int[151];
+
 
         DispatcherTimer mGlobalTimer;
         int mIterationMultiplier = 1;
@@ -124,6 +142,40 @@ namespace Gog
         {
             for (int i = 0; i < mIterationMultiplier; i++)
             {
+                /*Mike's edits
+                 * How this works is you will send arrays of all the blocks
+                 * Track_Controller_1.SendMaintenance sends all the current block maintenance requests
+                 * and returns all the blocks placed under maintenance.
+                 * SendOccupancies sends all of the occupancies and returns the states of all the occupancies
+                 * so on and so forth.
+                 * */
+                try
+                {
+                    mRedMaintenanceBlocks = mRedline1.SendMaintenance(mRedMaintenanceBlocks);
+                    mRedOccupancies = mRedline1.SendOccupancies(mRedOccupancies);
+                    mRedSpeeds = mRedline1.SendSpeeds(mRedSpeeds);
+                    mRedAuthorities = mRedline1.SendAuthorities(mRedAuthorities);
+                    mRedCrossings = mRedline1.SendCrossings(mRedCrossings);
+                    mRedSwitches = mRedline1.SendSwitches(mRedSwitches);
+                    mRedLeftLights = mRedline1.SendLeftLights(mRedLeftLights);
+                    mRedRightLights = mRedline1.SendRightLights(mRedRightLights);
+
+                    mGreenMaintenanceBlocks = mGreenLine1.SendMaintenance(mGreenMaintenanceBlocks);
+                    mGreenOccupancies = mGreenLine1.SendOccupancies(mGreenOccupancies);
+                    mGreenSpeeds = mGreenLine1.SendSpeeds(mGreenSpeeds);
+                    mGreenAuthorities = mGreenLine1.SendAuthorities(mGreenAuthorities);
+                    mGreenCrossings = mGreenLine1.SendCrossings(mGreenCrossings);
+                    mGreenSwitches = mGreenLine1.SendSwitches(mGreenSwitches);
+                    mGreenLeftLights = mGreenLine1.SendLeftLights(mGreenLeftLights);
+                    mGreenRightLights = mGreenLine1.SendRightLights(mGreenRightLights);
+                }
+                catch
+                {
+
+                }
+                
+
+
                 //trainCtrl.checkUpdatedValues();
                 //ctc.SetTrackData(track.);
                 //track.GetT
@@ -138,6 +190,8 @@ namespace Gog
                     
                     }
                 }*/
+
+
 
             }
         }
