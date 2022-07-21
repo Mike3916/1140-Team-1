@@ -16,6 +16,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
+//using Train = TrainObject.Train;
+
 namespace TrainController
 {
     /// <summary>
@@ -25,6 +27,7 @@ namespace TrainController
     {
         // Train controller objects/values:
         public List<Controller> mTrainSetList = new List<Controller>();
+        public List<int> mTrainIDs = new List<int>();
         public Controller mSelectedTrain;
 
         // Dispatch timer period (while in testing):
@@ -66,6 +69,15 @@ namespace TrainController
             InitTimer();
         }
 
+   /*     public void UpdateValues(Train train, int i)
+        {
+            // Update commanded authority (only at instantiation of train):
+            mSelectedTrain.setCmdAuthority(train.getAuthority());
+
+            // Update commanded speed (speed limit):
+            mSelectedTrain.setCmdSpeed(train.getCommandedSpeed());
+        }
+   */
         public void Button_Click(object sender, RoutedEventArgs e)
         {
             if (sender == AutoMode)
