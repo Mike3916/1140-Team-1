@@ -21,7 +21,8 @@ namespace TrainObject
         private bool serviceBrake;
         private bool engineFailure;
         private bool signalPickUp;
-        private int authority;
+        private int cmdAuthority;
+        private int currAuthority;
         private int passengers=58;
         private int crew=6;
         private bool interiorLights;
@@ -33,6 +34,7 @@ namespace TrainObject
         private int temperature=74;
         private double timeTillNextBlock;
         private bool announcement;
+        private string beaconMessage = "No beacon";
 
         private double blockDist;
         private double currDist;
@@ -76,6 +78,7 @@ namespace TrainObject
             interiorLights = false;
             exteriorLights = false;
             announcement = false;
+            currAuthority = 0;
 
         }
 
@@ -167,14 +170,24 @@ namespace TrainObject
             return Math.Round(currentSpeed * 2.23694,2);
         }
 
-        public void setAuthority(int a)
+        public void setCmdAuthority(int a)
         {
-            authority = a;
+            cmdAuthority = a;
         }
 
-        public int getAuthority()
+        public int getCmdAuthority()
         {
-            return authority;
+            return cmdAuthority;
+        }
+
+        public int getCurrAuthority()
+        {
+            return currAuthority;
+        }
+
+        public string getBeacon()
+        {
+            return beaconMessage;
         }
 
         public double getForce()
@@ -383,7 +396,7 @@ namespace TrainObject
             announcement = a;
         }
 
-        public void setBlockInfo(double dist, double grad, int passengerCount)
+        public void setBlockInfo(double dist, double grad, int passengerCount, string beacon)
         {
             blockDist = dist;
             gradient = grad;
@@ -401,6 +414,16 @@ namespace TrainObject
             mass = 56.7 * 2000 + 65 * passengers + 65 * crew;
 
             currDist = 0;
+            currAuthority++;
+            
+            if (beacon != "")
+            {
+                beaconMessage = beacon;
+            }
+            else
+            {
+                beaconMessage = "No beacon";
+            }
         }
 
         public bool askForInfo()

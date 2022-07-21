@@ -47,7 +47,7 @@ namespace TrainModel
             InitializeComponent();
             Trains.Add(new Train());
             Trains[0] = new Train();
-            Trains[0].setAuthority(35);
+            Trains[0].setCmdAuthority(35);
             Trains[0].setCommandedSpeed(17.8816);
             Trains[0].setPowerCmd(0);
 
@@ -99,7 +99,7 @@ namespace TrainModel
 
         private void Select_a_Train_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Position.Text = "Current Block: 10\nAuthority: " + Trains[0].getAuthority().ToString() + " Blocks\nLast Station: Castle Shannon\nNext Station: Dormont";
+            Position.Text = "Current Block: 10\nAuthority: " + Trains[0].getCmdAuthority().ToString() + " Blocks\nLast Station: Castle Shannon\nNext Station: Dormont";
             Speed.Text = "Current Speed: " + Math.Round(Trains[0].getCurrentSpeedMPH(),2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(Trains[0].getCommandedSpeedMPH(),2).ToString() + "Mi/h\nCurrent Acceleration: " + Trains[0].getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: "+Trains[0].getTimeTillNextBlock()+"s";
             Passed_Through_Variables.Text = "Speed Limit: 50Mi/h\nCommanded Authority: 85 Blocks";
             eBrake.Foreground = Brushes.White;
