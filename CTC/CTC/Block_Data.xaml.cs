@@ -25,26 +25,26 @@ namespace CTC
 
         private void Right_Click(object sender, RoutedEventArgs e)
         {
-            Right.Background = Brushes.Green;
-            Left.Background = Brushes.Gray;
+            Right.Background = Brushes.LightGreen;
+            Left.Background = Brushes.LightGray;
         }
 
         private void Left_Click(object sender, RoutedEventArgs e)
         {
-            Left.Background = Brushes.Green;
-            Right.Background = Brushes.Gray;
+            Left.Background = Brushes.LightGreen;
+            Right.Background = Brushes.LightGray;
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
-            Open.Background = Brushes.Green;
-            Close.Background = Brushes.Gray;
+            Open.Background = Brushes.LightGreen;
+            Close.Background = Brushes.LightGray;
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            Close.Background = Brushes.Green;
-            Open.Background = Brushes.Gray;
+            Close.Background = Brushes.LightGreen;
+            Open.Background = Brushes.LightGray;
         }
     }
 }

@@ -33,14 +33,19 @@ namespace CTC
         Dispatch dispatch = new Dispatch();
         Train_Data train_data = new Train_Data();
         Block_Data block_data = new Block_Data();
+
         public List<TrackModel.Line> mLines;
 
 
         public MainWindow()
         {
-            MessageBox.Show("poo!");
             InitializeComponent(); ///Default code
-            Frame.NavigationService.Navigate(default_page);
+            Frame.NavigationService.Navigate(default_page); //Show default blank page at center of screen
+
+            SelectTrain.Items.Clear(); //Clear out the default empty spaces in all the comboBoxes
+            LineCombo.Items.Clear();
+            SectionCombo.Items.Clear();
+            BlockCombo.Items.Clear();
         }    
 
         private void SelectTrain_SelectionChanged(object sender, SelectionChangedEventArgs e)
