@@ -53,7 +53,7 @@ namespace Gog
 
 
         DispatcherTimer mGlobalTimer;
-        int mIterationMultiplier = 1;
+        int mIterationMultiplier = 1, numTrains = 0, numTrainCtrls = 0;
         bool newBlock;
 
         public MainWindow()
@@ -83,6 +83,7 @@ namespace Gog
                 Application.Current.MainWindow = trains;
                 trains = new TrainModel.MainWindow();
                 trains.Show();
+                numTrains++;
             }
             else
                 trains.Activate();
@@ -95,6 +96,7 @@ namespace Gog
                 Application.Current.MainWindow = trainCtrl;
                 trainCtrl = new TrainController.ControlPanel();
                 trainCtrl.Show();
+                numTrainCtrls++;
             }
             else
                 trainCtrl.Activate();
@@ -184,10 +186,10 @@ namespace Gog
                 }*/
                 //track.GetT
 
-                for (int j = 0; j < trains.Trains.Count; j++)
+                for (int j = 0; j < numTrains && j < numTrainCtrls; j++)
                 {
                     newBlock=trains.UpdateValues(trainCtrl.mTrainSetList[i],i);
-                    //trainCtrl.UpdateValues(trains.Trains[i].getCmdAuthority(), trains.Trains[i].getCurrAuthority(), trains.Trains[i].getCommandedSpeed(), trains.Trains[i].getVelocity(), trains.Trains[i].getBeacon(), trains.Trains[i]., trains.Trains[i].getDoorL, trains.Trains[i].getDoorR, i);
+                    trainCtrl.UpdateValues(trains.Trains[i].getCmdAuthority(), trains.Trains[i].getCurrAuthority(), trains.Trains[i].getCommandedSpeed(), trains.Trains[i].getVelocity(), trains.Trains[i].getBeacon(), trains.Trains[i].getUnderground(), trains.Trains[i].getDoorL(), trains.Trains[i].getDoorR(), i);
                                     
                     /*if(newBlock){
                         trains.updateBlock(trackModel.nextBlock(i)),i); //trackModel.nextBlock(i) moves the train to the next block on it's map and it returns the block info it moved to ***JOE TALK TO HOWARD FOR HELP HERE***
