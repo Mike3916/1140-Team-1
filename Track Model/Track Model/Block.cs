@@ -41,31 +41,31 @@ namespace TrackModel
         }
 
         //getters
-        int getNextBlock()
+        int GetNextBlock()
         {
             return 0;  
         }
 
-        public string[] getmblockInfo()
+        public string[] GetmblockInfo()
         {
             return mblockInfo;
         }
 
-        public int getmblockNum()
+        public int GetmblockNum()
         {
             return mblockNum;
         }
 
-        public double getmElevation()
+        public double GetmElevation()
         {
             return mElevation;
         }
 
-        public double getmcumElevation()
+        public double GetmcumElevation()
         {
             return mcumElevation;
         }
-        public List<int> getmblockSwitch()
+        public List<int> GetmblockSwitch()
         {
             return mblockSwitches;
         }
