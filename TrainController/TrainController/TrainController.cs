@@ -39,18 +39,18 @@ namespace TrainController
         public int mTemperature = 72;
         public int mKp = 0;
         public int mKi = 0;
-        public int mCurSpeed = 0;
-        public int mCmdSpeed = 0;
-        public int mSetSpeed = 0;
+        public double mCurSpeed = 0;
+        public double mCmdSpeed = 0;
+        public double mSetSpeed = 0;
         public int mCmdAuthority = 0;
         public int mCurAuthority = 0;
         public string mBeacon = "-";
         public double mCurPower = 0;
 
         public const float Pmax = 120000; // 120 kW
-        public float Uk = 0;
-        public float Ek = 0;
-        public float Ek_prev = 0;
+        public double Uk = 0;
+        public double Ek = 0;
+        public double Ek_prev = 0;
         public int T = 250; // 250 ms
 
         public Controller()
@@ -412,7 +412,7 @@ namespace TrainController
             dispatcherTimer.Start();
         }
 
-        public void setCmdSpeed(int value)
+        public void setCmdSpeed(double value)
         {
             dispatcherTimer.Stop();
             mCmdSpeed = value;
