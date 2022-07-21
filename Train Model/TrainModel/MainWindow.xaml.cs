@@ -38,8 +38,8 @@ namespace TrainModel
     public partial class MainWindow : Window
     {
 
-        List<Train> Trains = new List<Train>();
-        List<int> TrainIndices = new List<int>();
+        public List<Train> Trains = new List<Train>();
+        public List<int> TrainIndices = new List<int>();
        
 
         public MainWindow()

@@ -215,17 +215,17 @@ namespace TrainController
                 }
                 else if (sender == CmdSpeed)
                 {
-                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setCmdSpeed(int.Parse(CmdSpeed.Text));
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setCmdSpeed(double.Parse(CmdSpeed.Text));
                     ((ControlPanel)Application.Current.MainWindow).CmdSpeed.Text = "Cmd Speed:\n" + ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mCmdSpeed.ToString() + " mph";
                 }
                 else if (sender == SetSpeed)
                 {
-                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setSetSpeed(int.Parse(SetSpeed.Text));
-                    SetSpeed.Text = ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mSetSpeed.ToString();
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setSetSpeed(double.Parse(SetSpeed.Text));
+                    ((ControlPanel)Application.Current.MainWindow).SetSpeedBox.Text = ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mSetSpeed.ToString();
                 }
                 else if (sender == CurSpeed)
                 {
-                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setCurSpeed(int.Parse(CurSpeed.Text));
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setCurSpeed(double.Parse(CurSpeed.Text));
                     ((ControlPanel)Application.Current.MainWindow).CurSpeed.Text = "Current Speed:\n" + ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mCurSpeed.ToString() + " mph";
                 }
                 else if (sender == CmdAuthority)

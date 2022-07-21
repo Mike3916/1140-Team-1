@@ -428,7 +428,7 @@ namespace TrainController
             dispatcherTimer.Start();
         }
 
-        public void setSetSpeed(int value)
+        public void setSetSpeed(double value)
         {
             dispatcherTimer.Stop();
 
@@ -472,7 +472,7 @@ namespace TrainController
             dispatcherTimer.Start();
         }
 
-        public void setCurSpeed(int value)
+        public void setCurSpeed(double value)
         {
             dispatcherTimer.Stop();
             mCurSpeed = value;
@@ -620,17 +620,6 @@ namespace TrainController
                 }
             }
         }
-
-        /*public void UpdateNonVitals(bool trainUnderground, bool trainLeftDoors, bool trainRightDoors)
-        {
-            if (mAutoMode)
-            {
-                mInteriorLightsStatus = trainUnderground;
-                mExteriorLightsStatus = trainUnderground;
-                mLeftDoorsStatus = trainLeftDoors;
-                mRightDoorsStatus = trainRightDoors;
-            }
-        }*/
 
         public void CalculatePowerSW(object sender, EventArgs e)
         {
