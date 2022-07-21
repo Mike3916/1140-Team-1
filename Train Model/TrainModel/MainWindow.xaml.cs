@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,6 +41,9 @@ namespace TrainModel
 
         public List<Train> Trains = new List<Train>();
         public List<int> TrainIndices = new List<int>();
+        public bool actualClose = false;
+
+        
        
 
         public MainWindow()
@@ -301,6 +305,15 @@ namespace TrainModel
             }
         }
 
-        
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (!actualClose)
+            {
+                e.Cancel = true;
+                this.WindowState = WindowState.Minimized;
+            }
+        }
+
+
     }
 }

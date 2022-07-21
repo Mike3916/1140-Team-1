@@ -205,6 +205,8 @@ namespace Gog
 
             trainCtrl.actualClose = true;
             trainCtrl.Close();
+            trains.actualClose = true;
+            trains.Close();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
