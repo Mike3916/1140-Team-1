@@ -231,7 +231,7 @@ namespace TrainModel
             power.Text = Trains[0].getPowerCmd().ToString() + " kW";
         }
 
-        private void Lights_Click(object sender, RoutedEventArgs e)
+       private void Lights_Click(object sender, RoutedEventArgs e)
         {
             Trains[0].toggleLights();
             if (Trains[0].getLights()) {
@@ -256,7 +256,8 @@ namespace TrainModel
                     non_Vitals.Text = "Number of Passengers: " + Trains[0].getPassengers() + "\nNumber of Crew: " + Trains[0].getCrew() + "\nNumber of Cars: " + Trains[0].getCars().ToString() + "\nCapacity: " + Trains[0].getCapacity().ToString() + "\nLights: Off\nDoors: L-Open\t\tR-Open\nTemperature: " + Trains[0].getTemperature().ToString() + "F";
             }            
         }
-
+      
+       
         private void doorL_Click(object sender, RoutedEventArgs e)
         {
             Trains[0].toggleDoorL();

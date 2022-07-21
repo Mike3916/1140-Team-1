@@ -325,6 +325,14 @@ namespace TrainObject
             return exteriorLights;
         }
 
+        public bool getLights()
+        {
+            return false;
+        }
+        
+        public void toggleLights(){
+            
+        }
         public int getCars()
         {
             return cars;
