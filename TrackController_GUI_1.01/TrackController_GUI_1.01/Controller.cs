@@ -27,12 +27,12 @@ namespace Track_Controller_1._02
             }
         }
 
-        public int[] SendCTC(int[] mPacket)
+        public int[] SendSwitches(int[] mPacket)
         {
             if(mHardPLC == false)
             {
              
-                mPacket = mADS.CTCSend(mPacket);
+                mPacket = mADS.SendSwitches(mPacket);
              
             }
             else
@@ -42,12 +42,12 @@ namespace Track_Controller_1._02
             return mPacket;
         }
 
-        public int[] SendTrack(int[] mPacket)
+        public int[] SendOccupancies(int[] mPacket)
         {
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.TrackSend(mPacket);
+                mPacket = mADS.SendOccupancies(mPacket);
                 
             }
             else
@@ -56,6 +56,98 @@ namespace Track_Controller_1._02
             }
             return mPacket;
         }
+
+        public int[] SendSpeeds(int[] mPacket)
+        {
+            if (mHardPLC == false)
+            {
+
+                mPacket = mADS.SendSpeeds(mPacket);
+
+            }
+            else
+            {
+                //What to communicate if there is a hardware controller
+            }
+            return mPacket;
+        }
+
+        public int[] SendAuthorities(int[] mPacket)
+        {
+            if (mHardPLC == false)
+            {
+
+                mPacket = mADS.SendAuthorities(mPacket);
+
+            }
+            else
+            {
+                //What to communicate if there is a hardware controller
+            }
+            return mPacket;
+        }
+
+        public int[] SendCrossings(int[] mPacket)
+        {
+            if (mHardPLC == false)
+            {
+
+                mPacket = mADS.SendCrossings(mPacket);
+
+            }
+            else
+            {
+                //What to communicate if there is a hardware controller
+            }
+            return mPacket;
+        }
+
+        public int[] SendLeftLights(int[] mPacket)
+        {
+            if (mHardPLC == false)
+            {
+
+                mPacket = mADS.SendLeftLights(mPacket);
+
+            }
+            else
+            {
+                //What to communicate if there is a hardware controller
+            }
+            return mPacket;
+        }
+
+        public int[] SendRightLights(int[] mPacket)
+        {
+            if (mHardPLC == false)
+            {
+
+                mPacket = mADS.SendRightLights(mPacket);
+
+            }
+            else
+            {
+                //What to communicate if there is a hardware controller
+            }
+            return mPacket;
+        }
+
+        public int[] SendMaintenance(int[] mPacket)
+        {
+            if (mHardPLC == false)
+            {
+
+                mPacket = mADS.SendMaintenance(mPacket);
+
+            }
+            else
+            {
+                //What to communicate if there is a hardware controller
+            }
+            return mPacket;
+        }
+
+
 
 
         private int mPort;
