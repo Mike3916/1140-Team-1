@@ -86,8 +86,6 @@ namespace TrainModel
             Trains[i].setTemperature(ctrl.mTemperature);
             Trains[i].increment();
             
-
-
             return Trains[i].askForInfo();
 
         }
