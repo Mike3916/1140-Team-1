@@ -178,7 +178,7 @@ namespace Gog
                 }
 
                 ctc.SetTrackData(track.mLines);
-
+                track.AddTrain(151, 1, 1, 12);
                 //trainCtrl.checkUpdatedValues();
                 //ctc.SetTrackData(track.);
                 //track.GetT
