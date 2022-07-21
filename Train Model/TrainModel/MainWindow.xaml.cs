@@ -89,7 +89,11 @@ namespace TrainModel
             Trains[i].setPowerCmd(ctrl.mCurPower);
             Trains[i].setTemperature(ctrl.mTemperature);
             Trains[i].increment();
-            
+            physics.Text = "Power:\nCurrent Mass: " + Trains[0].getMass().ToString() + " tons\nForce (P/V): " + Math.Round(Trains[0].getForce(), 2).ToString() + " N\nAcceleration (F/M): " + Trains[0].getAccelerationFPS().ToString() + " ft/s^2\nVelocity(V_(n - 1) + T / 2(A_n + A_(n - 1)): " + Trains[0].getCurrentSpeedMPH().ToString() + " Mi/h";
+            Speed.Text = "Current Speed: " + Math.Round(Trains[0].getCurrentSpeedMPH(), 2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(Trains[0].getCommandedSpeedMPH(), 2).ToString() + "Mi/h\nCurrent Acceleration: " + Trains[0].getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: " + Trains[0].getTimeTillNextBlock() + "s";
+            power.Text = Trains[0].getPowerCmd().ToString() + " kW";
+            Beacon.Text = "Beacon: " + Trains[0].getBeacon();
+
             return Trains[i].askForInfo();
 
         }
