@@ -21,16 +21,29 @@ namespace CTC
         public Dispatch()
         {
             InitializeComponent();
+            LineCombo.Items.Clear();
+            StationCombo.Items.Clear();
+            
+            LineCombo.Items.Add(((MainWindow)Application.Current.MainWindow).mLines[((MainWindow)Application.Current.MainWindow).mLines.Count - 1].getmnameLine());
+
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void LineCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            List<string> stations = new List<string>();
+            for (int i = 0; i < ((MainWindow)Application.Current.MainWindow).mLines[LineCombo.SelectedIndex].getmnumSections(); i++)
+            {
+                for (int j = 0; j < ((MainWindow)Application.Current.MainWindow).mLines[LineCombo.SelectedIndex].getmnumBlocks(); j++)
+                {
+                    if (((MainWindow)Application.Current.MainWindow).mLines[LineCombo.SelectedIndex].mSections[i].mBlocks[j].mStation == true) //This block has a station if true
+                    {
+                        stations.Add(((MainWindow)Application.Current.MainWindow).mLines[LineCombo.SelectedIndex].mSections[i].mBlocks[j].mstationName);
+                    }
+                }
+            }
+            StationCombo.Items.Clear(); //Clear empty space from StationCombo
+            StationCombo.Items.Add(stations);
 
-        }
-
-        private void Back_Click(object sender, RoutedEventArgs e)
-        {
-            this.NavigationService.GoBack();
         }
 
         private void Enter_Click(object sender, RoutedEventArgs e)
@@ -38,5 +51,7 @@ namespace CTC
             ///Here, save the Destination and ETA, then return to the default page
             this.NavigationService.GoBack();
         }
+
+       
     }
 }

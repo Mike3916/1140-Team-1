@@ -26,6 +26,7 @@ namespace CTC
         public Train_Data()
         {
             InitializeComponent();
+
         }
 
 
