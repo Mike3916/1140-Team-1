@@ -30,7 +30,7 @@ namespace Gog
         TrainController.ControlPanel trainCtrl;
         TrainModel.MainWindow trains;
         CTC.MainWindow ctc;
-        /*Track_Controller_1._02.Controller mRedline1 = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
+        Track_Controller_1._02.Controller mRedline1 = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
         Track_Controller_1._02.Controller mGreenLine1 = new Track_Controller_1._02.Controller(852, false, "127.0.0.1");
 
         int[] mRedMaintenanceBlocks = new int[77];
@@ -49,7 +49,7 @@ namespace Gog
         int[] mGreenCrossings = new int[151];
         int[] mGreenSwitches = new int[151];
         int[] mGreenLeftLights = new int[151];
-        int[] mGreenRightLights = new int[151];*/
+        int[] mGreenRightLights = new int[151];
 
 
         DispatcherTimer mGlobalTimer;
@@ -149,7 +149,7 @@ namespace Gog
                  * SendOccupancies sends all of the occupancies and returns the states of all the occupancies
                  * so on and so forth.
                  * */
-                /*try
+                try
                 {
                     mRedMaintenanceBlocks = mRedline1.SendMaintenance(mRedMaintenanceBlocks);
                     mRedOccupancies = mRedline1.SendOccupancies(mRedOccupancies);
@@ -172,12 +172,12 @@ namespace Gog
                 catch
                 {
 
-                }*/
-                
+                }
 
+                ctc.SetTrackData(track.mLines);
 
                 //trainCtrl.checkUpdatedValues();
-                //ctc.SetTrackData(track.);
+                //ctc.SetTrackData(track.mLines);
                 //track.GetT
 
                 /*for (int i = 0; i < trains.trainList.Count; i++)
