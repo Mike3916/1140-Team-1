@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Track_Controller_1;
+
 
 namespace Gog
 {
@@ -28,9 +30,9 @@ namespace Gog
         TrainController.ControlPanel trainCtrl;
         TrainModel.MainWindow trains;
         CTC.MainWindow ctc;
+        Track_Controller_1._02.Controller mRedline1 = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
+        Track_Controller_1._02.Controller mGreenLine1 = new Track_Controller_1._02.Controller(852, false, "127.0.0.1");
 
-        //Controller trackController = new Controller();
-        //trackController.CTCRead(ctc.commandedAuthority)
 
         DispatcherTimer mGlobalTimer;
         int mIterationMultiplier = 1;
@@ -135,6 +137,7 @@ namespace Gog
                     
                     }
                 }*/
+
             }
         }
         protected override void OnClosing(CancelEventArgs e)
@@ -143,6 +146,11 @@ namespace Gog
 
             trainCtrl.actualClose = true;
             trainCtrl.Close();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

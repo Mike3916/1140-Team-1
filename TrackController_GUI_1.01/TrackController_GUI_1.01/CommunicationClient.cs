@@ -9,7 +9,7 @@ using System.IO;
 
 namespace Track_Controller_1._02
 {
-    class CommunicationClient
+    public class CommunicationClient
     {
         //****************************************************************************************************************************************
         //Constructor: Initializes connection with the server and sends a test message.

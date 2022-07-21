@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace Track_Controller_1._02
 {
-    internal static class WC_Main
+    public static class WC_Main
     {
         /// <summary>
         ///  The main entry point for the application.

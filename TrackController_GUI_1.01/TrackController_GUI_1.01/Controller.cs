@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Track_Controller_1._02
 {
     [Serializable]
-    internal class Controller
+    public class Controller
     {
         public Controller(int mNewPort = 851, bool mPLCSelect = false, string mNewIP="127.0.0.1")
         {

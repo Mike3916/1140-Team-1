@@ -18,11 +18,17 @@
     <Reference Include="Track Model">
       <HintPath>..\..\Track Model\Track Model\bin\Release\net6.0-windows\Track Model.dll</HintPath>
     </Reference>
+    <Reference Include="TrackController1.01">
+      <HintPath>..\..\TrackController_GUI_1.01\TrackController_GUI_1.01\bin\Release\net6.0-windows\TrackController1.01.dll</HintPath>
+    </Reference>
     <Reference Include="TrainController">
       <HintPath>..\..\TrainController\TrainController\bin\Release\net6.0-windows\TrainController.dll</HintPath>
     </Reference>
     <Reference Include="TrainModel">
       <HintPath>..\..\Train Model\TrainModel\bin\Release\net6.0-windows\TrainModel.dll</HintPath>
+    </Reference>
+    <Reference Include="TwinCAT.Ads">
+      <HintPath>..\..\TrackController_GUI_1.01\TrackController_GUI_1.01\bin\Release\net6.0-windows\TwinCAT.Ads.dll</HintPath>
     </Reference>
   </ItemGroup>
 

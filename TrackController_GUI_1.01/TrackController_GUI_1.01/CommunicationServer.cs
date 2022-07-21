@@ -8,7 +8,7 @@ using System.Net.Sockets;
 
 namespace Track_Controller_1._02
 {
-    class CommunicationServer
+    public class CommunicationServer
     {
         //Server class variables
         private TcpListener mListener;

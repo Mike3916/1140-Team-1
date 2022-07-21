@@ -15,6 +15,7 @@
         <Button x:Name="TrainModelButton" Content="Train Model" HorizontalAlignment="Left" Margin="335,122,0,0" VerticalAlignment="Top" Click="TrainModelButton_Click"/>
         <Button x:Name="TrainCtrlButton" Content="Train Controller" HorizontalAlignment="Left" Margin="177,282,0,0" VerticalAlignment="Top" Click="TrainCtrlButton_Click"/>
         <Button x:Name="CTC_Button" Content="CTC" HorizontalAlignment="Left" Margin="143,188,0,0" VerticalAlignment="Top" Click="CTC_Button_Click"/>
+        <Button Content="Track Controller" HorizontalAlignment="Left" Margin="477,272,0,0" VerticalAlignment="Top" Click="Button_Click"/>
 
     </Grid>
 </Window>
