@@ -177,24 +177,25 @@ namespace Gog
                 catch
                 {
 
-                  }*/
+                  }
 
                 
-                if (track != null && ctc != null && setTrack==false)
-                {
+                if (track != null && ctc != null && setTrack==false)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
+                {                                                       //then check if the mLines data has been loaded into the track model
                     if (track.mLines.Count > 0)
                     {
-                        ctc.SetTrackData(track.mLines);
-                        setTrack = true;
+                        ctc.SetTrackData(track.mLines);                 //Send the track data to the CTC
+                        setTrack = true;                                //Set boolean to mark that the track data has been read by CTC
                     }
 
                 }
-
+                /*
                 ctc.SetTrackData(track.mLines);
                 track.AddTrain(151, 1, 1, 12);
-                //trainCtrl.checkUpdatedValues();
-                //ctc.SetTrackData(track.);
-                //track.GetT
+                trainCtrl.checkUpdatedValues();
+                ctc.SetTrackData(track.);
+                track.GetT
+                */
 
                 for (int j = 0; j < numTrains && j < numTrainCtrls; j++)
                 {
