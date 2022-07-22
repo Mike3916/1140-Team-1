@@ -24,9 +24,6 @@ namespace TrainController
         public bool mControlType;
         public bool mSetControlType = false;
 
-        // Boolean for controlling hardware functionality:
-        public bool mSerialAccepted = true;
-
         public bool mAutoMode = false;
         public bool mLeftDoorsStatus = false;
         public bool mRightDoorsStatus = false;
@@ -369,7 +366,6 @@ namespace TrainController
             {
                 pi.WriteLine("c");
                 string output = pi.ReadLine();
-                MessageBox.Show(output);
 
                 if (output == "tempDecreased")
                 {
@@ -559,12 +555,10 @@ namespace TrainController
             dispatcherTimer.Stop();
             mCurPower = value;
 
-            if (value > 120)
+            if (value > Pmax)
             {
-
+                value = 120000;
             }
-
-            mSerialAccepted = false;
 
             if (mControlType)
             {
@@ -579,7 +573,7 @@ namespace TrainController
 
         public void InitTimer()
         {
-            /*if (!mControlType) dispatcherTimer.Tick += new EventHandler(CalculatePowerSW);
+            if (!mControlType) dispatcherTimer.Tick += new EventHandler(CalculatePowerSW);
             else dispatcherTimer.Tick += new EventHandler(CalculatePowerHW);
 
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, T);
@@ -588,7 +582,7 @@ namespace TrainController
             updateSpeed.Tick += new EventHandler(UpdateSpeed);
 
             updateSpeed.Interval = new TimeSpan(0, 0, 0, 0, T);
-            updateSpeed.Start();*/
+            updateSpeed.Start();
         }
 
         public void UpdateSpeed(object sender, EventArgs e)
@@ -766,21 +760,99 @@ namespace TrainController
         public void CalculatePowerHW()
         {
             string output;
+
+            // Update current speed in Pi storage:
+            pi.WriteLine("n");
+            pi.WriteLine(mCurSpeed.ToString() + "\n");
+            pi.ReadLine(); //*/
+
+            // Calculate current speed from Pi storage:
+            pi.WriteLine("o");
+            output = pi.ReadLine();
+
+            mCurPower = Double.Parse(output);
+        }
+
+        public void CalculatePowerSW(object sender, EventArgs e)
+        {
             double[] powerOutput = new double[3];
             double powerCheck = 0;
 
+            // calculate power three times for vitality
             for (int i = 0; i < 3; i++)
             {
-                // Update current speed in Pi storage:
-                pi.WriteLine("n");
-                pi.WriteLine(mCurSpeed.ToString() + "\n");
-                pi.ReadLine(); //*/
+                if (mAutoMode)
+                {
+                    Ek_prev = Ek;
+                    Ek = mCmdSpeed - mCurSpeed;
 
-                // Calculate current speed from Pi storage:
-                pi.WriteLine("o");
-                output = pi.ReadLine();
+                    if (mCurSpeed < mCmdSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
 
-                powerOutput[i] = Double.Parse(output);
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else if (mCurSpeed > mCmdSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else
+                    {
+                        mCurPower = 0;
+                    }
+                }
+                else
+                {
+                    Ek_prev = Ek;
+                    Ek = mSetSpeed - mCurSpeed;
+
+                    if (mCurSpeed < mSetSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else if (mCurSpeed > mSetSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else
+                    {
+                        mCurPower = 0;
+                    }
+                }
             }
 
             // Any pair of outputs are equal (Modal calc):
@@ -816,6 +888,23 @@ namespace TrainController
             {
                 mCurPower = powerCheck;
             }
+        }
+
+        public void CalculatePowerHW(object sender, EventArgs e)
+        {
+            string output;
+
+            /*// Update current speed in Pi storage:
+            pi.WriteLine("n");
+            pi.WriteLine(mCurSpeed.ToString() + "\n");
+            pi.ReadLine(); //*/
+
+            // Calculate current speed from Pi storage:
+            pi.WriteLine("o");
+            output = pi.ReadLine();
+            //MessageBox.Show(output);
+
+            mCurPower = Double.Parse(output);
         }
 
         private double convertToImperial(double metricSpeed)
