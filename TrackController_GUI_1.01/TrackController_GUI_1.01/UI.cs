@@ -204,10 +204,10 @@ namespace Track_Controller_1._02
 
 
             //int[] test3 = mPLC1.SendPacket(test1);
-            int[] test4 = mPLC2.SendPacket(test2);
+            //int[] test4 = mPLC2.SendTrack(test2);
 
             //string string3 = "";
-            string string4 = "";
+            /*string string4 = "";
 
             foreach(int i in test4)
             {
@@ -217,7 +217,7 @@ namespace Track_Controller_1._02
 
             //MessageBox.Show("Software returns " + string3);
             MessageBox.Show("Hardware returns " + string4);
-            
+            */
         }
 
         private void CreateSoftwareController()

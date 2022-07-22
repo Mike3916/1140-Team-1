@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="MAIN" Id="{4c8b3e77-e4d8-438f-9dd4-fa42d08617c7}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+
+inc1 : DINT := 0;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[FOR inc1 := 0 TO 150 DO
+
+	GVL.mOutOccupancies[inc1] := GVL.mInOccupancies[inc1];
+	GVL.mOutSpeeds[inc1] := GVL.mInSpeeds[inc1];
+	GVL.mOutAuthorities[inc1] := GVL.mInAuthorities[inc1];
+	GVL.mOutMaintenance[inc1] := GVL.mInMaintenance[inc1];
+
+END_FOR
+
+inc1 := 0;
+
+//This starts the main track logic section
+
+//Crossing Logic
+IF GVL.mInOccupancies[18] = 0 THEN
+	GVL.mOutCrossings[18] := 1;
+ELSE
+	GVL.mOutCrossings[18] := 0;
+END_IF
+
+
+//Switch Logic
+IF GVL.mInMaintenance[8] = 1 THEN
+    GVL.mOutSwitch[8] := GVL.mInSwitch[8];
+ELSE
+    IF GVL.mInOccupancies[76] = 0 THEN
+    	GVL.mOutSwitch[8] := 76;
+    ELSE
+		GVL.mOutSwitch[8] := 9;
+	END_IF
+END_IF
+
+IF GVL.mInMaintenance[12] = 1 THEN
+    GVL.mOutSwitch[12] := GVL.mInSwitch[12];
+ELSE
+    IF GVL.mInOccupancies[11] = 0 THEN
+    FOR inc1 := 12 TO 28 DO 
+        IF GVL.mInOccupancies[inc1] = 0 THEN
+            GVL.mOutSwitch[12] := 13;
+            Exit;
+        ELSE 
+            GVL.mOutSwitch[12] := 0;
+        END_IF
+    END_FOR
+	END_IF
+END_IF
+
+IF GVL.mInMaintenance[28] = 1 THEN
+    GVL.mOutSwitch[28] := GVL.mInSwitch[28];
+ELSE
+    IF GVL.mInOccupancies[149] = 0 THEN
+    FOR inc1 := 12 TO 28 DO 
+        IF GVL.mInOccupancies[inc1] = 0 THEN
+            GVL.mOutSwitch[28] := 29;
+            Exit;
+        ELSE 
+            GVL.mOutSwitch[28] := 149;
+        END_IF
+    END_FOR
+	END_IF
+END_IF
+
+IF GVL.mInMaintenance[57] = 1 THEN
+    GVL.mOutSwitch[57] := GVL.mInSwitch[57];
+END_IF
+	
+IF GVL.mInMaintenance[62] = 1 THEN
+    GVL.mOutSwitch[62] := GVL.mInSwitch[62];
+ELSE
+    IF GVL.mInOccupancies[150] = 0 THEN
+    	GVL.mOutSwitch[62] := 150;
+	ELSE
+		GVL.mOutSwitch[62] := 61;
+	END_IF
+END_IF
+
+IF GVL.mInMaintenance[76] = 1 THEN
+    GVL.mOutSwitch[76] := GVL.mInSwitch[76];
+ELSE
+    IF GVL.mInOccupancies[75] = 0 THEN
+    FOR inc1 := 76 TO 84 DO 
+        IF GVL.mInOccupancies[inc1] = 0 THEN
+            GVL.mOutSwitch[75] := 100;
+            Exit;
+        ELSE 
+            GVL.mOutSwitch[75] := 74;
+        END_IF
+    END_FOR
+	END_IF
+END_IF
+
+IF GVL.mInMaintenance[84] = 1 THEN
+    GVL.mOutSwitch[84] := GVL.mInSwitch[84];
+ELSE
+    IF GVL.mInOccupancies[99] = 0 THEN
+    FOR inc1 := 76 TO 84 DO 
+        IF GVL.mInOccupancies[inc1] = 0 THEN
+            GVL.mOutSwitch[84] := 85;
+            Exit;
+        ELSE 
+            GVL.mOutSwitch[84] := 99;
+        END_IF
+    END_FOR
+	END_IF
+END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="241" Count="18" />
+      <LineId Id="356" Count="0" />
+      <LineId Id="260" Count="23" />
+      <LineId Id="366" Count="0" />
+      <LineId Id="284" Count="13" />
+      <LineId Id="367" Count="0" />
+      <LineId Id="298" Count="3" />
+      <LineId Id="357" Count="0" />
+      <LineId Id="361" Count="0" />
+      <LineId Id="360" Count="0" />
+      <LineId Id="359" Count="0" />
+      <LineId Id="302" Count="1" />
+      <LineId Id="310" Count="0" />
+      <LineId Id="362" Count="0" />
+      <LineId Id="364" Count="1" />
+      <LineId Id="312" Count="13" />
+      <LineId Id="369" Count="0" />
+      <LineId Id="326" Count="13" />
+      <LineId Id="370" Count="0" />
+      <LineId Id="340" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

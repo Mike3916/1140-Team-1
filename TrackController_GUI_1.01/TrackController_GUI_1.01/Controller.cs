@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Track_Controller_1._02
 {
     [Serializable]
-    internal class Controller
+    public class Controller
     {
         public Controller(int mNewPort = 851, bool mPLCSelect = false, string mNewIP="127.0.0.1")
         {
@@ -27,28 +27,127 @@ namespace Track_Controller_1._02
             }
         }
 
-        public int[] SendPacket(int[] mPacket)
+        public int[] SendSwitches(int[] mPacket)
         {
             if(mHardPLC == false)
             {
-                MessageBox.Show("Sending Software");
-                string string1 = "";
-
-                mPacket = mADS.SendPacket(mPacket);
-
-                foreach (int i in mPacket)
-                {
-                    string1 += mPacket[i].ToString();
-                }
-                MessageBox.Show(string1);
+             
+                mPacket = mADS.SendSwitches(mPacket);
+             
             }
             else
             {
-                MessageBox.Show("Sending Hardware");
-                mPacket = mTCP.MessageSender(mIP,mPort,mPacket);
+               //What to communicate if there is a hardware controller.
             }
             return mPacket;
         }
+
+        public int[] SendOccupancies(int[] mPacket)
+        {
+            if (mHardPLC == false)
+            {
+
+                mPacket = mADS.SendOccupancies(mPacket);
+                
+            }
+            else
+            {
+                //What to communicate if there is a hardware controller
+            }
+            return mPacket;
+        }
+
+        public int[] SendSpeeds(int[] mPacket)
+        {
+            if (mHardPLC == false)
+            {
+
+                mPacket = mADS.SendSpeeds(mPacket);
+
+            }
+            else
+            {
+                //What to communicate if there is a hardware controller
+            }
+            return mPacket;
+        }
+
+        public int[] SendAuthorities(int[] mPacket)
+        {
+            if (mHardPLC == false)
+            {
+
+                mPacket = mADS.SendAuthorities(mPacket);
+
+            }
+            else
+            {
+                //What to communicate if there is a hardware controller
+            }
+            return mPacket;
+        }
+
+        public int[] SendCrossings(int[] mPacket)
+        {
+            if (mHardPLC == false)
+            {
+
+                mPacket = mADS.SendCrossings(mPacket);
+
+            }
+            else
+            {
+                //What to communicate if there is a hardware controller
+            }
+            return mPacket;
+        }
+
+        public int[] SendLeftLights(int[] mPacket)
+        {
+            if (mHardPLC == false)
+            {
+
+                mPacket = mADS.SendLeftLights(mPacket);
+
+            }
+            else
+            {
+                //What to communicate if there is a hardware controller
+            }
+            return mPacket;
+        }
+
+        public int[] SendRightLights(int[] mPacket)
+        {
+            if (mHardPLC == false)
+            {
+
+                mPacket = mADS.SendRightLights(mPacket);
+
+            }
+            else
+            {
+                //What to communicate if there is a hardware controller
+            }
+            return mPacket;
+        }
+
+        public int[] SendMaintenance(int[] mPacket)
+        {
+            if (mHardPLC == false)
+            {
+
+                mPacket = mADS.SendMaintenance(mPacket);
+
+            }
+            else
+            {
+                //What to communicate if there is a hardware controller
+            }
+            return mPacket;
+        }
+
+
 
 
         private int mPort;

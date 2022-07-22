@@ -22,6 +22,7 @@ namespace TrainController
         // Boolean for switching between auto and manual driving modes:
         // 'false' is software controller, 'true' is hardware controller:
         public bool mControlType;
+        public bool mSetControlType = false;
 
         // Boolean for controlling hardware functionality:
         public bool mSerialAccepted = true;
@@ -36,20 +37,20 @@ namespace TrainController
         public bool mEmergencyBrakeStatus = false;
 
         public int mTemperature = 72;
-        public int mKp = 0;
-        public int mKi = 0;
-        public int mCurSpeed = 0;
-        public int mCmdSpeed = 0;
-        public int mSetSpeed = 0;
+        public int mKp = 250;
+        public int mKi = 100;
+        public double mCurSpeed = 0;
+        public double mCmdSpeed = 0;
+        public double mSetSpeed = 0;
         public int mCmdAuthority = 0;
         public int mCurAuthority = 0;
         public string mBeacon = "-";
         public double mCurPower = 0;
 
         public const float Pmax = 120000; // 120 kW
-        public float Uk = 0;
-        public float Ek = 0;
-        public float Ek_prev = 0;
+        public double Uk = 0;
+        public double Ek = 0;
+        public double Ek_prev = 0;
         public int T = 250; // 250 ms
 
         public Controller()
@@ -411,10 +412,17 @@ namespace TrainController
             dispatcherTimer.Start();
         }
 
-        public void setCmdSpeed(int value)
+        public void setCmdSpeed(double imperialValue)
         {
             dispatcherTimer.Stop();
-            mCmdSpeed = value;
+
+            double metricValue = convertToMetric(imperialValue);
+            mCmdSpeed = metricValue;
+
+            if (mAutoMode)
+            {
+                mSetSpeed = mCmdSpeed;
+            }
 
             // Hardware Controls:
             if (mControlType)
@@ -427,23 +435,25 @@ namespace TrainController
             dispatcherTimer.Start();
         }
 
-        public void setSetSpeed(int value)
+        public void setSetSpeed(double imperialValue)
         {
             dispatcherTimer.Stop();
 
+            double metricValue = convertToMetric(imperialValue);
+
             if (!mControlType)
             {
-                if (value > mCmdSpeed)
+                if (metricValue > mCmdSpeed)
                 {
                     MessageBox.Show("Set Speed Shall Not Exceed Commanded Speed");
                 }
-                else if (value < 0)
+                else if (metricValue < 0)
                 {
                     MessageBox.Show("Set Speed Shall Not Be Less Than Zero");
                 }
                 else
                 {
-                    mSetSpeed = value;
+                    mSetSpeed = metricValue;
                 }
             }
 
@@ -451,30 +461,32 @@ namespace TrainController
             else
             {
                 pi.WriteLine("b");
-                pi.WriteLine(value.ToString() + "\n");
+                pi.WriteLine(metricValue.ToString() + "\n");
                 string output = pi.ReadLine();
 
                 if (output == "tooHigh")
                 {
                     MessageBox.Show("Set Speed Shall Not Exceed Commanded Speed");
                 }
-                else if (value < 0)
+                else if (metricValue < 0)
                 {
                     MessageBox.Show("Set Speed Shall Not Be Less Than Zero");
                 }
                 else
                 {
-                    mSetSpeed = value;
+                    mSetSpeed = metricValue;
                 }
             }
 
             dispatcherTimer.Start();
         }
 
-        public void setCurSpeed(int value)
+        public void setCurSpeed(double imperialValue)
         {
             dispatcherTimer.Stop();
-            mCurSpeed = value;
+
+            double metricValue = convertToMetric(imperialValue);
+            mCurSpeed = metricValue;
 
             // Hardware Controls:
             if (mControlType)
@@ -547,10 +559,16 @@ namespace TrainController
             dispatcherTimer.Stop();
             mCurPower = value;
 
+            if (value > 120)
+            {
+
+            }
+
             mSerialAccepted = false;
 
             if (mControlType)
             {
+                // control max power
                 pi.WriteLine("p");
                 pi.WriteLine(value + "\n");
                 string output = pi.ReadLine();
@@ -561,7 +579,7 @@ namespace TrainController
 
         public void InitTimer()
         {
-            if (!mControlType) dispatcherTimer.Tick += new EventHandler(CalculatePowerSW);
+            /*if (!mControlType) dispatcherTimer.Tick += new EventHandler(CalculatePowerSW);
             else dispatcherTimer.Tick += new EventHandler(CalculatePowerHW);
 
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, T);
@@ -570,7 +588,7 @@ namespace TrainController
             updateSpeed.Tick += new EventHandler(UpdateSpeed);
 
             updateSpeed.Interval = new TimeSpan(0, 0, 0, 0, T);
-            updateSpeed.Start();
+            updateSpeed.Start();*/
         }
 
         public void UpdateSpeed(object sender, EventArgs e)
@@ -586,154 +604,170 @@ namespace TrainController
                     mCmdSpeed = 0;
                     mSetSpeed = 0;
 
-                    mCurSpeed -= 1;
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) - 1);
                 }
             }
             else if (mServiceBrakeStatus)
             {
                 if (mCurSpeed > 0)
                 {
-                    mCurSpeed--;
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) - 1);
                 }
             }
             else if (mAutoMode)
             {
-                if (mCurSpeed < mCmdSpeed)
+                if (Math.Abs(mCurSpeed - mCmdSpeed) < 0.5)
                 {
-                    mCurSpeed++;
+                    mCurSpeed = mCmdSpeed;
+                }
+                else if (mCurSpeed < mCmdSpeed)
+                {
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) + 1);
                 }
                 else if (mCurSpeed > mCmdSpeed)
                 {
-                    mCurSpeed--;
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) - 1);
                 }
             }
             else
             {
-                if (mCurSpeed < mSetSpeed)
+                if (Math.Abs(mCurSpeed - mSetSpeed) < 0.5)
                 {
-                    mCurSpeed++;
+                    mCurSpeed = mSetSpeed;
+                }
+                else if (mCurSpeed < mSetSpeed)
+                {
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) + 1);
                 }
                 else if (mCurSpeed > mSetSpeed)
                 {
-                    mCurSpeed--;
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) - 1);
                 }
             }
         }
 
-        public void CalculatePowerSW(object sender, EventArgs e)
+        public void CalculatePowerSW()
         {
-            if (mAutoMode)
+            double[] powerOutput = new double[3];
+            double powerCheck = 0;
+
+            // calculate power three times for vitality
+            for (int i = 0; i < 3; i++)
             {
-                Ek_prev = Ek;
-                Ek = mCmdSpeed - mCurSpeed;
+                if (mAutoMode)
+                {
+                    Ek_prev = Ek;
+                    Ek = mCmdSpeed - mCurSpeed;
+
+                    if (mCurSpeed < mCmdSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else if (mCurSpeed > mCmdSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else
+                    {
+                        mCurPower = 0;
+                    }
+                }
+                else
+                {
+                    Ek_prev = Ek;
+                    Ek = mSetSpeed - mCurSpeed;
+
+                    if (mCurSpeed < mSetSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else if (mCurSpeed > mSetSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else
+                    {
+                        mCurPower = 0;
+                    }
+                }
+            }
+
+            // Any pair of outputs are equal (Modal calc):
+            if (powerOutput[0] == powerOutput[1])
+                powerCheck = powerOutput[0];
+
+            else if (powerOutput[0] == powerOutput[2])
+                powerCheck = powerOutput[0];
+
+            else if (powerOutput[1] == powerOutput[2])
+                powerCheck = powerOutput[1];
+
+            // No outputs match, choose smallest:
+            else if (powerOutput[0] <= powerOutput[1] && powerOutput[0] <= powerOutput[2])
+                powerCheck = powerOutput[0];
+
+            else if (powerOutput[1] <= powerOutput[0] && powerOutput[1] <= powerOutput[2])
+                powerCheck = powerOutput[1];
+
+            else
+                powerCheck = powerOutput[2];
+
+            // Check calculate power not above max
+            if (powerCheck > Pmax)
+            {
+                mCurPower = Pmax;
+            }
+            else if (powerCheck < -Pmax)
+            {
+                mCurPower = -Pmax;
             }
             else
             {
-                Ek_prev = Ek;
-                Ek = mSetSpeed - mCurSpeed;
-            }
-
-            if (mEmergencyBrakeStatus)
-            {
-                if (mCurSpeed == 0)
-                {
-                    mEmergencyBrakeStatus = false;
-                }
-                else
-                {
-                    mCmdSpeed = 0;
-                    mSetSpeed = 0;
-
-                    mCurSpeed -= 1; // TODO: Replace with emergency brake deceleration!
-                }
-            }
-            else if (mServiceBrakeStatus)
-            {
-                if (mCurSpeed > 0)
-                {
-                    mCurSpeed--;  // TODO: Replace with service brake deceleration!
-                }
-            }
-            else if (mAutoMode)
-            {
-                if (mCurSpeed < mCmdSpeed)
-                {
-                    mCurSpeed++;    // TODO: Replace with acceleration!
-
-                    if (mCurPower < Pmax)
-                    {
-                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
-                    }
-                    else
-                    {
-                        Uk = Uk;
-                    }
-
-                    mCurPower = (mKp * Ek) + (mKi * Uk);
-                }
-                else if (mCurSpeed > mCmdSpeed)
-                {
-                    mCurSpeed--;    // TODO: Replace with deceleration!
-
-                    if (mCurPower < Pmax)
-                    {
-                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
-                    }
-                    else
-                    {
-                        Uk = Uk;
-                    }
-
-                    mCurPower = (mKp * Ek) + (mKi * Uk);
-                }
-                else
-                {
-                    mCurPower = 0;
-                }
-            }
-            else
-            {
-                if (mCurSpeed < mSetSpeed)
-                {
-                    mCurSpeed++;    // TODO: Replace with acceleration!
-
-                    if (mCurPower < Pmax)
-                    {
-                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
-                    }
-                    else
-                    {
-                        Uk = Uk;
-                    }
-
-                    mCurPower = (mKp * Ek) + (mKi * Uk);
-                }
-                else if (mCurSpeed > mSetSpeed)
-                {
-                    mCurSpeed--;    // TODO: Replace with deceleration!
-
-                    if (mCurPower < Pmax)
-                    {
-                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
-                    }
-                    else
-                    {
-                        Uk = Uk;
-                    }
-
-                    mCurPower = (mKp * Ek) + (mKi * Uk);
-                }
-                else
-                {
-                    mCurPower = 0;
-                }
+                mCurPower = powerCheck;
             }
         }
 
-        public void CalculatePowerHW(object sender, EventArgs e)
+        public void CalculatePowerHW()
         {
             string output;
             double[] powerOutput = new double[3];
+            double powerCheck = 0;
 
             for (int i = 0; i < 3; i++)
             {
@@ -751,23 +785,46 @@ namespace TrainController
 
             // Any pair of outputs are equal (Modal calc):
             if (powerOutput[0] == powerOutput[1])
-                mCurPower = powerOutput[0];
+                powerCheck = powerOutput[0];
 
             else if (powerOutput[0] == powerOutput[2])
-                mCurPower = powerOutput[0];
+                powerCheck = powerOutput[0];
 
             else if (powerOutput[1] == powerOutput[2])
-                mCurPower = powerOutput[1];
+                powerCheck = powerOutput[1];
 
             // No outputs match, choose smallest:
             else if (powerOutput[0] <= powerOutput[1] && powerOutput[0] <= powerOutput[2])
-                mCurPower = powerOutput[0];
+                powerCheck = powerOutput[0];
 
             else if (powerOutput[1] <= powerOutput[0] && powerOutput[1] <= powerOutput[2])
-                mCurPower = powerOutput[1];
+                powerCheck = powerOutput[1];
 
             else
-                mCurPower = powerOutput[2];
+                powerCheck = powerOutput[2];
+
+            // Check calculate power not above max
+            if (powerCheck > Pmax)
+            {
+                mCurPower = Pmax;
+            }
+            else if (powerCheck < -Pmax)
+            {
+                mCurPower = -Pmax;
+            }
+            else
+            {
+                mCurPower = powerCheck;
+            }
+        }
+
+        private double convertToImperial(double metricSpeed)
+        {
+            return metricSpeed * 2.236936;
+        }
+        private double convertToMetric(double imperialSpeed)
+        {
+            return imperialSpeed / 2.236936;
         }
     }
 }

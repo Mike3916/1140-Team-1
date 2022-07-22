@@ -5,10 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrainController"
         mc:Ignorable="d"
-        Title="Select Hardware or Software" Height="155" Width="301">
+        Title="Select Hardware or Software" Height="155" Width="301" Activated="HW_SWActive">
     <Grid Margin="0,0,25,27">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="21*"/>
+        </Grid.ColumnDefinitions>
         <Button x:Name="HardwareController" Click="Button_Click" ClickMode="Press" Content="HW Controller" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="32,54,0,0" Height="28" Width="100"/>
-        <Button x:Name="SoftwareController" Click="Button_Click" ClickMode="Press" Content="SW Controller" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="150,54,0,0" Height="28" Width="100"/>
-        <TextBlock HorizontalAlignment="Left" Margin="64,16,0,0" TextWrapping="Wrap" Text="Select Hardware or Software:" VerticalAlignment="Top" Height="21" Width="163" Background="#FF87D8A6"/>
+        <Button x:Name="SoftwareController" Click="Button_Click" ClickMode="Press" Content="SW Controller" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,54,0,0" Height="28" Width="100" Grid.Column="1"/>
+        <TextBlock HorizontalAlignment="Left" Margin="64,16,0,0" TextWrapping="Wrap" Text="Select Hardware or Software:" VerticalAlignment="Top" Height="21" Width="163" Background="#FF87D8A6" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>
