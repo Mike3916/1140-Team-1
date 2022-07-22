@@ -559,10 +559,16 @@ namespace TrainController
             dispatcherTimer.Stop();
             mCurPower = value;
 
+            if (value > 120)
+            {
+
+            }
+
             mSerialAccepted = false;
 
             if (mControlType)
             {
+                // control max power
                 pi.WriteLine("p");
                 pi.WriteLine(value + "\n");
                 string output = pi.ReadLine();
@@ -573,7 +579,7 @@ namespace TrainController
 
         public void InitTimer()
         {
-            if (!mControlType) dispatcherTimer.Tick += new EventHandler(CalculatePowerSW);
+            /*if (!mControlType) dispatcherTimer.Tick += new EventHandler(CalculatePowerSW);
             else dispatcherTimer.Tick += new EventHandler(CalculatePowerHW);
 
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, T);
@@ -582,7 +588,7 @@ namespace TrainController
             updateSpeed.Tick += new EventHandler(UpdateSpeed);
 
             updateSpeed.Interval = new TimeSpan(0, 0, 0, 0, T);
-            updateSpeed.Start();
+            updateSpeed.Start();*/
         }
 
         public void UpdateSpeed(object sender, EventArgs e)
@@ -640,7 +646,7 @@ namespace TrainController
             }
         }
 
-        public void CalculatePowerSW(object sender, EventArgs e)
+        public void CalculatePowerSW()
         {
             double[] powerOutput = new double[3];
             double powerCheck = 0;
@@ -757,7 +763,7 @@ namespace TrainController
             }
         }
 
-        public void CalculatePowerHW(object sender, EventArgs e)
+        public void CalculatePowerHW()
         {
             string output;
             double[] powerOutput = new double[3];

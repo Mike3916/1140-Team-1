@@ -8,6 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Reference Include="Track Model">
+      <HintPath>..\..\Track Model\Track Model\bin\Release\net6.0-windows\Track Model.dll</HintPath>
+    </Reference>
     <Reference Include="TrainController">
       <HintPath>..\..\TrainController\TrainController\bin\Release\net6.0-windows\TrainController.dll</HintPath>
     </Reference>

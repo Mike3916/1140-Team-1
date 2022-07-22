@@ -30,7 +30,7 @@ namespace Gog
         TrainController.ControlPanel trainCtrl;
         TrainModel.MainWindow trains;
         CTC.MainWindow ctc;
-       /* Track_Controller_1._02.Controller mRedline1 = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
+        Track_Controller_1._02.Controller mRedline1 = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
         Track_Controller_1._02.Controller mGreenLine1 = new Track_Controller_1._02.Controller(852, false, "127.0.0.1");
 
         int[] mRedMaintenanceBlocks = new int[77];
@@ -49,11 +49,11 @@ namespace Gog
         int[] mGreenCrossings = new int[151];
         int[] mGreenSwitches = new int[151];
         int[] mGreenLeftLights = new int[151];
-        int[] mGreenRightLights = new int[151];*/
+        int[] mGreenRightLights = new int[151];
 
 
         DispatcherTimer mGlobalTimer;
-        int mIterationMultiplier = 1, numTrains = 0, numTrainCtrls = 0;
+        int mIterationMultiplier = 100, numTrains = 0, numTrainCtrls = 0, iter = 0;
         bool newBlock;
         bool setTrack = false;
 
@@ -146,6 +146,7 @@ namespace Gog
         {
             for (int i = 0; i < mIterationMultiplier; i++)
             {
+                if (iter++ % 10 == 0) TimeBox.Text = (iter).ToString();
                 /*Mike's edits
                  * How this works is you will send arrays of all the blocks
                  * Track_Controller_1.SendMaintenance sends all the current block maintenance requests
@@ -153,28 +154,28 @@ namespace Gog
                  * SendOccupancies sends all of the occupancies and returns the states of all the occupancies
                  * so on and so forth.
                  * */
-                /*  try
-                  {
-                      mRedMaintenanceBlocks = mRedline1.SendMaintenance(mRedMaintenanceBlocks);
-                      mRedOccupancies = mRedline1.SendOccupancies(mRedOccupancies);
-                      mRedSpeeds = mRedline1.SendSpeeds(mRedSpeeds);
-                      mRedAuthorities = mRedline1.SendAuthorities(mRedAuthorities);
-                      mRedCrossings = mRedline1.SendCrossings(mRedCrossings);
-                      mRedSwitches = mRedline1.SendSwitches(mRedSwitches);
-                      mRedLeftLights = mRedline1.SendLeftLights(mRedLeftLights);
-                      mRedRightLights = mRedline1.SendRightLights(mRedRightLights);
+                try
+                {
+                    mRedMaintenanceBlocks = mRedline1.SendMaintenance(mRedMaintenanceBlocks);
+                    mRedOccupancies = mRedline1.SendOccupancies(mRedOccupancies);
+                    mRedSpeeds = mRedline1.SendSpeeds(mRedSpeeds);
+                    mRedAuthorities = mRedline1.SendAuthorities(mRedAuthorities);
+                    mRedCrossings = mRedline1.SendCrossings(mRedCrossings);
+                    mRedSwitches = mRedline1.SendSwitches(mRedSwitches);
+                    mRedLeftLights = mRedline1.SendLeftLights(mRedLeftLights);
+                    mRedRightLights = mRedline1.SendRightLights(mRedRightLights);
 
-                      mGreenMaintenanceBlocks = mGreenLine1.SendMaintenance(mGreenMaintenanceBlocks);
-                      mGreenOccupancies = mGreenLine1.SendOccupancies(mGreenOccupancies);
-                      mGreenSpeeds = mGreenLine1.SendSpeeds(mGreenSpeeds);
-                      mGreenAuthorities = mGreenLine1.SendAuthorities(mGreenAuthorities);
-                      mGreenCrossings = mGreenLine1.SendCrossings(mGreenCrossings);
-                      mGreenSwitches = mGreenLine1.SendSwitches(mGreenSwitches);
-                      mGreenLeftLights = mGreenLine1.SendLeftLights(mGreenLeftLights);
-                      mGreenRightLights = mGreenLine1.SendRightLights(mGreenRightLights);
-                  }
-                  catch
-                  {
+                    mGreenMaintenanceBlocks = mGreenLine1.SendMaintenance(mGreenMaintenanceBlocks);
+                    mGreenOccupancies = mGreenLine1.SendOccupancies(mGreenOccupancies);
+                    mGreenSpeeds = mGreenLine1.SendSpeeds(mGreenSpeeds);
+                    mGreenAuthorities = mGreenLine1.SendAuthorities(mGreenAuthorities);
+                    mGreenCrossings = mGreenLine1.SendCrossings(mGreenCrossings);
+                    mGreenSwitches = mGreenLine1.SendSwitches(mGreenSwitches);
+                    mGreenLeftLights = mGreenLine1.SendLeftLights(mGreenLeftLights);
+                    mGreenRightLights = mGreenLine1.SendRightLights(mGreenRightLights);
+                }
+                catch
+                {
 
                   }*/
 
@@ -189,14 +190,16 @@ namespace Gog
 
                 }
 
+                ctc.SetTrackData(track.mLines);
+                track.AddTrain(151, 1, 1, 12);
                 //trainCtrl.checkUpdatedValues();
                 //ctc.SetTrackData(track.);
                 //track.GetT
 
                 for (int j = 0; j < numTrains && j < numTrainCtrls; j++)
                 {
-                    newBlock=trains.UpdateValues(trainCtrl.mTrainSetList[i],i);
-                    trainCtrl.UpdateValues(trains.Trains[i].getCmdAuthority(), trains.Trains[i].getCurrAuthority(), trains.Trains[i].getCommandedSpeed(), trains.Trains[i].getVelocity(), trains.Trains[i].getBeacon(), trains.Trains[i].getUnderground(), trains.Trains[i].getDoorL(), trains.Trains[i].getDoorR(), i);
+                    newBlock=trains.UpdateValues(trainCtrl.mTrainSetList[j],j);
+                    trainCtrl.UpdateValues(trains.Trains[j].getCmdAuthority(), trains.Trains[j].getCurrAuthority(), trains.Trains[j].getCommandedSpeedMPH(), trains.Trains[j].getCurrentSpeedMPH(), trains.Trains[j].getBeacon(), trains.Trains[j].getUnderground(), trains.Trains[j].getDoorL(), trains.Trains[j].getDoorR(), j);
                                     
                     /*if(newBlock){
                         trains.updateBlock(trackModel.nextBlock(i)),i); //trackModel.nextBlock(i) moves the train to the next block on it's map and it returns the block info it moved to ***JOE TALK TO HOWARD FOR HELP HERE***
@@ -208,6 +211,8 @@ namespace Gog
 
             }
         }
+
+
         protected override void OnClosing(CancelEventArgs e)
         {
             // TODO: Add for every module

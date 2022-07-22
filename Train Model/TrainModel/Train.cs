@@ -104,6 +104,7 @@ namespace TrainObject
             announcement = false;
             cmdAuthority = authority;
             underground = false;
+            line = line;
         }
 
 
@@ -425,11 +426,11 @@ namespace TrainObject
             announcement = a;
         }
 
-        public void setBlockInfo(double dist, double grad, int passengerCount, string beacon)
+        public void setBlockInfo(TrackModel.Block b)
         {
-            blockDist = dist;
-            gradient = grad;
-            if (passengerCount > 0)
+            blockDist = b.mLength;
+            gradient = b.mGrade*90;
+            if (b.mPop > 0)
             {
                 int min =  passengers/4;
                 int max = 3*passengers/4;
@@ -438,21 +439,14 @@ namespace TrainObject
                 passengers -= leaveCount;
 
             }
-            passengers += passengerCount;
+            passengers += b.mPop;
            
             mass = 56.7 * 2000 + 65 * passengers + 65 * crew;
 
             currDist = 0;
             currAuthority++;
-            
-            if (beacon != "")
-            {
-                beaconMessage = beacon;
-            }
-            else
-            {
-                beaconMessage = "No beacon";
-            }
+
+            beaconMessage = "no Beacon";
         }
 
         public bool askForInfo()

@@ -16,6 +16,8 @@
         <Button x:Name="TrainCtrlButton" Content="Train Controller" HorizontalAlignment="Left" Margin="548,187,0,0" VerticalAlignment="Top" Click="TrainCtrlButton_Click" Height="51" Width="107"/>
         <Button x:Name="CTC_Button" Content="CTC" HorizontalAlignment="Left" Margin="76,187,0,0" VerticalAlignment="Top" Click="CTC_Button_Click" RenderTransformOrigin="-1.47,0.613" Height="51" Width="31"/>
         <Button Content="Track Controller" HorizontalAlignment="Left" Margin="147,187,0,0" VerticalAlignment="Top" Click="Button_Click" Height="51" Width="109"/>
+        <TextBlock HorizontalAlignment="Left" Margin="207,117,0,0" TextWrapping="Wrap" Text="Current Time:" VerticalAlignment="Top"/>
+        <TextBlock x:Name="TimeBox" HorizontalAlignment="Left" Margin="298,117,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
