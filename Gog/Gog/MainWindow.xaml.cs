@@ -55,6 +55,7 @@ namespace Gog
         DispatcherTimer mGlobalTimer;
         int mIterationMultiplier = 1, numTrains = 0, numTrainCtrls = 0;
         bool newBlock;
+        bool setTrack = false;
 
         public MainWindow()
         {
@@ -152,32 +153,41 @@ namespace Gog
                  * SendOccupancies sends all of the occupancies and returns the states of all the occupancies
                  * so on and so forth.
                  * */
-              /*  try
-                {
-                    mRedMaintenanceBlocks = mRedline1.SendMaintenance(mRedMaintenanceBlocks);
-                    mRedOccupancies = mRedline1.SendOccupancies(mRedOccupancies);
-                    mRedSpeeds = mRedline1.SendSpeeds(mRedSpeeds);
-                    mRedAuthorities = mRedline1.SendAuthorities(mRedAuthorities);
-                    mRedCrossings = mRedline1.SendCrossings(mRedCrossings);
-                    mRedSwitches = mRedline1.SendSwitches(mRedSwitches);
-                    mRedLeftLights = mRedline1.SendLeftLights(mRedLeftLights);
-                    mRedRightLights = mRedline1.SendRightLights(mRedRightLights);
+                /*  try
+                  {
+                      mRedMaintenanceBlocks = mRedline1.SendMaintenance(mRedMaintenanceBlocks);
+                      mRedOccupancies = mRedline1.SendOccupancies(mRedOccupancies);
+                      mRedSpeeds = mRedline1.SendSpeeds(mRedSpeeds);
+                      mRedAuthorities = mRedline1.SendAuthorities(mRedAuthorities);
+                      mRedCrossings = mRedline1.SendCrossings(mRedCrossings);
+                      mRedSwitches = mRedline1.SendSwitches(mRedSwitches);
+                      mRedLeftLights = mRedline1.SendLeftLights(mRedLeftLights);
+                      mRedRightLights = mRedline1.SendRightLights(mRedRightLights);
 
-                    mGreenMaintenanceBlocks = mGreenLine1.SendMaintenance(mGreenMaintenanceBlocks);
-                    mGreenOccupancies = mGreenLine1.SendOccupancies(mGreenOccupancies);
-                    mGreenSpeeds = mGreenLine1.SendSpeeds(mGreenSpeeds);
-                    mGreenAuthorities = mGreenLine1.SendAuthorities(mGreenAuthorities);
-                    mGreenCrossings = mGreenLine1.SendCrossings(mGreenCrossings);
-                    mGreenSwitches = mGreenLine1.SendSwitches(mGreenSwitches);
-                    mGreenLeftLights = mGreenLine1.SendLeftLights(mGreenLeftLights);
-                    mGreenRightLights = mGreenLine1.SendRightLights(mGreenRightLights);
+                      mGreenMaintenanceBlocks = mGreenLine1.SendMaintenance(mGreenMaintenanceBlocks);
+                      mGreenOccupancies = mGreenLine1.SendOccupancies(mGreenOccupancies);
+                      mGreenSpeeds = mGreenLine1.SendSpeeds(mGreenSpeeds);
+                      mGreenAuthorities = mGreenLine1.SendAuthorities(mGreenAuthorities);
+                      mGreenCrossings = mGreenLine1.SendCrossings(mGreenCrossings);
+                      mGreenSwitches = mGreenLine1.SendSwitches(mGreenSwitches);
+                      mGreenLeftLights = mGreenLine1.SendLeftLights(mGreenLeftLights);
+                      mGreenRightLights = mGreenLine1.SendRightLights(mGreenRightLights);
+                  }
+                  catch
+                  {
+
+                  }*/
+
+                
+                if (track != null && ctc != null && setTrack==false)
+                {
+                    if (track.mLines.Count > 0)
+                    {
+                        ctc.SetTrackData(track.mLines);
+                        setTrack = true;
+                    }
+
                 }
-                catch
-                {
-
-                }*/
-
-               //ctc.SetTrackData(track.mLines);
 
                 //trainCtrl.checkUpdatedValues();
                 //ctc.SetTrackData(track.);
