@@ -181,13 +181,34 @@ namespace Gog
 
                 
                 if (track != null && ctc != null && gotTrack==false)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
-                {                                                       //then check if the mLines data has been loaded into the track model
-                    if (track.mLines.Count > 0)
+                {                                                       
+                    if (track.mLines.Count > 0)                         //Make sure the track files are loaded into the TrackModel module BEFORE the CTC model (button) is pressed to make sure the CTC will always get the full track
                     {
                         ctc.GetTrackLayout(track.mLines);                 //Send the track data to the CTC
                         gotTrack = true;                                //Set boolean to mark that the track data has been read by CTC
                     }
                 }
+                //ctc.GetTrackController(mRedMaintenanceBlocks, mRedOccupancies, mRedSpeeds, mRedAuthorities, mRedCrossings, mRedSwitches, mRedLeftLights, mRedRightLights, mGreenMaintenanceBlocks, mGreenOccupancies, mGreenSpeeds, mGreenAuthorities, mGreenCrossings, mGreenSwitches, mGreenLeftLights, mGreenRightLights); //Write function in CTC to read in these values
+                /* Update Track Controller variables with values from CTC
+                mRedMaintenanceBlocks = ctc.mRedMaintenanceBlocks;
+                mRedOccupancies = ctc.mRedOccupancies;
+                mRedSpeeds = ctc.mRedSpeeds;
+                mRedAuthorities = ctc.mRedAuthorities;
+                mRedCrossings = ctc.mRedCrossings;
+                mRedSwitches = ctc.mRedSwitches;
+                mRedLeftLights = ctc.mRedLeftLights;
+                mRedRightLights = ctc.mRedRightLights
+
+                mGreenMaintenanceBlocks = ctc.mGreenMaintenanceBlocks;
+                mGreenOccupancies = ctc.mGreenOccupancies;
+                mGreenSpeeds = ctc.mGreenSpeeds;
+                mGreenAuthorities = ctc.mGreenAuthorities;
+                mGreenCrossings = ctc.mGreenCrossings;
+                mGreenSwitches = ctc.mGreenSwitches;
+                mGreenLeftLights = ctc.mGreenLeftLights;
+                mGreenRightLights = ctc.mGreenRightLights;
+                */
+                
                 /*
                 ctc.SetTrackData(track.mLines);
                 track.AddTrain(151, 1, 1, 12);
