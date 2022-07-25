@@ -34,8 +34,8 @@ namespace TrainController
         public bool mEmergencyBrakeStatus = false;
 
         public int mTemperature = 72;
-        public int mKp = 250;
-        public int mKi = 100;
+        public int mKp = 10000;
+        public int mKi = 0;
         public double mCurSpeed = 0;
         public double mCmdSpeed = 0;
         public double mSetSpeed = 0;
@@ -573,7 +573,7 @@ namespace TrainController
 
         public void InitTimer()
         {
-            if (!mControlType) dispatcherTimer.Tick += new EventHandler(CalculatePowerSW);
+            /*if (!mControlType) dispatcherTimer.Tick += new EventHandler(CalculatePowerSW);
             else dispatcherTimer.Tick += new EventHandler(CalculatePowerHW);
 
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, T);
@@ -582,7 +582,7 @@ namespace TrainController
             updateSpeed.Tick += new EventHandler(UpdateSpeed);
 
             updateSpeed.Interval = new TimeSpan(0, 0, 0, 0, T);
-            updateSpeed.Start();
+            updateSpeed.Start();*/
         }
 
         public void UpdateSpeed(object sender, EventArgs e)
