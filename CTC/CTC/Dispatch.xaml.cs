@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics; //Added to be able to quickly write output 
 
 namespace CTC
 {
@@ -23,20 +24,16 @@ namespace CTC
             InitializeComponent();
             LineCombo.Items.Clear();
             StationCombo.Items.Clear();
-            
         }
 
-        private void Grid_MouseMove(object sender, MouseEventArgs e)
-        {
-            LineCombo.Items.Add(((MainWindow)Application.Current.MainWindow).mLines[((MainWindow)Application.Current.MainWindow).mLines.Count - 1].getmnameLine());  //Don't do this in public Dispatch() above. This relies on data being loaded elsewhere for track data, so only do it when the dispatch page has been loaded
-        }
-
+        //The LineCombo data is loaded in the SetTrackData function in MainWindow
         private void LineCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             List<string> stations = new List<string>();
-            for (int i = 0; i < ((MainWindow)Application.Current.MainWindow).mLines[LineCombo.SelectedIndex].getmnumSections(); i++)
+
+            for (int i = 0; i < ((MainWindow)Application.Current.MainWindow).mLines[LineCombo.SelectedIndex].GetmnumSections(); i++)
             {
-                for (int j = 0; j < ((MainWindow)Application.Current.MainWindow).mLines[LineCombo.SelectedIndex].getmnumBlocks(); j++)
+                for (int j = 0; j < ((MainWindow)Application.Current.MainWindow).mLines[LineCombo.SelectedIndex].mSections[i].getmnumBlocks(); j++)
                 {
                     if (((MainWindow)Application.Current.MainWindow).mLines[LineCombo.SelectedIndex].mSections[i].mBlocks[j].mStation == true) //This block has a station if true
                     {
@@ -45,13 +42,14 @@ namespace CTC
                 }
             }
             StationCombo.Items.Clear(); //Clear empty space from StationCombo
-            StationCombo.Items.Add(stations);
+            foreach(string station in stations)
+                StationCombo.Items.Add(station);
 
         }
 
         private void Enter_Click(object sender, RoutedEventArgs e)
         {
-            ///Here, save the Destination and ETA, then return to the default page
+            //Here, save the Destination and ETA, then return to the default page
             this.NavigationService.GoBack();
         }
 

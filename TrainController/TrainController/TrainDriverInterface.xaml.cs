@@ -69,6 +69,16 @@ namespace TrainController
 
         public void UpdateValues(int cmdAuthority,int curAuthority,double cmdVelocity,double curVelocity,string beacon,bool trainUnderground,bool trainLeftDoors,bool trainRightDoors,int i)
         {
+            // Update power:
+            if (!mTrainSetList[i].mControlType)
+            {
+                mTrainSetList[i].CalculatePowerSW();
+            }
+            else
+            {
+                mTrainSetList[i].CalculatePowerHW();
+            }
+
             // Update commanded authority (only at instantiation of train):
             mTrainSetList[i].setCmdAuthority(cmdAuthority);
 

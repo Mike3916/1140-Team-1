@@ -20,16 +20,16 @@ class serialConnect
 		bool mAnnouncementsStatus=false;
 		
 		int mTemperature=72;
-		int mKp=0;
-		int mKi=0;
+		int mKp=250;
+		int mKi=100;
 		
-		int mCmdSpeed=0;
-		int mSetSpeed=0;
-		int mCurSpeed=0;
+		float mCmdSpeed=0;
+		float mSetSpeed=0;
+		float mCurSpeed=0;
 		
 		int mCmdAuthority=0;
 		int mCurAuthority=0;
-		int mCurPower=0;
+		float mCurPower=0;
 		int fd;
 		
 		const float Pmax=120000;
@@ -89,8 +89,8 @@ class serialConnect
 			
 			// Misc Value:
 			mTemperature = 72;
-			mKp = 0;
-			mKi = 0;
+			mKp = 250;
+			mKi = 100;
 			Uk = 0;
 			Ek = 0;
 			Ek_prev = 0;
@@ -158,7 +158,7 @@ class serialConnect
 			{
 				numChar = serialGetchar(fd);
 				
-				if(numChar>47 && numChar<58)
+				if((numChar>47 && numChar<58) || numChar == 46)
 				{
 					str += numChar;
 				}
@@ -193,74 +193,118 @@ class serialConnect
 		
 		const char* calculatePower()
 		{
-			if(mAutoMode)
-            {
-                Ek_prev = Ek;
-                Ek = mCmdSpeed - mCurSpeed;
-            }
-            else
-            {
-                Ek_prev = Ek;
-                Ek = mSetSpeed - mCurSpeed;
-            }
-            
-            if (mAutoMode)
-            {
-                if (mCurSpeed < mCmdSpeed)
-                {
-                    if (mCurPower < Pmax)
-                    {
-                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
-                    }
+			float powerOutput[3];
+            float powerCheck = 0;
 
-                    mCurPower = (mKp * Ek) + (mKi * Uk);
-                }
-                else if (mCurSpeed > mCmdSpeed)
-                {
-                    if (mCurPower < Pmax)
-                    {
-                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
-                    }
-
-                    mCurPower = (mKp * Ek) + (mKi * Uk);
-                }
-                else
-                {
-                    mCurPower = 0;
-                }
-            }
-            else
+            // calculate power three times for vitality
+            for (int i = 0; i < 3; i++)
             {
-                if (mCurSpeed < mSetSpeed)
+                if (mAutoMode)
                 {
-                    if (mCurPower < Pmax)
+                    Ek_prev = Ek;
+                    Ek = mCmdSpeed - mCurSpeed;
+
+                    if (mCurSpeed < mCmdSpeed)
                     {
-                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else if (mCurSpeed > mCmdSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
                     }
                     else
                     {
-                        Uk = Uk;
+                        mCurPower = 0;
                     }
-
-                    mCurPower = (mKp * Ek) + (mKi * Uk);
-                }
-                else if (mCurSpeed > mSetSpeed)
-                {
-                    if (mCurPower < Pmax)
-                    {
-                        Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
-                    }
-                    else
-                    {
-                        Uk = Uk;
-                    }
-
-                    mCurPower = (mKp * Ek) + (mKi * Uk);
                 }
                 else
                 {
-                    mCurPower = 0;
+                    Ek_prev = Ek;
+                    Ek = mSetSpeed - mCurSpeed;
+
+                    if (mCurSpeed < mSetSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else if (mCurSpeed > mSetSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else
+                    {
+                        mCurPower = 0;
+                    }
                 }
+            }
+
+            // Any pair of outputs are equal (Modal calc):
+            if (powerOutput[0] == powerOutput[1])
+                powerCheck = powerOutput[0];
+
+            else if (powerOutput[0] == powerOutput[2])
+                powerCheck = powerOutput[0];
+
+            else if (powerOutput[1] == powerOutput[2])
+                powerCheck = powerOutput[1];
+
+            // No outputs match, choose smallest:
+            else if (powerOutput[0] <= powerOutput[1] && powerOutput[0] <= powerOutput[2])
+                powerCheck = powerOutput[0];
+
+            else if (powerOutput[1] <= powerOutput[0] && powerOutput[1] <= powerOutput[2])
+                powerCheck = powerOutput[1];
+
+            else
+                powerCheck = powerOutput[2];
+
+            // Check calculate power not above max
+            if (powerCheck > Pmax)
+            {
+                mCurPower = Pmax;
+            }
+            else if (powerCheck < -Pmax)
+            {
+                mCurPower = -Pmax;
+            }
+            else
+            {
+                mCurPower = powerCheck;
             }
             
             string power = to_string(mCurPower) + "\n";

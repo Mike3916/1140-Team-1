@@ -57,6 +57,12 @@ namespace TrainModel
 
 
         }
+        
+        private void addTrain(int line, int authority=12)
+        {
+            Trains.Add(new Train(authority, line));
+            
+        }
 
       
         public bool UpdateValues(TrainCtrl ctrl, int i)
@@ -93,6 +99,9 @@ namespace TrainModel
             Speed.Text = "Current Speed: " + Math.Round(Trains[0].getCurrentSpeedMPH(), 2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(Trains[0].getCommandedSpeedMPH(), 2).ToString() + "Mi/h\nCurrent Acceleration: " + Trains[0].getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: " + Trains[0].getTimeTillNextBlock() + "s";
             power.Text = Trains[0].getPowerCmd().ToString() + " kW";
             Beacon.Text = "Beacon: " + Trains[0].getBeacon();
+
+            non_Vitals.Text = "Number of Passengers: " + Trains[0].getPassengers() + "\nNumber of Crew: " + Trains[0].getCrew() + "\nNumber of Cars: " + Trains[0].getCars().ToString() + "\nCapacity: " + Trains[0].getCapacity().ToString() + "\nInterior Lights: " + Trains[0].getInteriorLights() +"Exterior Lights: " + Trains[0].getExteriorLights()+"\nDoors: L-Open\t\tR-Closed\nTemperature: " + Trains[0].getTemperature().ToString() + "F";
+
 
             return Trains[i].askForInfo();
 
