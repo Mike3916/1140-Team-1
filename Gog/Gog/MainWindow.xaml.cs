@@ -55,7 +55,7 @@ namespace Gog
         DispatcherTimer mGlobalTimer;
         int mIterationMultiplier = 100, numTrains = 0, numTrainCtrls = 0, iter = 0;
         bool newBlock;
-        bool setTrack = false;
+        bool gotTrack = false;
 
         public MainWindow()
         {
@@ -180,14 +180,13 @@ namespace Gog
                 }*/
 
                 
-                if (track != null && ctc != null && setTrack==false)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
+                if (track != null && ctc != null && gotTrack==false)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
                 {                                                       //then check if the mLines data has been loaded into the track model
                     if (track.mLines.Count > 0)
                     {
-                        ctc.SetTrackData(track.mLines);                 //Send the track data to the CTC
-                        setTrack = true;                                //Set boolean to mark that the track data has been read by CTC
+                        ctc.GetTrackLayout(track.mLines);                 //Send the track data to the CTC
+                        gotTrack = true;                                //Set boolean to mark that the track data has been read by CTC
                     }
-
                 }
                 /*
                 ctc.SetTrackData(track.mLines);
