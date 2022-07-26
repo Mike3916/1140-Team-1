@@ -154,7 +154,7 @@ namespace Gog
                  * SendOccupancies sends all of the occupancies and returns the states of all the occupancies
                  * so on and so forth.
                  * */
-                /*try
+                try
                 {
                     mRedMaintenanceBlocks = mRedline1.SendMaintenance(mRedMaintenanceBlocks);
                     mRedOccupancies = mRedline1.SendOccupancies(mRedOccupancies);
@@ -165,55 +165,46 @@ namespace Gog
                     mRedLeftLights = mRedline1.SendLeftLights(mRedLeftLights);
                     mRedRightLights = mRedline1.SendRightLights(mRedRightLights);
 
-                    mGreenMaintenanceBlocks = mGreenLine1.SendMaintenance(mGreenMaintenanceBlocks);
-                    mGreenOccupancies = mGreenLine1.SendOccupancies(mGreenOccupancies);
-                    mGreenSpeeds = mGreenLine1.SendSpeeds(mGreenSpeeds);
-                    mGreenAuthorities = mGreenLine1.SendAuthorities(mGreenAuthorities);
-                    mGreenCrossings = mGreenLine1.SendCrossings(mGreenCrossings);
-                    mGreenSwitches = mGreenLine1.SendSwitches(mGreenSwitches);
-                    mGreenLeftLights = mGreenLine1.SendLeftLights(mGreenLeftLights);
-                    mGreenRightLights = mGreenLine1.SendRightLights(mGreenRightLights);
+                      mGreenMaintenanceBlocks = mGreenLine1.SendMaintenance(mGreenMaintenanceBlocks);
+                      mGreenOccupancies = mGreenLine1.SendOccupancies(mGreenOccupancies);
+                      mGreenSpeeds = mGreenLine1.SendSpeeds(mGreenSpeeds);
+                      mGreenAuthorities = mGreenLine1.SendAuthorities(mGreenAuthorities);
+                      mGreenCrossings = mGreenLine1.SendCrossings(mGreenCrossings);
+                      mGreenSwitches = mGreenLine1.SendSwitches(mGreenSwitches);
+                      mGreenLeftLights = mGreenLine1.SendLeftLights(mGreenLeftLights);
+                      mGreenRightLights = mGreenLine1.SendRightLights(mGreenRightLights);
+                  }
+                  catch
+                  {
+
                 }
-                catch
-                {
-
-                }*/
-
-                
-                if (track != null && ctc != null && setTrack==false)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
-                {                                                       //then check if the mLines data has been loaded into the track model
-                    if (track.mLines.Count > 0)
-                    {
-                        ctc.SetTrackData(track.mLines);                 //Send the track data to the CTC
-                        setTrack = true;                                //Set boolean to mark that the track data has been read by CTC
-                    }
 
                 }
                 /*
                 ctc.SetTrackData(track.mLines);
                 track.AddTrain(151, 1, 1, 12);
-                trainCtrl.checkUpdatedValues();
-                ctc.SetTrackData(track.);
-                track.GetT
-                */
+                //trainCtrl.checkUpdatedValues();
+                //ctc.SetTrackData(track.);
+                //track.GetT
 
                 for (int j = 0; j < numTrains && j < numTrainCtrls; j++)
                 {
-                    newBlock=trains.UpdateValues(trainCtrl.mTrainSetList[j],j);
-                    trainCtrl.UpdateValues(trains.Trains[j].getCmdAuthority(), trains.Trains[j].getCurrAuthority(), trains.Trains[j].getCommandedSpeedMPH(), trains.Trains[j].getCurrentSpeedMPH(), trains.Trains[j].getBeacon(), trains.Trains[j].getUnderground(), trains.Trains[j].getDoorL(), trains.Trains[j].getDoorR(), j);
+                    newBlock=trains.UpdateValues(trainCtrl.mTrainSetList[i],i);
+                    trainCtrl.UpdateValues(trains.Trains[i].getCmdAuthority(), trains.Trains[i].getCurrAuthority(), trains.Trains[i].getCommandedSpeed(), trains.Trains[i].getVelocity(), trains.Trains[i].getBeacon(), trains.Trains[i].getUnderground(), trains.Trains[i].getDoorL(), trains.Trains[i].getDoorR(), i);
                                     
                     /*if(newBlock){
                         trains.updateBlock(trackModel.nextBlock(i)),i); //trackModel.nextBlock(i) moves the train to the next block on it's map and it returns the block info it moved to ***JOE TALK TO HOWARD FOR HELP HERE***
                     
                     }*/
-                }
+
+                    if (newBlock)
+                        trains.updateBlock(trackModel.UpdateBlock()),i)
+                
 
 
 
             }
         }
-
-
         protected override void OnClosing(CancelEventArgs e)
         {
             // TODO: Add for every module
