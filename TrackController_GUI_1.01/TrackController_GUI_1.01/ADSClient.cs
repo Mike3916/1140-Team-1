@@ -49,11 +49,11 @@ namespace Track_Controller_1._02
         //ReceivePacket: reads an integer array to an array of global integers at ADS port the client is connected to. 
         //<[]mPacket>: contains the block states to be written to the PLC
         //<int[]> returns the block command states to be written to the track
-        public int[] ReceivePacket(int[] mPacket, string mVarName2)
+        public int[] ReceivePacket(int mLength, string mVarName2)
         {
-            MessageBox.Show(mVarName2 + mPacket[0].ToString() + mPacket[1].ToString());
+           
             hvar = ads.CreateVariableHandle(mVarName2);
-            mPacket = (int[])ads.ReadAny(hvar, typeof(int[]), new int[] { 4 });
+            int[] mPacket = (int[])ads.ReadAny(hvar, typeof(int[]), new int[] { mLength });
 
             MessageBox.Show(mVarName2 + mPacket[0].ToString() + mPacket[1].ToString());
 
@@ -74,9 +74,9 @@ namespace Track_Controller_1._02
         //ReceiveSwitches: Calls the receivepacket function with specified variable names to read/write
         //<mPacket>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveSwitches(int[] mPacket)
+        public int[] ReceiveSwitches(int mLength = 0)
         {
-            int[] temp = ReceivePacket(mPacket, "GVL.mOutSwitch");
+            int[] temp = ReceivePacket(mLength, "GVL.mOutSwitch");
             return temp;
         }
 
@@ -91,9 +91,9 @@ namespace Track_Controller_1._02
         //ReceiveOccupancies: Calls the receivepacket function with specified variable names to read
         //<mPacket>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveOccupancies(int[] mPacket)
+        public int[] ReceiveOccupancies(int mLength = 0)
         {
-            int[] temp = ReceivePacket(mPacket, "GVL.mOutOccupancies");
+            int[] temp = ReceivePacket(mLength, "GVL.mOutOccupancies");
             return temp;
         }
 
@@ -109,9 +109,9 @@ namespace Track_Controller_1._02
         //ReceiveSpeeds: Calls the receive packet function with specified variable names to read
         //<mPacket>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveSpeeds(int[] mPacket)
+        public int[] ReceiveSpeeds(int mLength = 0)
         {
-            int[] temp = ReceivePacket(mPacket, "GVL.mOutSpeeds");
+            int[] temp = ReceivePacket(mLength, "GVL.mOutSpeeds");
             return temp;
         }
 
@@ -127,9 +127,9 @@ namespace Track_Controller_1._02
         //ReceiveAuthorities: Calls the sendpacket function with specified variable names to read
         //<mPacket>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveAuthorities(int[] mPacket)
+        public int[] ReceiveAuthorities(int mLength = 0)
         {
-            int[] temp = ReceivePacket(mPacket, "GVL.mOutAuthorities");
+            int[] temp = ReceivePacket(mLength, "GVL.mOutAuthorities");
             return temp;
         }
 
@@ -145,9 +145,9 @@ namespace Track_Controller_1._02
         //ReceiveCrossings: Calls the sendpacket function with specified variable names to read/write
         //<mPacket>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveCrossings(int[] mPacket)
+        public int[] ReceiveCrossings(int mLength = 0)
         {
-            int[] temp = ReceivePacket(mPacket, "GVL.mOutCrossings");
+            int[] temp = ReceivePacket(mLength, "GVL.mOutCrossings");
             return temp;
         }
 
@@ -163,9 +163,9 @@ namespace Track_Controller_1._02
         //ReceiveLeftLights: Calls the sendpacket function with specified variable names to read
         //<mPacket>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveLeftLights(int[] mPacket)
+        public int[] ReceiveLeftLights(int mLength = 0)
         {
-            int[] temp = ReceivePacket(mPacket, "GVL.mOutLeftLights");
+            int[] temp = ReceivePacket(mLength, "GVL.mOutLeftLights");
             return temp;
         }
 
@@ -182,9 +182,9 @@ namespace Track_Controller_1._02
         //ReceiveRightLights: Calls the sendpacket function with specified variable names to read/write
         //<mPacket>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveRightLights(int[] mPacket)
+        public int[] ReceiveRightLights(int mLength = 0)
         {
-            int[] temp = ReceivePacket(mPacket, "GVL.mOutRightLights");
+            int[] temp = ReceivePacket(mLength, "GVL.mOutRightLights");
             return temp;
         }
 
@@ -200,9 +200,9 @@ namespace Track_Controller_1._02
         //ReceiveMaintenance: Calls the sendpacket function with specified variable names to read/write
         //<mPacket>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveMaintenance(int[] mPacket)
+        public int[] ReceiveMaintenance(int mLength = 0)
         {
-            int[] temp = ReceivePacket(mPacket, "GVL.mOutMaintenance");
+            int[] temp = ReceivePacket(mLength, "GVL.mOutMaintenance");
             return temp;
         }
 
@@ -218,9 +218,9 @@ namespace Track_Controller_1._02
         //ReceiveRoute: Calls the sendpacket function with specified variable names to read
         //<mPacket>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveRoute(int[] mPacket)
+        public int[] ReceiveRoute(int mLength = 0)
         {
-            mPacket = ReceivePacket(mPacket, "GVL.mOutRoute");
+            int[] mPacket = ReceivePacket(mLength, "GVL.mOutRoute");
             return mPacket;
         }
     }

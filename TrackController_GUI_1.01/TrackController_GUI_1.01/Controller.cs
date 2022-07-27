@@ -54,17 +54,19 @@ namespace Track_Controller_1._02
         //ReceiveSwitches: Calls the client class to receive an array of switch positions of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
         //<mLength>: length of return array. This is when the client stops reading.
         //<int[]>: array holding switch positions
-        public int[] ReceiveSwitches(int[] mPacket)
+        public int[] ReceiveSwitches(int mLength = 0)
         {
+            int[] mPacket = new int[mLength];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveSwitches(mPacket);
+                mPacket = mADS.ReceiveSwitches(mLength);
 
             }
             else
             {
-       
+                mPacket = mADS.ReceiveSwitches(mLength);
+
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;
@@ -91,17 +93,18 @@ namespace Track_Controller_1._02
         //ReceiveOccupancies: Calls the client class to receive an array of occupancies of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
         //<mLength>: length of return array. This is when the client stops reading.
         //<int[]>: array holding occupancies
-        public int[] ReceiveOccupancies(int[] mPacket)
+        public int[] ReceiveOccupancies(int mLength = 0)
         {
+            int[] mPacket = new int[mLength];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveOccupancies(mPacket);
+                mPacket = mADS.ReceiveOccupancies(mLength);
 
             }
             else
             {
-        
+                mPacket = mADS.ReceiveOccupancies(mLength);
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;
@@ -128,16 +131,18 @@ namespace Track_Controller_1._02
         //ReceiveSpeeds: Calls the client class to receive an array of speeds of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
         //<mLength>: length of return array. This is when the client stops reading.
         //<int[]>: array holding speeds
-        public int[] ReceiveSpeeds(int[] mPacket)
+        public int[] ReceiveSpeeds(int mLength = 0)
         {
+            int[] mPacket = new int[mLength];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveSpeeds(mPacket);
+                mPacket = mADS.ReceiveSpeeds(mLength);
 
             }
             else
             {
+                mPacket = mADS.ReceiveSpeeds(mLength);
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;
@@ -164,16 +169,18 @@ namespace Track_Controller_1._02
         //ReceiveAuthorities: Calls the client class to receive an array of authorities of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
         //<mLength>: length of return array. This is when the client stops reading.
         //<int[]>: array holding authorities
-        public int[] ReceiveAuthorities(int[] mPacket)
+        public int[] ReceiveAuthorities(int mLength = 0)
         {
+            int[] mPacket = new int[mLength];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveAuthorities(mPacket);
+                mPacket = mADS.ReceiveAuthorities(mLength);
 
             }
             else
             {
+                mPacket = mADS.ReceiveAuthorities(mLength);
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;
@@ -200,16 +207,18 @@ namespace Track_Controller_1._02
         //ReceiveCrossings: Calls the client class to receive an array of crossings of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
         //<mLength>: length of return array. This is when the client stops reading.
         //<int[]>: array holding authorities
-        public int[] ReceiveCrossings(int[] mPacket)
+        public int[] ReceiveCrossings(int mLength = 0)
         {
+            int[] mPacket = new int[mLength];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveCrossings(mPacket);
+                mPacket = mADS.ReceiveCrossings(mLength);
 
             }
             else
             {
+                mPacket = mADS.ReceiveAuthorities(mLength);
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;
@@ -236,16 +245,18 @@ namespace Track_Controller_1._02
         //ReceiveLeftLights: Calls the client class to receive an array of left light states of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
         //<mLength>: length of return array. This is when the client stops reading.
         //<int[]>: array holding left light states
-        public int[] ReceiveLeftLights(int[] mPacket)
+        public int[] ReceiveLeftLights(int mLength = 0)
         {
+            int[] mPacket = new int[mLength];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveLeftLights(mPacket);
+                mPacket = mADS.ReceiveLeftLights(mLength);
 
             }
             else
             {
+                mPacket = mADS.ReceiveLeftLights(mLength);
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;
@@ -272,16 +283,18 @@ namespace Track_Controller_1._02
         //ReceiveRightLights: Calls the client class to receive an array of right light states of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
         //<mLength>: length of return array. This is when the client stops reading.
         //<int[]>: array holding left right states
-        public int[] ReceiveRightLights(int[] mPacket)
+        public int[] ReceiveRightLights(int mLength = 0)
         {
+            int[] mPacket = new int[mLength];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveRightLights(mPacket);
+                mPacket = mADS.ReceiveRightLights(mLength);
 
             }
             else
             {
+                mPacket = mADS.ReceiveRightLights(mLength);
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;
@@ -308,16 +321,18 @@ namespace Track_Controller_1._02
         //ReceiveMaintenance: Calls the client class to receive an array of maintenance states of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
         //<mLength>: length of return array. This is when the client stops reading.
         //<int[]>: array holding maintenance states
-        public int[] ReceiveMaintenance(int[] mPacket)
+        public int[] ReceiveMaintenance(int mLength = 0)
         {
+            int[] mPacket = new int[mLength];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveMaintenance(mPacket);
+                mPacket = mADS.ReceiveMaintenance(mLength);
 
             }
             else
             {
+                mPacket = mADS.ReceiveMaintenance(mLength);
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;
@@ -343,16 +358,18 @@ namespace Track_Controller_1._02
         //ReceiveMaintenance: Calls the client class to receive an array of maintenance states of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
         //<mLength>: length of return array. This is when the client stops reading.
         //<int[]>: array holding maintenance states
-        public int[] ReceiveRoute(int[] mPacket)
+        public int[] ReceiveRoute(int mLength = 0)
         {
+            int[] mPacket = new int[mLength];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveRoute(mPacket);
+                mPacket = mADS.ReceiveRoute(mLength);
 
             }
             else
             {
+                mPacket = mADS.ReceiveRoute(mLength);
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;

@@ -205,7 +205,7 @@ namespace Track_Controller_1._02
             Controller mRedLine1 = new Controller(851, false, "127.0.0.1");
 
             mRedLine1.SendRoute(mRoutes);
-            mRoutes = mRedLine1.ReceiveRoute(mRoutes);
+            mRoutes = mRedLine1.ReceiveRoute(77);
 
         }
 
