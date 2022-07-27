@@ -8,11 +8,11 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Dispatch">
 
-    <Grid Background="White" Margin="0,0,188,0" Width="352" Height="400" MouseMove="Grid_MouseMove">
+    <Grid Background="White" Margin="0,0,188,0" Width="352" Height="400">
         <Label Content="Destination:" HorizontalAlignment="Left" Margin="54,157,0,0" VerticalAlignment="Top"/>
         <Label Content="ETA:" HorizontalAlignment="Left" Margin="54,196,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="ETACombo" HorizontalAlignment="Left" Margin="133,196,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="Enter" Content="Enter" HorizontalAlignment="Left" Margin="193,237,0,0" VerticalAlignment="Top" Click="Enter_Click"/>
+        <Button x:Name="Enter" Content="Enter" HorizontalAlignment="Left" Margin="178,237,0,0" VerticalAlignment="Top" Click="Enter_Click"/>
         <ComboBox x:Name="LineCombo" HorizontalAlignment="Left" Margin="133,161,0,0" VerticalAlignment="Top" Width="50" SelectionChanged="LineCombo_SelectionChanged"/>
         <ComboBox x:Name ="StationCombo" HorizontalAlignment="Left" Margin="193,161,0,0" VerticalAlignment="Top" Width="60"/>
         <TextBlock HorizontalAlignment="Left" Margin="134,134,0,0" TextWrapping="Wrap" Text="Line" VerticalAlignment="Top"/>

@@ -30,7 +30,7 @@ namespace Gog
         TrainController.ControlPanel trainCtrl;
         TrainModel.MainWindow trains;
         CTC.MainWindow ctc;
-        Track_Controller_1._02.Controller mRedline1 = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
+        /*Track_Controller_1._02.Controller mRedline1 = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
         Track_Controller_1._02.Controller mGreenLine1 = new Track_Controller_1._02.Controller(852, false, "127.0.0.1");
 
         int[] mRedMaintenanceBlocks = new int[77];
@@ -49,12 +49,13 @@ namespace Gog
         int[] mGreenCrossings = new int[151];
         int[] mGreenSwitches = new int[151];
         int[] mGreenLeftLights = new int[151];
-        int[] mGreenRightLights = new int[151];
+        int[] mGreenRightLights = new int[151];*/
 
 
         DispatcherTimer mGlobalTimer;
         int mIterationMultiplier = 100, numTrains = 0, numTrainCtrls = 0, iter = 0;
         bool newBlock;
+        bool gotTrack = false;
 
         public MainWindow()
         {
@@ -153,7 +154,7 @@ namespace Gog
                  * SendOccupancies sends all of the occupancies and returns the states of all the occupancies
                  * so on and so forth.
                  * */
-                try
+                /*try
                 {
                     mRedline1.SendMaintenance(mRedMaintenanceBlocks);
                     mRedMaintenanceBlocks = mRedline1.ReceiveMaintenance();
@@ -177,23 +178,60 @@ namespace Gog
                 catch
                 {
 
-                }
+                }*/
 
+                
+                if (track != null && ctc != null && gotTrack==false)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
+                {                                                       
+                    if (track.mLines.Count > 0)                         //Make sure the track files are loaded into the TrackModel module BEFORE the CTC model (button) is pressed to make sure the CTC will always get the full track
+                    {
+                        ctc.GetTrackLayout(track.mLines);                 //Send the track data to the CTC
+                        gotTrack = true;                                //Set boolean to mark that the track data has been read by CTC
+                    }
+                }
+                //ctc.GetTrackController(mRedMaintenanceBlocks, mRedOccupancies, mRedSpeeds, mRedAuthorities, mRedCrossings, mRedSwitches, mRedLeftLights, mRedRightLights, mGreenMaintenanceBlocks, mGreenOccupancies, mGreenSpeeds, mGreenAuthorities, mGreenCrossings, mGreenSwitches, mGreenLeftLights, mGreenRightLights); //Write function in CTC to read in these values
+                /* Update Track Controller variables with values from CTC
+                mRedMaintenanceBlocks = ctc.mRedMaintenanceBlocks;
+                mRedOccupancies = ctc.mRedOccupancies;
+                mRedSpeeds = ctc.mRedSpeeds;
+                mRedAuthorities = ctc.mRedAuthorities;
+                mRedCrossings = ctc.mRedCrossings;
+                mRedSwitches = ctc.mRedSwitches;
+                mRedLeftLights = ctc.mRedLeftLights;
+                mRedRightLights = ctc.mRedRightLights
+
+                mGreenMaintenanceBlocks = ctc.mGreenMaintenanceBlocks;
+                mGreenOccupancies = ctc.mGreenOccupancies;
+                mGreenSpeeds = ctc.mGreenSpeeds;
+                mGreenAuthorities = ctc.mGreenAuthorities;
+                mGreenCrossings = ctc.mGreenCrossings;
+                mGreenSwitches = ctc.mGreenSwitches;
+                mGreenLeftLights = ctc.mGreenLeftLights;
+                mGreenRightLights = ctc.mGreenRightLights;
+                */
+                
+                /*
                 ctc.SetTrackData(track.mLines);
                 track.AddTrain(151, 1, 1, 12);
-                //trainCtrl.checkUpdatedValues();
-                //ctc.SetTrackData(track.);
-                //track.GetT
+                trainCtrl.checkUpdatedValues();
+                ctc.SetTrackData(track.);
+                track.GetT
+                */
 
                 for (int j = 0; j < numTrains && j < numTrainCtrls; j++)
                 {
                     newBlock=trains.UpdateValues(trainCtrl.mTrainSetList[j],j);
                     trainCtrl.UpdateValues(trains.Trains[j].getCmdAuthority(), trains.Trains[j].getCurrAuthority(), trains.Trains[j].getCommandedSpeedMPH(), trains.Trains[j].getCurrentSpeedMPH(), trains.Trains[j].getBeacon(), trains.Trains[j].getUnderground(), trains.Trains[j].getDoorL(), trains.Trains[j].getDoorR(), j);
-                                    
-                    /*if(newBlock){
-                        trains.updateBlock(trackModel.nextBlock(i)),i); //trackModel.nextBlock(i) moves the train to the next block on it's map and it returns the block info it moved to ***JOE TALK TO HOWARD FOR HELP HERE***
-                    
-                    }*/
+
+                    if (trains.Trains[j].newBlock)                  //if train at j enters a new block
+                    { 
+                        TrackModel.Block bl = track.UpdateTrain(j); //get next block
+                        if (bl != null)                             //if that block exists
+                            trains.UpdateBlock(bl, j);              //update the train pos
+                        else                                        //if that block doesn't exist ...
+                            trains.Trains.RemoveAt(j);              //delete the train
+
+                    }
                 }
 
 
@@ -205,11 +243,21 @@ namespace Gog
         protected override void OnClosing(CancelEventArgs e)
         {
             // TODO: Add for every module
-
-            trainCtrl.actualClose = true;
-            trainCtrl.Close();
-            trains.actualClose = true;
-            trains.Close();
+            if (track != null)
+            {
+                track.actualClose = true;
+                track.Close();
+            }
+            if (trainCtrl != null)
+            {
+                trainCtrl.actualClose = true;
+                trainCtrl.Close();
+            }
+            if (trains != null)
+            {
+                trains.actualClose = true;
+                trains.Close();
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

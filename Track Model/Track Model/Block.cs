@@ -30,6 +30,10 @@ namespace TrackModel
             mElevation = Convert.ToDouble(blockInfo[8]);
             mcumElevation = Convert.ToDouble(blockInfo[9]);
 
+            mtrackRail = true;
+            mtrackCircuit = true;
+            mPower = true;
+
             mblockInfo = blockInfo;
 
             mtrackTemp = 32;
@@ -139,14 +143,26 @@ namespace TrackModel
         public void setmtrackRail(bool state)
         {
             mtrackRail = state;
+            if (mtrackRail == false)
+                mOccupied = true;
+            else
+                mOccupied = false;
         }
         public void setmtrackCircuit(bool state)
         {
             mtrackCircuit = state;
+            if (mtrackCircuit == false)
+                mOccupied = true;
+            else
+                mOccupied = false;
         }
         public void setmPower(bool state)
         {
             mPower = state;
+            if (mPower == false)
+                mOccupied = true;
+            else
+                mOccupied = false;
         }
         public void setNextBlock(int nextBlockNum)
         {

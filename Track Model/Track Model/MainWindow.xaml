@@ -31,7 +31,18 @@
         <Rectangle Grid.Column="8" HorizontalAlignment="Left" Height="378" Margin="47,67,0,0" Stroke="Black" VerticalAlignment="Top" Width="224" Fill="Gray" Grid.Row="1" Grid.ColumnSpan="2"/>
         <Button x:Name ="UploadCSV" Grid.Column="5" Content="Upload CSV" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Click="UploadCSV_Click" Height="20" Width="67"/>
         <TextBox x:Name="FileText" Grid.Column="1" HorizontalAlignment="Left" Margin="14,30,0,0" Grid.RowSpan="2" TextWrapping="Wrap" Text="Input File Name" VerticalAlignment="Top" Width="286" TextChanged="FileTextBox_TextChanged" Grid.ColumnSpan="5" Height="17" KeyDown="FileText_KeyDown" GotKeyboardFocus="TextBoc_Focus"/>
-        <DataGrid x:Name ="LineDataGrid" Grid.Column="3" Grid.Row="1" d:ItemsSource="{Binding}" Margin="0,23,133,10" Grid.ColumnSpan="6" IsReadOnly="True"/>
+        <DataGrid x:Name ="LineDataGrid" Grid.Column="3" Grid.Row="1" d:ItemsSource="{Binding}" Margin="0,23,133,10" Grid.ColumnSpan="6" IsReadOnly="True">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Occupied}" Value="True"> 
+                            <Setter Property="Background" Value="Blue" />
+                            <Setter Property="Foreground" Value="White" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+        </DataGrid>
         <Button x:Name ="BrowseFile" Grid.Column="1" Content="Browse" HorizontalAlignment="Left" Margin="14,5,0,0" VerticalAlignment="Top" Click="BrowseFile_Click" Grid.ColumnSpan="4" Height="20" Width="42"/>
         <TextBlock x:Name="Info_Text" Grid.Column="8" HorizontalAlignment="Left" Margin="50,55,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.204,-0.249" Grid.ColumnSpan="2" Height="388" Width="145" Foreground="#FFD4D1D1" TextAlignment="Left" LineHeight="6" ><Run/><LineBreak/><Run Text="Station:"/><LineBreak/><Run/><LineBreak/><Run Text="Occupied:"/><LineBreak/><Run/><LineBreak/><Run Text="Infrastructure:"/><LineBreak/><Run/><LineBreak/><Run Text="Speed Limit:"/><LineBreak/><Run/><LineBreak/><Run Text="Length:"/><LineBreak/><Run/><LineBreak/><Run Text="Grade:"/><LineBreak/><Run/><LineBreak/><Run Text="Elevation:"/><LineBreak/><LineBreak/><Run Text="Crossbar:"/><LineBreak/><LineBreak/><Run Text="Population:"/><LineBreak/><Run/><LineBreak/><Run Text="Signal:"/><LineBreak/><Run/><LineBreak/><Run Text="Switch:"/><LineBreak/><Run/><LineBreak/><Run Text="Track Heaters"/><LineBreak/><Run/></TextBlock>
         <TextBlock x:Name="BlockText" Grid.Column="8" HorizontalAlignment="Left" Margin="49,52,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Block Information" VerticalAlignment="Top" Width="125" Height="16"/>

@@ -37,6 +37,26 @@ namespace CTC
         public List<TrackModel.Line> mLines;    //Hold the track model
         bool trackLoaded = false;               //Keep track of whether the track has been loaded or not
 
+        //Variables to send to Track Controller
+        public int[] mRedMaintenanceBlocks = new int[77];
+        public int[] mRedOccupancies = new int[77];
+        public int[] mRedSpeeds = new int[77];
+        public int[] mRedAuthorities = new int[77];
+        public int[] mRedCrossings = new int[77];
+        public int[] mRedSwitches = new int[77];
+        public int[] mRedLeftLights = new int[77];
+        public int[] mRedRightLights = new int[77];
+
+        public int[] mGreenMaintenanceBlocks = new int[151];
+        public int[] mGreenOccupancies = new int[151];
+        public int[] mGreenSpeeds = new int[151];
+        public int[] mGreenAuthorities = new int[151];
+        public int[] mGreenCrossings = new int[151];
+        public int[] mGreenSwitches = new int[151];
+        public int[] mGreenLeftLights = new int[151];
+        public int[] mGreenRightLights = new int[151];
+
+        
 
         public MainWindow()
         {
@@ -140,19 +160,31 @@ namespace CTC
             Frame.NavigationService.Navigate(dispatch); ///Set the frame area to go to the dispatch_page
         }
 
-        public void SetTrackData(List<TrackModel.Line> data)
+        public void GetTrackLayout(List<TrackModel.Line> data)
         {
-            trackLoaded = true;
-            mLines = data;
-        }
-        private void TextBox_KeyDown(object sender, KeyEventArgs e) ///After the user types the block code in and hits the enter key
-        {
-            if (e.Key == Key.Return)
+            if (trackLoaded == false) //This is called every tick right now, but we only want to read it once
             {
-                //enter key is down
-                Frame.NavigationService.Navigate(block_data);
+                trackLoaded = true;
+                mLines = data;
+                for (int i = 0; i < mLines.Count; i++)
+                {
+                    dispatch.LineCombo.Items.Add(mLines[i].GetmnameLine());  //This relies on data being loaded elsewhere for track data, so only do it when the dispatch page has been loaded. This populates the lines comboBox of the Dispatch page
+                    LineCombo.Items.Add(mLines[i].GetmnameLine());  //This populates the LineCombo Box on the Main Window Page
+                }
             }
         }
+        private void LineCombo_SelectionChanged(object sender, SelectionChangedEventArgs e) //Once user selects a line, populate the SectionCombo box with all the sections in that line
+        {
+            for (int i = 0; i < mLines[LineCombo.SelectedIndex].GetmnumSections(); i++) //Step through each section
+                SectionCombo.Items.Add(mLines[LineCombo.SelectedIndex].mSections[i].getmnameSection());
+        }
+        private void SectionCombo_SelectionChanged(object sender, SelectionChangedEventArgs e) //Once user selects a section, populate the BlockCombo box with all the blocks in that section
+        {
+            for (int i = 0; i < mLines[LineCombo.SelectedIndex].mSections[SectionCombo.SelectedIndex].getmnumBlocks(); i++)
+                BlockCombo.Items.Add(mLines[LineCombo.SelectedIndex].mSections[SectionCombo.SelectedIndex].mBlocks[i].GetmblockNum());
+
+        }
+
 
         private void Frame_ContentRendered(object sender, EventArgs e) ///Every time the frame changes, it readjusts to fit. Without this code, the page that is sent to the frame gets cut off. Not sure if this is the best implimentation because it causes the entire window to resize a bit, look into later.
         {
@@ -169,5 +201,7 @@ namespace CTC
         {
             Frame.NavigationService.Navigate(block_data);
         }
+
+        
     }
 }
