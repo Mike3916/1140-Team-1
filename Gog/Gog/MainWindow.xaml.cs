@@ -223,7 +223,7 @@ namespace Gog
                     newBlock=trains.UpdateValues(trainCtrl.mTrainSetList[j],j);
                     trainCtrl.UpdateValues(trains.Trains[j].getCmdAuthority(), trains.Trains[j].getCurrAuthority(), trains.Trains[j].getCommandedSpeedMPH(), trains.Trains[j].getCurrentSpeedMPH(), trains.Trains[j].getBeacon(), trains.Trains[j].getUnderground(), trains.Trains[j].getDoorL(), trains.Trains[j].getDoorR(), j);
 
-                    if (trains.Trains[j].newBlock)                  //if train at j enters a new block
+                   /* if (trains.Trains[j].newBlock)                  //if train at j enters a new block
                     { 
                         TrackModel.Block bl = track.UpdateTrain(j); //get next block
                         if (bl != null)                             //if that block exists
@@ -231,7 +231,7 @@ namespace Gog
                         else                                        //if that block doesn't exist ...
                             trains.Trains.RemoveAt(j);              //delete the train
 
-                    }
+                    }*/
                 }
 
 
