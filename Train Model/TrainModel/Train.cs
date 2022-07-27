@@ -16,7 +16,7 @@ namespace TrainObject
         private double currentSpeed;
         private double previousAcceleration;
         private double commandedSpeed;
-        private double mass = 56.7 * 2000;
+        private double mass = 56.7 * 907.1850030836;
         private double powerCmd;
         public static double powerMax = 120000;
         private bool emergencyBrake;
