@@ -155,7 +155,8 @@ namespace Gog
                  * */
                 try
                 {
-                    mRedMaintenanceBlocks = mRedline1.SendMaintenance(mRedMaintenanceBlocks);
+                    mRedline1.SendMaintenance(mRedMaintenanceBlocks);
+                    mRedMaintenanceBlocks = mRedline1.ReceiveMaintenance();
                     mRedOccupancies = mRedline1.SendOccupancies(mRedOccupancies);
                     mRedSpeeds = mRedline1.SendSpeeds(mRedSpeeds);
                     mRedAuthorities = mRedline1.SendAuthorities(mRedAuthorities);
