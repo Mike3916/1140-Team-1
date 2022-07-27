@@ -221,11 +221,16 @@ namespace Gog
                 {
                     newBlock=trains.UpdateValues(trainCtrl.mTrainSetList[j],j);
                     trainCtrl.UpdateValues(trains.Trains[j].getCmdAuthority(), trains.Trains[j].getCurrAuthority(), trains.Trains[j].getCommandedSpeedMPH(), trains.Trains[j].getCurrentSpeedMPH(), trains.Trains[j].getBeacon(), trains.Trains[j].getUnderground(), trains.Trains[j].getDoorL(), trains.Trains[j].getDoorR(), j);
-                                    
-                    /*if(newBlock){
-                        trains.updateBlock(trackModel.nextBlock(i)),i); //trackModel.nextBlock(i) moves the train to the next block on it's map and it returns the block info it moved to ***JOE TALK TO HOWARD FOR HELP HERE***
-                    
-                    }*/
+
+                    if (trains.Trains[j].newBlock)                  //if train at j enters a new block
+                    { 
+                        TrackModel.Block bl = track.UpdateTrain(j); //get next block
+                        if (bl != null)                             //if that block exists
+                            trains.UpdateBlock(bl, j);              //update the train pos
+                        else                                        //if that block doesn't exist ...
+                            trains.Trains.RemoveAt(j);              //delete the train
+
+                    }
                 }
 
 
@@ -237,11 +242,21 @@ namespace Gog
         protected override void OnClosing(CancelEventArgs e)
         {
             // TODO: Add for every module
-
-            trainCtrl.actualClose = true;
-            trainCtrl.Close();
-            trains.actualClose = true;
-            trains.Close();
+            if (track != null)
+            {
+                track.actualClose = true;
+                track.Close();
+            }
+            if (trainCtrl != null)
+            {
+                trainCtrl.actualClose = true;
+                trainCtrl.Close();
+            }
+            if (trains != null)
+            {
+                trains.actualClose = true;
+                trains.Close();
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -63,21 +63,18 @@ namespace TrackModel
         {
             public int blockIdx;
             public int lineIdx;
-            public int trainID;
             public int commAuthority;
             
             public Train()
             {
                 blockIdx = 0;
                 lineIdx = 0;
-                trainID = 0;
                 commAuthority = 0;
             }
-            public Train(int bidx, int lidx, int ID, int auth)
+            public Train(int bidx, int lidx, int auth)
             {
                 blockIdx = bidx;
                 lineIdx = lidx;
-                trainID = ID;
                 commAuthority = auth;
             }
         }
@@ -89,6 +86,8 @@ namespace TrackModel
 
             InitializeComponent();
 
+            Application.Current.MainWindow = this;
+            
             LineDataGrid.IsReadOnly = true;
             ResetBlockInfo();
             ToggleBlockInfo();
@@ -120,29 +119,15 @@ namespace TrackModel
                     mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackTemp(currentTemp - 1);
                     HeatBox.Text = (currentTemp - 1).ToString();
                 }
+
+                if (testWindow.traingo)
+                {
+                    for (int i = 0; i < mtrainList.Count; i++)
+                        UpdateTrain(i);
+                }
+
                 interval = 0;
-                //if (traingo == true)
-                //{
-                //    if (mdest == 0 && mtrainPos == 5)
-                //    {
-                //        trainSect = 1;
-                //        trainBlock = 0;
-                //    }
-                //    else if (mdest == 1 && mtrainPos == 5)
-                //    {
-                //        trainSect = 2;
-                //        mtrainPos = 0;
-                //    }
-
-
-                //    mLines[trainLine].mSections[trainSect].mBlocks[mtrainPos].mOccupied = false;
-                //    mLines[mlineIdx].mSections[msectIdx].mBlocks[mtrainPos].mOccupied = true;
-                //    OccupiedBlock.Text = mLines[trainLine].mSections[trainSect].mBlocks[mblockIdx].mOccupied + "";
-                //}
-                
             }
-            //if (testWindow.traingo == true)
-            //    sendTrain(testWindow.authority, testWindow.speed, testWindow.destination);
         }
 
         public List<TrackModel.Line> GetTrackData()
@@ -183,6 +168,7 @@ namespace TrackModel
             lineData.Columns.Add("Infrastructure");
             lineData.Columns.Add("Station Side");
             lineData.Columns.Add("Elevation");
+            lineData.Columns.Add("Occupied");
 
             List<DataRow> blockData = new List<DataRow>(); //List of DataRow entries
 
@@ -195,6 +181,8 @@ namespace TrackModel
                     blockData[blockIdx][valueIdx] = newlineInfo[blockIdx][valueIdx]; //add data to row
                 }
                 lineData.Rows.Add(blockData[blockIdx]); //add to table
+
+                blockData[blockIdx][9] = mLines[lineIdx].GetBlock(blockIdx+1).mOccupied + "";  
             }
 
             return lineData;
@@ -209,22 +197,16 @@ namespace TrackModel
             newLine.AddSections(lineInfo); //pawns off data processing to Line Class
             mLines.Add(newLine);
         }
-        public void AddTrain(int blockIdx, int lineIdx, int trainID, int auth)
+        public void AddTrain(int blockIdx, int lineIdx, int auth)
         {
-            mtrainList.Add(new Train(blockIdx, lineIdx, trainID, auth));
+            mtrainList.Add(new Train(blockIdx, lineIdx, auth));
             mLines[lineIdx].OccupyBlock(blockIdx);
             OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
+            UpdateSelectRow(lineIdx, blockIdx);
         }
-        public void RemoveTrain(int trainID)
+        public void RemoveTrain(int trainIDX)
         {
-            int idx = 0;
-            foreach (Train tr in mtrainList)
-            {
-                if (tr.trainID == trainID)
-                    break;
-                idx++;
-            }
-            mtrainList.RemoveAt(idx);
+            mtrainList.RemoveAt(trainIDX);
         }
         public void RemoveTrainAt(int blockIdx, int lineIdx)
         {
@@ -238,9 +220,18 @@ namespace TrackModel
             mtrainList.RemoveAt(idx);
         }
 
-        public TrackModel.Block UpdateTrain(Train tr)
+        //takes in 
+        public TrackModel.Block UpdateTrain(int IDX)
         {
+            Train tr = mtrainList[IDX];
+            mLines[tr.lineIdx].UnOccupyBlock(tr.blockIdx);
+            UpdateSelectRow(mlineIdx, tr.blockIdx);
             tr.blockIdx = NextBlock(tr);
+            mLines[tr.lineIdx].OccupyBlock(tr.blockIdx);
+            UpdateSelectRow(mlineIdx, tr.blockIdx);
+
+            mtrainList[IDX] = tr;
+            OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
 
             return mLines[tr.lineIdx].GetBlock(tr.blockIdx);
         }
@@ -319,6 +310,8 @@ namespace TrackModel
             else
                 Population.Visibility = Visibility.Collapsed;
 
+            SetMurphy();
+
         }
         private void ResetBlockInfo()
         {
@@ -341,11 +334,85 @@ namespace TrackModel
             mLineData[mlineIdx].Select()[mblockIdx].BeginEdit();
             string[] blockinfo = mLines[mlineIdx].GetBlockInfo(msectIdx, mblockIdx);
 
-            for (int valueIdx = 0; valueIdx < mLineData[mlineIdx].Columns.Count; valueIdx++)
-                mLineData[mlineIdx].Select()[mblockIdx][valueIdx] = blockinfo[valueIdx];
+            //for (int valueIdx = 0; valueIdx < mLineData[mlineIdx].Columns.Count; valueIdx++)
+            //    mLineData[mlineIdx].Select()[mblockIdx][valueIdx] = blockinfo[valueIdx];
+
+            mLineData[mlineIdx].Select()[mblockIdx][0] = blockinfo[0];
+            mLineData[mlineIdx].Select()[mblockIdx][1] = blockinfo[1];
+            mLineData[mlineIdx].Select()[mblockIdx][2] = blockinfo[2];
+            mLineData[mlineIdx].Select()[mblockIdx][3] = blockinfo[3];
+            mLineData[mlineIdx].Select()[mblockIdx][4] = blockinfo[4];
+            mLineData[mlineIdx].Select()[mblockIdx][5] = blockinfo[5];
+            mLineData[mlineIdx].Select()[mblockIdx][6] = blockinfo[6];
+            mLineData[mlineIdx].Select()[mblockIdx][7] = blockinfo[7];
+            mLineData[mlineIdx].Select()[mblockIdx][8] = blockinfo[8];
+            mLineData[mlineIdx].Select()[mblockIdx][9] = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied;
 
             mLineData[mlineIdx].Select()[mblockIdx].EndEdit();
             mLineData[mlineIdx].Select()[mblockIdx].AcceptChanges();
+        }
+        public void UpdateSelectRow(int lIdx, int bIdx)
+        {
+            mLineData[lIdx].Select()[bIdx-1].BeginEdit();
+            TrackModel.Block bl = mLines[lIdx].GetBlock(bIdx);
+            string[] blockinfo = bl.mblockInfo;
+
+            mLineData[lIdx].Select()[bIdx-1][1] = blockinfo[1];
+            mLineData[lIdx].Select()[bIdx-1][0] = blockinfo[0];
+            mLineData[lIdx].Select()[bIdx-1][2] = blockinfo[2];
+            mLineData[lIdx].Select()[bIdx-1][3] = blockinfo[3];
+            mLineData[lIdx].Select()[bIdx-1][4] = blockinfo[4];
+            mLineData[lIdx].Select()[bIdx-1][5] = blockinfo[5];
+            mLineData[lIdx].Select()[bIdx-1][6] = blockinfo[6];
+            mLineData[lIdx].Select()[bIdx-1][7] = blockinfo[7];
+            mLineData[lIdx].Select()[bIdx-1][8] = blockinfo[8];
+            mLineData[lIdx].Select()[bIdx-1][9] = bl.mOccupied;
+                                 
+            mLineData[lIdx].Select()[bIdx-1].EndEdit();
+            mLineData[lIdx].Select()[bIdx-1].AcceptChanges();
+        }
+        private void UpdateRows()
+        {
+            for (int bIdx = 0; bIdx < mLines[mlineIdx].GetmnumBlocks(); bIdx++)
+            {
+                UpdateSelectRow(mlineIdx, bIdx);
+            }
+        }
+
+        public void SetMurphy()
+        {
+            if (mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mtrackCircuit == true)
+            {
+                FixCircuitButton.Background = Brushes.Green;
+                BreakCircuitButton.Background = Brushes.Gray;
+            }
+            else
+            {
+                BreakCircuitButton.Background = Brushes.Red;
+                FixCircuitButton.Background = Brushes.Gray;
+            }
+
+            if (mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mtrackRail == true)
+            {
+                FixTrackButton.Background = Brushes.Green;
+                BreakTrackButton.Background = Brushes.Gray;
+            }
+            else
+            {
+                BreakTrackButton.Background = Brushes.Red;
+                FixTrackButton.Background = Brushes.Gray;
+            }
+
+            if (mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mPower == true)
+            {
+                FixPowerButton.Background = Brushes.Green;
+                BreakPowerButton.Background = Brushes.Gray;
+            }
+            else
+            {
+                BreakPowerButton.Background = Brushes.Red;
+                FixPowerButton.Background = Brushes.Gray;
+            }
         }
 
         //private void sendTrain(int authority, double speed, int destination)
@@ -385,9 +452,7 @@ namespace TrackModel
                 AddLine(lineInfo);
 
                 DataTable lineData = MakeLineDataTable(mLines.Count - 1);
-
                 mLineData.Add(lineData);
-
                 LineDataGrid.ItemsSource = mLineData[mLineData.Count - 1].DefaultView;
                 LineCombo.Items.Add(mLines[mLines.Count - 1].GetmnameLine());
             }
@@ -569,6 +634,8 @@ namespace TrackModel
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackRail(false);
                 BreakTrackButton.Background = Brushes.Red;
                 FixTrackButton.Background = Brushes.Gray;
+                OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
+                UpdateCurrentRow();
             }
         }
 
@@ -579,6 +646,8 @@ namespace TrackModel
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackRail(true);
                 FixTrackButton.Background = Brushes.Green;
                 BreakTrackButton.Background = Brushes.Gray;
+                OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
+                UpdateCurrentRow();
             }
         }
 
@@ -589,6 +658,8 @@ namespace TrackModel
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmPower(true);
                 FixPowerButton.Background = Brushes.Green;
                 BreakPowerButton.Background = Brushes.Gray;
+                OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
+                UpdateCurrentRow();
             }
         }
 
@@ -606,6 +677,8 @@ namespace TrackModel
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmPower(false);
                 BreakPowerButton.Background = Brushes.Red;
                 FixPowerButton.Background = Brushes.Gray;
+                OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
+                UpdateCurrentRow();
             }
                 
         }
@@ -633,13 +706,15 @@ namespace TrackModel
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackCircuit(true);
                 FixCircuitButton.Background = Brushes.Green;
                 BreakCircuitButton.Background = Brushes.Gray;
+                OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
+                UpdateCurrentRow();
             }
                 
         }
 
         private void AddTrain_Click(object sender, RoutedEventArgs e)
         {
-            AddTrain(mblockIdx+1, mlineIdx, mtrainList.Count, 0);
+            AddTrain(mblockIdx+1, mlineIdx, 0);
         }
 
         private void BreakCircuitButton_Click(object sender, RoutedEventArgs e)
@@ -649,6 +724,8 @@ namespace TrackModel
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackCircuit(false);
                 BreakCircuitButton.Background = Brushes.Red;
                 FixCircuitButton.Background = Brushes.Gray;
+                OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
+                UpdateCurrentRow();
             }
         }
         protected override void OnClosing(CancelEventArgs e)
@@ -657,6 +734,7 @@ namespace TrackModel
             {
                 e.Cancel = true;
                 this.WindowState = WindowState.Minimized;
+                testWindow.WindowState = WindowState.Minimized;
             }
         }
 

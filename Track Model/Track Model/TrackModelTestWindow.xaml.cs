@@ -20,20 +20,25 @@ namespace TrackModel
     {
         //MainWindow main = (MainWindow)Application.Current.MainWindow;
         public int authority;
-        public int destination;
+        public int mlineIdx;
         public double speed;
         public bool traingo;
+        public bool actualClose;
         public TrackModelTestWindow()
         {
             InitializeComponent();
-            DestinationBox.Items.Add("Station B");
-            DestinationBox.Items.Add("Station C");
+            DestinationBox.Items.Clear();
+            DestinationBox.Items.Add("Red Line");
+            DestinationBox.Items.Add("Green Line");
             AuthorityBox.Text = 0 + "";
             SpeedBox.Text = 0 + "";
+            actualClose = false;
         }
 
         private void TrainButton_Click(object sender, RoutedEventArgs e)
         {
+            ((MainWindow)Application.Current.MainWindow).AddTrain(((MainWindow)Application.Current.MainWindow).mLines[mlineIdx].mnumBlocks,
+                                                                    mlineIdx, authority);
             traingo = true;
         }
 
@@ -65,13 +70,21 @@ namespace TrackModel
 
         private void DestinationBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            destination = DestinationBox.SelectedIndex;
+            mlineIdx = DestinationBox.SelectedIndex;
         }
 
         private void TestWindowClosed(object sender, EventArgs e)
         {
             //this.Visibility = Visibility.Collapsed;
             
+        }
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (!actualClose)
+            {
+                e.Cancel = true;
+                this.WindowState = WindowState.Minimized;
+            }
         }
     }
 }

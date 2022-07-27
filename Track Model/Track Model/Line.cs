@@ -164,29 +164,49 @@ namespace TrackModel
 
         public bool OccupyBlock(int blockIdx)
         {
-            int sIdx;
-            int bIdx;
             for (int i = 0; i < this.GetmnumSections(); i++)
             {
                 for (int j = 0; j < this.mSections[i].getmnumBlocks(); j++)
                 {
                     if (this.mSections[i].mBlocks[j].mblockNum == blockIdx)
                     {
-                        if(this.mSections[i].mBlocks[j].mOccupied == true)
-                            return false;
-                        else if(this.mSections[i].mBlocks[j].mOccupied == false)
+                        if (this.mSections[i].mBlocks[j].mOccupied == true)
+                            return false; //failed to occupy
+                        else if (this.mSections[i].mBlocks[j].mOccupied == false)
                         {
                             this.mSections[i].mBlocks[j].mOccupied = true;
-                            return true;
+                            return this.mSections[i].mBlocks[j].mOccupied; //successful occupy
                         }
                     }
                 }
             }
-            
-            return true;
+
+            return false; //failed to find 
         }
-        
-        
+
+        public bool UnOccupyBlock(int blockIdx)
+        {
+            for (int i = 0; i < this.GetmnumSections(); i++)
+            {
+                for (int j = 0; j < this.mSections[i].getmnumBlocks(); j++)
+                {
+                    if (this.mSections[i].mBlocks[j].mblockNum == blockIdx)
+                    {
+                        if (this.mSections[i].mBlocks[j].mOccupied == false)
+                            return false; //failed to unoccupy
+                        else if (this.mSections[i].mBlocks[j].mOccupied == true)
+                        {
+                            this.mSections[i].mBlocks[j].mOccupied = false;
+                            return this.mSections[i].mBlocks[j].mOccupied; //successful unoccupy
+                        }
+                    }
+                }
+            }
+
+            return false; //failed to find 
+        }
+
+
         int mnumSections;
         public int mnumBlocks;
         string mnameLine;
