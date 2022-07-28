@@ -59,7 +59,7 @@ namespace CTC
 
             ((MainWindow)Application.Current.MainWindow).totalTrains++; //Increment totalTrains (this never decreases)
 
-            string tempName = "train_" + ((MainWindow)Application.Current.MainWindow).totalTrains.ToString(); //Create new train name train_<train#>
+            string tempName = "train_" + (((MainWindow)Application.Current.MainWindow).totalTrains - 1).ToString(); //Create new train name train_<train#>
 
             int destNum = 0; //This will hold the number of the destination block
             if (LineCombo.SelectedIndex == 0) //This means the red line was selected, pick appropriate red line station number
@@ -69,6 +69,7 @@ namespace CTC
 
 
             ((MainWindow)Application.Current.MainWindow).TrainList.Add(new Train { line = LineCombo.SelectedIndex, name = tempName, destination = destNum, ETA = DateTime.Parse(ETABox.Text) }); //NEED TO ADD ETD (which should be set to current simulation time)
+            ((MainWindow)Application.Current.MainWindow).SelectTrain.Items.Add(tempName); //Add the new train's name to the SelectTrain ComboBox so the user will be able to see data about it.
             
             //((MainWindow)Application.Current.MainWindow).TrainList[((MainWindow)Application.Current.MainWindow).TrainList.Count - 1].calcDuration();  //This is the function call to set duration. Uncomment this after I've added the ETD to the line above
         }
