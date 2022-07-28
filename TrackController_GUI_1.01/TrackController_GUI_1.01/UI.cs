@@ -11,9 +11,11 @@ using Newtonsoft.Json;
 namespace Track_Controller_1._02
 {
     //[Serializable]
+    //Track_Controller_1._02
     public partial class Form_WC : Form
     {
 
+        //Class variables list for the Test UI
         private OpenFileDialog mOFD;
         private string mFilePath="";
         List<Line> mLines = new List<Line>();
@@ -31,10 +33,10 @@ namespace Track_Controller_1._02
         int mControllerLine = -1;
 
 
+        //Form_WC(): Instantiates new test UI.
         public Form_WC()
         {
             InitializeComponent();
-
         }
 
 
@@ -55,31 +57,37 @@ namespace Track_Controller_1._02
 
         }
 
+        //****************************************************************************************************************************************
+        //Form_WC_FormClosing_1: Originally serialized the runtime environment on closing for recovery purposes. This became redundant once the 
+        //Wayside Controller UI was no longer managing PLC to CTC connections. I've left the code here in comments in the event a change requires it.
+        //<sender>: reference to object that raises the form load event in this case "Track_Controller_<version #>.main()".
+        //<e>: Argument containing event data.
+        //<void>
         private void Form_WC_FormClosing_1(object sender, FormClosingEventArgs e)
         {
-            /*
-            if (File.Exists("C:\Users\Michael\Downloads\mPLCs.json") == true)
-            {
+            
+        //    if (File.Exists("C:\Users\Michael\Downloads\mPLCs.json") == true)
+        //    {
 
-                mPLCs= JsonConvert.DeserializeObject<Controller>("C:\Users\Michael\Downloads\mPLCs.json");
-            }
-            */
-            /*
-            string output = JsonConvert.SerializeObject(mPLCs);
-            File.WriteAllText(@"C:\Users\Michael\Downloads\mPLCs.json", output);
-            output = JsonConvert.SerializeObject(mLines);
-            File.WriteAllText(@"C:\Users\Michael\Downloads\mLines.json", output);
-            output = JsonConvert.SerializeObject(mLineData);
-            File.WriteAllText(@"C:\Users\Michael\Downloads\mLineData.json", output);
-            output = JsonConvert.SerializeObject(mSectNames);
-            File.WriteAllText(@"C:\Users\Michael\Downloads\mSectNames.json", output);
-            */
+        //        mPLCs= JsonConvert.DeserializeObject<Controller>("C:\Users\Michael\Downloads\mPLCs.json");
+        //    }
+           
+        //    string output = JsonConvert.SerializeObject(mPLCs);
+        //    File.WriteAllText(@"C:\Users\Michael\Downloads\mPLCs.json", output);
+        //    output = JsonConvert.SerializeObject(mLines);
+        //    File.WriteAllText(@"C:\Users\Michael\Downloads\mLines.json", output);
+        //    output = JsonConvert.SerializeObject(mLineData);
+        //    File.WriteAllText(@"C:\Users\Michael\Downloads\mLineData.json", output);
+        //    output = JsonConvert.SerializeObject(mSectNames);
+        //    File.WriteAllText(@"C:\Users\Michael\Downloads\mSectNames.json", output);
+            
            
 
         
         //Product deserializedProduct = JsonConvert.DeserializeObject<Product>(output);
         
-    }
+        }
+
 
         //****************************************************************************************************************************************
         //Lock_Local_Click: Toggles the class variable private mLocalLock which enables/disables the CTC office ability to put blocks in and
@@ -186,60 +194,42 @@ namespace Track_Controller_1._02
         }
 
 
-        //mButton_Controller_Connect_Click: Creates a new controller class object of type hardware and another of type software so connection can be tested. 
-        //
+        //mButton_Controller_Connect_Click: Creates a new controller class object of type software so ADS connection can be tested. 
+        //<sender>: reference to object that raises the form load event in this case "Form_WC.Toggle_TestMode()".
+        //<e>: Argument containing event data.
+        //<void>
         private void mButton_Controller_Connect_Click(object sender, EventArgs e)
         {
-            //Controller mPLC1 = new Controller(851,false);
-            Controller mPLC2 = new Controller(1300, true);
+            int[] mRoutes = new int[77];
 
-            //int[] test1 = new int[50];
-            int[] test2 = new int[50];
+            Controller mRedLine1 = new Controller(851, false, "127.0.0.1");
 
-            for(int i = 0; i < 50; i++)
-            {
-               // test1[i] = i;
-                test2[i] = i;
-            }
+            mRedLine1.SendRoute(mRoutes);
+            mRoutes = mRedLine1.ReceiveRoute(77);
 
-
-            //int[] test3 = mPLC1.SendPacket(test1);
-            //int[] test4 = mPLC2.SendTrack(test2);
-
-            //string string3 = "";
-            /*string string4 = "";
-
-            foreach(int i in test4)
-            {
-                //string3 += test1[i].ToString();
-                string4 += test2[i].ToString();
-            }
-
-            //MessageBox.Show("Software returns " + string3);
-            MessageBox.Show("Hardware returns " + string4);
-            */
         }
 
-        private void CreateSoftwareController()
-        {
+
+        //private void CreateSoftwareController()
+        //{
 
             
 
-            string[] mSelectedBlocks = new string[mRichText_BlockInfo.Lines.Count()];
-            for (int i=0; i<mRichText_BlockInfo.Lines.Count(); i++)
-            {
-                mSelectedBlocks[i] = mRichText_BlockInfo.Lines[i];
-            }
+        //    string[] mSelectedBlocks = new string[mRichText_BlockInfo.Lines.Count()];
+        //    for (int i=0; i<mRichText_BlockInfo.Lines.Count(); i++)
+        //    {
+        //        mSelectedBlocks[i] = mRichText_BlockInfo.Lines[i];
+        //    }
 
-            Controller mTempPLC = new Controller();
+        //    Controller mTempPLC = new Controller();
 
-            //mPLCs.Add(mTempPLC);
-        }
+        //    //mPLCs.Add(mTempPLC);
+        //}
 
-        private void CreateHardwareController()
-        {
+        //private void CreateHardwareController()
+        //{
 
-        }
+        //}
 
 
         //***************************************************************************************************************************************
@@ -291,6 +281,10 @@ namespace Track_Controller_1._02
         }
 
 
+        //**********************************************************************************************************************************************
+        //MakeLineDataTable: Creates a data table for the line information uploaded by CSV
+        //<lineIdx>: index of the line to make into a data table.
+        //<DataTable>: returns the data table object
         private DataTable MakeLineDataTable(int lineIdx)
         {
             List<string[]> newlineInfo = mLines[lineIdx].getlineInfo();
@@ -324,6 +318,10 @@ namespace Track_Controller_1._02
             return lineData;
         }
 
+        //*********************************************************************************************************************************************
+        //mComboBox_Section_SelectedIndexChanged: Updates the test UI when the selected section changes
+        //<sender> event sender (form control)
+        //<e> event arguments (button click)
         private void mComboBox_Section_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Empties Block Combo Box
@@ -349,8 +347,11 @@ namespace Track_Controller_1._02
             mLabel_Block.Text = "Block: ";
         }
 
+
         //***************************************************************************************************************************************
         //mComboBox_Select_Line_SelectedIndexChanged: Updates the section combobox when the selected line is changed.
+        //<sender> event sender (form control)
+        //<e> event arguments (button click)
         private void mComboBox_Select_Line_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Resets combo box
@@ -384,7 +385,7 @@ namespace Track_Controller_1._02
 
         //****************************************************************************************************************************************
         //mComboBox_ControllerSelect_SelectedIndexChanged: Updates the code window with the code associated with selected controller and populates 
-        //the block select comboBox.
+        //the block select comboBox. Did not need for test functionality. Left empty.
         private void mComboBox_ControllerSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
             
@@ -393,6 +394,8 @@ namespace Track_Controller_1._02
 
         //*****************************************************************************************************************************************
         //mComboBox_Select_Block_SelectedIndexChanged: Updates the view block panel with current block states
+        //<sender> event sender (form control)
+        //<e> event arguments (button click)
         private void mComboBox_Select_Block_SelectedIndexChanged(object sender, EventArgs e)
         {
             mCurrentBlockIndex = mComboBox_Select_Block.SelectedIndex - 1;
@@ -722,27 +725,35 @@ namespace Track_Controller_1._02
             MessageBox.Show(mCurrentAuthority.ToString());
         }
 
+        //********************************************************************************************************************************************
+        //mButton_Block_Adder_Click: This function originally managed which block data would be sent to which PLC. This has since become obsolete.
+        //<sender> event sender (form control)
+        //<e> event arguments (button click)
         private void mButton_Block_Adder_Click(object sender, EventArgs e)
         {
+            
+            //mRichText_BlockInfo.AppendText("\r\n" + mCurrentLineIndex + "." + mCurrentSectionIndex + "." + mCurrentBlockIndex);
+            //mRichText_BlockInfo.ScrollToCaret();
 
-            mRichText_BlockInfo.AppendText("\r\n" + mCurrentLineIndex + "." + mCurrentSectionIndex + "." + mCurrentBlockIndex);
-            mRichText_BlockInfo.ScrollToCaret();
 
-
-            mControllerLine = mCurrentLineIndex;
-            mControllerBlocks.Add(mCurrentBlockIndex);
-            mControllerSections.Add(mCurrentSectionIndex);
+            //mControllerLine = mCurrentLineIndex;
+            //mControllerBlocks.Add(mCurrentBlockIndex);
+            //mControllerSections.Add(mCurrentSectionIndex);
 
 
         }
 
+        //********************************************************************************************************************************************
+        //mButton_Block_Adder_Click: This function originally cleared the text window for the block adder. This has since become obsolete.
+        //<sender> event sender (form control)
+        //<e> event arguments (button click)
         private void mButton_Clear_Click(object sender, EventArgs e)
         {
+            /*
             mRichText_BlockInfo.Text = "";
             mText_Port.Text = "";
             mText_Address.Text = "";
-
-
+            */
         }
 
     }
