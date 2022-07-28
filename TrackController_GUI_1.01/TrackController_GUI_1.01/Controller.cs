@@ -222,7 +222,7 @@ namespace Track_Controller_1._02
             }
             else
             {
-                mPacket = mHWC.ReceiveAuthorities(mLength);
+                mPacket = mHWC.ReceiveCrossings(mLength);
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;
