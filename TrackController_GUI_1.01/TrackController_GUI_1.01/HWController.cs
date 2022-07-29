@@ -13,53 +13,53 @@ namespace Track_Controller_1._02
     {
         public HWController(int mNewPort = 4, int mBaud = 115200)
         {
-            pi = new SerialPort();
+            mPi = new SerialPort();
 
             //Setup serial port information
-            pi.PortName = "COM" + mNewPort.ToString();
-            pi.BaudRate = mBaud;
-            pi.Parity = Parity.None;
-            pi.DataBits = 8;
-            pi.StopBits = StopBits.One;
-            pi.Handshake = Handshake.None;
-            pi.WriteTimeout = 500;
+            mPi.PortName = "COM" + mNewPort.ToString();
+            mPi.BaudRate = mBaud;
+            mPi.Parity = Parity.None;
+            mPi.DataBits = 8;
+            mPi.StopBits = StopBits.One;
+            mPi.Handshake = Handshake.None;
+            mPi.WriteTimeout = 500;
 
 
             //Open serial port and reset all stored data
-            pi.Open();
-            pi.WriteLine("?");
+            mPi.Open();
+            mPi.WriteLine("?");
         }
 
-        public int[] TrackSend(int[] mPacket)
-        {
-            string mSentMessage = "";
-            for (int i = 0; i < mPacket.Length; i++)
-            {
-                mSentMessage = mSentMessage + mPacket[i].ToString();
-            }
+        //public int[] TrackSend(int[] mPacket)
+        //{
+        //    string mSentMessage = "";
+        //    for (int i = 0; i < mPacket.Length; i++)
+        //    {
+        //        mSentMessage = mSentMessage + mPacket[i].ToString();
+        //    }
 
-            pi.WriteLine(mSentMessage + "\n");
-            string mReceivedMessage = "";
-            while (mReceivedMessage == "")
-            {
-                mReceivedMessage = pi.ReadLine();
-            }
-            MessageBox.Show(mReceivedMessage);
-            // create an array with size as string
-            // length and initialize with 0
-            int[] temp = new int[mReceivedMessage.Length];
+        //    mPi.WriteLine(mSentMessage + "\n");
+        //    string mReceivedMessage = "";
+        //    while (mReceivedMessage == "")
+        //    {
+        //        mReceivedMessage = mPi.ReadLine();
+        //    }
+        //    MessageBox.Show(mReceivedMessage);
+        //    // create an array with size as string
+        //    // length and initialize with 0
+        //    int[] temp = new int[mReceivedMessage.Length];
 
 
-            // Traverse the string
-            for (int i = 0; mReceivedMessage[i] != '\0'; i++)
-            {
-                // subtract str[i] by 48 to convert it to int
-                // Generate number by multiplying 10 and adding
-                // (int)(str[i])
-                temp[i] = temp[i] * 10 + (mReceivedMessage[i] - 48);
-            }
-            return temp;
-        }
+        //    // Traverse the string
+        //    for (int i = 0; mReceivedMessage[i] != '\0'; i++)
+        //    {
+        //        // subtract str[i] by 48 to convert it to int
+        //        // Generate number by multiplying 10 and adding
+        //        // (int)(str[i])
+        //        temp[i] = temp[i] * 10 + (mReceivedMessage[i] - 48);
+        //    }
+        //    return temp;
+        //}
 
         public void SendSwitches(int[] mPacket)
         {
@@ -75,6 +75,32 @@ namespace Track_Controller_1._02
         public void SendOccupancies(int[] mPacket)
         {
             //TODO
+            string mSentMessage = "";
+            for (int i = 0; i < mPacket.Length; i++)
+            {
+                mSentMessage = mSentMessage + mPacket[i].ToString();
+            }
+
+            mPi.WriteLine(mSentMessage + "\n");
+            string mReceivedMessage = "";
+            while (mReceivedMessage == "")
+            {
+                mReceivedMessage = mPi.ReadLine();
+            }
+            MessageBox.Show(mReceivedMessage);
+            // create an array with size as string
+            // length and initialize with 0
+            int[] temp = new int[mReceivedMessage.Length];
+
+
+            // Traverse the string
+            for (int i = 0; mReceivedMessage[i] != '\0'; i++)
+            {
+                // subtract str[i] by 48 to convert it to int
+                // Generate number by multiplying 10 and adding
+                // (int)(str[i])
+                temp[i] = temp[i] * 10 + (mReceivedMessage[i] - 48);
+            }
         }
 
         public int[] ReceiveOccupancies(int mLength)
@@ -153,7 +179,12 @@ namespace Track_Controller_1._02
         }
 
 
-        private SerialPort pi;
+        private SerialPort mPi;
+        private int[] mOccupancies;
+        private int[] mSwitches;
+        private int[] mRightLights;
+        private int[] mLeftLights;
+        private int[] mCrossings;
 
     }
 }
