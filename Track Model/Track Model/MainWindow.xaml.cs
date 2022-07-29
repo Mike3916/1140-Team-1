@@ -378,7 +378,7 @@ namespace TrackModel
                 UpdateSelectRow(mlineIdx, bIdx);
             }
         }
-
+        
         public void SetMurphy()
         {
             if (mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mtrackCircuit == true)
@@ -455,6 +455,8 @@ namespace TrackModel
                 mLineData.Add(lineData);
                 LineDataGrid.ItemsSource = mLineData[mLineData.Count - 1].DefaultView;
                 LineCombo.Items.Add(mLines[mLines.Count - 1].GetmnameLine());
+
+                mLines[mLines.Count - 1].SetBeacon();
             }
             else
                 MessageBox.Show("File not found :(");
@@ -711,10 +713,23 @@ namespace TrackModel
             }
                 
         }
+        
 
         private void AddTrain_Click(object sender, RoutedEventArgs e)
         {
             AddTrain(mblockIdx+1, mlineIdx, 0);
+        }
+
+        private void ToggleCrossbar_Click(object sender, RoutedEventArgs e)
+        {
+            bool crossDown = !mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mcrossDown;
+            mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mcrossDown = crossDown;
+
+            if (crossDown)
+                ToggleCrossbar.Content = "Down";
+            else
+                ToggleCrossbar.Content = "Up";
+
         }
 
         private void BreakCircuitButton_Click(object sender, RoutedEventArgs e)
