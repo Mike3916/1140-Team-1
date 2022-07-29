@@ -19,4 +19,10 @@
     <ProjectReference Include="..\Gog\Gog.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="TrainModel">
+      <HintPath>..\..\Train Model\TrainModel\bin\Release\net6.0-windows\TrainModel.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
