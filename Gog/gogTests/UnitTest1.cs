@@ -1,4 +1,5 @@
 using GogNS;
+using Train=TrainObject.Train;
 using TrainController;
 
 namespace gogTests
@@ -7,15 +8,19 @@ namespace gogTests
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void maxPowerLimited()
         {
+            Train chooChoo = new Train(35, 1);
+            chooChoo.setPowerCmd(500000000);
+            Assert.AreEqual(120000, chooChoo.getPowerCmd(), "Account not debited correctly");
+            
         }
 
         [TestMethod]
         public void TrainController_ToggleLeftDoors()
         {
             TrainController.Controller train = new TrainController.Controller();
-            Assert.AreEqual(train.mLeftDoorsStatus, false); // closed by default
+            Assert.AreEqual(train.mLeftDoorsStatus, true); // closed by default
             train.setLeftDoors();
             Assert.AreEqual(train.mLeftDoorsStatus, true);  // open
             train.setLeftDoors();
@@ -78,6 +83,7 @@ namespace gogTests
             for (int i = 0; i < returns.Length; i++)
             {
                 occupancies[i] = 1;
+                Assert.AreEqual(occupancies[i],returns[i]);
             }
 
             GreenLinePLC.SendOccupancies(occupancies);

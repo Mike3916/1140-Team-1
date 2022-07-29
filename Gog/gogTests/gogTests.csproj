@@ -20,6 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="TrainModel">
+      <HintPath>..\..\Train Model\TrainModel\bin\Release\net6.0-windows\TrainModel.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Track Controller 1.1">
       <HintPath>..\..\TrackController_GUI_1.01\TrackController_GUI_1.01\bin\Release\net6.0-windows\Track Controller 1.1.dll</HintPath>
     </Reference>
