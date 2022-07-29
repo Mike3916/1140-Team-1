@@ -53,7 +53,7 @@ namespace GogNS
 
 
         DispatcherTimer mGlobalTimer;
-        int mIterationMultiplier = 100, numTrains = 0, numTrainCtrls = 0, iter = 0;
+        int mIterationMultiplier = 10, numTrains = 0, numTrainCtrls = 0, iter = 0;
         bool newBlock;
         bool gotTrack = false;
 
@@ -137,7 +137,7 @@ namespace GogNS
 
             mGlobalTimer.Tick += new EventHandler(updateTick);
 
-            mGlobalTimer.Interval = new TimeSpan(0, 0, 0, 0, 1); //1 millisecond
+            mGlobalTimer.Interval = new TimeSpan(0, 0, 0, 0, 10); //1 millisecond
             mGlobalTimer.Start();
 
         }
@@ -220,7 +220,7 @@ namespace GogNS
 
                 for (int j = 0; j < numTrains && j < numTrainCtrls; j++)
                 {
-                    newBlock=trains.UpdateValues(trainCtrl.mTrainSetList[j],j);
+                    newBlock = trains.UpdateValues(trainCtrl.mTrainSetList[j],j);
                     trainCtrl.UpdateValues(trains.Trains[j].getCmdAuthority(), trains.Trains[j].getCurrAuthority(), trains.Trains[j].getCommandedSpeedMPH(), trains.Trains[j].getCurrentSpeedMPH(), trains.Trains[j].getBeacon(), trains.Trains[j].getUnderground(), trains.Trains[j].getDoorL(), trains.Trains[j].getDoorR(), j);
 
                    /* if (trains.Trains[j].newBlock)                  //if train at j enters a new block

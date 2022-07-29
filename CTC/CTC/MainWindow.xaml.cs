@@ -37,6 +37,8 @@ namespace CTC
         public List<TrackModel.Line> mLines;    //Hold the track model
         bool trackLoaded = false;               //Keep track of whether the track has been loaded or not
 
+        public int totalTrains; //This will keep track of total number of trains in a day (it does NOT go down even when a train reaches destination). It is also used to assign train names in Dispatch
+
         //Variables to send to Track Controller
         public int[] mRedMaintenanceBlocks = new int[77];
         public int[] mRedOccupancies = new int[77];
@@ -71,7 +73,6 @@ namespace CTC
 
         private void SelectTrain_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             Frame.NavigationService.Navigate(train_data);
         }
 
@@ -87,10 +88,11 @@ namespace CTC
                 string filepath = openFileDialog.FileName; ///Save the filename
                 using (var reader = new StreamReader(filepath))
                 {
-                    List<string> trackLine = new List<string>();
+                    List<int> trackLine = new List<int>();
                     List<string> name = new List<string>();
                     List<int> destination = new List<int>();
-                    List<TimeSpan> ETA = new List<TimeSpan>();
+                    List<DateTime> ETD = new List<DateTime>();
+                    List<DateTime> ETA = new List<DateTime>();
 
                     int i = 0;
                     while (!reader.EndOfStream)
@@ -100,22 +102,24 @@ namespace CTC
 
                         if (i >= 1) //The first row (line) of the file has the header names, so only start saving the second row onwards
                         {
-                            trackLine.Add(values[0]);
+                            trackLine.Add(Int32.Parse(values[0]));
                             name.Add(values[1]);
                             destination.Add(Int32.Parse(values[2]));
-                            ETA.Add(TimeSpan.Parse(values[3]));
+                            ETD.Add(DateTime.Parse(values[3]));
+                            ETA.Add(DateTime.Parse(values[4]));
                         }
                         i++; 
                     }
                     
-                    int numTrains = trackLine.Count; //The number of trains 
-                    Train.numTrains = numTrains;    //Save to Train static member variable
+                    totalTrains = trackLine.Count; //The number of trains 
+                    Train.numTrains = totalTrains;    //Save to Train static member variable
 
                     //Create List of trains
                     SelectTrain.Items.Clear(); //Clears the default item pre-loaded into combo-box
-                    for (i=0; i < numTrains; i++)
+                    for (i=0; i < totalTrains; i++)
                     {
-                        TrainList.Add(new Train {line = trackLine[i], name = name[i], destination = destination[i], ETA = ETA[i] });
+                        TrainList.Add(new Train {line = trackLine[i], name = name[i], destination = destination[i], ETD = ETD[i], ETA = ETA[i] });
+                        TrainList[i].calcDuration();
                         SelectTrain.Items.Add(name[i]); //This populates the drop down list of trains with the train names
                     }
                 } 

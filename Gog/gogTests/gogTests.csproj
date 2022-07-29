@@ -25,4 +25,16 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Track Controller 1.1">
+      <HintPath>..\..\TrackController_GUI_1.01\TrackController_GUI_1.01\bin\Release\net6.0-windows\Track Controller 1.1.dll</HintPath>
+    </Reference>
+    <Reference Include="TrackController1.01">
+      <HintPath>..\..\TrackController_GUI_1.01\TrackController_GUI_1.01\bin\Release\net6.0-windows\TrackController1.01.dll</HintPath>
+    </Reference>
+    <Reference Include="TwinCAT.Ads">
+      <HintPath>..\..\TrackController_GUI_1.01\TrackController_GUI_1.01\bin\Release\net6.0-windows\TwinCAT.Ads.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

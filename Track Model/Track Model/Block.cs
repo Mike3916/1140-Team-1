@@ -30,6 +30,9 @@ namespace TrackModel
             mElevation = Convert.ToDouble(blockInfo[8]);
             mcumElevation = Convert.ToDouble(blockInfo[9]);
 
+            mBeacon = "";
+            mSignal = "Green";
+
             mtrackRail = true;
             mtrackCircuit = true;
             mPower = true;
@@ -268,6 +271,8 @@ namespace TrackModel
         public bool mRight;     //station on right
 
         public int mPop;        //population at station
+        public string mBeacon;
+        public string mSignal;
 
         public string[] mblockInfo;
         public List<int> mblockSwitches = new List<int>();
