@@ -12,7 +12,7 @@ namespace gogTests
             Train chooChoo = new Train(35, 1);
             chooChoo.setPowerCmd(500000000);
             Assert.AreEqual(120000, chooChoo.getPowerCmd(), "Account not debited correctly");
-
+            
         }
 
         [TestMethod]
@@ -28,7 +28,7 @@ namespace gogTests
 
             for(int i = 0; i < returns.Length; i++)
             {
-                Assert(occupancies[i] == returns[i]);
+                Assert.AreEqual(occupancies[i],returns[i]);
             }
 
             for (int i = 0; i < returns.Length; i++)
@@ -41,7 +41,7 @@ namespace gogTests
 
             for (int i = 0; i < returns.Length; i++)
             {
-                Assert(occupancies[i] == returns[i]);
+                Assert.AreEqual(occupancies[i],returns[i]);
             }
 
 
