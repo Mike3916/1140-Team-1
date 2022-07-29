@@ -66,6 +66,8 @@ namespace TrackModel
         {
             return mSections[sectIdx].getmblockSwitch(blockIdx);
         }
+
+        //gets to 1-index block with ID blockNum
         public TrackModel.Block GetBlock(int blockNum)
         {
             for (int idx = 0; idx < mnumSections; idx++)
@@ -77,6 +79,30 @@ namespace TrackModel
                 }
             }
             return null;
+        }
+
+        public void SetBlock(TrackModel.Block bl)
+        {
+            int blockNum = bl.mblockNum;
+            for (int idx = 0; idx < mnumSections; idx++)
+            {
+                for (int jdx = 0; jdx < mSections[idx].getmnumBlocks(); jdx++)
+                {
+                    if (blockNum == this.mSections[idx].mBlocks[jdx].mblockNum)
+                        this.mSections[idx].mBlocks[jdx] = bl;
+                }
+            }
+        }
+        public void SetBlock(TrackModel.Block bl, int blockNum)
+        {
+            for (int idx = 0; idx < mnumSections; idx++)
+            {
+                for (int jdx = 0; jdx < mSections[idx].getmnumBlocks(); jdx++)
+                {
+                    if (blockNum == this.mSections[idx].mBlocks[jdx].mblockNum)
+                        this.mSections[idx].mBlocks[jdx] = bl;
+                }
+            }
         }
         public List<string> GetSectionNames()
         {
@@ -97,7 +123,23 @@ namespace TrackModel
         {
             mnameLine = newName;
         }
+        public void UpdateSignal()
+        {
+            for (int blockNum = 1; blockNum <= GetmnumBlocks(); blockNum++)
+            {
+                TrackModel.Block bl = GetBlock(blockNum);
+                if (bl.mOccupied && bl.mblockNum > 2)
+                {
+                    TrackModel.Block newYellow = GetBlock(blockNum - 2);
+                    newYellow.mSignal = "Yellow";
+                    SetBlock(newYellow);
 
+                    TrackModel.Block newRed = GetBlock(blockNum - 1);
+                    newRed.mSignal = "Red";
+                    SetBlock(newRed);
+                }
+            }
+        }
         //setters
         //sets info of param with type double
         public void SetBlockInfo(int sectIdx, int blockIdx, int param, double info)
@@ -121,6 +163,25 @@ namespace TrackModel
                         continue;
                     mSections[sectIdx].mBlocks[idx].UpdateCumElevation(dif);
                 }
+            }
+        }
+
+        //adds beacons 3 blocks ahead of station en route
+        public void SetBeacon()
+        {
+            //add beacons to Block obj
+            List<int> Stations = new List<int>();
+            for (int i = 1; i <= mnumBlocks; i++)
+            {
+                if (GetBlock(i).mStation)
+                    Stations.Add(i);
+            }
+
+            for (int i = 0; i < Stations.Count; i++)
+            {
+                TrackModel.Block newBeacon = GetBlock(Stations[i] - 3);
+                newBeacon.mBeacon = "Station 3 blocks Ahead!";
+                SetBlock(newBeacon);
             }
         }
 

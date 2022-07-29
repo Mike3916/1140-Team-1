@@ -28,8 +28,7 @@ namespace Track_Controller_1._02
                 mHardPLC = true;
                 mPort = mNewPort;
                 mIP = mNewIP;
-                mTCP = new CommunicationClient(mIP, mPort);
-                mADS = new ADSClient(mPort);
+                mHWC = new HWController(mNewPort);
             }
         }
 
@@ -47,6 +46,7 @@ namespace Track_Controller_1._02
             else
             {
                //What to communicate if there is a hardware controller.
+               mHWC.SendSwitches(mPacket);
             }
             return;
         }
@@ -65,7 +65,7 @@ namespace Track_Controller_1._02
             }
             else
             {
-                mPacket = mADS.ReceiveSwitches(mLength);
+                mPacket = mHWC.ReceiveSwitches(mLength);
 
                 //What to communicate if there is a hardware controller.
             }
@@ -86,6 +86,7 @@ namespace Track_Controller_1._02
             else
             {
                 //What to communicate if there is a hardware controller
+                mHWC.SendOccupancies(mPacket);
             }
             return;
         }
@@ -104,7 +105,7 @@ namespace Track_Controller_1._02
             }
             else
             {
-                mPacket = mADS.ReceiveOccupancies(mLength);
+                mPacket = mHWC.ReceiveOccupancies(mLength);
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;
@@ -124,6 +125,7 @@ namespace Track_Controller_1._02
             else
             {
                 //What to communicate if there is a hardware controller
+                mHWC.SendSpeeds(mPacket);
             }
             return;
         }
@@ -142,7 +144,7 @@ namespace Track_Controller_1._02
             }
             else
             {
-                mPacket = mADS.ReceiveSpeeds(mLength);
+                mPacket = mHWC.ReceiveSpeeds(mLength);
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;
@@ -162,6 +164,7 @@ namespace Track_Controller_1._02
             else
             {
                 //What to communicate if there is a hardware controller
+                mHWC.SendAuthorities(mPacket);
             }
             return;
         }
@@ -180,7 +183,7 @@ namespace Track_Controller_1._02
             }
             else
             {
-                mPacket = mADS.ReceiveAuthorities(mLength);
+                mPacket = mHWC.ReceiveAuthorities(mLength);
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;
@@ -200,6 +203,7 @@ namespace Track_Controller_1._02
             else
             {
                 //What to communicate if there is a hardware controller
+                mHWC.SendCrossings(mPacket);
             }
             return;
         }
@@ -218,7 +222,7 @@ namespace Track_Controller_1._02
             }
             else
             {
-                mPacket = mADS.ReceiveAuthorities(mLength);
+                mPacket = mHWC.ReceiveCrossings(mLength);
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;
@@ -238,6 +242,7 @@ namespace Track_Controller_1._02
             else
             {
                 //What to communicate if there is a hardware controller
+                mHWC.SendLeftLights(mPacket);
             }
             return;
         }
@@ -256,7 +261,7 @@ namespace Track_Controller_1._02
             }
             else
             {
-                mPacket = mADS.ReceiveLeftLights(mLength);
+                mPacket = mHWC.ReceiveLeftLights(mLength);
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;
@@ -276,6 +281,7 @@ namespace Track_Controller_1._02
             else
             {
                 //What to communicate if there is a hardware controller
+                mHWC.SendRightLights(mPacket);
             }
             return;
         }
@@ -294,7 +300,7 @@ namespace Track_Controller_1._02
             }
             else
             {
-                mPacket = mADS.ReceiveRightLights(mLength);
+                mPacket = mHWC.ReceiveRightLights(mLength);
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;
@@ -314,6 +320,7 @@ namespace Track_Controller_1._02
             else
             {
                 //What to communicate if there is a hardware controller
+                mHWC.SendMaintenance(mPacket);
             }
             return;
         }
@@ -332,7 +339,7 @@ namespace Track_Controller_1._02
             }
             else
             {
-                mPacket = mADS.ReceiveMaintenance(mLength);
+                mPacket = mHWC.ReceiveMaintenance(mLength);
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;
@@ -351,6 +358,7 @@ namespace Track_Controller_1._02
             else
             {
                 //What to communicate if there is a hardware controller
+                mHWC.SendRoute(mPacket);
             }
             return;
         }
@@ -369,7 +377,7 @@ namespace Track_Controller_1._02
             }
             else
             {
-                mPacket = mADS.ReceiveRoute(mLength);
+                mPacket = mHWC.ReceiveRoute(mLength);
                 //What to communicate if there is a hardware controller.
             }
             return mPacket;
@@ -378,7 +386,7 @@ namespace Track_Controller_1._02
         private int mRouteLength;
         private int mPort;
         private ADSClient mADS;
-        private CommunicationClient mTCP;
+        private HWController mHWC;
         private bool mHardPLC = false;
         private string mIP;
 

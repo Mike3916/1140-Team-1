@@ -16,7 +16,7 @@ namespace TrainObject
         private double currentSpeed;
         private double previousAcceleration;
         private double commandedSpeed;
-        private double mass = 56.7 * 2000;
+        private double mass = 56.7 * 907.1850030836;
         private double powerCmd;
         public static double powerMax = 120000;
         private bool emergencyBrake;
@@ -168,7 +168,7 @@ namespace TrainObject
 
         public double getMass()
         {
-            return mass/2000* 1.10231;
+            return mass/ 907.1850030836;
         }
 
         public void setCommandedSpeed( double s)
@@ -441,7 +441,7 @@ namespace TrainObject
             }
             passengers += b.mPop;
            
-            mass = 56.7 * 2000 + 65 * passengers + 65 * crew;
+            mass = 56.7 * 907.1850030836 + 65 * passengers + 65 * crew;
 
             currDist = 0;
             currAuthority++;
