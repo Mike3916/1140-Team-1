@@ -35,10 +35,33 @@ namespace Backend
 
         public void calcDuration() //Calculates time between ETD and ETA and saves into "duration" variable
         {
-			duration = ETA.Subtract(ETD); //This calculates the span of time between departure and arrival
+            duration = ETA.Subtract(ETD); //This calculates the span of time between departure and arrival
         }
-		public void calcRoute()
+        public void calcRoute()
         {
+            int i = -1; //Start at -1
+            if (line == 0) //The red line
+            {
+                while (destination != mredRoute[i])
+                {
+                    i++; //increment i and add info to document, so it's already added by the time the while loop ends. (i=-1 before the while loop starts)
+                    route.Add(mredRoute[i]);
+                    length += ((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(mredRoute[i]).mLength; //Add the length of the block. GetBlock() is sent the Block ID (starts at 1), not block index
+                }
+            }
+            else if (line == 1) //The green line
+            {
+                while (destination != mgreenRoute[i])
+                {
+                    i++;
+                    route.Add(mgreenRoute[i]);
+                    length += ((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(mredRoute[i]).mLength; //Add the length of the block. GetBlock() is sent the Block ID (starts at 1), not block index
+                }
+            }
+
+            authority = route.Count; //maybe make this equal to (route.Count-1)?
+            speed = length / duration.TotalSeconds; //This will give speed in meters per second
+
 
         }
     }
