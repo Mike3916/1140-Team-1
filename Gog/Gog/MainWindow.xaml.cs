@@ -18,7 +18,7 @@ using System.Windows.Threading;
 using Track_Controller_1;
 
 
-namespace Gog
+namespace GogNS
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
