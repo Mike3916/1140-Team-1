@@ -185,6 +185,7 @@ namespace Track_Controller_1._02
         private int[] mRightLights;
         private int[] mLeftLights;
         private int[] mCrossings;
+        private int[] mRoute;
 
     }
 }
