@@ -13,7 +13,10 @@
           "MSTest.TestFramework": "2.2.8",
           "Microsoft.NET.Test.Sdk": "17.1.0",
           "coverlet.collector": "3.1.2",
-          "Track Model": "1.0.0.0"
+          "Track Controller 1.1": "1.0.0.0",
+          "TrackController1.01": "1.0.0.0",
+          "TrainModel": "1.0.0.0",
+          "TwinCAT.Ads": "4.4.0.0"
         },
         "runtime": {
           "gogTests.dll": {}
@@ -1165,6 +1168,38 @@
           "Gog.dll": {}
         }
       },
+      "Track Controller 1.1/1.0.0.0": {
+        "runtime": {
+          "Track Controller 1.1.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "TrackController1.01/1.0.0.0": {
+        "runtime": {
+          "TrackController1.01.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "TrainModel/1.0.0.0": {
+        "runtime": {
+          "TrainModel.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "TwinCAT.Ads/4.4.0.0": {
+        "runtime": {
+          "TwinCAT.Ads.dll": {
+            "assemblyVersion": "4.4.0.0",
+            "fileVersion": "4.4.7.0"
+          }
+        }
+      },
       "Track Model/1.0.0.0": {
         "runtime": {
           "Track Model.dll": {
@@ -1176,14 +1211,6 @@
       "TrainController/1.0.0.0": {
         "runtime": {
           "TrainController.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
-      "TrainModel/1.0.0.0": {
-        "runtime": {
-          "TrainModel.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -1875,17 +1902,32 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Track Controller 1.1/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TrackController1.01/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TrainModel/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TwinCAT.Ads/4.4.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
     "Track Model/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
     },
     "TrainController/1.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "TrainModel/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
