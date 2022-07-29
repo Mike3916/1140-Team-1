@@ -86,11 +86,11 @@ namespace gogTests
         //    {
         //        occupancies[i] = 1;
         //    }
-            for (int i = 0; i < returns.Length; i++)
-            {
-                occupancies[i] = 1;
-                Assert.AreEqual(occupancies[i],returns[i]);
-            }
+       //     for (int i = 0; i < returns.Length; i++)
+        //    {
+        //        occupancies[i] = 1;
+        //        Assert.AreEqual(occupancies[i],returns[i]);
+        //    }
 
         //    GreenLinePLC.SendOccupancies(occupancies);
         //    returns = GreenLinePLC.ReceiveOccupancies(151);
@@ -102,7 +102,7 @@ namespace gogTests
 
 
         //}
-        }
+        //}
         [TestMethod]
         public void TrackModel_AddTrain()
         {
