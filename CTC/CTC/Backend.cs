@@ -1,9 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using System.IO;
 using System.Globalization;
 
-
+using CTC;
 namespace Backend
+
 {
 	public class Train
     {
@@ -14,6 +28,11 @@ namespace Backend
 		public DateTime ETA;	
 		public int destination;
 		public TimeSpan duration; //TimeSpan variable to keep track of time duration between ETD and ETA
+        public double length = 0;  //The length of the route
+        public int authority;
+        public double speed;
+        public List<int> route = new List<int>(); //holds list of blockNumbers that the train passes through
+
 
         int[] mredRoute = {77, 9, 8, 7, 6, 5, 4, 3, 2, 1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 76, 75,
                                 74, 73, 72, 33, 34, 35, 36, 37, 38, 71, 70, 69, 68, 67, 44, 45, 46, 47, 48, 49, 50, 51,
@@ -66,13 +85,6 @@ namespace Backend
         }
     }
 
-	public class Route
-    {
-		public Route() { }
-
-
-    }
-
 	public class CTCObject
 	{
 
@@ -82,11 +94,6 @@ namespace Backend
 		{
 		}
 
-
-		public void router()
-        {
-
-        }
 
 	}
 }
