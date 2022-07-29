@@ -1,4 +1,7 @@
 using GogNS;
+using Train=TrainObject.Train;
+using TrainController;
+using TrackModel;
 
 namespace gogTests
 {
@@ -6,8 +9,23 @@ namespace gogTests
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void maxPowerLimited()
         {
+            Train chooChoo = new Train(35, 1);
+            chooChoo.setPowerCmd(500000000);
+            Assert.AreEqual(120000, chooChoo.getPowerCmd(), "Account not debited correctly");
+            
+        }
+
+        [TestMethod]
+        public void TrainController_ToggleLeftDoors()
+        {
+            TrainController.Controller train = new TrainController.Controller();
+            Assert.AreEqual(train.mLeftDoorsStatus, false); // closed by default
+            train.setLeftDoors();
+            Assert.AreEqual(train.mLeftDoorsStatus, true);  // open
+            train.setLeftDoors();
+            Assert.AreEqual(train.mLeftDoorsStatus, false); // closed
         }
 
         [TestMethod]
@@ -67,6 +85,11 @@ namespace gogTests
         //    {
         //        occupancies[i] = 1;
         //    }
+            for (int i = 0; i < returns.Length; i++)
+            {
+                occupancies[i] = 1;
+                Assert.AreEqual(occupancies[i],returns[i]);
+            }
 
         //    GreenLinePLC.SendOccupancies(occupancies);
         //    returns = GreenLinePLC.ReceiveOccupancies(151);
@@ -78,6 +101,21 @@ namespace gogTests
 
 
         //}
+        }
+        [TestMethod]
+        public void TrackModel_AddTrain()
+        {
+            int blockIdx = 0;
+            int lineIdx = 0;
+            int authority = 0;
 
+            TrackModel.MainWindow track = new TrackModel.MainWindow();
+            track.AddTrain(blockIdx, lineIdx, authority);
+
+            Assert.AreEqual(track.mtrainList.Count, 1);
+            Assert.AreEqual(track.mtrainList[0].blockIdx, 0);
+            Assert.AreEqual(track.mtrainList[0].lineIdx, 0);
+            Assert.AreEqual(track.mtrainList[0].commAuthority, 0);
+        }
     }
 }

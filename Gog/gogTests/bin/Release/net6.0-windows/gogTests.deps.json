@@ -15,6 +15,10 @@
           "coverlet.collector": "3.1.2",
           "Track Controller 1.1": "1.0.0.0",
           "TrackController1.01": "1.0.0.0",
+<<<<<<< HEAD
+=======
+          "TrainModel": "1.0.0.0",
+>>>>>>> 4e94403bf270ec7234c92060057c79873b12022c
           "TwinCAT.Ads": "4.4.0.0"
         },
         "runtime": {
@@ -1183,6 +1187,17 @@
           }
         }
       },
+<<<<<<< HEAD
+=======
+      "TrainModel/1.0.0.0": {
+        "runtime": {
+          "TrainModel.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+>>>>>>> 4e94403bf270ec7234c92060057c79873b12022c
       "TwinCAT.Ads/4.4.0.0": {
         "runtime": {
           "TwinCAT.Ads.dll": {
@@ -1207,6 +1222,7 @@
           }
         }
       },
+<<<<<<< HEAD
       "TrainModel/1.0.0.0": {
         "runtime": {
           "TrainModel.dll": {
@@ -1215,6 +1231,8 @@
           }
         }
       },
+=======
+>>>>>>> 4e94403bf270ec7234c92060057c79873b12022c
       "CTC/1.0.0.0": {
         "runtime": {
           "CTC.dll": {
@@ -1911,6 +1929,14 @@
       "serviceable": false,
       "sha512": ""
     },
+<<<<<<< HEAD
+=======
+    "TrainModel/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+>>>>>>> 4e94403bf270ec7234c92060057c79873b12022c
     "TwinCAT.Ads/4.4.0.0": {
       "type": "reference",
       "serviceable": false,
@@ -1926,11 +1952,14 @@
       "serviceable": false,
       "sha512": ""
     },
+<<<<<<< HEAD
     "TrainModel/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
     },
+=======
+>>>>>>> 4e94403bf270ec7234c92060057c79873b12022c
     "CTC/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
