@@ -54,7 +54,7 @@ namespace TrainModel
 
         }
         
-        private void addTrain(int line, int authority=12)
+        public void addTrain(int line, int authority=12)
         {
             Trains.Add(new Train(authority, line));
           
@@ -62,7 +62,7 @@ namespace TrainModel
             
         }
 
-        private void RemoveTrain(int index)
+        public void RemoveTrain(int index)
         {
             Trains.RemoveAt(index);
         }  
