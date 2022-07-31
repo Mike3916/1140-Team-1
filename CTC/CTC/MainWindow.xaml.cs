@@ -69,6 +69,8 @@ namespace CTC
             InitializeComponent(); ///Default code
             Frame.NavigationService.Navigate(default_page); //Show default blank page at center of screen
 
+            Application.Current.MainWindow = this;
+
             SelectTrain.Items.Clear(); //Clear out the default empty spaces in all the comboBoxes
             LineCombo.Items.Clear();
             SectionCombo.Items.Clear();
@@ -234,6 +236,7 @@ namespace CTC
 
         private void SeeBlock_Click(object sender, RoutedEventArgs e)
         {
+            block_data.loadBlockInfo(); //This is a function in block_data that loads information into the page
             Frame.NavigationService.Navigate(block_data);
         }
     }

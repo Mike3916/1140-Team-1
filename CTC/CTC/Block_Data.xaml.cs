@@ -27,102 +27,102 @@ namespace CTC
 
         public Block_Data()
         {
+            InitializeComponent();
             
-            if ( ((MainWindow)Application.Current.MainWindow).trackLoaded == true)
-            {
-                InitializeComponent();
-
-                line = ((MainWindow)Application.Current.MainWindow).LineCombo.SelectedIndex; //This hold the line, 0=red, 1=green
-                block = ((MainWindow)Application.Current.MainWindow).LineCombo.SelectedIndex; //This holds the block index (to get BlockID, do this + 1)
-                blockType = 0; //This will indicate the type of block selected (0 = normal, 1 = switch, 2 = crossing);
-
-
-                //Here the CTC loads only the necessary items depending on the type of block
-                blockType = 0; //Start by assuming block is normal (not switch or crossing)
-                if (((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(block + 1).mSwitch == true) //set blockType to 1 if it a switch block
-                    blockType = 1;
-                else if (((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(block + 1).mhasCross == true) //set blockType to 2 if it is a crossing block
-                    blockType = 2;
-
-
-                if (blockType == 0) //If the selecte block is just a normal block, it doesn't have a switch or crossing light, so hide these properties
-                {
-                    ToggleButton.Visibility = Visibility.Collapsed;
-                    SwitchText.Visibility = Visibility.Collapsed;
-                    SwitchNum.Visibility = Visibility.Collapsed;
-
-                    CrossingRect.Visibility = Visibility.Collapsed;
-                    CrossingText.Visibility = Visibility.Collapsed;
-
-                }
-                else if (blockType == 1) //The selected block is a switch block, hide crossing info
-                {
-                    CrossingRect.Visibility = Visibility.Collapsed;
-                    CrossingText.Visibility = Visibility.Collapsed;
-
-                    if (line == 0)
-                        SwitchNum.Text = ((MainWindow)Application.Current.MainWindow).mRedSwitches[block].ToString();
-                    else if (line == 1)
-                        SwitchNum.Text = ((MainWindow)Application.Current.MainWindow).mGreenSwitches[block].ToString();
-                }
-                else if (blockType == 2) //The block is a crossing block, hide switch info
-                {
-                    ToggleButton.Visibility = Visibility.Collapsed;
-                    SwitchText.Visibility = Visibility.Collapsed;
-                    SwitchNum.Visibility = Visibility.Collapsed;
-
-                    if (line == 0) //red line
-                        if (((MainWindow)Application.Current.MainWindow).mRedCrossings[block] == 0) //no crossing light
-                            CrossingRect.Fill = System.Windows.Media.Brushes.LightGray;
-                        else if (((MainWindow)Application.Current.MainWindow).mRedCrossings[block] == 1) //crossing light on
-                            CrossingRect.Fill = System.Windows.Media.Brushes.LightGreen;
-                        else if (line == 1) //green line
-                            if (((MainWindow)Application.Current.MainWindow).mGreenCrossings[block] == 0) //no crossing light
-                                CrossingRect.Fill = System.Windows.Media.Brushes.LightGray;
-                            else if (((MainWindow)Application.Current.MainWindow).mGreenCrossings[block] == 1) //crossing light on
-                                CrossingRect.Fill = System.Windows.Media.Brushes.LightGreen;
-
-                }
-
-                /////////////////////Info about all trains
-                if (line == 0) //The selected line is red, put the info here that should always show up for every type of block (occupancy, maintenance, throughput, and signal light)
-                {
-                    //Check occupancy
-                    if (((MainWindow)Application.Current.MainWindow).mRedOccupancies[block] == 0) //the block is unoccupied
-                    {
-                        UnoccupiedRect.Fill = System.Windows.Media.Brushes.LightGreen;
-                        OccupiedRect.Fill = System.Windows.Media.Brushes.LightGray;
-                    }
-                    else if (((MainWindow)Application.Current.MainWindow).mRedOccupancies[block] == 1)
-                    {
-                        UnoccupiedRect.Fill = System.Windows.Media.Brushes.LightGray;
-                        OccupiedRect.Fill = System.Windows.Media.Brushes.LightGreen;
-                    }
-                    //////////////////////// Check maintenance
-                    if (((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[block] == 0) //the block is not in maintenance (open)
-                    {
-                        Close.Background = System.Windows.Media.Brushes.LightGray;
-                        Open.Background = System.Windows.Media.Brushes.LightGreen;
-                    }
-                    else if (((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[block] == 1) //The block is in maintenance (closed)
-                    {
-                        Close.Background = System.Windows.Media.Brushes.LightGreen;
-                        Open.Background = System.Windows.Media.Brushes.LightGray;
-                    }
-                    //////////////////////// Check signal light color
-
-
-                    ////////////////////////Check throughput for the line
-
-
-                }
-                else if (line == 1) //The selected line is green, put the info here that should always show up for every type of block
-                {
-                    //Copy above but for greeninfo insead of red
-                }
-            }
         }
+        public void loadBlockInfo()
+        {
+            line = ((MainWindow)Application.Current.MainWindow).LineCombo.SelectedIndex; //This hold the line, 0=red, 1=green
+            block = ((MainWindow)Application.Current.MainWindow).LineCombo.SelectedIndex; //This holds the block index (to get BlockID, do this + 1)
+            blockType = 0; //This will indicate the type of block selected (0 = normal, 1 = switch, 2 = crossing);
 
+
+            //Here the CTC loads only the necessary items depending on the type of block
+            blockType = 0; //Start by assuming block is normal (not switch or crossing)
+            if (((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(block + 1).mSwitch == true) //set blockType to 1 if it a switch block
+                blockType = 1;
+            else if (((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(block + 1).mhasCross == true) //set blockType to 2 if it is a crossing block
+                blockType = 2;
+
+
+            if (blockType == 0) //If the selecte block is just a normal block, it doesn't have a switch or crossing light, so hide these properties
+            {
+                ToggleButton.Visibility = Visibility.Collapsed;
+                SwitchText.Visibility = Visibility.Collapsed;
+                SwitchNum.Visibility = Visibility.Collapsed;
+
+                CrossingRect.Visibility = Visibility.Collapsed;
+                CrossingText.Visibility = Visibility.Collapsed;
+
+            }
+            else if (blockType == 1) //The selected block is a switch block, hide crossing info
+            {
+                CrossingRect.Visibility = Visibility.Collapsed;
+                CrossingText.Visibility = Visibility.Collapsed;
+
+                if (line == 0)
+                    SwitchNum.Text = ((MainWindow)Application.Current.MainWindow).mRedSwitches[block].ToString();
+                else if (line == 1)
+                    SwitchNum.Text = ((MainWindow)Application.Current.MainWindow).mGreenSwitches[block].ToString();
+            }
+            else if (blockType == 2) //The block is a crossing block, hide switch info
+            {
+                ToggleButton.Visibility = Visibility.Collapsed;
+                SwitchText.Visibility = Visibility.Collapsed;
+                SwitchNum.Visibility = Visibility.Collapsed;
+
+                if (line == 0) //red line
+                    if (((MainWindow)Application.Current.MainWindow).mRedCrossings[block] == 0) //no crossing light
+                        CrossingRect.Fill = System.Windows.Media.Brushes.LightGray;
+                    else if (((MainWindow)Application.Current.MainWindow).mRedCrossings[block] == 1) //crossing light on
+                        CrossingRect.Fill = System.Windows.Media.Brushes.LightGreen;
+                    else if (line == 1) //green line
+                        if (((MainWindow)Application.Current.MainWindow).mGreenCrossings[block] == 0) //no crossing light
+                            CrossingRect.Fill = System.Windows.Media.Brushes.LightGray;
+                        else if (((MainWindow)Application.Current.MainWindow).mGreenCrossings[block] == 1) //crossing light on
+                            CrossingRect.Fill = System.Windows.Media.Brushes.LightGreen;
+
+            }
+
+            /////////////////////Info about all trains
+            if (line == 0) //The selected line is red, put the info here that should always show up for every type of block (occupancy, maintenance, throughput, and signal light)
+            {
+                //Check occupancy
+                if (((MainWindow)Application.Current.MainWindow).mRedOccupancies[block] == 0) //the block is unoccupied
+                {
+                    UnoccupiedRect.Fill = System.Windows.Media.Brushes.LightGreen;
+                    OccupiedRect.Fill = System.Windows.Media.Brushes.LightGray;
+                }
+                else if (((MainWindow)Application.Current.MainWindow).mRedOccupancies[block] == 1)
+                {
+                    UnoccupiedRect.Fill = System.Windows.Media.Brushes.LightGray;
+                    OccupiedRect.Fill = System.Windows.Media.Brushes.LightGreen;
+                }
+                //////////////////////// Check maintenance
+                if (((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[block] == 0) //the block is not in maintenance (open)
+                {
+                    Close.Background = System.Windows.Media.Brushes.LightGray;
+                    Open.Background = System.Windows.Media.Brushes.LightGreen;
+                }
+                else if (((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[block] == 1) //The block is in maintenance (closed)
+                {
+                    Close.Background = System.Windows.Media.Brushes.LightGreen;
+                    Open.Background = System.Windows.Media.Brushes.LightGray;
+                }
+                //////////////////////// Check signal light color
+
+
+                ////////////////////////Check throughput for the line
+
+
+            }
+            else if (line == 1) //The selected line is green, put the info here that should always show up for every type of block
+            {
+                //Copy above but for greeninfo insead of red
+            }
+
+
+        }
 
 
         private void Open_Click(object sender, RoutedEventArgs e)
