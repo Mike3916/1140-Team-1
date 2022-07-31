@@ -34,7 +34,7 @@ namespace gogTests
         [TestMethod]
         public void TrainController_ToggleLeftDoors()
         {
-            TrainController.Controller train = new TrainController.Controller();
+            TrainController.Controller train = new TrainController.Controller(true);
             Assert.AreEqual(train.mLeftDoorsStatus, false); // closed by default
             train.setLeftDoors();
             Assert.AreEqual(train.mLeftDoorsStatus, true);  // open
