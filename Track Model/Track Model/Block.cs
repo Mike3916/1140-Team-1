@@ -18,6 +18,7 @@ namespace TrackModel
             mUnderground = false; //is underground
             mLeft = false; //has station on left
             mRight = false; //has station on right
+            mSwitch = false; //has switch
 
             mlineName = blockInfo[0];
             msectionName = blockInfo[1];
@@ -197,6 +198,7 @@ namespace TrackModel
             {
                 if (partInfra.ToLower().Contains("switch"))
                 {
+                    mSwitch = true;
                     string[] switches = partInfra.Substring(8, partInfra.IndexOf(')') - 8).Split(':');
 
                     foreach (string sw in switches)
@@ -269,6 +271,7 @@ namespace TrackModel
         public bool mUnderground;//is underground
         public bool mLeft;      //station on left
         public bool mRight;     //station on right
+        public bool mSwitch;
 
         public int mPop;        //population at station
         public string mBeacon;
