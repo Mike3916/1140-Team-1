@@ -42,7 +42,7 @@ namespace TrainObject
         private double blockDist;
         private double currDist;
         private double gradient;
-        int line;
+        private int RailLine;
 
 
 
@@ -86,6 +86,7 @@ namespace TrainObject
             announcement = false;
             currAuthority = 0;
             underground = false;
+            RailLine = 0; //0=Red
 
         }
 
@@ -104,7 +105,7 @@ namespace TrainObject
             announcement = false;
             cmdAuthority = authority;
             underground = false;
-            line = line;
+            RailLine = line;
         }
 
 
@@ -461,7 +462,19 @@ namespace TrainObject
             }
         }
 
+        public int getLine()
+        {
+            return RailLine;
+        }
 
+        public String getLineName()
+        {
+            if (RailLine == 1)
+                return "Green";
+            else
+                return "Red";
+        }
+               
     }
 
 
