@@ -32,6 +32,7 @@ namespace TrainController
         public bool mAnnouncementsStatus = false;
         public bool mServiceBrakeStatus = false;
         public bool mEmergencyBrakeStatus = false;
+        public bool mLine;
 
         public int mTemperature = 72;
         public int mKp = 10000;
@@ -50,9 +51,9 @@ namespace TrainController
         public double Ek_prev = 0;
         public int T = 250; // 250 ms
 
-        public Controller()
+        public Controller(bool line)
         {
-
+            mLine = line;
         }
 
         public void setupHardware()

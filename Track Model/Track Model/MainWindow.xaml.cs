@@ -129,6 +129,38 @@ namespace TrackModel
                 interval = 0;
             }
         }
+        public void UpdateTick()
+        {
+            //update train
+            interval++;
+
+            if (interval >= 5)
+            {
+                if (testWindow.traingo)
+                {
+                    for (int i = 0; i < mtrainList.Count; i++)
+                        UpdateTrain(i);
+                }
+                if (mblockIdx != -1)
+                {
+                    double currentTemp = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].getmtrackTemp();
+                    if (currentTemp < 32)
+                    {
+                        mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackTemp(currentTemp + 1);
+                        HeatBox.Text = (currentTemp + 1).ToString();
+                    }
+                    else if (currentTemp == 32)
+                    {
+                        //do nothing 
+                    }
+                    else
+                    {
+                        mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackTemp(currentTemp - 1);
+                        HeatBox.Text = (currentTemp - 1).ToString();
+                    }
+                }
+            }
+        }
 
         public List<TrackModel.Line> GetTrackData()
         {
@@ -151,6 +183,8 @@ namespace TrackModel
 
             return occblocks;
         }
+
+        
 
         private DataTable MakeLineDataTable(int lineIdx)
         {

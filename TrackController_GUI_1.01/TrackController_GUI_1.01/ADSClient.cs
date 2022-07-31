@@ -27,11 +27,11 @@ namespace Track_Controller_1._02
            ads.Connect(mPort);//default port of TwinCAT 3 is 851
             if (ads.IsConnected == true)
             {
-                MessageBox.Show("Connection OK");
+                Console.WriteLine(mPort.ToString() + " Connection OK");
             }
             else
             {
-                MessageBox.Show("Not connected");
+                Console.WriteLine(mPort.ToString() + " Not connected");
             }
         }
 
@@ -39,10 +39,24 @@ namespace Track_Controller_1._02
         //<[]mPacket>: contains the block states to be written to the PLC
         public void SendPacket(int[] mPacket, string mVarName1)
         {
-
-            hvar = ads.CreateVariableHandle(mVarName1);
-            ads.WriteAny(hvar, mPacket);
             
+            try
+            {
+                hvar = ads.CreateVariableHandle(mVarName1);
+            }
+            catch
+            {
+                Console.WriteLine("You are attempting to connect to a server that does not exist. Please check your server port number.");
+            }
+
+            try
+            {
+                ads.WriteAny(hvar, mPacket);
+            }
+            catch
+            {
+                Console.WriteLine("Failed to send. Check that Port " + mPort.ToString() + " is connected and the array size matches at the sender and receiver.");
+            }
             return;
         }
 
@@ -51,13 +65,19 @@ namespace Track_Controller_1._02
         //<int[]> returns the block command states to be written to the track
         public int[] ReceivePacket(int mLength, string mVarName2)
         {
-           
+            try
+            {
             hvar = ads.CreateVariableHandle(mVarName2);
             int[] mPacket = (int[])ads.ReadAny(hvar, typeof(int[]), new int[] { mLength });
-
-            MessageBox.Show(mVarName2 + mPacket[0].ToString() + mPacket[1].ToString());
-
             return mPacket;
+            }
+            catch
+            {
+                Console.WriteLine("You are attempting to connect to a server that does not exist. Please check your server port number.");
+                int[] temp = new int[0];
+                return temp;
+            }
+           
         }
 
 

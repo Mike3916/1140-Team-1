@@ -11,7 +11,7 @@ namespace TrainObject
 {
     public class Train
     {
-        static int nextID = 0;
+        static public int nextID = 0;
         private int ID;
         private double currentSpeed;
         private double previousAcceleration;
@@ -42,7 +42,7 @@ namespace TrainObject
         private double blockDist;
         private double currDist;
         private double gradient;
-        int line;
+        private int RailLine;
 
 
 
@@ -86,6 +86,7 @@ namespace TrainObject
             announcement = false;
             currAuthority = 0;
             underground = false;
+            RailLine = 0; //0=Red
 
         }
 
@@ -104,7 +105,7 @@ namespace TrainObject
             announcement = false;
             cmdAuthority = authority;
             underground = false;
-            line = line;
+            RailLine = line;
         }
 
 
@@ -373,9 +374,7 @@ namespace TrainObject
             return false;
         }
         
-        public void toggleLights(){
-            
-        }
+      
         public int getCars()
         {
             return cars;
@@ -446,7 +445,11 @@ namespace TrainObject
             currDist = 0;
             currAuthority++;
 
-            beaconMessage = "no Beacon";
+            if(signalPickUp)
+                beaconMessage = b.mBeacon;
+            else
+                beaconMessage = "";
+
         }
 
         public bool askForInfo()
@@ -461,6 +464,22 @@ namespace TrainObject
             }
         }
 
+        public int getLine()
+        {
+            return RailLine;
+        }
+
+        public String getLineName()
+        {
+            if (RailLine == 1)
+                return "Green";
+            else
+                return "Red";
+        }
+        public int getID()
+        {
+            return ID;
+        }
 
     }
 

@@ -243,7 +243,7 @@ namespace Track_Controller_1._02
             {
                 mReceivedMessage = mPi.ReadLine();
             }
-            MessageBox.Show(mReceivedMessage);
+            Console.WriteLine(mReceivedMessage);
             // create an array with size as string
             // length and initialize with 0
             int[] temp = new int[mReceivedMessage.Length];
