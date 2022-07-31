@@ -24,10 +24,16 @@ namespace Track_Controller_1._02
             mPi.Handshake = Handshake.None;
             mPi.WriteTimeout = 500;
 
-
-            //Open serial port and reset all stored data
-            mPi.Open();
-            mPi.WriteLine("?");
+            mOccupancies = new int[151];
+            mSwitches = new int[3];
+            mSpeeds = new int[151];
+            mAuthorities = new int[151];
+            mRightLights = new int[151];
+            mLeftLights = new int[151];
+            mMaintenance = new int[151];
+        //Open serial port and reset all stored data
+        mPi.Open();
+            //mPi.WriteLine("?");
         }
 
         //public int[] TrackSend(int[] mPacket)
@@ -64,24 +70,165 @@ namespace Track_Controller_1._02
         public void SendSwitches(int[] mPacket)
         {
             //TODO
+            mSwitches = mPacket;
+            mSwUpToDate = true;
         }
 
         public int[] ReceiveSwitches(int mLength)
         {
             //TODO
-            
+            if (mSwUpToDate)
+            {
+                return mSwitches;
+            }
+            else
+            {
+                run();
+                return mSwitches;
+            }
         }
 
         public void SendOccupancies(int[] mPacket)
         {
             //TODO
-            string mSentMessage = "";
-            for (int i = 0; i < mPacket.Length; i++)
+            mOccupancies = mPacket;
+            mSwUpToDate = false;
+            mRLUpToDate = false;
+            mLLUpToDate = false;
+            mCrUpToDate = false;
+        }
+
+        public int[] ReceiveOccupancies(int mLength)
+        {
+            //todo
+            return mOccupancies; 
+        }
+
+        public void SendSpeeds(int[] mPacket)
+        {
+            //todo
+            mSpeeds = mPacket;
+        }
+
+        public int[] ReceiveSpeeds(int mLength)
+        {
+            //todo
+            return mSpeeds;
+        }
+
+        public void SendAuthorities(int[] mPacket)
+        {
+            //todo
+            mAuthorities = mPacket;
+        }
+
+        public int[] ReceiveAuthorities(int mLength)
+        {
+            //todo
+            return mAuthorities;
+        }
+
+        public void SendCrossings(int[] mPacket)
+        {
+            //todo
+            mCrossings = mPacket;
+            mCrUpToDate = true;
+        }
+
+        public int[] ReceiveCrossings(int mLength)
+        {
+            //todo
+            if (mCrUpToDate)
             {
-                mSentMessage = mSentMessage + mPacket[i].ToString();
+                return mCrossings;
+            }
+            else
+            {
+                run();
+                return mCrossings;
+            }
+        }
+
+        public void SendLeftLights(int[] mPacket)
+        {
+            //todo
+            mLeftLights = mPacket;
+            mLLUpToDate = true;
+        }
+
+        public int[] ReceiveLeftLights(int mLength)
+        {
+            //todo
+            if (mLLUpToDate)
+            {
+                return mLeftLights;
+            }
+            else
+            {
+                run();
+                return mLeftLights;
+            }
+        }
+
+        public void SendRightLights(int[] mPacket)
+        {
+            //todo
+            mRightLights = mPacket;
+            mRLUpToDate = true;
+        }
+
+        public int[] ReceiveRightLights(int mLength)
+        {
+            //todo
+            if (mRLUpToDate)
+            {
+                return mRightLights;
+            }
+            else
+            {
+                run();
+                return mRightLights;
+            }
+        }
+
+        public void SendMaintenance(int[] mPacket)
+        {
+            //todo
+            mMaintenance = mPacket;
+            mSwUpToDate = false;
+            mRLUpToDate = false;
+            mLLUpToDate = false;
+            mCrUpToDate = false;
+        }
+
+        public int[] ReceiveMaintenance(int mLength)
+        {
+            //todo
+            return mMaintenance;
+        }
+
+        public void SendRoute(int[] mPacket)
+        {
+            //todo
+            mRoute = mPacket;
+        }
+
+        public int[] ReceiveRoute(int mLength)
+        {
+            //todo
+            return mRoute;
+        }
+
+        public void run()
+        {
+            //todo
+            mSentMessage = "";
+            for (int i = 0; i < mOccupancies.Length; i++)
+            {
+                mSentMessage = mSentMessage + (mOccupancies[i] + mMaintenance[i] >= 1).ToString();
             }
 
-            mPi.WriteLine(mSentMessage + "\n");
+            mPi.WriteLine(mSentMessage);
             string mReceivedMessage = "";
             while (mReceivedMessage == "")
             {
@@ -99,93 +246,30 @@ namespace Track_Controller_1._02
                 // subtract str[i] by 48 to convert it to int
                 // Generate number by multiplying 10 and adding
                 // (int)(str[i])
+                //todo
                 temp[i] = temp[i] * 10 + (mReceivedMessage[i] - 48);
             }
-        }
 
-        public int[] ReceiveOccupancies(int mLength)
-        {
-            //todo
+            mSwUpToDate = true;
+            mRLUpToDate = true;
+            mLLUpToDate = true;
+            mCrUpToDate = true;
         }
-
-        public void SendSpeeds(int[] mPacket)
-        {
-            //todo
-        }
-
-        public int[] ReceiveSpeeds(int mLength)
-        {
-            //todo
-        }
-
-        public void SendAuthorities(int[] mPacket)
-        {
-            //todo
-        }
-
-        public int[] ReceiveAuthorities(int mLength)
-        {
-            //todo
-        }
-
-        public void SendCrossings(int[] mPacket)
-        {
-            //todo
-        }
-
-        public int[] ReceiveCrossings(int mLength)
-        {
-            //todo
-        }
-
-        public void SendLeftLights(int[] mPacket)
-        {
-            //todo
-        }
-
-        public int[] ReceiveLeftLights(int mLength)
-        {
-            //todo
-        }
-
-        public void SendRightLights(int[] mPacket)
-        {
-            //todo
-        }
-
-        public int[] ReceiveRightLights(int mLength)
-        {
-            //todo
-        }
-
-        public void SendMaintenance(int[] mPacket)
-        {
-            //todo
-        }
-
-        public int[] ReceiveMaintenance(int mLength)
-        {
-            //todo
-        }
-
-        public void SendRoute(int[] mPacket)
-        {
-            //todo
-        }
-
-        public int[] ReceiveRoute(int mLength)
-        {
-            //todo
-        }
-
 
         private SerialPort mPi;
         private int[] mOccupancies;
         private int[] mSwitches;
+        private int[] mSpeeds;
+        private int[] mAuthorities;
         private int[] mRightLights;
         private int[] mLeftLights;
+        private int[] mMaintenance;
         private int[] mCrossings;
         private int[] mRoute;
-
+        private bool mSwUpToDate;
+        private bool mRLUpToDate;
+        private bool mLLUpToDate;
+        private bool mCrUpToDate;
+        private byte[] mSentMessage;
     }
 }
