@@ -86,8 +86,6 @@ namespace Backend
 	public class CTCObject
 	{
 
-		private Route[] routes;
-
 		public CTCObject()
 		{
 		}

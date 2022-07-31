@@ -189,8 +189,9 @@ namespace Gog
                         gotTrack = true;                                //Set boolean to mark that the track data has been read by CTC
                     }
                 }
-                //ctc.GetTrackController(mRedMaintenanceBlocks, mRedOccupancies, mRedSpeeds, mRedAuthorities, mRedCrossings, mRedSwitches, mRedLeftLights, mRedRightLights, mGreenMaintenanceBlocks, mGreenOccupancies, mGreenSpeeds, mGreenAuthorities, mGreenCrossings, mGreenSwitches, mGreenLeftLights, mGreenRightLights); //Write function in CTC to read in these values
-                /* Update Track Controller variables with values from CTC
+
+                ctc.GetTrackController(mRedMaintenanceBlocks, mRedOccupancies, mRedSpeeds, mRedAuthorities, mRedCrossings, mRedSwitches, mRedLeftLights, mRedRightLights, mGreenMaintenanceBlocks, mGreenOccupancies, mGreenSpeeds, mGreenAuthorities, mGreenCrossings, mGreenSwitches, mGreenLeftLights, mGreenRightLights); //Write function in CTC to read in these values
+                //Update Track Controller variables with values from CTC
                 mRedMaintenanceBlocks = ctc.mRedMaintenanceBlocks;
                 mRedOccupancies = ctc.mRedOccupancies;
                 mRedSpeeds = ctc.mRedSpeeds;
@@ -198,7 +199,7 @@ namespace Gog
                 mRedCrossings = ctc.mRedCrossings;
                 mRedSwitches = ctc.mRedSwitches;
                 mRedLeftLights = ctc.mRedLeftLights;
-                mRedRightLights = ctc.mRedRightLights
+                mRedRightLights = ctc.mRedRightLights;
 
                 mGreenMaintenanceBlocks = ctc.mGreenMaintenanceBlocks;
                 mGreenOccupancies = ctc.mGreenOccupancies;
@@ -208,7 +209,7 @@ namespace Gog
                 mGreenSwitches = ctc.mGreenSwitches;
                 mGreenLeftLights = ctc.mGreenLeftLights;
                 mGreenRightLights = ctc.mGreenRightLights;
-                */
+                
                 
                 /*
                 ctc.SetTrackData(track.mLines);

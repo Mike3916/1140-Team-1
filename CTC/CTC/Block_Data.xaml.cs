@@ -41,8 +41,7 @@ namespace CTC
 
             if (blockType == 0) //If the selecte block is just a normal block, it doesn't have a switch or crossing light, so hide these properties
             {
-                Left.Visibility = Visibility.Collapsed;
-                Right.Visibility = Visibility.Collapsed;
+                ToggleButton.Visibility = Visibility.Collapsed;
                 CrossingRect.Visibility = Visibility.Collapsed;
                 CrossingText.Visibility = Visibility.Collapsed;
 
@@ -51,13 +50,10 @@ namespace CTC
             {
                 CrossingRect.Visibility = Visibility.Collapsed;
                 CrossingText.Visibility = Visibility.Collapsed;
-
-    
             }
             else if (blockType ==2)
             {
-                Left.Visibility = Visibility.Collapsed;
-                Right.Visibility = Visibility.Collapsed;
+                ToggleButton.Visibility = Visibility.Collapsed;
             }
 
 
@@ -98,19 +94,6 @@ namespace CTC
             }
         }
 
-        private void Right_Click(object sender, RoutedEventArgs e)
-        {
-            Right.Background = Brushes.LightGreen;
-            Left.Background = Brushes.LightGray;
-
-
-        }
-
-        private void Left_Click(object sender, RoutedEventArgs e)
-        {
-            Left.Background = Brushes.LightGreen;
-            Right.Background = Brushes.LightGray;
-        }
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
@@ -122,6 +105,14 @@ namespace CTC
         {
             Close.Background = Brushes.LightGreen;
             Open.Background = Brushes.LightGray;
+        }
+
+        private void ToggleButton_Click(object sender, RoutedEventArgs e) //Change the switch to it's opposite position
+        {
+            if (line==0) //red line
+                ((MainWindow)Application.Current.MainWindow).mRedSwitches[block] = 1; //To indicate that the switch should be toggled, set the switch to 1
+            else if (line==1) //green line
+                ((MainWindow)Application.Current.MainWindow).mGreenSwitches[block] = 1;
         }
     }
 }
