@@ -177,7 +177,9 @@ namespace TrackModel
                 for (int j = 0; j < mLines[idx].mSections[i].getmnumBlocks(); j++)
                 {
                     if (mLines[idx].mSections[i].mBlocks[j].mOccupied == true)
-                        occblocks.Add(mLines[idx].mSections[i].mBlocks[j].mblockNum);
+                        occblocks.Add(1);
+                    else
+                        occblocks.Add(0);
                 }
             }
 
@@ -194,9 +196,46 @@ namespace TrackModel
             }
         }
 
-        public void SetAuthorities()
+        public void SetAuthorities(int[] auth, int lIdx)
         {
+            for (int trIdx = 0; trIdx < mtrainList.Count; trIdx++)
+            {
+                Train tr = mtrainList[trIdx];
+                for (int i = 0; i < auth.Length; i++)
+                {
+                    if (tr.blockIdx - 1 == i && tr.lineIdx == lIdx)
+                        tr.commAuthority = auth[i];
+                }
+            }
+        }
 
+        public void SetCrossings(int[] crossings, int lIdx)
+        {
+            for (int cr = 0; cr < crossings.Length; cr++)
+            {
+                if (cr == 1)
+                {
+                    TrackModel.Block bl = mLines[lIdx].GetBlock(cr+1);
+                    bl.mcrossDown = true;
+                    mLines[lIdx].SetBlock(bl);
+                }
+                else
+                {
+                    TrackModel.Block bl = mLines[lIdx].GetBlock(cr + 1);
+                    bl.mcrossDown = false;
+                    mLines[lIdx].SetBlock(bl);
+                }
+            }
+        }
+
+        public void SetSwitches(int[] switches, int lIdx)
+        {
+            for (int sw = 0; sw < switches.Length; sw++)
+            {
+                TrackModel.Block bl = mLines[lIdx].GetBlock(sw + 1);
+                bl.setmswitchPos(switches[sw]);
+                mLines[lIdx].SetBlock(bl);
+            }
         }
         
 

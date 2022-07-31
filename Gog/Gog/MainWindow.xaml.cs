@@ -88,8 +88,8 @@ namespace GogNS
         */
 
         DispatcherTimer mGlobalTimer;
-        int mIterationMultiplier = 10, numTrains = 0, numTrainCtrls = 0, iter = 0;
-        bool newBlock;
+        int mIterationMultiplier = 10, numTrains = 0, iter = 0;
+        bool newBlock = false;
         bool gotTrack = false;
 
         public MainWindow()
@@ -119,7 +119,6 @@ namespace GogNS
                 Application.Current.MainWindow = trains;
                 trains = new TrainModel.MainWindow();
                 trains.Show();
-                numTrains++;
             }
             else
                 trains.Activate();
@@ -132,7 +131,6 @@ namespace GogNS
                 Application.Current.MainWindow = trainCtrl;
                 trainCtrl = new TrainController.ControlPanel();
                 trainCtrl.Show();
-                numTrainCtrls++;
             }
             else
                 trainCtrl.Activate();
@@ -164,17 +162,27 @@ namespace GogNS
             {
                 Application.Current.MainWindow = trainCtrl;
             }
+            else if (trains != null && trains.IsActive)
+            {
+                Application.Current.MainWindow = trains;
+            }
+            else if (track != null && track.IsActive)
+            {
+                Application.Current.MainWindow = track;
+            }
+            else if (ctc != null && ctc.IsActive)
+            {
+                Application.Current.MainWindow = ctc;
+            }
         }
 
         private void InitTimer()    
         {
             mGlobalTimer = new DispatcherTimer();
-
             mGlobalTimer.Tick += new EventHandler(updateTick);
 
             mGlobalTimer.Interval = new TimeSpan(0, 0, 0, 0, 10); //1 millisecond
             mGlobalTimer.Start();
-
         }
 
         private void updateTick(object sender, EventArgs e)
@@ -232,12 +240,13 @@ namespace GogNS
                 track.GetT
                 */
 
-                for (int j = 0; j < numTrains && j < numTrainCtrls; j++)
+                for (int j = 0; j < numTrains; j++)
                 {
+                    MessageBox.Show(j.ToString());
                     newBlock = trains.UpdateValues(trainCtrl.mTrainSetList[j],j);
                     trainCtrl.UpdateValues(trains.Trains[j].getCmdAuthority(), trains.Trains[j].getCurrAuthority(), trains.Trains[j].getCommandedSpeedMPH(), trains.Trains[j].getCurrentSpeedMPH(), trains.Trains[j].getBeacon(), trains.Trains[j].getUnderground(), trains.Trains[j].getDoorL(), trains.Trains[j].getDoorR(), j);
 
-                   if (newBlock)                  //if train at j enters a new block
+                    if (newBlock)                  //if train at j enters a new block
                     { 
                         TrackModel.Block bl = track.UpdateTrain(j); //get next block
                         if (bl != null)                             //if that block exists
@@ -248,11 +257,9 @@ namespace GogNS
                             track.RemoveTrain(j);              //remove the train from the track
                         }
 
+                        newBlock = false;
                     }
                 }
-
-
-
             }
         }
 
@@ -374,6 +381,9 @@ namespace GogNS
             */
 
             track.SetSpeeds(mRedSpeeds, 0);
+            track.SetAuthorities(mRedAuthorities, 0);
+            track.SetCrossings(mRedCrossings, 0);
+            track.SetSwitches(mRedSwitches, 0);
 
             //151 element array for green
             /*
@@ -384,6 +394,11 @@ namespace GogNS
             = mRedLeftLights;
             = mRedRightLights;
             */
+
+            track.SetSpeeds(mGreenSpeeds, 1);
+            track.SetAuthorities(mGreenAuthorities, 1);
+            track.SetCrossings(mGreenCrossings, 1);
+            track.SetSwitches(mGreenSwitches, 1);
         }
 
         private void ArraySplitter()
@@ -462,7 +477,7 @@ namespace GogNS
             }
             if (trainCtrl != null)
             {
-                trainCtrl.actualClose = true;
+                trainCtrl.mActualClose = true;
                 trainCtrl.Close();
             }
             if (trains != null)
