@@ -40,7 +40,7 @@ namespace CTC
         public int totalTrains; //This will keep track of total number of trains in a day (it does NOT go down even when a train reaches destination). It is also used to assign train names in Dispatch
 
         //Variables to send to Track Controller
-        public int[] mRedMaintenanceBlocks = new int[77];
+        public int[] mRedMaintenanceBlocks = new int[77]; //Use block indexes starting with 0
         public int[] mRedOccupancies = new int[77];
         public int[] mRedSpeeds = new int[77];
         public int[] mRedAuthorities = new int[77];

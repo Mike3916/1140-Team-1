@@ -1,9 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using System.IO;
 using System.Globalization;
 
-
+using CTC;
 namespace Backend
+
 {
 	public class Train
     {
@@ -14,18 +28,59 @@ namespace Backend
 		public DateTime ETA;	
 		public int destination;
 		public TimeSpan duration; //TimeSpan variable to keep track of time duration between ETD and ETA
+        public double length = 0;  //The length of the route
+        public int authority;
+        public double speed;
+        public List<int> route = new List<int>(); //holds list of blockNumbers that the train passes through
 
-		public void calcDuration() //Calculates time between ETD and ETA and saves into "duration" variable
+
+        int[] mredRoute = {77, 9, 8, 7, 6, 5, 4, 3, 2, 1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 76, 75,
+                                74, 73, 72, 33, 34, 35, 36, 37, 38, 71, 70, 69, 68, 67, 44, 45, 46, 47, 48, 49, 50, 51,
+                                52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 52, 51, 50, 49, 48, 47, 46,
+                                45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24,
+                                23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10};
+       
+
+        int[] mgreenRoute = {151, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
+                                82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 85, 84,
+                                83, 82, 81, 80, 79, 78, 77, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111,
+                                112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128,
+                                129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145,
+                                146, 147, 148, 149, 150, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15,
+                                14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                                21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
+                                42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57 ,58, 59, 60, 61};
+
+
+        public void calcDuration() //Calculates time between ETD and ETA and saves into "duration" variable
         {
-			duration = ETA.Subtract(ETD); //This calculates the span of time between departure and arrival
+            duration = ETA.Subtract(ETD); //This calculates the span of time between departure and arrival
         }
-    }
+        public void calcRoute()
+        {
+            int i = -1; //Start at -1
+            if (line == 0) //The red line
+            {
+                while (destination != mredRoute[i])
+                {
+                    i++; //increment i and add info to document, so it's already added by the time the while loop ends. (i=-1 before the while loop starts)
+                    route.Add(mredRoute[i]);
+                    length += ((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(mredRoute[i]).mLength; //Add the length of the block. GetBlock() is sent the Block ID (starts at 1), not block index
+                }
+            }
+            else if (line == 1) //The green line
+            {
+                while (destination != mgreenRoute[i])
+                {
+                    i++;
+                    route.Add(mgreenRoute[i]);
+                    length += ((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(mredRoute[i]).mLength; //Add the length of the block. GetBlock() is sent the Block ID (starts at 1), not block index
+                }
+            }
 
-	public class Route
-    {
-		public Route() { }
-
-
+            authority = route.Count; //maybe make this equal to (route.Count-1)?
+            speed = length / duration.TotalSeconds; //This will give speed in meters per second
+        }
     }
 
 	public class CTCObject
@@ -37,11 +92,6 @@ namespace Backend
 		{
 		}
 
-
-		public void router()
-        {
-
-        }
 
 	}
 }
