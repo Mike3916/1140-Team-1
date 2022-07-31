@@ -184,6 +184,8 @@ namespace TrackModel
             return occblocks;
         }
 
+        
+
         private DataTable MakeLineDataTable(int lineIdx)
         {
             List<string[]> newlineInfo = mLines[lineIdx].GetlineInfo();
