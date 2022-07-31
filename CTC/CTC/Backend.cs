@@ -80,8 +80,6 @@ namespace Backend
 
             authority = route.Count; //maybe make this equal to (route.Count-1)?
             speed = length / duration.TotalSeconds; //This will give speed in meters per second
-
-
         }
     }
 
