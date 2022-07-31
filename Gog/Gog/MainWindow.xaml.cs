@@ -375,6 +375,9 @@ namespace GogNS
             */
 
             track.SetSpeeds(mRedSpeeds, 0);
+            track.SetAuthorities(mRedAuthorities, 0);
+            track.SetCrossings(mRedCrossings, 0);
+            track.SetSwitches(mRedSwitches, 0);
 
             //151 element array for green
             /*
