@@ -242,7 +242,7 @@ namespace GogNS
                             trains.UpdateBlock(bl, j);              //update the train pos
                             if (bl.mStation)
                             {
-                                track.SetPopulation(trains.UpdatePassenger(bl.mPop));
+                                track.SetPopulation(trains.Trains[j].UpdatePassenger(bl.mPop), bl);
                             }
                         }
                         else
