@@ -11,7 +11,7 @@ namespace TrainObject
 {
     public class Train
     {
-        static int nextID = 0;
+        static public int nextID = 0;
         private int ID;
         private double currentSpeed;
         private double previousAcceleration;
@@ -478,7 +478,11 @@ namespace TrainObject
             else
                 return "Red";
         }
-               
+        public int getID()
+        {
+            return ID;
+        }
+
     }
 
 
