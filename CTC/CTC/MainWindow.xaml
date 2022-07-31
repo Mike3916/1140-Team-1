@@ -26,7 +26,7 @@
         <Frame x:Name="Frame" Content="" Grid.RowSpan="2" NavigationUIVisibility="Hidden" Visibility="Visible" Grid.Column="1" Margin="203,24,245,10" ContentRendered="Frame_ContentRendered"/>
         <Button x:Name="Clear" Content="Clear" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="68,409,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="Clear_Click"/>
         <TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="572,27,0,0" Grid.RowSpan="2" TextWrapping="Wrap" Text="Select Train:" VerticalAlignment="Top"/>
-        <Button Content="See Block" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="685,180,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button x:Name ="SeeBlock" Content="See Block" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="685,180,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="SeeBlock_Click"/>
         <ComboBox x:Name="LineCombo" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="685,78,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="54" SelectionChanged="LineCombo_SelectionChanged"/>
         <ComboBox x:Name="SectionCombo" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="685,105,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="54" SelectionChanged="SectionCombo_SelectionChanged"/>
         <ComboBox x:Name="BlockCombo" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="686,132,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="54"/>

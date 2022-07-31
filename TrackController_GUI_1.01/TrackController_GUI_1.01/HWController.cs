@@ -31,6 +31,7 @@ namespace Track_Controller_1._02
             mRightLights = new int[151];
             mLeftLights = new int[151];
             mMaintenance = new int[151];
+            
         //Open serial port and reset all stored data
         mPi.Open();
             //mPi.WriteLine("?");
@@ -222,13 +223,21 @@ namespace Track_Controller_1._02
         public void run()
         {
             //todo
-            mSentMessage = "";
-            for (int i = 0; i < mOccupancies.Length; i++)
+            mSentMessage = new byte[11];
+            mTempSend = new bool[86];
+            for (int i = 0; i < 86; i++)
             {
-                mSentMessage = mSentMessage + (mOccupancies[i] + mMaintenance[i] >= 1).ToString();
+                if (mOccupancies[i + 57] + mMaintenance[i + 57] >= 1)
+                {
+                    mSentMessage[i / 8] = Convert.ToByte((mSentMessage[i / 8] | (1<<(i % 8))));
+                }
             }
 
-            mPi.WriteLine(mSentMessage);
+            //for (int i = 0; i < mSentMessage.Length; i++)
+            //{
+            //    mSentMessage[i] = FileStream.ReadByte(mTempSend, 8 * i);
+            //}
+            mPi.Write(mSentMessage, 0, 11);
             string mReceivedMessage = "";
             while (mReceivedMessage == "")
             {
@@ -266,6 +275,7 @@ namespace Track_Controller_1._02
         private int[] mMaintenance;
         private int[] mCrossings;
         private int[] mRoute;
+        private bool[] mTempSend;
         private bool mSwUpToDate;
         private bool mRLUpToDate;
         private bool mLLUpToDate;

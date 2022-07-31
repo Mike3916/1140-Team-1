@@ -10,11 +10,45 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[FOR inc1 := 0 TO 150 DO
+	//Sets Red Lights
+	IF GVL.mInOccupancies[inc1] = 0
+	THEN
+		GVL.mOutLeftLights[inc1] := 0;
+		GVL.mOutRightLights[inc1] := 0;
+	//Sets green lights
+	ELSE
+		GVL.mOutLeftLights[inc1] := 2;
+		GVL.mOutRightLights[inc1] := 2;
+	END_IF
+END_FOR
+
+FOR inc1 := 1 TO 149 DO
+	//Sets Yellow Lights
+	IF GVL.mInOccupancies[inc1-1] = 0 AND GVL.mInOccupancies[inc1] <> 0
+	THEN
+		GVL.mOutRightLights[inc1] := 1;
+	END_IF
+	IF GVL.mInOccupancies[inc1+1] = 0 AND GVL.mInOccupancies[inc1] <> 0
+	THEN
+	GVL.mOutLeftLights[inc1] := 1;
+	END_IF
+END_FOR
+
+//0 to 61 corresponds to blocks 1 to 62
+//76 to 150 corresponds to 
+
+FOR inc1 := 0 TO 150 DO
 
 	GVL.mOutOccupancies[inc1] := GVL.mInOccupancies[inc1];
 	GVL.mOutSpeeds[inc1] := GVL.mInSpeeds[inc1];
 	GVL.mOutAuthorities[inc1] := GVL.mInAuthorities[inc1];
 	GVL.mOutMaintenance[inc1] := GVL.mInMaintenance[inc1];
+	IF GVL.mInSpeeds[inc1] < GVL.mSpeedLimits[inc1]
+	THEN
+		GVL.mOutSpeeds[inc1] := GVL.mInSpeeds[inc1];
+	ELSE
+		GVL.mOutSpeeds[inc1] := GVL.mSpeedLimits[inc1];
+	END_IF
 
 END_FOR
 
@@ -31,60 +65,43 @@ END_IF
 
 
 //Switch Logic
-IF GVL.mInMaintenance[8] = 1 THEN
-    GVL.mOutSwitch[8] := GVL.mInSwitch[8];
-ELSE
-    IF GVL.mInOccupancies[76] = 0 THEN
-    	GVL.mOutSwitch[8] := 76;
-    ELSE
-		GVL.mOutSwitch[8] := 9;
-	END_IF
-END_IF
 
+//Set switch on block 13
 IF GVL.mInMaintenance[12] = 1 THEN
     GVL.mOutSwitch[12] := GVL.mInSwitch[12];
 ELSE
     IF GVL.mInOccupancies[11] = 0 THEN
-    FOR inc1 := 12 TO 28 DO 
-        IF GVL.mInOccupancies[inc1] = 0 THEN
-            GVL.mOutSwitch[12] := 13;
-            Exit;
-        ELSE 
-            GVL.mOutSwitch[12] := 0;
-        END_IF
-    END_FOR
+    	GVL.mOutSwitch[12] := 11;
+    ELSE
+		GVL.mOutSwitch[12] := 0;
 	END_IF
 END_IF
 
+//Set switch on block 29
 IF GVL.mInMaintenance[28] = 1 THEN
     GVL.mOutSwitch[28] := GVL.mInSwitch[28];
 ELSE
-    IF GVL.mInOccupancies[149] = 0 THEN
+    IF GVL.mInOccupancies[28] = 0 THEN
     FOR inc1 := 12 TO 28 DO 
         IF GVL.mInOccupancies[inc1] = 0 THEN
-            GVL.mOutSwitch[28] := 29;
+            GVL.mOutSwitch[28] := 149;
             Exit;
         ELSE 
-            GVL.mOutSwitch[28] := 149;
+            GVL.mOutSwitch[28] := 29;
         END_IF
     END_FOR
 	END_IF
 END_IF
 
+
+//Set switch on block 58
 IF GVL.mInMaintenance[57] = 1 THEN
     GVL.mOutSwitch[57] := GVL.mInSwitch[57];
+ELSE
+	GVL.mOutSwitch[57] := 58;
 END_IF
 	
-IF GVL.mInMaintenance[62] = 1 THEN
-    GVL.mOutSwitch[62] := GVL.mInSwitch[62];
-ELSE
-    IF GVL.mInOccupancies[150] = 0 THEN
-    	GVL.mOutSwitch[62] := 150;
-	ELSE
-		GVL.mOutSwitch[62] := 61;
-	END_IF
-END_IF
-
+//Set switch on block
 IF GVL.mInMaintenance[76] = 1 THEN
     GVL.mOutSwitch[76] := GVL.mInSwitch[76];
 ELSE
@@ -117,22 +134,31 @@ END_IF
 ]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="241" Count="18" />
+      <LineId Id="402" Count="22" />
+      <LineId Id="400" Count="1" />
+      <LineId Id="390" Count="0" />
+      <LineId Id="392" Count="0" />
+      <LineId Id="391" Count="0" />
+      <LineId Id="241" Count="5" />
+      <LineId Id="426" Count="4" />
+      <LineId Id="425" Count="0" />
+      <LineId Id="247" Count="12" />
       <LineId Id="356" Count="0" />
-      <LineId Id="260" Count="23" />
+      <LineId Id="260" Count="1" />
+      <LineId Id="378" Count="0" />
+      <LineId Id="377" Count="0" />
+      <LineId Id="262" Count="8" />
+      <LineId Id="379" Count="0" />
+      <LineId Id="271" Count="12" />
       <LineId Id="366" Count="0" />
-      <LineId Id="284" Count="13" />
-      <LineId Id="367" Count="0" />
+      <LineId Id="284" Count="0" />
+      <LineId Id="380" Count="0" />
       <LineId Id="298" Count="3" />
+      <LineId Id="381" Count="1" />
       <LineId Id="357" Count="0" />
-      <LineId Id="361" Count="0" />
-      <LineId Id="360" Count="0" />
-      <LineId Id="359" Count="0" />
-      <LineId Id="302" Count="1" />
-      <LineId Id="310" Count="0" />
-      <LineId Id="362" Count="0" />
-      <LineId Id="364" Count="1" />
-      <LineId Id="312" Count="13" />
+      <LineId Id="313" Count="0" />
+      <LineId Id="383" Count="0" />
+      <LineId Id="314" Count="11" />
       <LineId Id="369" Count="0" />
       <LineId Id="326" Count="13" />
       <LineId Id="370" Count="0" />

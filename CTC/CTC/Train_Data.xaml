@@ -17,6 +17,7 @@
         <Label Content="17 mph" HorizontalAlignment="Left" Margin="218,202,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="Dest" HorizontalAlignment="Left" Margin="218,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Loaded="Dest_Loaded"/>
         <TextBox x:Name="ETA" HorizontalAlignment="Left" Margin="218,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Loaded="ETA_Loaded"/>
+        <Button x:Name="UpdateTrain" Content="UpdateTrain" HorizontalAlignment="Left" Margin="360,210,0,0" VerticalAlignment="Top" Click="UpdateTrain_Click"/>
 
     </Grid>
 </Page>
