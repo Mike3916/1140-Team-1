@@ -89,7 +89,7 @@ namespace GogNS
 
         DispatcherTimer mGlobalTimer;
         int mIterationMultiplier = 10, numTrains = 0, iter = 0;
-        bool newBlock;
+        bool newBlock = false;
         bool gotTrack = false;
 
         public MainWindow()
@@ -161,6 +161,18 @@ namespace GogNS
             if (trainCtrl != null && trainCtrl.IsActive)
             {
                 Application.Current.MainWindow = trainCtrl;
+            }
+            else if (trains != null && trains.IsActive)
+            {
+                Application.Current.MainWindow = trains;
+            }
+            else if (track != null && track.IsActive)
+            {
+                Application.Current.MainWindow = track;
+            }
+            else if (ctc != null && ctc.IsActive)
+            {
+                Application.Current.MainWindow = ctc;
             }
         }
 
@@ -244,6 +256,8 @@ namespace GogNS
                             trains.RemoveTrain(j);             //delete the train
                             track.RemoveTrain(j);              //remove the train from the track
                         }
+
+                        newBlock = false;
                     }
                 }
             }
