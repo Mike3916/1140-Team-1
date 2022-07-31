@@ -54,13 +54,13 @@
             <Border.Effect>
                 <DropShadowEffect/>
             </Border.Effect>
-            <TextBlock x:Name="non_Vitals" Margin="6,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="116" Foreground="Black" HorizontalAlignment="Left" Width="298"><Run Text="Number of Passengers:"/><LineBreak/><Run Text="Number of Crew:"/><LineBreak/><Run Text="Number of Cars:"/><LineBreak/><Run Text="Capacity:"/><LineBreak/><Run Text="Indoor Lights:&#x9;&#x9;Exterior Lights:"/><LineBreak/><Run Text="Doors:"/><LineBreak/><Run Text="Temperature:"/></TextBlock>
+            <TextBlock x:Name="non_Vitals" Margin="6,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="116" Foreground="Black" HorizontalAlignment="Left" Width="298"><Run Text="Number of Passengers:"/><LineBreak/><Run Text="Number of Crew:"/><LineBreak/><Run Text="Number of Cars:"/><LineBreak/><Run Text="Capacity:"/><LineBreak/><Run Text="Indoor Lights:&#x9;&#x9;Exterior Lights:"/><LineBreak/><Run Text="Right Doors:&#x9;&#x9;Left Doors:"/><LineBreak/><Run Text="Temperature:"/></TextBlock>
 
         </Border>
         <Button x:Name="interiorLights" Content="Toggle" HorizontalAlignment="Left" Margin="555,248,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="16" Padding="0,-1,0,0" Grid.IsSharedSizeScope="True" FontSize="9" Click="Internal_Lights_Click" IsEnabled="False"/>
 
         <Button x:Name="doorL" Content="Toggle" HorizontalAlignment="Left" Margin="541,264,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="16" Padding="0,-1,0,0" Grid.IsSharedSizeScope="True" FontSize="9" Click="doorL_Click" IsEnabled="False"/>
-        <Button x:Name="doorR" Content="Toggle" HorizontalAlignment="Left" Margin="655,264,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="16" Padding="0,-1,0,0" Grid.IsSharedSizeScope="True" FontSize="9" Click="doorR_Click" IsEnabled="False"/>
+        <Button x:Name="doorR" Content="Toggle" HorizontalAlignment="Left" Margin="691,264,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="16" Padding="0,-1,0,0" Grid.IsSharedSizeScope="True" FontSize="9" Click="doorR_Click" IsEnabled="False"/>
         <Label Content="Beacon Announcements" HorizontalAlignment="Left" Margin="460,340,0,0" VerticalAlignment="Top" FontSize="8" Padding="0,0,0,0" Background="White" Height="11" Panel.ZIndex="500" Width="86"/>
         <Border BorderThickness="1,1,1,1" BorderBrush="Black" CornerRadius="15,15,15,15" Background="White" Width="315" Height="39" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="440,345,0,0">
             <Border.Effect>

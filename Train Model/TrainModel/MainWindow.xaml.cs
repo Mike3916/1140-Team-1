@@ -358,6 +358,19 @@ namespace TrainModel
 
 
                 non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nIndoor Lights: \t\t External Lights: \nDoors: L-Closed\t\tR-Closed\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
+                if (Trains[selectedTrain].getInteriorLights())
+                    InteriorLight.Text = "On";
+                else
+                {
+                    InteriorLight.Text = "Off";
+                }
+
+                if (Trains[selectedTrain].getExteriorLights())
+                    ExteriorLight.Text = "On";
+                else
+                {
+                    ExteriorLight.Text = "Off";
+                }
 
                 currLine.Text = Trains[selectedTrain].getLineName();
             }

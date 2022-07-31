@@ -232,7 +232,7 @@ namespace Gog
                         {                                         //if that block doesn't exist ...
                             trains.RemoveTrain(j);             //delete the train
                             track.RemoveTrain(j);              //remove the train from the track
-                            trainCtrl.RemoveTrain(j);          //remove the train from the train controller
+                            trainCtrl.removeController(j);          //remove the train from the train controller
                         }
 
                     }
