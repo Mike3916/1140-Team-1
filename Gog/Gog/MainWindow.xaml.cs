@@ -191,19 +191,22 @@ namespace GogNS
             {
                 if (iter++ % 10 == 0) TimeBox.Text = (iter).ToString();
 
-                PLCgetCTC();
-                PLCgetTrack();
 
-                System.Threading.Thread.Sleep(10);
+                if (track != null && ctc != null && track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
+                {
+                    PLCgetCTC();
+                    PLCgetTrack();
 
-                PLCsetCTC();
-                PLCsetTrack(); 
+                    System.Threading.Thread.Sleep(10);
 
-           
+                    PLCsetCTC();
+                    PLCsetTrack();
+                }
+
                 
 
 
-                if (track != null && ctc != null && gotTrack==false)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
+                if (track != null && ctc != null && gotTrack==false && track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
                 {                                                       
                     if (track.mLines.Count > 0)                         //Make sure the track files are loaded into the TrackModel module BEFORE the CTC model (button) is pressed to make sure the CTC will always get the full track
                     {
@@ -212,26 +215,28 @@ namespace GogNS
                     }
                 }
 
-                ctc.GetTrackController(mRedMaintenanceBlocks, mRedOccupancies, mRedSpeeds, mRedAuthorities, mRedCrossings, mRedSwitches, mRedLeftLights, mRedRightLights, mGreenMaintenanceBlocks, mGreenOccupancies, mGreenSpeeds, mGreenAuthorities, mGreenCrossings, mGreenSwitches, mGreenLeftLights, mGreenRightLights); //Write function in CTC to read in these values
-                //Update Track Controller variables with values from CTC
-                mRedMaintenanceBlocks = ctc.mRedMaintenanceBlocks;
-                mRedOccupancies = ctc.mRedOccupancies;
-                mRedSpeeds = ctc.mRedSpeeds;
-                mRedAuthorities = ctc.mRedAuthorities;
-                mRedCrossings = ctc.mRedCrossings;
-                mRedSwitches = ctc.mRedSwitches;
-                mRedLeftLights = ctc.mRedLeftLights;
-                mRedRightLights = ctc.mRedRightLights;
+                if (track != null && ctc != null &&  track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
+                {
+                    ctc.GetTrackController(mRedMaintenanceBlocks, mRedOccupancies, mRedSpeeds, mRedAuthorities, mRedCrossings, mRedSwitches, mRedLeftLights, mRedRightLights, mGreenMaintenanceBlocks, mGreenOccupancies, mGreenSpeeds, mGreenAuthorities, mGreenCrossings, mGreenSwitches, mGreenLeftLights, mGreenRightLights); //Write function in CTC to read in these values
+                                                                                                                                                                                                                                                                                                                                  //Update Track Controller variables with values from CTC
+                    mRedMaintenanceBlocks = ctc.mRedMaintenanceBlocks;
+                    mRedOccupancies = ctc.mRedOccupancies;
+                    mRedSpeeds = ctc.mRedSpeeds;
+                    mRedAuthorities = ctc.mRedAuthorities;
+                    mRedCrossings = ctc.mRedCrossings;
+                    mRedSwitches = ctc.mRedSwitches;
+                    mRedLeftLights = ctc.mRedLeftLights;
+                    mRedRightLights = ctc.mRedRightLights;
 
-                mGreenMaintenanceBlocks = ctc.mGreenMaintenanceBlocks;
-                mGreenOccupancies = ctc.mGreenOccupancies;
-                mGreenSpeeds = ctc.mGreenSpeeds;
-                mGreenAuthorities = ctc.mGreenAuthorities;
-                mGreenCrossings = ctc.mGreenCrossings;
-                mGreenSwitches = ctc.mGreenSwitches;
-                mGreenLeftLights = ctc.mGreenLeftLights;
-                mGreenRightLights = ctc.mGreenRightLights;
-                
+                    mGreenMaintenanceBlocks = ctc.mGreenMaintenanceBlocks;
+                    mGreenOccupancies = ctc.mGreenOccupancies;
+                    mGreenSpeeds = ctc.mGreenSpeeds;
+                    mGreenAuthorities = ctc.mGreenAuthorities;
+                    mGreenCrossings = ctc.mGreenCrossings;
+                    mGreenSwitches = ctc.mGreenSwitches;
+                    mGreenLeftLights = ctc.mGreenLeftLights;
+                    mGreenRightLights = ctc.mGreenRightLights;
+                }
                 /*
                 ctc.SetTrackData(track.mLines);
                 track.AddTrain(151, 1, 1, 12);
@@ -349,25 +354,25 @@ namespace GogNS
 
         private void PLCsetTrack()
         {
-            mRedline1.ReceiveSpeeds(mRed1Speeds.Length);
-            mRedline1.ReceiveAuthorities(mRed1Authorities.Length);
-            mRedline1.ReceiveCrossings(mRed1Crossings.Length);
-            mRedline1.ReceiveSwitches(mRed1Switches.Length);
-            mRedline1.ReceiveRightLights(mRed1RightLights.Length);
-            mRedline1.ReceiveLeftLights(mRed1LeftLights.Length);
-            mRedline2.ReceiveSpeeds(mRed2Speeds.Length);
-            mRedline2.ReceiveAuthorities(mRed2Authorities.Length);
-            mRedline2.ReceiveCrossings(mRed2Crossings.Length);
-            mRedline2.ReceiveSwitches(mRed2Switches.Length);
-            mRedline2.ReceiveRightLights(mRed2RightLights.Length);
-            mRedline2.ReceiveLeftLights(mRed2LeftLights.Length);
+            mRed1Speeds = mRedline1.ReceiveSpeeds(mRed1Speeds.Length);
+            mRed1Authorities = mRedline1.ReceiveAuthorities(mRed1Authorities.Length);
+            mRed1Crossings = mRedline1.ReceiveCrossings(mRed1Crossings.Length);
+            mRed1Switches = mRedline1.ReceiveSwitches(mRed1Switches.Length);
+            mRed1RightLights = mRedline1.ReceiveRightLights(mRed1RightLights.Length);
+            mRed1LeftLights = mRedline1.ReceiveLeftLights(mRed1LeftLights.Length);
+            mRed2Speeds = mRedline2.ReceiveSpeeds(mRed2Speeds.Length);
+            mRed2Authorities = mRedline2.ReceiveAuthorities(mRed2Authorities.Length);
+            mRed2Crossings = mRedline2.ReceiveCrossings(mRed2Crossings.Length);
+            mRed2Switches = mRedline2.ReceiveSwitches(mRed2Switches.Length);
+            mRed2RightLights = mRedline2.ReceiveRightLights(mRed2RightLights.Length);
+            mRed2LeftLights = mRedline2.ReceiveLeftLights(mRed2LeftLights.Length);
 
-            mGreenLine1.ReceiveSpeeds(mGreen1Speeds.Length);
-            mGreenLine1.ReceiveAuthorities(mGreen1Authorities.Length);
-            mGreenLine1.ReceiveCrossings(mGreen1Crossings.Length);
-            mGreenLine1.ReceiveSwitches(mGreen1Switches.Length);
-            mGreenLine1.ReceiveRightLights(mGreen1RightLights.Length);
-            mGreenLine1.ReceiveLeftLights(mGreen1LeftLights.Length);
+            mGreenSpeeds = mGreenLine1.ReceiveSpeeds(mGreenSpeeds.Length);
+            mGreenAuthorities = mGreenLine1.ReceiveAuthorities(mGreenAuthorities.Length);
+            mGreenCrossings = mGreenLine1.ReceiveCrossings(mGreenCrossings.Length);
+            mGreenSwitches = mGreenLine1.ReceiveSwitches(mGreenSwitches.Length);
+            mGreenRightLights = mGreenLine1.ReceiveRightLights(mGreenRightLights.Length);
+            mGreenLeftLights = mGreenLine1.ReceiveLeftLights(mGreenLeftLights.Length);
 
             ArrayMerger();
 
@@ -430,7 +435,7 @@ namespace GogNS
              Array.Copy(mRedSwitches,32,mRed2Switches,0,39);
              Array.Copy(mRedLeftLights,32,mRed2LeftLights,0,39);
              Array.Copy(mRedRightLights,32,mRed2RightLights,0,39);
-            
+
             return;
         }
 
@@ -446,14 +451,14 @@ namespace GogNS
             Array.Copy(mRed1LeftLights, 0, mRedLeftLights, 0, 38);
             Array.Copy(mRed1RightLights, 0, mRedRightLights, 0, 38);
 
-            Array.Copy(mRedMaintenanceBlocks, 38, mRed1MaintenanceBlocks, 71, 6);
-            Array.Copy(mRedOccupancies, 38, mRed1Occupancies, 71, 6);
-            Array.Copy(mRedSpeeds, 38, mRed1Speeds, 71, 6);
-            Array.Copy(mRedAuthorities, 38, mRed1Authorities, 71, 6);
-            Array.Copy(mRedCrossings, 38, mRed1Crossings, 71, 6);
-            Array.Copy(mRedSwitches, 38, mRed1Switches, 71, 6);
-            Array.Copy(mRedLeftLights, 38, mRed1LeftLights, 71, 6);
-            Array.Copy(mRedRightLights, 38, mRed1RightLights, 71, 6);
+            Array.Copy(mRed1MaintenanceBlocks, 37, mRedMaintenanceBlocks, 71, 6);
+            Array.Copy(mRed1Occupancies, 37, mRedOccupancies, 71, 6);
+            Array.Copy(mRed1Speeds, 37, mRedSpeeds, 71, 6);
+            Array.Copy(mRed1Authorities, 37, mRedAuthorities, 71, 6);
+            Array.Copy(mRed1Crossings, 37, mRedCrossings, 71, 6);
+            Array.Copy(mRed1Switches, 37, mRedSwitches, 71, 6);
+            Array.Copy(mRed1LeftLights, 37, mRedLeftLights, 71, 6);
+            Array.Copy(mRed1RightLights, 37, mRedRightLights, 71, 6);
 
             Array.Copy(mRed2MaintenanceBlocks, 0, mRedMaintenanceBlocks, 32, 39);
             Array.Copy(mRed2Occupancies, 0, mRedOccupancies, 32, 39);
