@@ -2,6 +2,7 @@
 <TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.29">
 	<Project ProjectGUID="{2EEB2563-6FD1-4293-B096-153BD5A24743}" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
+			<Settings MaxCpus="12" NonWinCpus="2"/>
 			<Tasks>
 				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
 					<Name>PlcTask</Name>
@@ -12,9 +13,9 @@
 			</Tasks>
 		</System>
 		<Plc>
-			<Project GUID="{B383DA3D-09B2-4775-8D8B-BC8114809C47}" Name="RedLine" PrjFilePath="RedLine\RedLine.plcproj" TmcFilePath="RedLine\RedLine.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="RedLine\RedLine.tmc">
-					<Name>RedLine Instance</Name>
+			<Project GUID="{B383DA3D-09B2-4775-8D8B-BC8114809C47}" Name="RedLine3" PrjFilePath="RedLine3\RedLine3.plcproj" TmcFilePath="RedLine3\RedLine3.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="RedLine3\RedLine3.tmc">
+					<Name>RedLine3 Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
 						<Context>
@@ -49,6 +50,26 @@
 					</Contexts>
 					<TaskPouOids>
 						<TaskPouOid Prio="21" OTCID="#x08502041"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+			<Project GUID="{F373F920-BB8D-46F1-ACCC-D73BB1B5D516}" Name="RedLine" PrjFilePath="RedLine2\RedLine.plcproj" TmcFilePath="RedLine2\RedLine.tmc" ReloadTmc="true" AmsPort="853" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502080" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="RedLine2\RedLine.tmc">
+					<Name>RedLine Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id NeedCalleeCall="true">0</Id>
+							<Name>PlcTask</Name>
+							<ManualConfig>
+								<OTCID>#x02010030</OTCID>
+							</ManualConfig>
+							<Priority>20</Priority>
+							<CycleTime>10000000</CycleTime>
+						</Context>
+					</Contexts>
+					<TaskPouOids>
+						<TaskPouOid Prio="20" OTCID="#x08502081"/>
 					</TaskPouOids>
 				</Instance>
 			</Project>
