@@ -229,7 +229,7 @@ namespace Gog
                         if (bl != null)                             //if that block exists
                             trains.UpdateBlock(bl, j);              //update the train pos
                         else                                        //if that block doesn't exist ...
-                            trains.Trains.RemoveAt(j);              //delete the train
+                            trains.RemoveTrain(j);              //delete the train
 
                     }
                 }

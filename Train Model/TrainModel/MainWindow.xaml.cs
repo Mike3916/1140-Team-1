@@ -62,7 +62,7 @@ namespace TrainModel
             
         }
 
-        private void removeTrain(int index)
+        private void RemoveTrain(int index)
         {
             Trains.RemoveAt(index);
         }  
