@@ -83,6 +83,8 @@ namespace TrainObject
             previousAcceleration = 0;
             interiorLights = false;
             exteriorLights = false;
+            doorL = false;
+            doorR = false;
             announcement = false;
             currAuthority = 0;
             underground = false;
@@ -102,6 +104,8 @@ namespace TrainObject
             previousAcceleration = 0;
             interiorLights = false;
             exteriorLights = false;
+            doorL = false;
+            doorR = false;
             announcement = false;
             cmdAuthority = authority;
             underground = false;
