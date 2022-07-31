@@ -197,8 +197,23 @@ namespace TrainController
 
             else if (sender == AddTrain)
             {
-                ((ControlPanel)Application.Current.MainWindow).addController();
-            }    
+                if (Line.Text == "Red")
+                {
+                    ((ControlPanel)Application.Current.MainWindow).addController(false);
+                }
+                else if (Line.Text == "Green")
+                {
+                    ((ControlPanel)Application.Current.MainWindow).addController(true);
+                }
+            }
+
+            else if (sender == RemoveTrain)
+            {
+                if (((ControlPanel)Application.Current.MainWindow).mTrainSetList.Count > 0)
+                {
+                    ((ControlPanel)Application.Current.MainWindow).removeController(int.Parse(Index.Text));
+                }
+            }
         }
 
         private void KeyDownButton(object sender, KeyEventArgs e)
