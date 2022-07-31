@@ -374,9 +374,7 @@ namespace TrainObject
             return false;
         }
         
-        public void toggleLights(){
-            
-        }
+      
         public int getCars()
         {
             return cars;
