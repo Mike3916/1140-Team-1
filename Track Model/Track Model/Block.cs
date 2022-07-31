@@ -241,11 +241,6 @@ namespace TrackModel
                 setNextBlock(blockNum);
         }
 
-        void PopulateStation()
-        {
-
-        }
-
         public string mlineName;
         public string msectionName;
         public int mblockNum;
@@ -271,7 +266,7 @@ namespace TrackModel
         public bool mUnderground;//is underground
         public bool mLeft;      //station on left
         public bool mRight;     //station on right
-        public bool mSwitch;
+        public bool mSwitch;    //has switch
 
         public int mPop;        //population at station
         public string mBeacon;
