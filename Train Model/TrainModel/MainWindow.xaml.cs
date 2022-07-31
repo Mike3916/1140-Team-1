@@ -111,7 +111,12 @@ namespace TrainModel
         }
 
 
-       
+        public void UpdateBlock(TrackModel.Block block, int i)
+        {
+            Trains[i].setBlockInfo(block);
+        }
+        
+         
 
       
 

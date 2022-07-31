@@ -447,7 +447,11 @@ namespace TrainObject
             currDist = 0;
             currAuthority++;
 
-            beaconMessage = "no Beacon";
+            if(signalPickUp)
+                beaconMessage = b.mBeacon;
+            else
+                beaconMessage = "";
+
         }
 
         public bool askForInfo()
