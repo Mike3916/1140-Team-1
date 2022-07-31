@@ -162,7 +162,10 @@ namespace TrainObject
             {
                 powerCmd = powerMax;
             }
-          
+
+            if(power<0)
+                toggleServiceBrake();
+
 
         }
 
@@ -442,7 +445,7 @@ namespace TrainObject
                 passengers -= leaveCount;
 
             }
-            passengers += b.mPop;
+            
            
             mass = 56.7 * 907.1850030836 + 65 * passengers + 65 * crew;
 
@@ -453,6 +456,21 @@ namespace TrainObject
                 beaconMessage = b.mBeacon;
             else
                 beaconMessage = "";
+
+        }
+
+        public int UpdatePassenger(int p)
+        {
+            int temp= passengers + p;
+            int ret = 0;
+            if (temp > capacity)
+            {
+                passengers = capacity;
+                ret = temp - capacity;
+            }
+            else
+                passengers += p;
+            return ret;
 
         }
 
