@@ -54,10 +54,10 @@
             <Border.Effect>
                 <DropShadowEffect/>
             </Border.Effect>
-            <TextBlock x:Name="non_Vitals" Margin="6,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="116" Foreground="Black" HorizontalAlignment="Left" Width="298"><Run Text="Number of Passengers:"/><LineBreak/><Run Text="Number of Crew:"/><LineBreak/><Run Text="Number of Cars:"/><LineBreak/><Run Text="Capacity:"/><LineBreak/><Run Text="Lights: "/><LineBreak/><Run Text="Doors:"/><LineBreak/><Run Text="Temperature:"/></TextBlock>
+            <TextBlock x:Name="non_Vitals" Margin="6,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="116" Foreground="Black" HorizontalAlignment="Left" Width="298"><Run Text="Number of Passengers:"/><LineBreak/><Run Text="Number of Crew:"/><LineBreak/><Run Text="Number of Cars:"/><LineBreak/><Run Text="Capacity:"/><LineBreak/><Run Text="Indoor Lights&#x9;&#x9;Exterior Lights:"/><LineBreak/><Run Text="Doors:"/><LineBreak/><Run Text="Temperature:"/></TextBlock>
 
         </Border>
-        <Button x:Name="lights" Content="Toggle" HorizontalAlignment="Left" Margin="517,248,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="16" Padding="0,-1,0,0" Grid.IsSharedSizeScope="True" FontSize="9" Click="Lights_Click" IsEnabled="False"/>
+        <Button x:Name="interiorLights" Content="Toggle" HorizontalAlignment="Left" Margin="555,248,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="16" Padding="0,-1,0,0" Grid.IsSharedSizeScope="True" FontSize="9" Click="Lights_Click" IsEnabled="False"/>
 
         <Button x:Name="doorL" Content="Toggle" HorizontalAlignment="Left" Margin="541,264,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="16" Padding="0,-1,0,0" Grid.IsSharedSizeScope="True" FontSize="9" Click="doorL_Click" IsEnabled="False"/>
         <Button x:Name="doorR" Content="Toggle" HorizontalAlignment="Left" Margin="655,264,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="16" Padding="0,-1,0,0" Grid.IsSharedSizeScope="True" FontSize="9" Click="doorR_Click" IsEnabled="False"/>
@@ -69,10 +69,11 @@
             <TextBlock x:Name="Beacon" HorizontalAlignment="Left" Margin="6,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="273" Foreground="Black" Text="Beacon Announcements would be displayed here as the train passes over them"/>
         </Border>
         <TextBlock HorizontalAlignment="Left" Margin="43,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16"><Run Text="Select a train"/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
-        <Button Content="Add Name" HorizontalAlignment="Left" Margin="540,45,0,0" VerticalAlignment="Top" Click="Button_Click"/>
-        <Button Content="Close" HorizontalAlignment="Left" Margin="644,45,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
+        <Button Content="Add Train" HorizontalAlignment="Left" Margin="509,43,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button Content="Close" HorizontalAlignment="Left" Margin="669,43,0,0" VerticalAlignment="Top" Click="Button_Click_1" RenderTransformOrigin="0.489,0.453"/>
         <TextBlock HorizontalAlignment="Left" Margin="187,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16"><Run Text="Train Line:"/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
         <TextBlock x:Name="currLine"  HorizontalAlignment="Left" Margin="187,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16"><Run Text=""/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
+        <Button Content="Remove Train" HorizontalAlignment="Left" Margin="570,42,0,0" VerticalAlignment="Top" Click="Button_Click_2"/>
 
 
 

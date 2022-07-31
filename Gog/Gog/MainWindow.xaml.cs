@@ -229,8 +229,11 @@ namespace Gog
                         TrackModel.Block bl = track.UpdateTrain(j); //get next block
                         if (bl != null)                             //if that block exists
                             trains.UpdateBlock(bl, j);              //update the train pos
-                        else                                        //if that block doesn't exist ...
+                        else
+                        {                                         //if that block doesn't exist ...
                             trains.RemoveTrain(j);             //delete the train
+                            track.RemoveTrain(j);              //remove the train from the track
+                        }
 
                     }
                 }
