@@ -169,17 +169,17 @@ namespace TrackModel
             return mLines;
         }
 
-        public List<bool> OccupiedBlocks(int idx)
+        public List<int> OccupiedBlocks(int idx)
         {
-            List<bool> occblocks = new List<bool>();
+            List<int> occblocks = new List<int>();
             for (int i = 0; i < mLines[idx].GetmnumSections(); i++)
             {
                 for (int j = 0; j < mLines[idx].mSections[i].getmnumBlocks(); j++)
                 {
                     if (mLines[idx].mSections[i].mBlocks[j].mOccupied == true)
-                        occblocks.Add(true);
+                        occblocks.Add(1);
                     else
-                        occblocks.Add(false);
+                        occblocks.Add(0);
                 }
             }
 
