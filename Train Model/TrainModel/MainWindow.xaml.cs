@@ -258,48 +258,32 @@ namespace TrainModel
         private void doorL_Click(object sender, RoutedEventArgs e)
         {
             Trains[selectedTrain].toggleDoorL();
-            writeDoors();
+            if (Trains[selectedTrain].getDoorL())
+            {
 
+                LDoor.Text= "Open";
+            }
+            else
+            {
+                LDoor.Text = "Closed";
+            }
         }
 
         private void doorR_Click(object sender, RoutedEventArgs e)
         {
             Trains[selectedTrain].toggleDoorR();
-            writeDoors();
-        }
+            if (Trains[selectedTrain].getDoorR())
+            {
 
-        private void writeDoors()
-        {
-            if (Trains[selectedTrain].getDoorL() && !Trains[selectedTrain].getDoorR())
-            {
-                if (!Trains[selectedTrain].getLights())
-                    non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nLights: Off\nDoors: L-Open\t\tR-Closed\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
-                else
-                    non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nLights: On\nDoors: L-Open\t\tR-Closed\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
+                RDoor.Text = "Open";
             }
-            if (Trains[selectedTrain].getDoorL() && Trains[selectedTrain].getDoorR())
+            else
             {
-                if (!Trains[selectedTrain].getLights())
-                    non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nLights: Off\nDoors: L-Open\t\tR-Open\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
-                else
-                    non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nLights: On\nDoors: L-Open\t\tR-Open\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
-            }
-            if (!Trains[selectedTrain].getDoorL() && Trains[selectedTrain].getDoorR())
-            {
-                if (!Trains[selectedTrain].getLights())
-                    non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nLights: Off\nDoors: L-Closed\t\tR-Open\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
-                else
-                    non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nLights: On\nDoors: L-Closed\t\tR-Open\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
-            }
-            if (!Trains[selectedTrain].getDoorL() && !Trains[selectedTrain].getDoorR())
-            {
-                if (!Trains[selectedTrain].getLights())
-                    non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nLights: Off\nDoors: L-Closed\t\tR-Closed\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
-                else
-                    non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nLights: On\nDoors: L-Closed\t\tR-Closed\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
+                RDoor.Text = "Closed";
             }
         }
 
+      
         protected override void OnClosing(CancelEventArgs e)
         {
             if (!actualClose)
@@ -357,7 +341,7 @@ namespace TrainModel
                 Speed.Text = "Current Speed: " + Math.Round(Trains[selectedTrain].getCurrentSpeedMPH(), 2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(Trains[selectedTrain].getCommandedSpeedMPH(), 2).ToString() + "Mi/h\nCurrent Acceleration: " + Trains[selectedTrain].getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: " + Trains[selectedTrain].getTimeTillNextBlock() + "s";
 
 
-                non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nIndoor Lights: \t\t External Lights: \nDoors: L-Closed\t\tR-Closed\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
+                non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nIndoor Lights: \t\tExternal Lights: \nRight Door: \t\tLeft Door: \nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
                 if (Trains[selectedTrain].getInteriorLights())
                     InteriorLight.Text = "On";
                 else
@@ -371,6 +355,24 @@ namespace TrainModel
                 {
                     ExteriorLight.Text = "Off";
                 }
+                if (Trains[selectedTrain].getDoorL())
+                {
+
+                    LDoor.Text = "Open";
+                }
+                else
+                {
+                    LDoor.Text = "Closed";
+                }
+                if (Trains[selectedTrain].getDoorR())
+                {
+
+                    RDoor.Text = "Open";
+                }
+                else
+                {
+                    RDoor.Text = "Closed";
+                } 
 
                 currLine.Text = Trains[selectedTrain].getLineName();
             }

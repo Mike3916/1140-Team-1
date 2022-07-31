@@ -28,20 +28,24 @@ namespace CTC
     public partial class MainWindow : Window
     {
         public List<Train> TrainList = new List<Train>(); //Global TrainList
-                                                          
-        Default_Page default_page = new Default_Page(); //Create the center-pane windows that will be switched between
-        Dispatch dispatch = new Dispatch();
-        Train_Data train_data = new Train_Data();
-        Block_Data block_data = new Block_Data();
-
-        public List<TrackModel.Line> mLines;    //Hold the track model
-        bool trackLoaded = false;               //Keep track of whether the track has been loaded or not
-
         public int totalTrains; //This will keep track of total number of trains in a day (it does NOT go down even when a train reaches destination). It is also used to assign train names in Dispatch
 
+        public List<TrackModel.Line> mLines;    //Hold the track model
+        public bool trackLoaded = false;        //Keep track of whether the track has been loaded or not
+
+        Default_Page default_page = new Default_Page(); //Create the center-pane windows that will be switched between
+        Dispatch dispatch = new Dispatch();
+        Train_Data train_data = new Train_Data(); 
+        Block_Data block_data = new Block_Data(); //Don't load at the start, it relies on data that has not been initialized yet (the select Block comboBOxes)
+
+        
+
+        
+
         //Variables to send to Track Controller
-        public int[] mRedMaintenanceBlocks = new int[77]; //Use block indexes starting with 0
-        public int[] mRedOccupancies = new int[77];
+        //Use block indexes starting with 0
+        public int[] mRedMaintenanceBlocks = new int[77]; // 0 means not in maintenance, 1 means it is in maintenance
+        public int[] mRedOccupancies = new int[77];       // 0 means not occupied, 1 means it is occupied
         public int[] mRedSpeeds = new int[77];
         public int[] mRedAuthorities = new int[77];
         public int[] mRedCrossings = new int[77];
@@ -64,6 +68,8 @@ namespace CTC
         {
             InitializeComponent(); ///Default code
             Frame.NavigationService.Navigate(default_page); //Show default blank page at center of screen
+
+            Application.Current.MainWindow = this;
 
             SelectTrain.Items.Clear(); //Clear out the default empty spaces in all the comboBoxes
             LineCombo.Items.Clear();
@@ -137,10 +143,11 @@ namespace CTC
 
                 train_data.Dest.IsEnabled = true; //on the train_data page, enable editing of the Destination box if the user is in manual mode
                 train_data.ETA.IsEnabled = true; // on the train_data page, enable editing of the ETA box
+               
                 block_data.ToggleButton.IsEnabled = true; //on block_data page, enable editing of toggle switch button
                 block_data.Close.IsEnabled = true; //on block_data page, disabled editing of close/open block status
                 block_data.Open.IsEnabled = true;
-
+                train_data.UpdateTrain.IsEnabled = true; //on train_data page, make the update train button available
 
 
             }
@@ -151,9 +158,13 @@ namespace CTC
 
                 train_data.Dest.IsEnabled = false; //on the train_data page, disable editing of the Destination box
                 train_data.ETA.IsEnabled = false; //on the train_data page, disable the editing of the ETA box
+
                 block_data.ToggleButton.IsEnabled = false; //on block_data page, disable editing of toggle switch button
                 block_data.Close.IsEnabled = false; //on block_data page, disabled editing of close/open block status
                 block_data.Open.IsEnabled = false;
+                
+                
+                train_data.UpdateTrain.IsEnabled = false;
             }
 
         }
@@ -197,7 +208,7 @@ namespace CTC
             mGreenLeftLights = GreenLeftLights;
             mGreenRightLights = GreenRightLights;
 
-    }
+        }
 
         private void LineCombo_SelectionChanged(object sender, SelectionChangedEventArgs e) //Once user selects a line, populate the SectionCombo box with all the sections in that line
         {
@@ -223,11 +234,10 @@ namespace CTC
             Frame.NavigationService.Navigate(default_page);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SeeBlock_Click(object sender, RoutedEventArgs e)
         {
+            block_data.loadBlockInfo(); //This is a function in block_data that loads information into the page
             Frame.NavigationService.Navigate(block_data);
         }
-
-        
     }
 }

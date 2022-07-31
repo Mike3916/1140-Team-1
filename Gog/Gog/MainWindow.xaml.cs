@@ -88,7 +88,7 @@ namespace GogNS
         */
 
         DispatcherTimer mGlobalTimer;
-        int mIterationMultiplier = 10, numTrains = 0, numTrainCtrls = 0, iter = 0;
+        int mIterationMultiplier = 10, numTrains = 0, iter = 0;
         bool newBlock;
         bool gotTrack = false;
 
@@ -119,7 +119,6 @@ namespace GogNS
                 Application.Current.MainWindow = trains;
                 trains = new TrainModel.MainWindow();
                 trains.Show();
-                numTrains++;
             }
             else
                 trains.Activate();
@@ -132,7 +131,6 @@ namespace GogNS
                 Application.Current.MainWindow = trainCtrl;
                 trainCtrl = new TrainController.ControlPanel();
                 trainCtrl.Show();
-                numTrainCtrls++;
             }
             else
                 trainCtrl.Activate();
@@ -169,12 +167,10 @@ namespace GogNS
         private void InitTimer()    
         {
             mGlobalTimer = new DispatcherTimer();
-
             mGlobalTimer.Tick += new EventHandler(updateTick);
 
             mGlobalTimer.Interval = new TimeSpan(0, 0, 0, 0, 10); //1 millisecond
             mGlobalTimer.Start();
-
         }
 
         private void updateTick(object sender, EventArgs e)
@@ -224,7 +220,6 @@ namespace GogNS
                 mGreenLeftLights = ctc.mGreenLeftLights;
                 mGreenRightLights = ctc.mGreenRightLights;
                 
-                
                 /*
                 ctc.SetTrackData(track.mLines);
                 track.AddTrain(151, 1, 1, 12);
@@ -233,12 +228,13 @@ namespace GogNS
                 track.GetT
                 */
 
-                for (int j = 0; j < numTrains && j < numTrainCtrls; j++)
+                for (int j = 0; j < numTrains; j++)
                 {
+                    MessageBox.Show(j.ToString());
                     newBlock = trains.UpdateValues(trainCtrl.mTrainSetList[j],j);
                     trainCtrl.UpdateValues(trains.Trains[j].getCmdAuthority(), trains.Trains[j].getCurrAuthority(), trains.Trains[j].getCommandedSpeedMPH(), trains.Trains[j].getCurrentSpeedMPH(), trains.Trains[j].getBeacon(), trains.Trains[j].getUnderground(), trains.Trains[j].getDoorL(), trains.Trains[j].getDoorR(), j);
 
-                   if (newBlock)                  //if train at j enters a new block
+                    if (newBlock)                  //if train at j enters a new block
                     { 
                         TrackModel.Block bl = track.UpdateTrain(j); //get next block
                         if (bl != null)                             //if that block exists
@@ -248,12 +244,8 @@ namespace GogNS
                             trains.RemoveTrain(j);             //delete the train
                             track.RemoveTrain(j);              //remove the train from the track
                         }
-
                     }
                 }
-
-
-
             }
         }
 
@@ -466,7 +458,7 @@ namespace GogNS
             }
             if (trainCtrl != null)
             {
-                trainCtrl.actualClose = true;
+                trainCtrl.mActualClose = true;
                 trainCtrl.Close();
             }
             if (trains != null)
