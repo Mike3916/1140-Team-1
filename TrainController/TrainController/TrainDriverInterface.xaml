@@ -14,7 +14,7 @@
         <TextBlock x:Name="CmdAuthority" HorizontalAlignment="Left" Margin="41,195,0,0" TextWrapping="Wrap" Text="Commanded Authority:&#xa;0 blocks" VerticalAlignment="Top" Height="60" Width="218" Background="#FF64E164" FontSize="20" TextAlignment="Center"/>
         <TextBlock x:Name="CurAuthority" HorizontalAlignment="Left" Margin="41,272,0,0" TextWrapping="Wrap" Text="Current Authority:&#xa;0 blocks" VerticalAlignment="Top" Height="60" Width="218" Background="#FF64E164" FontSize="20" TextAlignment="Center"/>
 
-        <TextBlock x:Name="CurSpeed" HorizontalAlignment="Left" Margin="280,173,0,0" TextWrapping="Wrap" Text="Current Speed:&#xa;0 mph" VerticalAlignment="Top" Height="119" Width="242" Background="#FF64E164" FontSize="34" TextAlignment="Center"/>
+        <TextBlock x:Name="CurSpeed" HorizontalAlignment="Left" Margin="280,173,0,0" TextWrapping="Wrap" Text="Current Speed:&#xa;0 mph" VerticalAlignment="Top" Height="119" Width="238" Background="#FF64E164" FontSize="34" TextAlignment="Center"/>
         <TextBlock x:Name="CmdSpeed" HorizontalAlignment="Left" Margin="280,306,0,0" TextWrapping="Wrap" Text="Cmd Speed:&#xa;0 mph" VerticalAlignment="Top" Height="62" Width="109" Background="#FF64E164" FontSize="18" TextAlignment="Center"/>
         <TextBlock x:Name="SetSpeed" HorizontalAlignment="Left" Margin="410,306,0,0" TextWrapping="Wrap" Text="Set Speed:&#xa;        mph" VerticalAlignment="Top" Height="62" Width="109" Background="#FFFFDF20" FontSize="18" TextAlignment="Center"/>
         <TextBlock x:Name="CurPower" HorizontalAlignment="Left" Margin="280,380,0,0" TextWrapping="Wrap" Text="Power: 0 kW" VerticalAlignment="Top" Height="32" Width="238" Background="#FF64E164" FontSize="18" TextAlignment="Center"/>
@@ -39,8 +39,9 @@
         <Button x:Name="TestPanel" Click="Button_Click" ClickMode="Press" Content="Open Test Panel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="540,426,0,0" Height="28" Width="220" FontSize="16"/>
 
         <TextBox x:Name="SetSpeedBox" HorizontalAlignment="Left" Margin="422,336,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="41" TextAlignment="Center" KeyDown="KeyDownButton"/>
-        <ComboBox x:Name="mControllerList" HorizontalAlignment="Left" Margin="627,22,0,0" VerticalAlignment="Top" Width="130" SelectionChanged="SelectTrain_SelectionChanged"/>
-        <Label x:Name="SelectTrainLabel" Content="Select Train:" HorizontalAlignment="Left" Margin="516,18,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Width="97" FontSize="15" HorizontalContentAlignment="Center" Height="30"/>
-        <Button x:Name="CloseButton" Click="Button_Click" ClickMode="Press" Content="Close Controller" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="41,20,0,0" Height="26" Width="129" Background="#FFFF5A5A" FontSize="15"/>
+        <ComboBox x:Name="mControllerList" HorizontalAlignment="Left" Margin="650,20,0,0" VerticalAlignment="Top" Width="102" SelectionChanged="SelectTrain_SelectionChanged" Height="26"/>
+        <Label x:Name="SelectTrainLabel" Content="Select Train:" HorizontalAlignment="Left" Margin="547,17,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Width="93" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="33"/>
+        <Button x:Name="CloseButton" Click="Button_Click" ClickMode="Press" Content="Close Controller" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,20,0,0" Height="26" Width="200" Background="#FFFF5A5A" FontSize="15"/>
+        <Label x:Name="Line" HorizontalContentAlignment="Center" Content="Line: -" FontSize="15" HorizontalAlignment="Left" Margin="341,17,0,0" VerticalAlignment="Top" Height="33" Width="116" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"/>
     </Grid>
 </Window>

@@ -27,11 +27,11 @@ namespace Track_Controller_1._02
            ads.Connect(mPort);//default port of TwinCAT 3 is 851
             if (ads.IsConnected == true)
             {
-                //MessageBox.Show(mPort.ToString() + " Connection OK");
+                Console.WriteLine(mPort.ToString() + " Connection OK");
             }
             else
             {
-                //MessageBox.Show(mPort.ToString() + " Not connected");
+                Console.WriteLine(mPort.ToString() + " Not connected");
             }
         }
 
@@ -46,7 +46,7 @@ namespace Track_Controller_1._02
             }
             catch
             {
-                MessageBox.Show("You are attempting to connect to a server that does not exist. Please check your server port number.");
+                Console.WriteLine("You are attempting to connect to a server that does not exist. Please check your server port number.");
             }
 
             try
@@ -55,7 +55,7 @@ namespace Track_Controller_1._02
             }
             catch
             {
-                MessageBox.Show("Failed to send. Check that Port " + mPort.ToString() + " is connected and the array size matches at the sender and receiver.");
+                Console.WriteLine("Failed to send. Check that Port " + mPort.ToString() + " is connected and the array size matches at the sender and receiver.");
             }
             return;
         }
@@ -73,7 +73,7 @@ namespace Track_Controller_1._02
             }
             catch
             {
-                MessageBox.Show("You are attempting to connect to a server that does not exist. Please check your server port number.");
+                Console.WriteLine("You are attempting to connect to a server that does not exist. Please check your server port number.");
                 int[] temp = new int[0];
                 return temp;
             }
