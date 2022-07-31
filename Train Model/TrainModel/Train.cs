@@ -42,7 +42,7 @@ namespace TrainObject
         private double blockDist;
         private double currDist;
         private double gradient;
-        int line;
+        int mLine;
 
 
 
@@ -104,7 +104,7 @@ namespace TrainObject
             announcement = false;
             cmdAuthority = authority;
             underground = false;
-            line = line;
+            mLine = line;
         }
 
 
