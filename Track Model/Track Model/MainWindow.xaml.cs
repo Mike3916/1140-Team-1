@@ -186,6 +186,15 @@ namespace TrackModel
             return occblocks;
         }
 
+        public void SetPopulation(int pop, TrackModel.Block bl)
+        {
+            bl.mPop = pop;
+            if (bl.mlineName == "Red")
+                mLines[0].SetBlock(bl);
+            else
+                mLines[1].SetBlock(bl);
+        }
+
         public void SetSpeeds(int[] speeds, int lIdx)
         {
             for (int blocknum = 1; blocknum <= mLines[lIdx].GetmnumBlocks(); blocknum++)
