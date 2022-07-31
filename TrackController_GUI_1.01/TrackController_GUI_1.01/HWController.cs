@@ -61,122 +61,122 @@ namespace Track_Controller_1._02
         //    return temp;
         //}
 
-        public void SendSwitches(int[] mPacket)
-        {
-            //TODO
-        }
+        //public void SendSwitches(int[] mPacket)
+        //{
+        //    //TODO
+        //}
 
-        public int[] ReceiveSwitches(int mLength)
-        {
-            //TODO
+        //public int[] ReceiveSwitches(int mLength)
+        //{
+        //    //TODO
             
-        }
+        //}
 
-        public void SendOccupancies(int[] mPacket)
-        {
-            //TODO
-            string mSentMessage = "";
-            for (int i = 0; i < mPacket.Length; i++)
-            {
-                mSentMessage = mSentMessage + mPacket[i].ToString();
-            }
+        //public void SendOccupancies(int[] mPacket)
+        //{
+        //    //TODO
+        //    string mSentMessage = "";
+        //    for (int i = 0; i < mPacket.Length; i++)
+        //    {
+        //        mSentMessage = mSentMessage + mPacket[i].ToString();
+        //    }
 
-            mPi.WriteLine(mSentMessage + "\n");
-            string mReceivedMessage = "";
-            while (mReceivedMessage == "")
-            {
-                mReceivedMessage = mPi.ReadLine();
-            }
-            MessageBox.Show(mReceivedMessage);
-            // create an array with size as string
-            // length and initialize with 0
-            int[] temp = new int[mReceivedMessage.Length];
+        //    mPi.WriteLine(mSentMessage + "\n");
+        //    string mReceivedMessage = "";
+        //    while (mReceivedMessage == "")
+        //    {
+        //        mReceivedMessage = mPi.ReadLine();
+        //    }
+        //    MessageBox.Show(mReceivedMessage);
+        //    // create an array with size as string
+        //    // length and initialize with 0
+        //    int[] temp = new int[mReceivedMessage.Length];
 
 
-            // Traverse the string
-            for (int i = 0; mReceivedMessage[i] != '\0'; i++)
-            {
-                // subtract str[i] by 48 to convert it to int
-                // Generate number by multiplying 10 and adding
-                // (int)(str[i])
-                temp[i] = temp[i] * 10 + (mReceivedMessage[i] - 48);
-            }
-        }
+        //    // Traverse the string
+        //    for (int i = 0; mReceivedMessage[i] != '\0'; i++)
+        //    {
+        //        // subtract str[i] by 48 to convert it to int
+        //        // Generate number by multiplying 10 and adding
+        //        // (int)(str[i])
+        //        temp[i] = temp[i] * 10 + (mReceivedMessage[i] - 48);
+        //    }
+        //}
 
-        public int[] ReceiveOccupancies(int mLength)
-        {
-            //todo
-        }
+        //public int[] ReceiveOccupancies(int mLength)
+        //{
+        //    //todo
+        //}
 
-        public void SendSpeeds(int[] mPacket)
-        {
-            //todo
-        }
+        //public void SendSpeeds(int[] mPacket)
+        //{
+        //    //todo
+        //}
 
-        public int[] ReceiveSpeeds(int mLength)
-        {
-            //todo
-        }
+        //public int[] ReceiveSpeeds(int mLength)
+        //{
+        //    //todo
+        //}
 
-        public void SendAuthorities(int[] mPacket)
-        {
-            //todo
-        }
+        //public void SendAuthorities(int[] mPacket)
+        //{
+        //    //todo
+        //}
 
-        public int[] ReceiveAuthorities(int mLength)
-        {
-            //todo
-        }
+        //public int[] ReceiveAuthorities(int mLength)
+        //{
+        //    //todo
+        //}
 
-        public void SendCrossings(int[] mPacket)
-        {
-            //todo
-        }
+        //public void SendCrossings(int[] mPacket)
+        //{
+        //    //todo
+        //}
 
-        public int[] ReceiveCrossings(int mLength)
-        {
-            //todo
-        }
+        //public int[] ReceiveCrossings(int mLength)
+        //{
+        //    //todo
+        //}
 
-        public void SendLeftLights(int[] mPacket)
-        {
-            //todo
-        }
+        //public void SendLeftLights(int[] mPacket)
+        //{
+        //    //todo
+        //}
 
-        public int[] ReceiveLeftLights(int mLength)
-        {
-            //todo
-        }
+        //public int[] ReceiveLeftLights(int mLength)
+        //{
+        //    //todo
+        //}
 
-        public void SendRightLights(int[] mPacket)
-        {
-            //todo
-        }
+        //public void SendRightLights(int[] mPacket)
+        //{
+        //    //todo
+        //}
 
-        public int[] ReceiveRightLights(int mLength)
-        {
-            //todo
-        }
+        //public int[] ReceiveRightLights(int mLength)
+        //{
+        //    //todo
+        //}
 
-        public void SendMaintenance(int[] mPacket)
-        {
-            //todo
-        }
+        //public void SendMaintenance(int[] mPacket)
+        //{
+        //    //todo
+        //}
 
-        public int[] ReceiveMaintenance(int mLength)
-        {
-            //todo
-        }
+        //public int[] ReceiveMaintenance(int mLength)
+        //{
+        //    //todo
+        //}
 
-        public void SendRoute(int[] mPacket)
-        {
-            //todo
-        }
+        //public void SendRoute(int[] mPacket)
+        //{
+        //    //todo
+        //}
 
-        public int[] ReceiveRoute(int mLength)
-        {
-            //todo
-        }
+        //public int[] ReceiveRoute(int mLength)
+        //{
+        //    //todo
+        //}
 
 
         private SerialPort mPi;

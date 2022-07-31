@@ -14,6 +14,7 @@
           "Microsoft.Extensions.DependencyInjection": "6.0.0",
           "Newtonsoft.Json": "13.0.1",
           "System.Data.SqlClient": "4.8.3",
+          "System.IO.Ports": "6.0.0.0",
           "TwinCAT.Ads": "4.4.0.0"
         },
         "runtime": {
@@ -481,6 +482,14 @@
           "System.Drawing.Common": "4.7.0"
         }
       },
+      "System.IO.Ports/6.0.0.0": {
+        "runtime": {
+          "System.IO.Ports.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.21.52210"
+          }
+        }
+      },
       "TwinCAT.Ads/4.4.0.0": {
         "runtime": {
           "TwinCAT.Ads.dll": {
@@ -839,6 +848,11 @@
       "sha512": "sha512-CeWTdRNfRaSh0pm2gDTJFwVaXfTq6Xwv/sA887iwPTneW7oMtMlpvDIO+U60+3GWTB7Aom6oQwv5VZVUhQRdPQ==",
       "path": "system.windows.extensions/4.7.0",
       "hashPath": "system.windows.extensions.4.7.0.nupkg.sha512"
+    },
+    "System.IO.Ports/6.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
     },
     "TwinCAT.Ads/4.4.0.0": {
       "type": "reference",
