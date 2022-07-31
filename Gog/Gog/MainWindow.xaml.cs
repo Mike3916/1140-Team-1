@@ -224,7 +224,6 @@ namespace GogNS
                 mGreenLeftLights = ctc.mGreenLeftLights;
                 mGreenRightLights = ctc.mGreenRightLights;
                 
-                
                 /*
                 ctc.SetTrackData(track.mLines);
                 track.AddTrain(151, 1, 1, 12);
