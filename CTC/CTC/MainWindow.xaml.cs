@@ -45,7 +45,7 @@ namespace CTC
         public int[] mRedSpeeds = new int[77];
         public int[] mRedAuthorities = new int[77];
         public int[] mRedCrossings = new int[77];
-        public int[] mRedSwitches = new int[77];
+        public int[] mRedSwitches = new int[77]; //The integer stored here is the index of the next block the switch points to (I will send a 1 to indicate the switch is toggled by dispatcher in Block_Data
         public int[] mRedLeftLights = new int[77];
         public int[] mRedRightLights = new int[77];
 
@@ -137,10 +137,10 @@ namespace CTC
 
                 train_data.Dest.IsEnabled = true; //on the train_data page, enable editing of the Destination box if the user is in manual mode
                 train_data.ETA.IsEnabled = true; // on the train_data page, enable editing of the ETA box
-                block_data.Left.IsEnabled = true; //on block_data page, enable editing of left/right switch buttons
-                block_data.Right.IsEnabled = true;
+                block_data.ToggleButton.IsEnabled = true; //on block_data page, enable editing of toggle switch button
                 block_data.Close.IsEnabled = true; //on block_data page, disabled editing of close/open block status
                 block_data.Open.IsEnabled = true;
+
 
 
             }
@@ -151,8 +151,7 @@ namespace CTC
 
                 train_data.Dest.IsEnabled = false; //on the train_data page, disable editing of the Destination box
                 train_data.ETA.IsEnabled = false; //on the train_data page, disable the editing of the ETA box
-                block_data.Left.IsEnabled = false; //on block_data page, disable editing of left/right switch buttons
-                block_data.Right.IsEnabled = false;
+                block_data.ToggleButton.IsEnabled = false; //on block_data page, disable editing of toggle switch button
                 block_data.Close.IsEnabled = false; //on block_data page, disabled editing of close/open block status
                 block_data.Open.IsEnabled = false;
             }
@@ -177,6 +176,29 @@ namespace CTC
                 }
             }
         }
+
+        public void GetTrackController(int[] RedMaintenanceBlocks, int[] RedOccupancies, int[] RedSpeeds, int[] RedAuthorities, int[] RedCrossings, int[] RedSwitches, int[] RedLeftLights, int[] RedRightLights, int[] GreenMaintenanceBlocks, int[] GreenOccupancies, int[] GreenSpeeds, int[] GreenAuthorities, int[] GreenCrossings, int[] GreenSwitches, int[] GreenLeftLights, int[] GreenRightLights) //Write function in CTC to read in these values
+        {
+            mRedMaintenanceBlocks = RedMaintenanceBlocks;
+            mRedOccupancies = RedOccupancies;
+            mRedSpeeds = RedSpeeds;
+            mRedAuthorities = RedAuthorities;
+            mRedCrossings = RedCrossings;
+            mRedSwitches = RedSwitches;
+            mRedLeftLights = RedLeftLights;
+            mRedRightLights = RedRightLights;
+
+            mGreenMaintenanceBlocks = GreenMaintenanceBlocks;
+            mGreenOccupancies = GreenOccupancies;
+            mGreenSpeeds = GreenSpeeds;
+            mGreenAuthorities = GreenAuthorities;
+            mGreenCrossings = GreenCrossings;
+            mGreenSwitches = GreenSwitches;
+            mGreenLeftLights = GreenLeftLights;
+            mGreenRightLights = GreenRightLights;
+
+    }
+
         private void LineCombo_SelectionChanged(object sender, SelectionChangedEventArgs e) //Once user selects a line, populate the SectionCombo box with all the sections in that line
         {
             for (int i = 0; i < mLines[LineCombo.SelectedIndex].GetmnumSections(); i++) //Step through each section

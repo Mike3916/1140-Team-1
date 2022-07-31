@@ -9,8 +9,6 @@
       Title="Block_Data">
 
     <Grid Background="White" Width="389" Height="395">
-        <Button x:Name="Left" Content="Left" HorizontalAlignment="Left" Margin="79,88,0,0" VerticalAlignment="Top" Height="31" Width="32" Click="Left_Click"/>
-        <Button x:Name="Right" Content="Right" HorizontalAlignment="Left" Margin="137,88,0,0" VerticalAlignment="Top" Height="31" Width="33" Background="LightGreen" Click="Right_Click"/>
         <Button x:Name="Open" Content="Open" HorizontalAlignment="Left" Margin="137,144,0,0" VerticalAlignment="Top" Background="LightGreen" Click="Open_Click"/>
         <Button x:Name="Close" Content="Close" HorizontalAlignment="Left" Margin="79,144,0,0" VerticalAlignment="Top" Click="Close_Click"/>
         <TextBlock HorizontalAlignment="Left" Margin="51,236,0,0" TextWrapping="Wrap" Text="Tickets per Hour:" VerticalAlignment="Top"/>
@@ -32,5 +30,8 @@
         <TextBlock HorizontalAlignment="Left" Margin="242,117,0,0" TextWrapping="Wrap" Text="Signal Light" VerticalAlignment="Top"/>
         <Rectangle x:Name="CrossingRect" Fill="LightGray" HorizontalAlignment="Left" Height="42" Margin="228,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="92"/>
         <TextBlock x:Name="CrossingText" HorizontalAlignment="Left" Margin="232,0,0,0" TextWrapping="Wrap" Text="Crossing Status" VerticalAlignment="Center"/>
+        <TextBlock x:Name="SwitchText" HorizontalAlignment="Left" Margin="51,266,0,0" TextWrapping="Wrap" Text="Switch to Block:" VerticalAlignment="Top"/>
+        <TextBlock x:Name="SwitchNum" HorizontalAlignment="Left" Margin="151,266,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top"/>
+        <Button x:Name="ToggleButton" Content="Toggle Switch" HorizontalAlignment="Left" Margin="194,267,0,0" VerticalAlignment="Top" Click="ToggleButton_Click"/>
     </Grid>
 </Page>
