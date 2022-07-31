@@ -1,4 +1,4 @@
-using Train = TrainObject.Train;
+
 
 namespace gogTests
 {
@@ -20,11 +20,11 @@ namespace gogTests
             Assert.AreEqual(track.mtrainList[0].lineIdx, 0);
             Assert.AreEqual(track.mtrainList[0].commAuthority, 0);
         }
-
+        
         [TestMethod]
         public void maxPowerLimited()
         {
-            Train chooChoo = new Train(35, 1);
+            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
             chooChoo.setPowerCmd(500000000);
             Assert.AreEqual(120000, chooChoo.getPowerCmd(), "Account not debited correctly");
 
@@ -477,7 +477,6 @@ namespace gogTests
             //GreenLinePLC.SendOccupancies(occupancies);
             //returns = GreenLinePLC.ReceiveOccupancies(151);
 
-        //}
         }
         //[TestMethod]
         //public void TrackModel_AddTrain()
