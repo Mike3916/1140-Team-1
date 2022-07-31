@@ -200,12 +200,23 @@ namespace Track_Controller_1._02
         //<void>
         private void mButton_Controller_Connect_Click(object sender, EventArgs e)
         {
-            int[] mRoutes = new int[77];
+            int[] mRoutes = new int[45];
+            int[] mOccupancies = new int[45];
+            int length = 45;
+
+            for(int i=0; i<45; i++)
+            {
+                mOccupancies[i] = 1;
+                mRoutes[i] = i;
+            }
 
             Controller mRedLine1 = new Controller(851, false, "127.0.0.1");
 
             mRedLine1.SendRoute(mRoutes);
-            mRoutes = mRedLine1.ReceiveRoute(77);
+            mRoutes = mRedLine1.ReceiveRoute(length);
+
+            mRedLine1.SendOccupancies(mOccupancies);
+            mOccupancies = mRedLine1.ReceiveOccupancies(length);
 
         }
 

@@ -231,30 +231,26 @@ namespace TrainModel
             Beacon.Text = "Beacon: " + Trains[selectedTrain].getBeacon();
         }
 
-        private void Lights_Click(object sender, RoutedEventArgs e)
+        private void Internal_Lights_Click(object sender, RoutedEventArgs e)
         {
-            Trains[selectedTrain].toggleLights();
-            if (Trains[selectedTrain].getLights())
+            Trains[selectedTrain].toggleInteriorLights();
+            if(Trains[selectedTrain].getInteriorLights())
+                InteriorLight.Text = "On";
+            else
+                {
+                    InteriorLight.Text = "Off";
+                }
+          
+        }
+
+        private void Exterior_Lights_Click(object sender, RoutedEventArgs e)
+        {
+            Trains[selectedTrain].toggleExteriorLights();
+            if (Trains[selectedTrain].getExteriorLights())
+                ExteriorLight.Text = "On";
+            else
             {
-                if (!Trains[selectedTrain].getDoorR() && !Trains[selectedTrain].getDoorL())
-                    non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nLights: On\nDoors: L-Closed\t\tR-Closed\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
-                else if (Trains[selectedTrain].getDoorR() && !Trains[selectedTrain].getDoorL())
-                    non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nLights: On\nDoors: L-Closed\t\tR-Open\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
-                else if (!Trains[selectedTrain].getDoorR() && Trains[selectedTrain].getDoorL())
-                    non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nLights: On\nDoors: L-Open\t\tR-Closed\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
-                else
-                    non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nLights: On\nDoors: L-Open\t\tR-Open\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
-            }
-            if (!Trains[selectedTrain].getLights())
-            {
-                if (!Trains[selectedTrain].getDoorR() && !Trains[selectedTrain].getDoorL())
-                    non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nLights: Off\nDoors: L-Closed\t\tR-Closed\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
-                else if (Trains[selectedTrain].getDoorR() && !Trains[selectedTrain].getDoorL())
-                    non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nLights: Off\nDoors: L-Closed\t\tR-Open\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
-                else if (!Trains[selectedTrain].getDoorR() && Trains[selectedTrain].getDoorL())
-                    non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nLights: Off\nDoors: L-Open\t\tR-Closed\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
-                else
-                    non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nLights: Off\nDoors: L-Open\t\tR-Open\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
+                ExteriorLight.Text = "Off";
             }
         }
 
@@ -350,7 +346,8 @@ namespace TrainModel
                 engineFailure.IsEnabled = true;
                 power.IsEnabled = true;
                 increment.IsEnabled = true;
-                lights.IsEnabled = true;
+                exteriorLights.IsEnabled = true;
+                interiorLights.IsEnabled = true;
                 doorL.IsEnabled = true;
                 doorR.IsEnabled = true;
 
@@ -360,7 +357,20 @@ namespace TrainModel
                 Speed.Text = "Current Speed: " + Math.Round(Trains[selectedTrain].getCurrentSpeedMPH(), 2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(Trains[selectedTrain].getCommandedSpeedMPH(), 2).ToString() + "Mi/h\nCurrent Acceleration: " + Trains[selectedTrain].getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: " + Trains[selectedTrain].getTimeTillNextBlock() + "s";
 
 
-                non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nLights: Off\nDoors: L-Closed\t\tR-Closed\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
+                non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nIndoor Lights: \t\t External Lights: \nDoors: L-Closed\t\tR-Closed\nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
+                if (Trains[selectedTrain].getInteriorLights())
+                    InteriorLight.Text = "On";
+                else
+                {
+                    InteriorLight.Text = "Off";
+                }
+
+                if (Trains[selectedTrain].getExteriorLights())
+                    ExteriorLight.Text = "On";
+                else
+                {
+                    ExteriorLight.Text = "Off";
+                }
 
                 currLine.Text = Trains[selectedTrain].getLineName();
             }

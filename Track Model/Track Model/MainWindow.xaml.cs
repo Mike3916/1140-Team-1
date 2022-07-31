@@ -184,6 +184,22 @@ namespace TrackModel
             return occblocks;
         }
 
+        public void SetSpeeds(int[] speeds, int lIdx)
+        {
+            for (int blocknum = 1; blocknum <= mLines[lIdx].GetmnumBlocks(); blocknum++)
+            {
+                TrackModel.Block newSpeed = mLines[lIdx].GetBlock(blocknum);
+                newSpeed.mspeedLimit = speeds[blocknum-1];
+                mLines[lIdx].SetBlock(newSpeed);
+            }
+        }
+
+        public void SetAuthorities()
+        {
+
+        }
+        
+
         private DataTable MakeLineDataTable(int lineIdx)
         {
             List<string[]> newlineInfo = mLines[lineIdx].GetlineInfo();
