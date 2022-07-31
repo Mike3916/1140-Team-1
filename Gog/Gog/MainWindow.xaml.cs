@@ -380,6 +380,11 @@ namespace GogNS
             = mRedLeftLights;
             = mRedRightLights;
             */
+
+            track.SetSpeeds(mGreenSpeeds, 1);
+            track.SetAuthorities(mGreenAuthorities, 1);
+            track.SetCrossings(mGreenCrossings, 1);
+            track.SetSwitches(mGreenSwitches, 1);
         }
 
         private void ArraySplitter()
