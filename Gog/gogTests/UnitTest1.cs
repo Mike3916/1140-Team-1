@@ -20,7 +20,7 @@ namespace gogTests
             Assert.AreEqual(track.mtrainList[0].lineIdx, 0);
             Assert.AreEqual(track.mtrainList[0].commAuthority, 0);
         }
-        
+
         [TestMethod]
         public void maxPowerLimited()
         {
@@ -29,101 +29,6 @@ namespace gogTests
             Assert.AreEqual(120000, chooChoo.getPowerCmd(), "Account not debited correctly");
 
         }
-
-        [TestMethod]
-        public void TrainControllerSW_ToggleLeftDoors()
-        {
-            TrainController.Controller train = new TrainController.Controller(false);
-            Assert.AreEqual(train.mLeftDoorsStatus, false); // closed by default
-            train.setLeftDoors();
-            Assert.AreEqual(train.mLeftDoorsStatus, true);  // open
-            train.setLeftDoors();
-            Assert.AreEqual(train.mLeftDoorsStatus, false); // closed
-        }
-
-        [TestMethod]
-        public void TrainControllerSW_ToggleRightDoors()
-        {
-            TrainController.Controller train = new TrainController.Controller(false);
-            Assert.AreEqual(train.mRightDoorsStatus, false); // closed by default
-            train.setRightDoors();
-            Assert.AreEqual(train.mRightDoorsStatus, true);  // open
-            train.setRightDoors();
-            Assert.AreEqual(train.mRightDoorsStatus, false); // closed
-        }
-
-        [TestMethod]
-        public void TrainControllerSW_ToggleInteriorLights()
-        {
-            TrainController.Controller train = new TrainController.Controller(false);
-            Assert.AreEqual(train.mInteriorLightsStatus, false); // closed by default
-            train.setInteriorLights();
-            Assert.AreEqual(train.mInteriorLightsStatus, true);  // open
-            train.setInteriorLights();
-            Assert.AreEqual(train.mInteriorLightsStatus, false); // closed
-        }
-
-        [TestMethod]
-        public void TrainControllerSW_ToggleExteriorLights()
-        {
-            TrainController.Controller train = new TrainController.Controller(false);
-            Assert.AreEqual(train.mExteriorLightsStatus, false); // closed by default
-            train.setExteriorLights();
-            Assert.AreEqual(train.mExteriorLightsStatus, true);  // open
-            train.setExteriorLights();
-            Assert.AreEqual(train.mExteriorLightsStatus, false); // closed
-        }
-
-        [TestMethod]
-        public void TrainControllerSW_ToggleAnnouncements()
-        {
-            TrainController.Controller train = new TrainController.Controller(false);
-            Assert.AreEqual(train.mAnnouncementsStatus, false); // closed by default
-            train.setAnnouncements();
-            Assert.AreEqual(train.mAnnouncementsStatus, true);  // open
-            train.setAnnouncements();
-            Assert.AreEqual(train.mAnnouncementsStatus, false); // closed
-        }
-
-        [TestMethod]
-        public void TrainControllerSW_DecrementTemperature()
-        {
-            TrainController.Controller train = new TrainController.Controller(false);
-            Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
-            train.tempDecrease();
-            Assert.AreEqual(train.mTemperature, 71);  // 71 degrees F
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            Assert.AreEqual(train.mTemperature, 62); // 62 degrees F
-        }
-
-        [TestMethod]
-        public void TrainControllerSW_IncrementTemperature()
-        {
-            TrainController.Controller train = new TrainController.Controller(false);
-            Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
-            train.tempIncrease();
-            Assert.AreEqual(train.mTemperature, 73);  // 73 degrees F
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            Assert.AreEqual(train.mTemperature, 82); // 82 degrees F
-        }
-
-
 
         [TestMethod]
         //Checks if program will crash when attempting to connect to an unconfigured port number
@@ -135,8 +40,8 @@ namespace gogTests
             int[] returns = new int[45];
 
             RedlinePLC.SendCrossings(crossings);
-            (RedlinePLC.ReceiveCrossings(45)).CopyTo(returns,0);
-        }   
+            (RedlinePLC.ReceiveCrossings(45)).CopyTo(returns, 0);
+        }
 
         [TestMethod]
         //Test to see if PLC receives and sends the occupancies correctly
@@ -284,7 +189,7 @@ namespace gogTests
             //Change speeds to 1s
             for (int i = 0; i < returns.Length; i++)
             {
-                authorities[i] = i+1;
+                authorities[i] = i + 1;
             }
 
             //check that arrays no longer match
@@ -401,7 +306,7 @@ namespace gogTests
             //block 76 (yard) to unoccupied (high)
             occupancies[44] = 1;
             //two way track unoccupied
-            for(int i=16; i<=26; i++)
+            for (int i = 16; i <= 26; i++)
             {
                 occupancies[i] = 0;
             }
@@ -493,14 +398,14 @@ namespace gogTests
             (RedlinePLC1.ReceiveRightLights(45)).CopyTo(returns2, 0);
 
             //Lights should be logical low when red/occupied
-            for(int i = 0; i< occupancies.Length; i++)
+            for (int i = 0; i < occupancies.Length; i++)
             {
                 Assert.AreEqual(returns1[i], 0);
                 Assert.AreEqual(returns2[i], 0);
             }
 
             //Switch all blocks to unoccupied (high) from occupied (low).
-            for(int i=0; i< returns1.Length; i++)
+            for (int i = 0; i < returns1.Length; i++)
             {
                 occupancies[i] = 1;
             }
@@ -536,44 +441,266 @@ namespace gogTests
         //{
         //    Track_Controller_1._02.Controller GreenLinePLC = new Track_Controller_1._02.Controller(4, true, "127.0.0.1");
 
-            //int[] occupancies = new int[151];
-            //int[] returns = new int[151];
+        //int[] occupancies = new int[151];
+        //int[] returns = new int[151];
 
-            //GreenLinePLC.SendOccupancies(occupancies);
-            //returns = GreenLinePLC.ReceiveOccupancies(151);
+        //GreenLinePLC.SendOccupancies(occupancies);
+        //returns = GreenLinePLC.ReceiveOccupancies(151);
 
-            //for (int i = 0; i < returns.Length; i++)
-            //{
-            //    Assert.AreEqual(occupancies[i], returns[i]);
-            //}
+        //for (int i = 0; i < returns.Length; i++)
+        //{
+        //    Assert.AreEqual(occupancies[i], returns[i]);
+        //}
 
         //    for (int i = 0; i < returns.Length; i++)
         //    {
         //        occupancies[i] = 1;
         //    }
-            //for (int i = 0; i < returns.Length; i++)
-            //{
-            //    occupancies[i] = 1;
-            //    Assert.AreEqual(occupancies[i],returns[i]);
-            //}
-
-            //GreenLinePLC.SendOccupancies(occupancies);
-            //returns = GreenLinePLC.ReceiveOccupancies(151);
-
-        }
-        //[TestMethod]
-        //public void TrackModel_AddTrain()
+        //for (int i = 0; i < returns.Length; i++)
         //{
-        //    int blockIdx = 0;
-        //    int lineIdx = 0;
-        //    int authority = 0;
-
-        //    TrackModel.MainWindow track = new TrackModel.MainWindow();
-        //    track.AddTrain(blockIdx, lineIdx, authority);
-
-        //    Assert.AreEqual(track.mtrainList.Count, 1);
-        //    Assert.AreEqual(track.mtrainList[0].blockIdx, 0);
-        //    Assert.AreEqual(track.mtrainList[0].lineIdx, 0);
-        //    Assert.AreEqual(track.mtrainList[0].commAuthority, 0);
+        //    occupancies[i] = 1;
+        //    Assert.AreEqual(occupancies[i],returns[i]);
         //}
+
+        //GreenLinePLC.SendOccupancies(occupancies);
+        //returns = GreenLinePLC.ReceiveOccupancies(151);
+
     }
+    //[TestMethod]
+    //public void TrackModel_AddTrain()
+    //{
+    //    int blockIdx = 0;
+    //    int lineIdx = 0;
+    //    int authority = 0;
+
+    //    TrackModel.MainWindow track = new TrackModel.MainWindow();
+    //    track.AddTrain(blockIdx, lineIdx, authority);
+
+    //    Assert.AreEqual(track.mtrainList.Count, 1);
+    //    Assert.AreEqual(track.mtrainList[0].blockIdx, 0);
+    //    Assert.AreEqual(track.mtrainList[0].lineIdx, 0);
+    //    Assert.AreEqual(track.mtrainList[0].commAuthority, 0);
+    //}
+
+    [TestClass]
+    public class TrainControllerSW
+    {
+        [TestMethod]
+        public void TrainControllerSW_ToggleLeftDoors()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mLeftDoorsStatus, false); // closed by default
+            train.setLeftDoors();
+            Assert.AreEqual(train.mLeftDoorsStatus, true);  // open
+            train.setLeftDoors();
+            Assert.AreEqual(train.mLeftDoorsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void TrainControllerSW_ToggleRightDoors()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mRightDoorsStatus, false); // closed by default
+            train.setRightDoors();
+            Assert.AreEqual(train.mRightDoorsStatus, true);  // open
+            train.setRightDoors();
+            Assert.AreEqual(train.mRightDoorsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void TrainControllerSW_ToggleInteriorLights()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mInteriorLightsStatus, false); // closed by default
+            train.setInteriorLights();
+            Assert.AreEqual(train.mInteriorLightsStatus, true);  // open
+            train.setInteriorLights();
+            Assert.AreEqual(train.mInteriorLightsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void TrainControllerSW_ToggleExteriorLights()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mExteriorLightsStatus, false); // closed by default
+            train.setExteriorLights();
+            Assert.AreEqual(train.mExteriorLightsStatus, true);  // open
+            train.setExteriorLights();
+            Assert.AreEqual(train.mExteriorLightsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void TrainControllerSW_ToggleAnnouncements()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mAnnouncementsStatus, false); // closed by default
+            train.setAnnouncements();
+            Assert.AreEqual(train.mAnnouncementsStatus, true);  // open
+            train.setAnnouncements();
+            Assert.AreEqual(train.mAnnouncementsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void TrainControllerSW_DecrementTemperature()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
+            train.tempDecrease();
+            Assert.AreEqual(train.mTemperature, 71);  // 71 degrees F
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            Assert.AreEqual(train.mTemperature, 62); // 62 degrees F
+        }
+
+        [TestMethod]
+        public void TrainControllerSW_IncrementTemperature()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
+            train.tempIncrease();
+            Assert.AreEqual(train.mTemperature, 73);  // 73 degrees F
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            Assert.AreEqual(train.mTemperature, 82); // 82 degrees F
+        }
+    }
+
+    [TestClass]
+    public class TrainControllerHW
+    {
+        [TestMethod]
+        public void TrainControllerSW_ToggleLeftDoors()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+
+            Assert.AreEqual(train.mLeftDoorsStatus, false); // closed by default
+            train.setLeftDoors();
+            Assert.AreEqual(train.mLeftDoorsStatus, true);  // open
+            train.setLeftDoors();
+            Assert.AreEqual(train.mLeftDoorsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void TrainControllerSW_ToggleRightDoors()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+
+            Assert.AreEqual(train.mRightDoorsStatus, false); // closed by default
+            train.setRightDoors();
+            Assert.AreEqual(train.mRightDoorsStatus, true);  // open
+            train.setRightDoors();
+            Assert.AreEqual(train.mRightDoorsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void TrainControllerSW_ToggleInteriorLights()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+
+            Assert.AreEqual(train.mInteriorLightsStatus, false); // closed by default
+            train.setInteriorLights();
+            Assert.AreEqual(train.mInteriorLightsStatus, true);  // open
+            train.setInteriorLights();
+            Assert.AreEqual(train.mInteriorLightsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void TrainControllerSW_ToggleExteriorLights()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+
+            Assert.AreEqual(train.mExteriorLightsStatus, false); // closed by default
+            train.setExteriorLights();
+            Assert.AreEqual(train.mExteriorLightsStatus, true);  // open
+            train.setExteriorLights();
+            Assert.AreEqual(train.mExteriorLightsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void TrainControllerSW_ToggleAnnouncements()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+
+            Assert.AreEqual(train.mAnnouncementsStatus, false); // closed by default
+            train.setAnnouncements();
+            Assert.AreEqual(train.mAnnouncementsStatus, true);  // open
+            train.setAnnouncements();
+            Assert.AreEqual(train.mAnnouncementsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void TrainControllerSW_DecrementTemperature()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+
+            Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
+            train.tempDecrease();
+            Assert.AreEqual(train.mTemperature, 71);  // 71 degrees F
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            Assert.AreEqual(train.mTemperature, 62); // 62 degrees F
+        }
+
+        [TestMethod]
+        public void TrainControllerSW_IncrementTemperature()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+
+            Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
+            train.tempIncrease();
+            Assert.AreEqual(train.mTemperature, 73);  // 73 degrees F
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            Assert.AreEqual(train.mTemperature, 82); // 82 degrees F
+        }
+    }
+}
