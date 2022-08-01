@@ -21,7 +21,7 @@ namespace CTC
     /// </summary>
     public partial class Dispatch : Page
     {
-        int[] redStation = { 7, 16, 21, 25, 35, 45, 48, 60 }; //Matches StationCombo index numbers to the block numbers for the red line
+        int[] redStation = { 7, 16, 21, 25, 35, 45, 48, 60 }; //Matches StationCombo index numbers to the block numbers for the red line (index starting at 1)
         int[] greenStation = { 2, 9, 16, 22, 31, 39, 48, 57, 65, 73, 77, 88, 96, 105, 114, 123, 132, 141 };
         public Dispatch()
         {
