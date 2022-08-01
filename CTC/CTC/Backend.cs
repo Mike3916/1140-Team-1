@@ -34,6 +34,7 @@ namespace Backend
         public List<int> route = new List<int>(); //holds list of blockNumbers that the train passes through
 
 
+        //red and green routes are set so they start at index 1 (my destinations are saved starting at index 0)
         int[] mredRoute = {77, 9, 8, 7, 6, 5, 4, 3, 2, 1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 76, 75,
                                 74, 73, 72, 33, 34, 35, 36, 37, 38, 71, 70, 69, 68, 67, 44, 45, 46, 47, 48, 49, 50, 51,
                                 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 52, 51, 50, 49, 48, 47, 46,
