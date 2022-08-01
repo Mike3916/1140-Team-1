@@ -185,7 +185,7 @@ namespace GogNS
                     PLCgetCTC();
                     PLCgetTrack();
 
-                    System.Threading.Thread.Sleep(10);
+                    System.Threading.Thread.Sleep(1);
 
                     PLCsetCTC();
                     PLCsetTrack();
