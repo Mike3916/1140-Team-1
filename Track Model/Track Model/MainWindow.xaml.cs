@@ -177,11 +177,22 @@ namespace TrackModel
                 for (int j = 0; j < mLines[idx].mSections[i].getmnumBlocks(); j++)
                 {
                     if (mLines[idx].mSections[i].mBlocks[j].mOccupied == true)
-                        occblocks.Add(mLines[idx].mSections[i].mBlocks[j].mblockNum);
+                        occblocks.Add(1);
+                    else
+                        occblocks.Add(0);
                 }
             }
 
             return occblocks;
+        }
+
+        public void SetPopulation(int pop, TrackModel.Block bl)
+        {
+            bl.mPop = pop;
+            if (bl.mlineName == "Red")
+                mLines[0].SetBlock(bl);
+            else
+                mLines[1].SetBlock(bl);
         }
 
         public void SetSpeeds(int[] speeds, int lIdx)
