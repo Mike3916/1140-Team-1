@@ -30,17 +30,100 @@ namespace gogTests
 
         }
 
-
         [TestMethod]
-        public void TrainController_ToggleLeftDoors()
+        public void TrainControllerSW_ToggleLeftDoors()
         {
-            TrainController.Controller train = new TrainController.Controller();
+            TrainController.Controller train = new TrainController.Controller(false);
             Assert.AreEqual(train.mLeftDoorsStatus, false); // closed by default
             train.setLeftDoors();
             Assert.AreEqual(train.mLeftDoorsStatus, true);  // open
             train.setLeftDoors();
             Assert.AreEqual(train.mLeftDoorsStatus, false); // closed
         }
+
+        [TestMethod]
+        public void TrainControllerSW_ToggleRightDoors()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            Assert.AreEqual(train.mRightDoorsStatus, false); // closed by default
+            train.setRightDoors();
+            Assert.AreEqual(train.mRightDoorsStatus, true);  // open
+            train.setRightDoors();
+            Assert.AreEqual(train.mRightDoorsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void TrainControllerSW_ToggleInteriorLights()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            Assert.AreEqual(train.mInteriorLightsStatus, false); // closed by default
+            train.setInteriorLights();
+            Assert.AreEqual(train.mInteriorLightsStatus, true);  // open
+            train.setInteriorLights();
+            Assert.AreEqual(train.mInteriorLightsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void TrainControllerSW_ToggleExteriorLights()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            Assert.AreEqual(train.mExteriorLightsStatus, false); // closed by default
+            train.setExteriorLights();
+            Assert.AreEqual(train.mExteriorLightsStatus, true);  // open
+            train.setExteriorLights();
+            Assert.AreEqual(train.mExteriorLightsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void TrainControllerSW_ToggleAnnouncements()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            Assert.AreEqual(train.mAnnouncementsStatus, false); // closed by default
+            train.setAnnouncements();
+            Assert.AreEqual(train.mAnnouncementsStatus, true);  // open
+            train.setAnnouncements();
+            Assert.AreEqual(train.mAnnouncementsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void TrainControllerSW_DecrementTemperature()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
+            train.tempDecrease();
+            Assert.AreEqual(train.mTemperature, 71);  // 71 degrees F
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            train.tempDecrease();
+            Assert.AreEqual(train.mTemperature, 62); // 62 degrees F
+        }
+
+        [TestMethod]
+        public void TrainControllerSW_IncrementTemperature()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
+            train.tempIncrease();
+            Assert.AreEqual(train.mTemperature, 73);  // 73 degrees F
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            train.tempIncrease();
+            Assert.AreEqual(train.mTemperature, 82); // 82 degrees F
+        }
+
+
 
         [TestMethod]
         //Checks if program will crash when attempting to connect to an unconfigured port number
