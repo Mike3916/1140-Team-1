@@ -486,7 +486,7 @@ namespace gogTests
     public class TrainControllerSW
     {
         [TestMethod]
-        public void TrainControllerSW_ToggleLeftDoors()
+        public void ToggleLeftDoors()
         {
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = false;
@@ -499,7 +499,7 @@ namespace gogTests
         }
 
         [TestMethod]
-        public void TrainControllerSW_ToggleRightDoors()
+        public void ToggleRightDoors()
         {
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = false;
@@ -512,7 +512,7 @@ namespace gogTests
         }
 
         [TestMethod]
-        public void TrainControllerSW_ToggleInteriorLights()
+        public void ToggleInteriorLights()
         {
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = false;
@@ -525,7 +525,7 @@ namespace gogTests
         }
 
         [TestMethod]
-        public void TrainControllerSW_ToggleExteriorLights()
+        public void ToggleExteriorLights()
         {
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = false;
@@ -538,7 +538,7 @@ namespace gogTests
         }
 
         [TestMethod]
-        public void TrainControllerSW_ToggleAnnouncements()
+        public void ToggleAnnouncements()
         {
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = false;
@@ -551,7 +551,7 @@ namespace gogTests
         }
 
         [TestMethod]
-        public void TrainControllerSW_DecrementTemperature()
+        public void DecrementTemperature()
         {
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = false;
@@ -559,20 +559,15 @@ namespace gogTests
             Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
             train.tempDecrease();
             Assert.AreEqual(train.mTemperature, 71);  // 71 degrees F
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
+            for (int i = 0; i < 9; i++)
+            {
+                train.tempDecrease();
+            }
             Assert.AreEqual(train.mTemperature, 62); // 62 degrees F
         }
 
         [TestMethod]
-        public void TrainControllerSW_IncrementTemperature()
+        public void IncrementTemperature()
         {
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = false;
@@ -580,16 +575,37 @@ namespace gogTests
             Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
             train.tempIncrease();
             Assert.AreEqual(train.mTemperature, 73);  // 73 degrees F
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
+            for (int i=0; i<9; i++)
+            {
+                train.tempIncrease();
+            }
             Assert.AreEqual(train.mTemperature, 82); // 82 degrees F
+        }
+
+        [TestMethod]
+        public void SetKp()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mKp, 10000); // default 10000 Kp
+            train.setKp(500);
+            Assert.AreEqual(train.mKp, 500); // 500 Kp
+            train.setKp(0);
+            Assert.AreEqual(train.mKp, 0); // 0 Kp
+        }
+
+        [TestMethod]
+        public void SetKi()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mKi, 0); // default 0 Ki
+            train.setKp(500);
+            Assert.AreEqual(train.mKi, 500); // 500 Kp
+            train.setKp(10000);
+            Assert.AreEqual(train.mKi, 10000); // 10000 Ki
         }
     }
 
@@ -597,7 +613,7 @@ namespace gogTests
     public class TrainControllerHW
     {
         [TestMethod]
-        public void TrainControllerSW_ToggleLeftDoors()
+        public void ToggleLeftDoors()
         {
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = true;
@@ -610,7 +626,7 @@ namespace gogTests
         }
 
         [TestMethod]
-        public void TrainControllerSW_ToggleRightDoors()
+        public void ToggleRightDoors()
         {
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = true;
@@ -623,7 +639,7 @@ namespace gogTests
         }
 
         [TestMethod]
-        public void TrainControllerSW_ToggleInteriorLights()
+        public void ToggleInteriorLights()
         {
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = true;
@@ -636,7 +652,7 @@ namespace gogTests
         }
 
         [TestMethod]
-        public void TrainControllerSW_ToggleExteriorLights()
+        public void ToggleExteriorLights()
         {
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = true;
@@ -649,7 +665,7 @@ namespace gogTests
         }
 
         [TestMethod]
-        public void TrainControllerSW_ToggleAnnouncements()
+        public void ToggleAnnouncements()
         {
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = true;
@@ -662,7 +678,7 @@ namespace gogTests
         }
 
         [TestMethod]
-        public void TrainControllerSW_DecrementTemperature()
+        public void DecrementTemperature()
         {
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = true;
@@ -670,20 +686,15 @@ namespace gogTests
             Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
             train.tempDecrease();
             Assert.AreEqual(train.mTemperature, 71);  // 71 degrees F
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
+            for (int i = 0; i < 9; i++)
+            {
+                train.tempDecrease();
+            }
             Assert.AreEqual(train.mTemperature, 62); // 62 degrees F
         }
 
         [TestMethod]
-        public void TrainControllerSW_IncrementTemperature()
+        public void IncrementTemperature()
         {
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = true;
@@ -691,16 +702,37 @@ namespace gogTests
             Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
             train.tempIncrease();
             Assert.AreEqual(train.mTemperature, 73);  // 73 degrees F
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
+            for (int i = 0; i < 9; i++)
+            {
+                train.tempIncrease();
+            }
             Assert.AreEqual(train.mTemperature, 82); // 82 degrees F
+        }
+
+        [TestMethod]
+        public void SetKp()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+
+            Assert.AreEqual(train.mKp, 10000); // default 10000 Kp
+            train.setKp(500);
+            Assert.AreEqual(train.mKp, 500); // 500 Kp
+            train.setKp(0);
+            Assert.AreEqual(train.mKp, 0); // 0 Kp
+        }
+
+        [TestMethod]
+        public void SetKi()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+
+            Assert.AreEqual(train.mKi, 0); // default 0 Ki
+            train.setKp(500);
+            Assert.AreEqual(train.mKi, 500); // 500 Kp
+            train.setKp(10000);
+            Assert.AreEqual(train.mKi, 10000); // 10000 Ki
         }
     }
 }
