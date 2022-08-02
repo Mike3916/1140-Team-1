@@ -15,17 +15,15 @@ namespace Track_Controller_1._02
     public class ADSClient
     {
 
-        private TcAdsClient ads = new TcAdsClient();
-        private int hvar;
-        private int[] var = new int[75];
-        int mPort;
-        private ITcAdsSymbol sym = null;
+        private TcAdsClient mAds = new TcAdsClient();
+        private int mHvar;
+        private int mPort;
 
         public ADSClient(int mLocalPort)
         {
             mPort = mLocalPort;
-           ads.Connect(mPort);//default port of TwinCAT 3 is 851
-            if (ads.IsConnected == true)
+           mAds.Connect(mPort);//default port of TwinCAT 3 is 851
+            if (mAds.IsConnected == true)
             {
                 Console.WriteLine(mPort.ToString() + " Connection OK");
             }
@@ -42,7 +40,7 @@ namespace Track_Controller_1._02
             
             try
             {
-                hvar = ads.CreateVariableHandle(mVarName1);
+                mHvar = mAds.CreateVariableHandle(mVarName1);
             }
             catch
             {
@@ -51,7 +49,7 @@ namespace Track_Controller_1._02
 
             try
             {
-                ads.WriteAny(hvar, mPacket);
+                ads.WriteAny(mHvar, mPacket);
             }
             catch
             {
@@ -67,9 +65,9 @@ namespace Track_Controller_1._02
         {
             try
             {
-            hvar = ads.CreateVariableHandle(mVarName2);
-            int[] mPacket = (int[])ads.ReadAny(hvar, typeof(int[]), new int[] { mLength });
-            return mPacket;
+            mHvar = ads.CreateVariableHandle(mVarName2);
+            int[] Packet = (int[])ads.ReadAny(mHvar, typeof(int[]), new int[] { mLength });
+            return Packet;
             }
             catch
             {
