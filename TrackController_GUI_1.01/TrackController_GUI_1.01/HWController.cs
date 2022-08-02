@@ -25,7 +25,7 @@ namespace Track_Controller_1._02
             mPi.WriteTimeout = 500;
 
             mOccupancies = new int[151];
-            mSwitches = new int[3];
+            mSwitches = new int[151];
             mSpeeds = new int[151];
             mAuthorities = new int[151];
             mRightLights = new int[151];
@@ -78,15 +78,14 @@ namespace Track_Controller_1._02
         public int[] ReceiveSwitches(int mLength)
         {
             //TODO
-            if (mSwUpToDate)
-            {
-                return mSwitches;
-            }
-            else
+            if (!mSwUpToDate)
             {
                 run();
-                return mSwitches;
             }
+            
+            
+            return mSwitches;
+            
         }
 
         public void SendOccupancies(int[] mPacket)
@@ -256,17 +255,12 @@ namespace Track_Controller_1._02
                     mLeftLights[i + 57] = 0;
                 }
             }
-            for (int i = 86; i < 89; i++)
-            {
-                if ((mReceivedMessage[i / 8] & (1 << (i % 8))) != 0)
-                {
-                    mSwitches[i - 86] = 1;
-                }
-                else
-                {
-                    mSwitches[i - 86] = 0;
-                }
-            }
+
+
+            mSwitches[61] = ((mReceivedMessage[86 / 8] & (1 << (86 % 8))) != 0) ? 62 : 150;
+            mSwitches[76] = ((mReceivedMessage[87 / 8] & (1 << (87 % 8))) != 0) ? 100 : 75;
+            mSwitches[84] = ((mReceivedMessage[88 / 8] & (1 << (88 % 8))) != 0) ? 85 : 99;
+
 
             mSwUpToDate = true;
             mRLUpToDate = true;
