@@ -29,10 +29,8 @@ namespace CTC
 
         }
 
-
         private void Dest_Loaded(object sender, RoutedEventArgs e) //Display the saved destination data for the selected train
         {
-  
             int i = ((MainWindow)Application.Current.MainWindow).SelectTrain.SelectedIndex; //Get the index of the selected train
             Dest.Text = ((MainWindow)Application.Current.MainWindow).TrainList[i].destination.ToString();
         }
@@ -54,5 +52,6 @@ namespace CTC
 
 
         }
+
     }
 }
