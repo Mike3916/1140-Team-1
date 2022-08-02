@@ -22,7 +22,8 @@ namespace CTC
     public partial class Block_Data : Page
     {
         int line;  //This hold the line, 0=red, 1=green
-        int block; //This holds the block index (to get BlockID, do this + 1)
+        int blockNum; //This holds the block number (to get BlockIdx do this - 1)
+        int blockIdx;
         int blockType; //This will indicate the type of block selected (0 = normal, 1 = switch, 2 = crossing);
 
         public Block_Data()
@@ -33,15 +34,16 @@ namespace CTC
         public void loadBlockInfo()
         {
             line = ((MainWindow)Application.Current.MainWindow).LineCombo.SelectedIndex; //This hold the line, 0=red, 1=green
-            block = ((MainWindow)Application.Current.MainWindow).LineCombo.SelectedIndex; //This holds the block index (to get BlockID, do this + 1)
+            blockNum = Int32.Parse(((MainWindow)Application.Current.MainWindow).BlockCombo.SelectedValue.ToString()); //This holds the block number (starts at 1) (to get BlockID, do this - 1)
+            blockIdx = blockNum - 1;
             blockType = 0; //This will indicate the type of block selected (0 = normal, 1 = switch, 2 = crossing);
 
 
             //Here the CTC loads only the necessary items depending on the type of block
             blockType = 0; //Start by assuming block is normal (not switch or crossing)
-            if (((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(block + 1).mSwitch == true) //set blockType to 1 if it a switch block
+            if (((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(blockNum).mSwitch == true) //set blockType to 1 if it a switch block //send GetBlock(blockNum) because GetBlock recieves index 1, and "blockNum" starts at index 1
                 blockType = 1;
-            else if (((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(block + 1).mhasCross == true) //set blockType to 2 if it is a crossing block
+            else if (((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(blockNum).mhasCross == true) //set blockType to 2 if it is a crossing block (need to add 1 to go from block index to block number)
                 blockType = 2;
 
 
@@ -61,9 +63,9 @@ namespace CTC
                 CrossingText.Visibility = Visibility.Collapsed;
 
                 if (line == 0)
-                    SwitchNum.Text = ((MainWindow)Application.Current.MainWindow).mRedSwitches[block].ToString();
+                    SwitchNum.Text = ((MainWindow)Application.Current.MainWindow).mRedSwitches[blockIdx].ToString();
                 else if (line == 1)
-                    SwitchNum.Text = ((MainWindow)Application.Current.MainWindow).mGreenSwitches[block].ToString();
+                    SwitchNum.Text = ((MainWindow)Application.Current.MainWindow).mGreenSwitches[blockIdx].ToString();
             }
             else if (blockType == 2) //The block is a crossing block, hide switch info
             {
@@ -72,14 +74,14 @@ namespace CTC
                 SwitchNum.Visibility = Visibility.Collapsed;
 
                 if (line == 0) //red line
-                    if (((MainWindow)Application.Current.MainWindow).mRedCrossings[block] == 0) //no crossing light
+                    if (((MainWindow)Application.Current.MainWindow).mRedCrossings[blockIdx] == 0) //no crossing light
                         CrossingRect.Fill = System.Windows.Media.Brushes.LightGray;
-                    else if (((MainWindow)Application.Current.MainWindow).mRedCrossings[block] == 1) //crossing light on
+                    else if (((MainWindow)Application.Current.MainWindow).mRedCrossings[blockIdx] == 1) //crossing light on
                         CrossingRect.Fill = System.Windows.Media.Brushes.LightGreen;
                     else if (line == 1) //green line
-                        if (((MainWindow)Application.Current.MainWindow).mGreenCrossings[block] == 0) //no crossing light
+                        if (((MainWindow)Application.Current.MainWindow).mGreenCrossings[blockIdx] == 0) //no crossing light
                             CrossingRect.Fill = System.Windows.Media.Brushes.LightGray;
-                        else if (((MainWindow)Application.Current.MainWindow).mGreenCrossings[block] == 1) //crossing light on
+                        else if (((MainWindow)Application.Current.MainWindow).mGreenCrossings[blockIdx] == 1) //crossing light on
                             CrossingRect.Fill = System.Windows.Media.Brushes.LightGreen;
 
             }
@@ -88,23 +90,23 @@ namespace CTC
             if (line == 0) //The selected line is red, put the info here that should always show up for every type of block (occupancy, maintenance, throughput, and signal light)
             {
                 //Check occupancy
-                if (((MainWindow)Application.Current.MainWindow).mRedOccupancies[block] == 0) //the block is unoccupied
+                if (((MainWindow)Application.Current.MainWindow).mRedOccupancies[blockIdx] == 0) //the block is unoccupied
                 {
                     UnoccupiedRect.Fill = System.Windows.Media.Brushes.LightGreen;
                     OccupiedRect.Fill = System.Windows.Media.Brushes.LightGray;
                 }
-                else if (((MainWindow)Application.Current.MainWindow).mRedOccupancies[block] == 1)
+                else if (((MainWindow)Application.Current.MainWindow).mRedOccupancies[blockIdx] == 1)
                 {
                     UnoccupiedRect.Fill = System.Windows.Media.Brushes.LightGray;
                     OccupiedRect.Fill = System.Windows.Media.Brushes.LightGreen;
                 }
                 //////////////////////// Check maintenance
-                if (((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[block] == 0) //the block is not in maintenance (open)
+                if (((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] == 0) //the block is not in maintenance (open)
                 {
                     Close.Background = System.Windows.Media.Brushes.LightGray;
                     Open.Background = System.Windows.Media.Brushes.LightGreen;
                 }
-                else if (((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[block] == 1) //The block is in maintenance (closed)
+                else if (((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] == 1) //The block is in maintenance (closed)
                 {
                     Close.Background = System.Windows.Media.Brushes.LightGreen;
                     Open.Background = System.Windows.Media.Brushes.LightGray;
@@ -131,9 +133,9 @@ namespace CTC
             Close.Background = Brushes.LightGray;
 
             if (line==0)
-                ((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[block] = 0; //Block is out of maintenance, send 0
+                ((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] = 0; //Block is out of maintenance, send 0
             else if(line==1)
-                ((MainWindow)Application.Current.MainWindow).mGreenMaintenanceBlocks[block] = 0; //Block is out of maintenance, send 0
+                ((MainWindow)Application.Current.MainWindow).mGreenMaintenanceBlocks[blockIdx] = 0; //Block is out of maintenance, send 0
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -142,17 +144,17 @@ namespace CTC
             Open.Background = Brushes.LightGray;
 
             if (line == 0)
-                ((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[block] = 1; //Block is out of maintenance, send 1
+                ((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] = 1; //Block is out of maintenance, send 1
             else if (line == 1)
-                ((MainWindow)Application.Current.MainWindow).mGreenMaintenanceBlocks[block] = 1; //Block is out of maintenance, send 1
+                ((MainWindow)Application.Current.MainWindow).mGreenMaintenanceBlocks[blockIdx] = 1; //Block is out of maintenance, send 1
         }
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e) //Change the switch to it's opposite position
         {
             if (line==0) //red line
-                ((MainWindow)Application.Current.MainWindow).mRedSwitches[block] = 1; //To indicate that the switch should be toggled, set the switch to 1
+                ((MainWindow)Application.Current.MainWindow).mRedSwitches[blockIdx] = 1; //To indicate that the switch should be toggled, set the switch to 1
             else if (line==1) //green line
-                ((MainWindow)Application.Current.MainWindow).mGreenSwitches[block] = 1;
+                ((MainWindow)Application.Current.MainWindow).mGreenSwitches[blockIdx] = 1;
         }
     }
 }

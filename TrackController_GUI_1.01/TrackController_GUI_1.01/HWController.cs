@@ -25,7 +25,7 @@ namespace Track_Controller_1._02
             mPi.WriteTimeout = 500;
 
             mOccupancies = new int[151];
-            mSwitches = new int[3];
+            mSwitches = new int[151];
             mSpeeds = new int[151];
             mAuthorities = new int[151];
             mRightLights = new int[151];
@@ -78,15 +78,14 @@ namespace Track_Controller_1._02
         public int[] ReceiveSwitches(int mLength)
         {
             //TODO
-            if (mSwUpToDate)
-            {
-                return mSwitches;
-            }
-            else
+            if (!mSwUpToDate)
             {
                 run();
-                return mSwitches;
             }
+            
+            
+            return mSwitches;
+            
         }
 
         public void SendOccupancies(int[] mPacket)
@@ -224,7 +223,7 @@ namespace Track_Controller_1._02
         {
             //todo
             mSentMessage = new byte[11];
-            mTempSend = new bool[86];
+            mReceivedMessage = new byte[12];
             for (int i = 0; i < 86; i++)
             {
                 if (mOccupancies[i + 57] + mMaintenance[i + 57] >= 1)
@@ -238,26 +237,30 @@ namespace Track_Controller_1._02
             //    mSentMessage[i] = FileStream.ReadByte(mTempSend, 8 * i);
             //}
             mPi.Write(mSentMessage, 0, 11);
-            string mReceivedMessage = "";
-            while (mReceivedMessage == "")
-            {
-                mReceivedMessage = mPi.ReadLine();
-            }
-            Console.WriteLine(mReceivedMessage);
-            // create an array with size as string
-            // length and initialize with 0
-            int[] temp = new int[mReceivedMessage.Length];
+            mPi.Read(mReceivedMessage, 0, 12);
+            
 
 
             // Traverse the string
-            for (int i = 0; mReceivedMessage[i] != '\0'; i++)
+            for (int i = 0; i < 86; i++)
             {
-                // subtract str[i] by 48 to convert it to int
-                // Generate number by multiplying 10 and adding
-                // (int)(str[i])
-                //todo
-                temp[i] = temp[i] * 10 + (mReceivedMessage[i] - 48);
+                if ((mReceivedMessage[i / 8] & (1<<(i % 8))) != 0)
+                {
+                    mRightLights[i + 57] = 1;
+                    mLeftLights[i + 57] = 1;
+                }
+                else
+                {
+                    mRightLights[i + 57] = 0;
+                    mLeftLights[i + 57] = 0;
+                }
             }
+
+
+            mSwitches[61] = ((mReceivedMessage[86 / 8] & (1 << (86 % 8))) != 0) ? 62 : 150;
+            mSwitches[76] = ((mReceivedMessage[87 / 8] & (1 << (87 % 8))) != 0) ? 100 : 75;
+            mSwitches[84] = ((mReceivedMessage[88 / 8] & (1 << (88 % 8))) != 0) ? 85 : 99;
+
 
             mSwUpToDate = true;
             mRLUpToDate = true;
@@ -275,11 +278,11 @@ namespace Track_Controller_1._02
         private int[] mMaintenance;
         private int[] mCrossings;
         private int[] mRoute;
-        private bool[] mTempSend;
         private bool mSwUpToDate;
         private bool mRLUpToDate;
         private bool mLLUpToDate;
         private bool mCrUpToDate;
         private byte[] mSentMessage;
+        private byte[] mReceivedMessage;
     }
 }
