@@ -193,6 +193,7 @@ namespace TrackModel
                 mLines[0].SetBlock(bl);
             else
                 mLines[1].SetBlock(bl);
+            SetBlockInfo();
         }
 
         public void SetSpeeds(int[] speeds, int lIdx)
@@ -203,6 +204,7 @@ namespace TrackModel
                 newSpeed.mspeedLimit = speeds[blocknum-1];
                 mLines[lIdx].SetBlock(newSpeed);
             }
+            SetBlockInfo();
         }
 
         public void SetAuthorities(int[] auth, int lIdx)
@@ -216,6 +218,7 @@ namespace TrackModel
                         tr.commAuthority = auth[i];
                 }
             }
+            SetBlockInfo();
         }
 
         public void SetCrossings(int[] crossings, int lIdx)
@@ -235,6 +238,7 @@ namespace TrackModel
                     mLines[lIdx].SetBlock(bl);
                 }
             }
+            SetBlockInfo();
         }
 
         public void SetSwitches(int[] switches, int lIdx)
@@ -245,6 +249,7 @@ namespace TrackModel
                 bl.setmswitchPos(switches[sw]);
                 mLines[lIdx].SetBlock(bl);
             }
+            SetBlockInfo();
         }
         
 
@@ -366,7 +371,7 @@ namespace TrackModel
             HeatBox.IsReadOnly = true;
         }
         //places blockInfo into textboxes and makes them writeable
-        private void SetBlockInfo(string[] blockInfo)
+        private void SetBlockInfo()
         {
             if (mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied)
                 ReadOnly();
@@ -381,11 +386,11 @@ namespace TrackModel
 
             StationName.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mstationName;
             OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
-            InfrastructureBlock.Text = blockInfo[6];
-            SpeedBox.Text = blockInfo[5];
-            LengthBox.Text = blockInfo[3];
-            GradeBox.Text = blockInfo[4];
-            ElevationBox.Text = blockInfo[8];
+            InfrastructureBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mInfrastructure;
+            SpeedBox.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mspeedLimit + "";
+            LengthBox.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mLength + "";
+            GradeBox.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mGrade + "";
+            ElevationBox.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mElevation + "";
 
             if (mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mhasCross)
             {
@@ -616,7 +621,7 @@ namespace TrackModel
                     int sectionIdx = SectionCombo.SelectedIndex;
                     int blockIdx = BlockCombo.SelectedIndex;
                     string[] blockInfo = mLines[lineIdx].mSections[sectionIdx].mBlocks[blockIdx].mblockInfo;
-                    SetBlockInfo(blockInfo);
+                    SetBlockInfo();
 
                     List<int> switchList = mLines[lineIdx].GetmblockSwitch(sectionIdx, blockIdx);
                     foreach (int sw in switchList)

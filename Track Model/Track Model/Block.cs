@@ -250,7 +250,7 @@ namespace TrackModel
         public double mLength;         //param = 0
         public double mGrade;          //param = 1
         public double mspeedLimit;     //param = 2
-        string mInfrastructure;
+        public string mInfrastructure;
         public  string mstationSide;
         public double mElevation;      //param = 3
         public double mcumElevation;   //should NOT be mutable
