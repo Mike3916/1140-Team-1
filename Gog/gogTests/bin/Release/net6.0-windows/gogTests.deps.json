@@ -13,7 +13,6 @@
           "MSTest.TestFramework": "2.2.8",
           "Microsoft.NET.Test.Sdk": "17.1.0",
           "coverlet.collector": "3.1.2",
-          "Track Controller 1.1": "1.0.0.0",
           "Track Model": "1.0.0.0",
           "TrackController1.01": "1.0.0.0",
           "TrainController": "1.0.0.0",
@@ -1170,14 +1169,6 @@
           "Gog.dll": {}
         }
       },
-      "Track Controller 1.1/1.0.0.0": {
-        "runtime": {
-          "Track Controller 1.1.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
       "Track Model/1.0.0.0": {
         "runtime": {
           "Track Model.dll": {
@@ -1901,11 +1892,6 @@
     },
     "Gog/1.0.0": {
       "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Track Controller 1.1/1.0.0.0": {
-      "type": "reference",
       "serviceable": false,
       "sha512": ""
     },

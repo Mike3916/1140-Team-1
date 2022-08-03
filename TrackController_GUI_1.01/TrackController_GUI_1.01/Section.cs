@@ -8,16 +8,20 @@ namespace Track_Controller_1._02
 {
     public class Section
     {
+        //Constructor
         public Section()
         {
             mBlocks = new List<Block>();
         }
+
+        //constructor ovverride newName
         public Section(string newName)
         {
             mnameSection = newName;
             mBlocks = new List<Block>();
         }
 
+        //Joe's accessor and mutator methods
         public int getmnumBlocks()
         {
             return mnumBlocks;
@@ -50,7 +54,7 @@ namespace Track_Controller_1._02
             mBlocks.Add(newBlock);
             mnumBlocks++;
         }
-
+        //end Joe's accessor and mutator functions
 
         //**********************************************************************************************************************************
         //Mike's Accessor and Mutator functions for the block subclass
