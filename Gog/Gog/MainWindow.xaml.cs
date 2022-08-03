@@ -195,8 +195,9 @@ namespace Gog
                     PLCsetCTC();
                     PLCsetTrack();
                 }
-                    
-                
+
+                if (track != null)
+                    track.UpdateTick(mIterationMultiplier);
 
                 
 
