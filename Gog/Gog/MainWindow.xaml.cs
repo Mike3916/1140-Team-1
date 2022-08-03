@@ -42,6 +42,8 @@ namespace Gog
         int[] mRedSwitches = new int[77];
         int[] mRedLeftLights = new int[77];
         int[] mRedRightLights = new int[77];
+        int[] mRedRoute = new int[77];
+        bool mRedTrain = false;
 
         int[] mRed1MaintenanceBlocks = new int[44];
         int[] mRed1Occupancies = new int[44];
@@ -68,6 +70,8 @@ namespace Gog
         int[] mGreenSwitches = new int[151];
         int[] mGreenLeftLights = new int[151];
         int[] mGreenRightLights = new int[151];
+        int[] mGreenRoute = new int[151];
+        bool mGreenTrain = false;
 
         int[] mGreen1MaintenanceBlocks = new int[140];
         int[] mGreen1Occupancies = new int[140];
@@ -228,13 +232,13 @@ namespace Gog
                     mGreenLeftLights = ctc.mGreenLeftLights;
                     mGreenRightLights = ctc.mGreenRightLights;
                 }
-                /*
-                ctc.SetTrackData(track.mLines);
-                track.AddTrain(151, 1, 1, 12);
-                trainCtrl.checkUpdatedValues();
-                ctc.SetTrackData(track.);
-                track.GetT
-                */
+               
+                //ctc.SetTrackData(track.mLines);
+                //track.AddTrain(151, 1, 1, 12);
+                //trainCtrl.checkUpdatedValues();
+                //ctc.SetTrackData(track.);
+                //track.GetT
+            
 
                 for (int j = 0; j < numTrains; j++)
                 {
@@ -289,11 +293,16 @@ namespace Gog
             mRedline2.SendSpeeds(mRed2Speeds);
             mRedline2.SendAuthorities(mRed2Authorities);
             mRedline2.SendSwitches(mRed2Switches);
+            mRedline1.SendRoute(mRedRoute);
+            mRedline1.SendTrain(mRedTrain);
+            Array.Clear(mRedRoute,0,mRedRoute.Length);
 
             mGreenLine1.SendMaintenance(mGreen1MaintenanceBlocks);
             mGreenLine1.SendSpeeds(mGreen1Speeds);
             mGreenLine1.SendAuthorities(mGreen1Authorities);
             mGreenLine1.SendSwitches(mGreen1Switches);
+            mGreenLine1.SendRoute(mGreenRoute);
+            mGreenLine1.SendTrain(mGreenTrain);
 
         }
 
@@ -361,6 +370,8 @@ namespace Gog
             mRed2Switches = mRedline2.ReceiveSwitches(mRed2Switches.Length);
             mRed2RightLights = mRedline2.ReceiveRightLights(mRed2RightLights.Length);
             mRed2LeftLights = mRedline2.ReceiveLeftLights(mRed2LeftLights.Length);
+            mRedRoute = mRedline1.ReceiveRoute(mRedRoute.Length);
+            mRedTrain = mRedline1.ReceiveTrain();
 
             mGreenSpeeds = mGreenLine1.ReceiveSpeeds(mGreenSpeeds.Length);
             mGreenAuthorities = mGreenLine1.ReceiveAuthorities(mGreenAuthorities.Length);
@@ -368,37 +379,22 @@ namespace Gog
             mGreenSwitches = mGreenLine1.ReceiveSwitches(mGreenSwitches.Length);
             mGreenRightLights = mGreenLine1.ReceiveRightLights(mGreenRightLights.Length);
             mGreenLeftLights = mGreenLine1.ReceiveLeftLights(mGreenLeftLights.Length);
+            mGreenTrain = mGreenLine1.ReceiveTrain();
 
             ArrayMerger();
-
-            /*77 element array for red
-            = mRedSpeeds;
-            = mRedAuthorities;
-            = mRedCrossings;
-            = mRedSwitches;
-            = mRedLeftLights;
-            = mRedRightLights;
-            */
 
             track.SetSpeeds(mRedSpeeds, 0);
             track.SetAuthorities(mRedAuthorities, 0);
             track.SetCrossings(mRedCrossings, 0);
             track.SetSwitches(mRedSwitches, 0);
 
-            //151 element array for green
-            /*
-            = mRedSpeeds;
-            = mRedAuthorities;
-            = mRedCrossings;
-            = mRedSwitches;
-            = mRedLeftLights;
-            = mRedRightLights;
-            */
-
             track.SetSpeeds(mGreenSpeeds, 1);
             track.SetAuthorities(mGreenAuthorities, 1);
             track.SetCrossings(mGreenCrossings, 1);
             track.SetSwitches(mGreenSwitches, 1);
+
+            mRedline1.SendTrain(false);
+            mGreenLine1.SendTrain(false);
         }
 
         private void ArraySplitter()

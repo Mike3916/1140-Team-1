@@ -78,6 +78,51 @@ namespace Track_Controller_1._02
            
         }
 
+        //SendBool: writes an integer array to an array of global integers at ADS port the client is connected to. 
+        //<train>: puts train on a line
+        public void SendBool(bool value, string varName1)
+        {
+
+            try
+            {
+                mHvar = mAds.CreateVariableHandle(varName1);
+            }
+            catch
+            {
+                Console.WriteLine("You are attempting to connect to a server that does not exist. Please check your server port number.");
+            }
+
+            try
+            {
+                mAds.WriteAny(mHvar, value);
+            }
+            catch
+            {
+                Console.WriteLine("Failed to send. Check that Port " + mPort.ToString() + " is connected and the array size matches at the sender and receiver.");
+            }
+            return;
+        }
+
+        //ReceiveBool: reads an integer array to an array of global integers at ADS port the client is connected to. 
+        //<[]packet>: contains the block states to be written to the PLC
+        //<int[]> returns the block command states to be written to the track
+        public bool ReceiveBool(string varName2)
+        {
+            try
+            {
+                mHvar = mAds.CreateVariableHandle(varName2);
+                bool val = (bool)mAds.ReadAny(mHvar, typeof(bool)); ;
+                return val;
+            }
+            catch
+            {
+                Console.WriteLine("You are attempting to connect to a server that does not exist. Please check your server port number.");
+                bool temp = false;
+                return temp;
+            }
+
+        }
+
 
 
         //SendSwitches: Calls the sendpacket function with specified variable names to read/write
@@ -241,5 +286,23 @@ namespace Track_Controller_1._02
             int[] packet = ReceivePacket(length, "GVL.mOutRoute");
             return packet;
         }
+
+        //SendTrain: To add a train to the system
+        //<train>: bool to add train or not add train
+        //<void>
+        public void SendTrain(bool train = false)
+        {
+            SendBool(train, "GVL.mInTrain");
+            return;
+        }
+
+        //ReceiveRoute: Method to return whether a train should be added.
+        //<bool>: integer array of values returned from the PLC
+        public bool ReceiveTrain()
+        {
+            bool train = ReceiveBool("GVL.mOutTrain");
+            return train;
+        }
+
     }
 }
