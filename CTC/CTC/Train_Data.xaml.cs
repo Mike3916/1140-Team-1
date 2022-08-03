@@ -85,7 +85,6 @@ namespace CTC
 
             if (DestLineCombo.SelectedIndex == 0) //Red line
             {
-                //MessageBox.Show( (String)redStation[DestStationCombo.SelectedIndex, 0].ToString() );
                 ((MainWindow)Application.Current.MainWindow).TrainList[i].destination = (int)redStation[DestStationCombo.SelectedIndex,0];
             }
             else if (DestLineCombo.SelectedIndex == 1) //Green line
