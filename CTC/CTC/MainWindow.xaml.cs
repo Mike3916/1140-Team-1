@@ -25,6 +25,8 @@ namespace CTC
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
+
+    //MessageBox.Show();
     public partial class MainWindow : Window
     {
         public List<Train> TrainList = new List<Train>(); //Global TrainList
@@ -79,6 +81,7 @@ namespace CTC
 
         private void SelectTrain_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            train_data.update_Train_Data(); //Update the train data
             Frame.NavigationService.Navigate(train_data);
         }
 
