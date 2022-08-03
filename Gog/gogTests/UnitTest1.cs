@@ -520,11 +520,11 @@ namespace gogTests
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = false;
 
-            Assert.AreEqual(train.mInteriorLightsStatus, false); // closed by default
+            Assert.AreEqual(train.mInteriorLightsStatus, false); // off by default
             train.setInteriorLights();
-            Assert.AreEqual(train.mInteriorLightsStatus, true);  // open
+            Assert.AreEqual(train.mInteriorLightsStatus, true);  // on
             train.setInteriorLights();
-            Assert.AreEqual(train.mInteriorLightsStatus, false); // closed
+            Assert.AreEqual(train.mInteriorLightsStatus, false); // off
         }
 
         [TestMethod]
@@ -533,11 +533,11 @@ namespace gogTests
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = false;
 
-            Assert.AreEqual(train.mExteriorLightsStatus, false); // closed by default
+            Assert.AreEqual(train.mExteriorLightsStatus, false); // off by default
             train.setExteriorLights();
-            Assert.AreEqual(train.mExteriorLightsStatus, true);  // open
+            Assert.AreEqual(train.mExteriorLightsStatus, true);  // on
             train.setExteriorLights();
-            Assert.AreEqual(train.mExteriorLightsStatus, false); // closed
+            Assert.AreEqual(train.mExteriorLightsStatus, false); // off
         }
 
         [TestMethod]
@@ -546,11 +546,11 @@ namespace gogTests
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = false;
 
-            Assert.AreEqual(train.mAnnouncementsStatus, false); // closed by default
+            Assert.AreEqual(train.mAnnouncementsStatus, false); // off by default
             train.setAnnouncements();
-            Assert.AreEqual(train.mAnnouncementsStatus, true);  // open
+            Assert.AreEqual(train.mAnnouncementsStatus, true);  // on
             train.setAnnouncements();
-            Assert.AreEqual(train.mAnnouncementsStatus, false); // closed
+            Assert.AreEqual(train.mAnnouncementsStatus, false); // off
         }
 
         [TestMethod]
@@ -559,14 +559,14 @@ namespace gogTests
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = false;
 
-            Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
+            Assert.AreEqual(train.mTemperature, 72);  // 72 degrees F by default
             train.tempDecrease();
             Assert.AreEqual(train.mTemperature, 71);  // 71 degrees F
             for (int i = 0; i < 9; i++)
             {
                 train.tempDecrease();
             }
-            Assert.AreEqual(train.mTemperature, 62); // 62 degrees F
+            Assert.AreEqual(train.mTemperature, 62);  // 62 degrees F
         }
 
         [TestMethod]
@@ -575,14 +575,14 @@ namespace gogTests
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = false;
 
-            Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
+            Assert.AreEqual(train.mTemperature, 72);  // 72 degrees F by default
             train.tempIncrease();
             Assert.AreEqual(train.mTemperature, 73);  // 73 degrees F
             for (int i=0; i<9; i++)
             {
                 train.tempIncrease();
             }
-            Assert.AreEqual(train.mTemperature, 82); // 82 degrees F
+            Assert.AreEqual(train.mTemperature, 82);  // 82 degrees F
         }
 
         [TestMethod]
@@ -593,9 +593,9 @@ namespace gogTests
 
             Assert.AreEqual(train.mKp, 10000); // default 10000 Kp
             train.setKp(500);
-            Assert.AreEqual(train.mKp, 500); // 500 Kp
+            Assert.AreEqual(train.mKp, 500);   // 500 Kp
             train.setKp(0);
-            Assert.AreEqual(train.mKp, 0); // 0 Kp
+            Assert.AreEqual(train.mKp, 0);     // 0 Kp
         }
 
         [TestMethod]
@@ -604,11 +604,168 @@ namespace gogTests
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = false;
 
-            Assert.AreEqual(train.mKi, 0); // default 0 Ki
+            Assert.AreEqual(train.mKi, 0);     // default 0 Ki
             train.setKp(500);
-            Assert.AreEqual(train.mKi, 500); // 500 Kp
+            Assert.AreEqual(train.mKi, 500);   // 500 Kp
             train.setKp(10000);
             Assert.AreEqual(train.mKi, 10000); // 10000 Ki
+        }
+
+        [TestMethod]
+        public void TrainMovesTowardsCommandedSpeedInAutomaticMode()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+            train.mAutoMode = true;              // automatic mode
+
+            Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
+            train.setCmdSpeed(5);
+            
+            for (int i=0; i<100; i++)
+            {
+                train.UpdateSpeed();
+            }
+            Assert.IsTrue(train.mCurSpeed == 5); // train reaches commanded speed
+        }
+
+        [TestMethod]
+        public void TrainMovesTowardsSetSpeedInManualMode()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+            train.mAutoMode = false;             // manual mode
+
+            Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
+            train.setCmdSpeed(5);
+            train.setSetSpeed(3);
+            
+            for (int i=0; i<100; i++)
+            {
+                train.UpdateSpeed();
+            }
+            Assert.IsTrue(train.mCurSpeed == 3); // train reaches set speed
+        }
+
+        [TestMethod]
+        public void UnableToSetSetSpeedAboveCommandedSpeed()
+        {
+            TrainController.Controller train - new TrainController.Controller(false);
+            train.mControlType = false;
+            train.mAutoMode = false;
+
+            Assert.AreEqual(train.mSetSpeed, 0); // set speed initiialy zero
+            train.setCmdSpeed(5);
+            train.setSetSpeed(10);
+            Assert.AreEqual(train.mSetSpeed, 0); // set speed does not change because input is above commanded speed
+        }
+
+        [TestMethod]
+        public void TrainSpeedIncrements()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+            train.mAutoMode = true;
+
+            Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
+            train.setCmdSpeed(5);                // set commanded speed to 5
+            train.SpeedUpdate();
+            Assert.IsTrue(train.mCurSpeed > 0);  // train speed increments
+        }
+
+        [TestMethod]
+        public void TrainSpeedDecrements()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+            train.mAutoMode = true;
+
+            Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
+            train.setCurSpeed(5);                // set current speed to 5
+            train.SpeedUpdate();
+            Assert.IsTrue(train.mCurSpeed < 5);  // train speed decrements
+        }
+
+        [TestMethod]
+        public void TrainCalculatesPositivePower()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+            train.mAutoMode = true;
+
+            Assert.AreEqual(train.mCurPower, 0); // train initially not moving, has no power
+            train.setCmdSpeed(100);
+            train.CalculatePowerSW();
+            Assert.IsTrue(train.mcurPower > 0);  // train accelerates towards commanded speed, calculates positive power
+        }
+
+        [TestMethod]
+        public void TrainCalculatesNegativePower()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+            train.mAutoMode = true;
+
+            Assert.AreEqual(train.mCurPower, 0); // train initially not moving, has no power
+            train.setCurSpeed(100);
+            train.CalculatePowerSW();
+            Assert.IsTrue(train.mcurPower < 0);  // train decelerates towards commanded speed, calculates negative power
+        }
+
+        [TestMethod]
+        public void TrainCalculatesPowerLimitedToMax()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+            train.mAutoMode = true;
+
+            Assert.AreEqual(train.mCurPower, 0);          // train initially not moving, has no power
+            train.setCmdSpeed(1000000000000000000);       // train receives very large commanded speed
+            train.CalculatePowerSW();                     // train calculates power
+            Assert.IsTrue(train.mcurPower == train.Pmax); // power set to max power
+        }
+
+        [TestMethod]
+        public void TrainDeceleratesWhileEmergencyBrakeActivated()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+            train.mAutoMode = true;
+
+            Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
+            train.setCmdSpeed(5);
+            
+            // train accelerates to commanded speed
+            for (int i=0; i<100; i++)
+            {
+                train.UpdateSpeed();
+            }
+            Assert.IsTrue(train.mCurSpeed == 5);
+
+            train.setEmergencyBrake();
+            train.UpdateSpeed();
+            Assert.IsTrue(train.mCurSpeed < 5); // train decelerates from emergency brake
+        }
+
+        [TestMethod]
+        public void TrainDeceleratesWhileServiceBrakeActivated()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+            train.mAutoMode = true;
+
+            Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
+            train.setCmdSpeed(5);
+            
+            // train accelerates to commanded speed
+            for (int i=0; i<100; i++)
+            {
+                train.UpdateSpeed();
+            }
+            Assert.IsTrue(train.mCurSpeed == 5);
+
+            train.setServiceBrake();
+            train.UpdateSpeed();
+            Assert.IsTrue(train.mCurSpeed < 5); // train decelerates from emergency brake
         }
     }
 
