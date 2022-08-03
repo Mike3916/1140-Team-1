@@ -19,7 +19,7 @@
         <TextBox x:Name="ETA" HorizontalAlignment="Left" Margin="218,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="UpdateTrain" Content="UpdateTrain" HorizontalAlignment="Left" Margin="360,210,0,0" VerticalAlignment="Top" Click="UpdateTrain_Click"/>
         <ComboBox x:Name="DestStationCombo" HorizontalAlignment="Left" Margin="400,87,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name ="DestLineCombo" HorizontalAlignment="Left" Margin="260,87,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name ="DestLineCombo" HorizontalAlignment="Left" Margin="260,87,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="DestLineCombo_SelectionChanged"/>
 
     </Grid>
 </Page>
