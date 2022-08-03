@@ -21,8 +21,13 @@ namespace CTC
     /// <summary>
     /// Interaction logic for Train_Data.xaml
     /// </summary>
+    /// 
+
     public partial class Train_Data : Page
     {
+        Object[,] greenStation = new Object[,] { { 2, "" }, { 9, "" }, { 16, "" }, { 22, "" }, { 31, "" }, { 39, "" }, { 48, "" }, { 57, "" }, { 65, "" }, { 73, "" }, { 77, "" }, { 88, "" }, { 96, "" }, { 105, "" }, { 114, "" }, { 123, "" }, { 132, "" }, { 141, "" } };
+        Object[,] redStation = new Object[,] { { 7, "" }, { 16, "" }, { 21, "" }, { 25, "" }, { 35, "" }, { 45, "" }, { 48, "" }, { 60, "" } }; //Matches StationCombo index numbers to the block numbers for the red line (index starting at 1)
+
         public Train_Data()
         {
             InitializeComponent();

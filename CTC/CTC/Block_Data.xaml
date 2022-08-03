@@ -26,12 +26,14 @@
             </Rectangle.RenderTransform>
         </Rectangle>
         <TextBlock HorizontalAlignment="Left" Margin="151,236,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top"/>
-        <Rectangle Fill="LightGray" HorizontalAlignment="Left" Height="42" Margin="235,104,0,0" Stroke="Black" VerticalAlignment="Top" Width="78"/>
-        <TextBlock HorizontalAlignment="Left" Margin="242,117,0,0" TextWrapping="Wrap" Text="Signal Light" VerticalAlignment="Top"/>
+        <Rectangle x:Name="SignalLeft" Fill="LightGray" HorizontalAlignment="Left" Height="29" Margin="205,117,0,0" Stroke="Black" VerticalAlignment="Top" Width="69"/>
+        <TextBlock HorizontalAlignment="Left" Margin="209,124,0,0" TextWrapping="Wrap" Text="Signal Left" VerticalAlignment="Top"/>
         <Rectangle x:Name="CrossingRect" Fill="LightGray" HorizontalAlignment="Left" Height="42" Margin="228,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="92"/>
         <TextBlock x:Name="CrossingText" HorizontalAlignment="Left" Margin="232,0,0,0" TextWrapping="Wrap" Text="Crossing Status" VerticalAlignment="Center"/>
         <TextBlock x:Name="SwitchText" HorizontalAlignment="Left" Margin="51,266,0,0" TextWrapping="Wrap" Text="Switch to Block:" VerticalAlignment="Top"/>
         <TextBlock x:Name="SwitchNum" HorizontalAlignment="Left" Margin="151,266,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top"/>
         <Button x:Name="ToggleButton" Content="Toggle Switch" HorizontalAlignment="Left" Margin="194,267,0,0" VerticalAlignment="Top" Click="ToggleButton_Click"/>
+        <Rectangle x:Name="SignalRight" Fill="LightGray" HorizontalAlignment="Left" Height="29" Margin="289,117,0,0" Stroke="Black" VerticalAlignment="Top" Width="69"/>
+        <TextBlock HorizontalAlignment="Left" Margin="291,124,0,0" TextWrapping="Wrap" Text="Signal Right" VerticalAlignment="Top"/>
     </Grid>
 </Page>
