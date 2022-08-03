@@ -15,17 +15,15 @@ namespace Track_Controller_1._02
     public class ADSClient
     {
 
-        private TcAdsClient ads = new TcAdsClient();
-        private int hvar;
-        private int[] var = new int[75];
-        int mPort;
-        private ITcAdsSymbol sym = null;
+        private TcAdsClient mAds = new TcAdsClient();
+        private int mHvar;
+        private int mPort;
 
-        public ADSClient(int mLocalPort)
+        public ADSClient(int LocalPort)
         {
-            mPort = mLocalPort;
-           ads.Connect(mPort);//default port of TwinCAT 3 is 851
-            if (ads.IsConnected == true)
+            mPort = LocalPort;
+           mAds.Connect(mPort);//default port of TwinCAT 3 is 851
+            if (mAds.IsConnected == true)
             {
                 Console.WriteLine(mPort.ToString() + " Connection OK");
             }
@@ -36,13 +34,13 @@ namespace Track_Controller_1._02
         }
 
         //SendPacket: writes an integer array to an array of global integers at ADS port the client is connected to. 
-        //<[]mPacket>: contains the block states to be written to the PLC
-        public void SendPacket(int[] mPacket, string mVarName1)
+        //<[]packet>: contains the block states to be written to the PLC
+        public void SendPacket(int[] packet, string varName1)
         {
             
             try
             {
-                hvar = ads.CreateVariableHandle(mVarName1);
+                mHvar = mAds.CreateVariableHandle(varName1);
             }
             catch
             {
@@ -51,7 +49,7 @@ namespace Track_Controller_1._02
 
             try
             {
-                ads.WriteAny(hvar, mPacket);
+                mAds.WriteAny(mHvar, packet);
             }
             catch
             {
@@ -61,15 +59,15 @@ namespace Track_Controller_1._02
         }
 
         //ReceivePacket: reads an integer array to an array of global integers at ADS port the client is connected to. 
-        //<[]mPacket>: contains the block states to be written to the PLC
+        //<[]packet>: contains the block states to be written to the PLC
         //<int[]> returns the block command states to be written to the track
-        public int[] ReceivePacket(int mLength, string mVarName2)
+        public int[] ReceivePacket(int length, string varName2)
         {
             try
             {
-            hvar = ads.CreateVariableHandle(mVarName2);
-            int[] mPacket = (int[])ads.ReadAny(hvar, typeof(int[]), new int[] { mLength });
-            return mPacket;
+            mHvar = mAds.CreateVariableHandle(varName2);
+            int[] Packet = (int[])mAds.ReadAny(mHvar, typeof(int[]), new int[] { length });;
+            return Packet;
             }
             catch
             {
@@ -83,165 +81,165 @@ namespace Track_Controller_1._02
 
 
         //SendSwitches: Calls the sendpacket function with specified variable names to read/write
-        //<mPacket>: integer array of values to send to PLC
+        //<packet>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public void SendSwitches(int[] mPacket)
+        public void SendSwitches(int[] packet)
         {
-            SendPacket(mPacket, "GVL.mInSwitch");
+            SendPacket(packet, "GVL.mInSwitch");
             return;
         }
 
         //ReceiveSwitches: Calls the receivepacket function with specified variable names to read/write
-        //<mPacket>: integer array of values to send to PLC
+        //<packet>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveSwitches(int mLength = 0)
+        public int[] ReceiveSwitches(int length = 0)
         {
-            int[] temp = ReceivePacket(mLength, "GVL.mOutSwitch");
+            int[] temp = ReceivePacket(length, "GVL.mOutSwitch");
             return temp;
         }
 
         //SendOccupancies: Calls the sendpacket function with specified variable names to read/write
-        //<mPacket>: integer array of values to send to PLC
-        public void SendOccupancies(int[] mPacket)
+        //<packet>: integer array of values to send to PLC
+        public void SendOccupancies(int[] packet)
         {
-            SendPacket(mPacket, "GVL.mInOccupancies");
+            SendPacket(packet, "GVL.mInOccupancies");
             return;
         }
 
         //ReceiveOccupancies: Calls the receivepacket function with specified variable names to read
-        //<mPacket>: integer array of values to send to PLC
+        //<packet>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveOccupancies(int mLength = 0)
+        public int[] ReceiveOccupancies(int length = 0)
         {
-            int[] temp = ReceivePacket(mLength, "GVL.mOutOccupancies");
+            int[] temp = ReceivePacket(length, "GVL.mOutOccupancies");
             return temp;
         }
 
         //SendSpeeds: Calls the sendpacket function with specified variable names to write
-        //<mPacket>: integer array of values to send to PLC
+        //<packet>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public void SendSpeeds(int[] mPacket)
+        public void SendSpeeds(int[] packet)
         {
-            SendPacket(mPacket, "GVL.mInSpeeds");
+            SendPacket(packet, "GVL.mInSpeeds");
             return;
         }
 
         //ReceiveSpeeds: Calls the receive packet function with specified variable names to read
-        //<mPacket>: integer array of values to send to PLC
+        //<packet>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveSpeeds(int mLength = 0)
+        public int[] ReceiveSpeeds(int length = 0)
         {
-            int[] temp = ReceivePacket(mLength, "GVL.mOutSpeeds");
+            int[] temp = ReceivePacket(length, "GVL.mOutSpeeds");
             return temp;
         }
 
         //SendAuthorities: Calls the sendpacket function with specified variable names to write
-        //<mPacket>: integer array of values to send to PLC
+        //<packet>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public void SendAuthorities(int[] mPacket)
+        public void SendAuthorities(int[] packet)
         {
-            SendPacket(mPacket, "GVL.mInAuthorities");
+            SendPacket(packet, "GVL.mInAuthorities");
             return;
         }
 
         //ReceiveAuthorities: Calls the sendpacket function with specified variable names to read
-        //<mPacket>: integer array of values to send to PLC
+        //<packet>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveAuthorities(int mLength = 0)
+        public int[] ReceiveAuthorities(int length = 0)
         {
-            int[] temp = ReceivePacket(mLength, "GVL.mOutAuthorities");
+            int[] temp = ReceivePacket(length, "GVL.mOutAuthorities");
             return temp;
         }
 
         //SendCrossings: Calls the sendpacket function with specified variable names to write
-        //<mPacket>: integer array of values to send to PLC
+        //<packet>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public void SendCrossings(int[] mPacket)
+        public void SendCrossings(int[] packet)
         {
-            SendPacket(mPacket, "GVL.mInCrossings");
+            SendPacket(packet, "GVL.mInCrossings");
             return;
         }
 
         //ReceiveCrossings: Calls the sendpacket function with specified variable names to read/write
-        //<mPacket>: integer array of values to send to PLC
+        //<packet>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveCrossings(int mLength = 0)
+        public int[] ReceiveCrossings(int length = 0)
         {
-            int[] temp = ReceivePacket(mLength, "GVL.mOutCrossings");
+            int[] temp = ReceivePacket(length, "GVL.mOutCrossings");
             return temp;
         }
 
         //SendLeftLights: Calls the sendpacket function with specified variable names to write
-        //<mPacket>: integer array of values to send to PLC
+        //<packet>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public void SendLeftLights(int[] mPacket)
+        public void SendLeftLights(int[] packet)
         {
-            SendPacket(mPacket, "GVL.mInLeftLights");
+            SendPacket(packet, "GVL.mInLeftLights");
             return;
         }
 
         //ReceiveLeftLights: Calls the sendpacket function with specified variable names to read
-        //<mPacket>: integer array of values to send to PLC
+        //<packet>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveLeftLights(int mLength = 0)
+        public int[] ReceiveLeftLights(int length = 0)
         {
-            int[] temp = ReceivePacket(mLength, "GVL.mOutLeftLights");
+            int[] temp = ReceivePacket(length, "GVL.mOutLeftLights");
             return temp;
         }
 
 
         //SendRightLights: Calls the sendpacket function with specified variable names to read/write
-        //<mPacket>: integer array of values to send to PLC
+        //<packet>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public void SendRightLights(int[] mPacket)
+        public void SendRightLights(int[] packet)
         {
-            SendPacket(mPacket, "GVL.mInRightLights");
+            SendPacket(packet, "GVL.mInRightLights");
             return;
         }
 
         //ReceiveRightLights: Calls the sendpacket function with specified variable names to read/write
-        //<mPacket>: integer array of values to send to PLC
+        //<packet>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveRightLights(int mLength = 0)
+        public int[] ReceiveRightLights(int length = 0)
         {
-            int[] temp = ReceivePacket(mLength, "GVL.mOutRightLights");
+            int[] temp = ReceivePacket(length, "GVL.mOutRightLights");
             return temp;
         }
 
         //SendMaintenance: Calls the sendpacket function with specified variable names to read/write
-        //<mPacket>: integer array of values to send to PLC
+        //<packet>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public void SendMaintenance(int[] mPacket)
+        public void SendMaintenance(int[] packet)
         {
-            SendPacket(mPacket, "GVL.mInMaintenance");
+            SendPacket(packet, "GVL.mInMaintenance");
             return;
         }
 
         //ReceiveMaintenance: Calls the sendpacket function with specified variable names to read/write
-        //<mPacket>: integer array of values to send to PLC
+        //<packet>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveMaintenance(int mLength = 0)
+        public int[] ReceiveMaintenance(int length = 0)
         {
-            int[] temp = ReceivePacket(mLength, "GVL.mOutMaintenance");
+            int[] temp = ReceivePacket(length, "GVL.mOutMaintenance");
             return temp;
         }
 
         //SendRoute: Calls the sendpacket function with specified variable names to write
-        //<mPacket>: integer array of values to send to PLC
+        //<packet>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public void SendRoute(int[] mPacket)
+        public void SendRoute(int[] packet)
         {
-            SendPacket(mPacket, "GVL.mInRoute");
+            SendPacket(packet, "GVL.mInRoute");
             return;
         }
 
         //ReceiveRoute: Calls the sendpacket function with specified variable names to read
-        //<mPacket>: integer array of values to send to PLC
+        //<packet>: integer array of values to send to PLC
         //<int[]>: integer array of values returned from the PLC
-        public int[] ReceiveRoute(int mLength = 0)
+        public int[] ReceiveRoute(int length = 0)
         {
-            int[] mPacket = ReceivePacket(mLength, "GVL.mOutRoute");
-            return mPacket;
+            int[] packet = ReceivePacket(length, "GVL.mOutRoute");
+            return packet;
         }
     }
 }

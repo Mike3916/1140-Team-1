@@ -109,15 +109,14 @@ namespace Track_Controller_1._02
      
         //**********************************************************************************************************************************
         //Mike's Accessor and Mutator Functions
-
         public int getmBlockState(int sectIdx, int blockIdx)
         {
             return mSections[sectIdx].getmBlockState(blockIdx);
         }
 
-        public void setmBlockState(int sectIdx, int blockIdx, int mNewState)
+        public void setmBlockState(int sectIdx, int blockIdx, int newState)
         {
-            mSections[sectIdx].setmBlockState(blockIdx, mNewState);
+            mSections[sectIdx].setmBlockState(blockIdx, newState);
         }
 
         public int getmSpeedLimit(int sectIdx, int blockIdx)
@@ -125,23 +124,23 @@ namespace Track_Controller_1._02
             return mSections[sectIdx].getmSpeedLimit(blockIdx);
         }
 
-        public void setmSpeedLimit(int sectIdx, int blockIdx, int mNewState)
+        public void setmSpeedLimit(int sectIdx, int blockIdx, int newState)
         {
-            mSections[sectIdx].setmSpeedLimit(blockIdx, mNewState);
+            mSections[sectIdx].setmSpeedLimit(blockIdx, newState);
         }
 
-        public void setAuthority(int sectIdx, int blockIdx, int mNewState)
+        public void setAuthority(int sectIdx, int blockIdx, int newState)
         {
-            mSections[sectIdx].setAuthority(blockIdx, mNewState);
+            mSections[sectIdx].setAuthority(blockIdx, newState);
         }
 
         public int getAuthority(int sectIdx, int blockIdx)
         {
             return mSections[sectIdx].getAuthority(blockIdx);
         }
-        public void setSuggested(int sectIdx, int blockIdx, int mNewState)
+        public void setSuggested(int sectIdx, int blockIdx, int newState)
         {
-            mSections[sectIdx].setSuggested(blockIdx, mNewState);
+            mSections[sectIdx].setSuggested(blockIdx, newState);
         }
 
         public int getSuggested(int sectIdx, int blockIdx)

@@ -21,326 +21,238 @@ namespace gogTests
             Assert.AreEqual(track.mtrainList[0].commAuthority, 0);
         }
 
-
-
         [TestMethod]
-        public void TrainControllerSW_ToggleLeftDoors()
+        public void maxPowerLimited()
         {
-            TrainController.Controller train = new TrainController.Controller(false);
-            Assert.AreEqual(train.mLeftDoorsStatus, false); // closed by default
-            train.setLeftDoors();
-            Assert.AreEqual(train.mLeftDoorsStatus, true);  // open
-            train.setLeftDoors();
-            Assert.AreEqual(train.mLeftDoorsStatus, false); // closed
+            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
+            chooChoo.setPowerCmd(500000000);
+            Assert.AreEqual(120000, chooChoo.getPowerCmd(), "Account not debited correctly");
+
         }
 
         [TestMethod]
-        public void TrainControllerSW_ToggleRightDoors()
+        //Checks if program will crash when attempting to connect to an unconfigured port number
+        public void ConnectToBadPort()
         {
-            TrainController.Controller train = new TrainController.Controller(false);
-            Assert.AreEqual(train.mRightDoorsStatus, false); // closed by default
-            train.setRightDoors();
-            Assert.AreEqual(train.mRightDoorsStatus, true);  // open
-            train.setRightDoors();
-            Assert.AreEqual(train.mRightDoorsStatus, false); // closed
+            Track_Controller_1._02.Controller RedlinePLC = new Track_Controller_1._02.Controller(855, false, "127.0.0.1");
+
+            int[] crossings = new int[45];
+            int[] returns = new int[45];
+
+            RedlinePLC.SendCrossings(crossings);
+            (RedlinePLC.ReceiveCrossings(45)).CopyTo(returns, 0);
         }
 
         [TestMethod]
-        public void TrainControllerSW_ToggleInteriorLights()
+        //Test to see if PLC receives and sends the occupancies correctly
+        public void TrackControllerReceiveOccupancies()
         {
-            TrainController.Controller train = new TrainController.Controller(false);
-            Assert.AreEqual(train.mInteriorLightsStatus, false); // closed by default
-            train.setInteriorLights();
-            Assert.AreEqual(train.mInteriorLightsStatus, true);  // open
-            train.setInteriorLights();
-            Assert.AreEqual(train.mInteriorLightsStatus, false); // closed
+            Track_Controller_1._02.Controller RedlinePLC = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
+
+            int[] occupancies = new int[45];
+            int[] returns = new int[45];
+
+            //Send and receive zero arrays with wait in between
+            RedlinePLC.SendOccupancies(occupancies);
+            Thread.Sleep(10);
+            (RedlinePLC.ReceiveOccupancies(45)).CopyTo(returns, 0);
+
+            //Change values of array
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreEqual(occupancies[i], returns[i]);
+            }
+
+            //Change occupancies to 1s
+            for (int i = 0; i < returns.Length; i++)
+            {
+                occupancies[i] = 1;
+            }
+
+            //check that arrays no longer match
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreNotEqual(occupancies[i], returns[i]);
+            }
+
+            //Send. Wait. Receive
+            RedlinePLC.SendOccupancies(occupancies);
+            Thread.Sleep(10);
+            (RedlinePLC.ReceiveOccupancies(45)).CopyTo(returns, 0);
+
+            //Check for match
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreEqual(occupancies[i], returns[i]);
+            }
+
+            //Test mismatch size.
+            int[] sizemismatch = new int[99];
+
+            RedlinePLC.SendOccupancies(sizemismatch);
+            (RedlinePLC.ReceiveOccupancies(99)).CopyTo(sizemismatch, 0);
+            (RedlinePLC.ReceiveOccupancies(45)).CopyTo(sizemismatch, 0);
         }
 
         [TestMethod]
-        public void TrainControllerSW_ToggleExteriorLights()
-        {
-            TrainController.Controller train = new TrainController.Controller(false);
-            Assert.AreEqual(train.mExteriorLightsStatus, false); // closed by default
-            train.setExteriorLights();
-            Assert.AreEqual(train.mExteriorLightsStatus, true);  // open
-            train.setExteriorLights();
-            Assert.AreEqual(train.mExteriorLightsStatus, false); // closed
-        }
-
-        [TestMethod]
-        public void TrainControllerSW_ToggleAnnouncements()
-        {
-            TrainController.Controller train = new TrainController.Controller(false);
-            Assert.AreEqual(train.mAnnouncementsStatus, false); // closed by default
-            train.setAnnouncements();
-            Assert.AreEqual(train.mAnnouncementsStatus, true);  // open
-            train.setAnnouncements();
-            Assert.AreEqual(train.mAnnouncementsStatus, false); // closed
-        }
-
-        [TestMethod]
-        public void TrainControllerSW_DecrementTemperature()
-        {
-            TrainController.Controller train = new TrainController.Controller(false);
-            Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
-            train.tempDecrease();
-            Assert.AreEqual(train.mTemperature, 71);  // 71 degrees F
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            train.tempDecrease();
-            Assert.AreEqual(train.mTemperature, 62); // 62 degrees F
-        }
-
-        [TestMethod]
-        public void TrainControllerSW_IncrementTemperature()
-        {
-            TrainController.Controller train = new TrainController.Controller(false);
-            Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
-            train.tempIncrease();
-            Assert.AreEqual(train.mTemperature, 73);  // 73 degrees F
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            train.tempIncrease();
-            Assert.AreEqual(train.mTemperature, 82); // 82 degrees F
-        }
-
-
-
-        /*  [TestMethod]
-          //Checks if program will crash when attempting to connect to an unconfigured port number
-          public void ConnectToBadPort()
-          {
-              Track_Controller_1._02.Controller RedlinePLC = new Track_Controller_1._02.Controller(855, false, "127.0.0.1");
-
-              int[] crossings = new int[45];
-              int[] returns = new int[45];
-
-              RedlinePLC.SendCrossings(crossings);
-              (RedlinePLC.ReceiveCrossings(45)).CopyTo(returns,0);
-          }   
-
-          [TestMethod]
-          //Test to see if PLC receives and sends the occupancies correctly
-          public void TrackControllerReceiveOccupancies()
-          {
-              Track_Controller_1._02.Controller RedlinePLC = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
-
-              int[] occupancies = new int[45];
-              int[] returns = new int[45];
-
-              //Send and receive zero arrays with wait in between
-              RedlinePLC.SendOccupancies(occupancies);
-              Thread.Sleep(10);
-              (RedlinePLC.ReceiveOccupancies(45)).CopyTo(returns, 0);
-
-              //Change values of array
-              for (int i = 0; i < returns.Length; i++)
-              {
-                  Assert.AreEqual(occupancies[i], returns[i]);
-              }
-
-              //Change occupancies to 1s
-              for (int i = 0; i < returns.Length; i++)
-              {
-                  occupancies[i] = 1;
-              }
-
-              //check that arrays no longer match
-              for (int i = 0; i < returns.Length; i++)
-              {
-                  Assert.AreNotEqual(occupancies[i], returns[i]);
-              }
-
-              //Send. Wait. Receive
-              RedlinePLC.SendOccupancies(occupancies);
-              Thread.Sleep(10);
-              (RedlinePLC.ReceiveOccupancies(45)).CopyTo(returns, 0);
-
-              //Check for match
-              for (int i = 0; i < returns.Length; i++)
-              {
-                  Assert.AreEqual(occupancies[i], returns[i]);
-              }
-
-              //Test mismatch size.
-              int[] sizemismatch = new int[99];
-
-              RedlinePLC.SendOccupancies(sizemismatch);
-              (RedlinePLC.ReceiveOccupancies(99)).CopyTo(sizemismatch, 0);
-              (RedlinePLC.ReceiveOccupancies(45)).CopyTo(sizemismatch, 0);
-          }
-  */
-        // [TestMethod]
         //Test to see if PLC receives and sends the speeds correctly
-        /*   public void TrackControllerReceiveSpeeds()
-           {
-               Track_Controller_1._02.Controller RedlinePLC = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
+        public void TrackControllerReceiveSpeeds()
+        {
+            Track_Controller_1._02.Controller RedlinePLC = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
 
-               int[] speeds = new int[45];
-               int[] returns = new int[45];
+            int[] speeds = new int[45];
+            int[] returns = new int[45];
 
-               //Send and receive zero arrays with wait in between
-               RedlinePLC.SendSpeeds(speeds);
-               Thread.Sleep(10);
-               (RedlinePLC.ReceiveSpeeds(45)).CopyTo(returns, 0);
+            //Send and receive zero arrays with wait in between
+            RedlinePLC.SendSpeeds(speeds);
+            Thread.Sleep(10);
+            (RedlinePLC.ReceiveSpeeds(45)).CopyTo(returns, 0);
 
-               //Change values of array
-               for (int i = 0; i < returns.Length; i++)
-               {
-                   Assert.AreEqual(speeds[i], returns[i]);
-               }
+            //Change values of array
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreEqual(speeds[i], returns[i]);
+            }
 
-               //Change speeds to 1s
-               for (int i = 0; i < returns.Length; i++)
-               {
-                   speeds[i] = 5;
-               }
+            //Change speeds to 1s
+            for (int i = 0; i < returns.Length; i++)
+            {
+                speeds[i] = 5;
+            }
 
-               //check that arrays no longer match
-               for (int i = 0; i < returns.Length; i++)
-               {
-                   Assert.AreNotEqual(speeds[i], returns[i]);
-               }
+            //check that arrays no longer match
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreNotEqual(speeds[i], returns[i]);
+            }
 
-               //Send. Wait. Receive
-               RedlinePLC.SendSpeeds(speeds);
-               Thread.Sleep(10);
-               (RedlinePLC.ReceiveSpeeds(45)).CopyTo(returns, 0);
+            //Send. Wait. Receive
+            RedlinePLC.SendSpeeds(speeds);
+            Thread.Sleep(10);
+            (RedlinePLC.ReceiveSpeeds(45)).CopyTo(returns, 0);
 
-               //Check for match
-               for (int i = 0; i < returns.Length; i++)
-               {
-                   Assert.AreEqual(speeds[i], returns[i]);
-               }
+            //Check for match
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreEqual(speeds[i], returns[i]);
+            }
 
-               //Set speeds above speed limit
-               for (int i = 0; i < returns.Length; i++)
-               {
-                   speeds[i] = 150;
-               }
+            //Set speeds above speed limit
+            for (int i = 0; i < returns.Length; i++)
+            {
+                speeds[i] = 150;
+            }
 
-               RedlinePLC.SendSpeeds(speeds);
-               Thread.Sleep(10);
-               (RedlinePLC.ReceiveSpeeds(45)).CopyTo(returns, 0);
+            RedlinePLC.SendSpeeds(speeds);
+            Thread.Sleep(10);
+            (RedlinePLC.ReceiveSpeeds(45)).CopyTo(returns, 0);
 
-               //Speeds should not match
-               for (int i = 0; i < returns.Length; i++)
-               {
-                   Assert.AreNotEqual(speeds[i], returns[i]);
-               }
+            //Speeds should not match
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreNotEqual(speeds[i], returns[i]);
+            }
 
-               //Sample a few test blocks with known speed limits
-               Assert.AreEqual(speeds[0], 40);
-               Assert.AreEqual(speeds[16], 55);
-               Assert.AreEqual(speeds[17], 70);
+            //Sample a few test blocks with known speed limits
+            Assert.AreEqual(speeds[0], 40);
+            Assert.AreEqual(speeds[16], 55);
+            Assert.AreEqual(speeds[17], 70);
 
-               //Test mismatch size.
-               int[] sizemismatch = new int[99];
+            //Test mismatch size.
+            int[] sizemismatch = new int[99];
 
-               RedlinePLC.SendSpeeds(sizemismatch);
-               (RedlinePLC.ReceiveSpeeds(99)).CopyTo(sizemismatch, 0);
-               (RedlinePLC.ReceiveSpeeds(45)).CopyTo(sizemismatch, 0);
-           }
+            RedlinePLC.SendSpeeds(sizemismatch);
+            (RedlinePLC.ReceiveSpeeds(99)).CopyTo(sizemismatch, 0);
+            (RedlinePLC.ReceiveSpeeds(45)).CopyTo(sizemismatch, 0);
+        }
 
-           [TestMethod]
-           //Test to see if PLC receives the authorities correctly
-           public void TrackControllerReceiveAuthorities()
-           {
-               Track_Controller_1._02.Controller RedlinePLC = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
+        [TestMethod]
+        //Test to see if PLC receives the authorities correctly
+        public void TrackControllerReceiveAuthorities()
+        {
+            Track_Controller_1._02.Controller RedlinePLC = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
 
-               int[] authorities = new int[45];
-               int[] returns = new int[45];
+            int[] authorities = new int[45];
+            int[] returns = new int[45];
 
-               //Send and receive zero arrays with wait in between
-               RedlinePLC.SendAuthorities(authorities);
-               Thread.Sleep(10);
-               (RedlinePLC.ReceiveAuthorities(45)).CopyTo(returns, 0);
+            //Send and receive zero arrays with wait in between
+            RedlinePLC.SendAuthorities(authorities);
+            Thread.Sleep(10);
+            (RedlinePLC.ReceiveAuthorities(45)).CopyTo(returns, 0);
 
-               //Change values of array
-               for (int i = 0; i < returns.Length; i++)
-               {
-                   Assert.AreEqual(authorities[i], returns[i]);
-               }
+            //Change values of array
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreEqual(authorities[i], returns[i]);
+            }
 
-               //Change speeds to 1s
-               for (int i = 0; i < returns.Length; i++)
-               {
-                   authorities[i] = i+1;
-               }
+            //Change speeds to 1s
+            for (int i = 0; i < returns.Length; i++)
+            {
+                authorities[i] = i + 1;
+            }
 
-               //check that arrays no longer match
-               for (int i = 0; i < returns.Length; i++)
-               {
-                   Assert.AreNotEqual(authorities[i], returns[i]);
-               }
+            //check that arrays no longer match
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreNotEqual(authorities[i], returns[i]);
+            }
 
-               //Send. Wait. Receive
-               RedlinePLC.SendAuthorities(authorities);
-               Thread.Sleep(10);
-               (RedlinePLC.ReceiveAuthorities(45)).CopyTo(returns, 0);
+            //Send. Wait. Receive
+            RedlinePLC.SendAuthorities(authorities);
+            Thread.Sleep(10);
+            (RedlinePLC.ReceiveAuthorities(45)).CopyTo(returns, 0);
 
-               //Check for match
-               for (int i = 0; i < returns.Length; i++)
-               {
-                   Assert.AreEqual(authorities[i], returns[i]);
-               }
+            //Check for match
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreEqual(authorities[i], returns[i]);
+            }
 
-               //Test mismatch size.
-               int[] sizemismatch = new int[99];
+            //Test mismatch size.
+            int[] sizemismatch = new int[99];
 
-               RedlinePLC.SendAuthorities(sizemismatch);
-               (RedlinePLC.ReceiveAuthorities(99)).CopyTo(sizemismatch, 0);
-               (RedlinePLC.ReceiveAuthorities(45)).CopyTo(sizemismatch, 0);
-           }*/
+            RedlinePLC.SendAuthorities(sizemismatch);
+            (RedlinePLC.ReceiveAuthorities(99)).CopyTo(sizemismatch, 0);
+            (RedlinePLC.ReceiveAuthorities(45)).CopyTo(sizemismatch, 0);
+        }
 
-        /*   [TestMethod]
-           //Test to see if PLC changes the crossing value when occupied
-           public void TrackControllerChangeCrossing()
-           {
-               Track_Controller_1._02.Controller RedlinePLC2 = new Track_Controller_1._02.Controller(853, false, "127.0.0.1");
+        [TestMethod]
+        //Test to see if PLC changes the crossing value when occupied
+        public void TrackControllerChangeCrossing()
+        {
+            Track_Controller_1._02.Controller RedlinePLC2 = new Track_Controller_1._02.Controller(853, false, "127.0.0.1");
 
-               //arrays for handling send receive values
-               int[] crossings = new int[39];
-               int[] occupancies = new int[39];
-               int[] returns1 = new int[39];
-               int[] returns2 = new int[39];
+            //arrays for handling send receive values
+            int[] crossings = new int[39];
+            int[] occupancies = new int[39];
+            int[] returns1 = new int[39];
+            int[] returns2 = new int[39];
 
-               //Send and receive zero arrays with wait in between
-               RedlinePLC2.SendOccupancies(occupancies);
-               Thread.Sleep(10);
-               (RedlinePLC2.ReceiveCrossings(39)).CopyTo(returns1, 0);
-               occupancies[14] = 1;
-               RedlinePLC2.SendOccupancies(occupancies);
-               Thread.Sleep(10);
-               (RedlinePLC2.ReceiveCrossings(39)).CopyTo(returns2, 0);
+            //Send and receive zero arrays with wait in between
+            RedlinePLC2.SendOccupancies(occupancies);
+            Thread.Sleep(10);
+            (RedlinePLC2.ReceiveCrossings(39)).CopyTo(returns1, 0);
+            occupancies[14] = 1;
+            RedlinePLC2.SendOccupancies(occupancies);
+            Thread.Sleep(10);
+            (RedlinePLC2.ReceiveCrossings(39)).CopyTo(returns2, 0);
 
-               //Check that Crossing changed state.
-               Assert.AreNotEqual(returns1[14], returns2[14]);
+            //Check that Crossing changed state.
+            Assert.AreNotEqual(returns1[14], returns2[14]);
 
-               //Test mismatch size.
-               int[] sizemismatch = new int[99];
-               RedlinePLC2.SendCrossings(sizemismatch);
-               (RedlinePLC2.ReceiveCrossings(99)).CopyTo(sizemismatch, 0);
-               (RedlinePLC2.ReceiveCrossings(45)).CopyTo(sizemismatch, 0);
-           }
+            //Test mismatch size.
+            int[] sizemismatch = new int[99];
+            RedlinePLC2.SendCrossings(sizemismatch);
+            (RedlinePLC2.ReceiveCrossings(99)).CopyTo(sizemismatch, 0);
+            (RedlinePLC2.ReceiveCrossings(45)).CopyTo(sizemismatch, 0);
+        }
 
-           [TestMethod]*/
+        [TestMethod]
         //Test to see if switch changes when in maintenance mode and commanded change given
         //Test to see if switch does not change when not in maintenance mode and commanded change given
         //Test to see if PLC code changes the switch value when some blocks occupied
-        /*public void TrackControllerChangeSwitch()
+        public void TrackControllerChangeSwitch()
         {
             Track_Controller_1._02.Controller RedlinePLC1 = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
 
@@ -394,7 +306,7 @@ namespace gogTests
             //block 76 (yard) to unoccupied (high)
             occupancies[44] = 1;
             //two way track unoccupied
-            for(int i=16; i<=26; i++)
+            for (int i = 16; i <= 26; i++)
             {
                 occupancies[i] = 0;
             }
@@ -486,14 +398,14 @@ namespace gogTests
             (RedlinePLC1.ReceiveRightLights(45)).CopyTo(returns2, 0);
 
             //Lights should be logical low when red/occupied
-            for(int i = 0; i< occupancies.Length; i++)
+            for (int i = 0; i < occupancies.Length; i++)
             {
                 Assert.AreEqual(returns1[i], 0);
                 Assert.AreEqual(returns2[i], 0);
             }
 
             //Switch all blocks to unoccupied (high) from occupied (low).
-            for(int i=0; i< returns1.Length; i++)
+            for (int i = 0; i < returns1.Length; i++)
             {
                 occupancies[i] = 1;
             }
@@ -522,105 +434,308 @@ namespace gogTests
             Assert.AreEqual(returns2[17], 1);
 
 
-        }*/
+        }
 
-        //[TestMethod]
-        //public void TrackReceiveOccupanciesGreen()
-        //{
-        //    Track_Controller_1._02.Controller GreenLinePLC = new Track_Controller_1._02.Controller(4, true, "127.0.0.1");
+        [TestMethod]
+        public void TrackReceiveOccupanciesGreen()
+        {
+            Track_Controller_1._02.Controller GreenLinePLC = new Track_Controller_1._02.Controller(4, true, "127.0.0.1");
 
-        //int[] occupancies = new int[151];
-        //int[] returns = new int[151];
+            int[] occupancies = new int[151];
+            int[] returns = new int[151];
+            Random rnd = new Random();
 
-        //GreenLinePLC.SendOccupancies(occupancies);
-        //returns = GreenLinePLC.ReceiveOccupancies(151);
+            GreenLinePLC.SendOccupancies(occupancies);
+            returns = GreenLinePLC.ReceiveOccupancies(151);
 
-        //for (int i = 0; i < returns.Length; i++)
-        //{
-        //    Assert.AreEqual(occupancies[i], returns[i]);
-        //}
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreEqual(occupancies[i], returns[i]);
+            }
 
-        //    for (int i = 0; i < returns.Length; i++)
-        //    {
-        //        occupancies[i] = 1;
-        //    }
-        //for (int i = 0; i < returns.Length; i++)
-        //{
-        //    occupancies[i] = 1;
-        //    Assert.AreEqual(occupancies[i],returns[i]);
-        //}
+            for (int i = 0; i < returns.Length; i++)
+            {
+                occupancies[i] = rnd.Next(1);
+            }
 
-        //GreenLinePLC.SendOccupancies(occupancies);
-        //returns = GreenLinePLC.ReceiveOccupancies(151);
 
-        //}
-        //[TestMethod]
-        //public void TrackModel_AddTrain()
-        //{
-        //    int blockIdx = 0;
-        //    int lineIdx = 0;
-        //    int authority = 0;
+            GreenLinePLC.SendOccupancies(occupancies);
+            returns = GreenLinePLC.ReceiveOccupancies(151);
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreEqual(occupancies[i], returns[i]);
+            }
 
-        //    TrackModel.MainWindow track = new TrackModel.MainWindow();
-        //    track.AddTrain(blockIdx, lineIdx, authority);
 
-        //    Assert.AreEqual(track.mtrainList.Count, 1);
-        //    Assert.AreEqual(track.mtrainList[0].blockIdx, 0);
-        //    Assert.AreEqual(track.mtrainList[0].lineIdx, 0);
-        //    Assert.AreEqual(track.mtrainList[0].commAuthority, 0);
-        //}
+        }
+    }
+    //[TestMethod]
+    //public void TrackModel_AddTrain()
+    //{
+    //    int blockIdx = 0;
+    //    int lineIdx = 0;
+    //    int authority = 0;
 
+    //    TrackModel.MainWindow track = new TrackModel.MainWindow();
+    //    track.AddTrain(blockIdx, lineIdx, authority);
+
+    //    Assert.AreEqual(track.mtrainList.Count, 1);
+    //    Assert.AreEqual(track.mtrainList[0].blockIdx, 0);
+    //    Assert.AreEqual(track.mtrainList[0].lineIdx, 0);
+    //    Assert.AreEqual(track.mtrainList[0].commAuthority, 0);
+    //}
+
+    [TestClass]
+    public class TrainControllerSW
+    {
+        [TestMethod]
+        public void ToggleLeftDoors()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mLeftDoorsStatus, false); // closed by default
+            train.setLeftDoors();
+            Assert.AreEqual(train.mLeftDoorsStatus, true);  // open
+            train.setLeftDoors();
+            Assert.AreEqual(train.mLeftDoorsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void ToggleRightDoors()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mRightDoorsStatus, false); // closed by default
+            train.setRightDoors();
+            Assert.AreEqual(train.mRightDoorsStatus, true);  // open
+            train.setRightDoors();
+            Assert.AreEqual(train.mRightDoorsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void ToggleInteriorLights()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mInteriorLightsStatus, false); // closed by default
+            train.setInteriorLights();
+            Assert.AreEqual(train.mInteriorLightsStatus, true);  // open
+            train.setInteriorLights();
+            Assert.AreEqual(train.mInteriorLightsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void ToggleExteriorLights()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mExteriorLightsStatus, false); // closed by default
+            train.setExteriorLights();
+            Assert.AreEqual(train.mExteriorLightsStatus, true);  // open
+            train.setExteriorLights();
+            Assert.AreEqual(train.mExteriorLightsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void ToggleAnnouncements()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mAnnouncementsStatus, false); // closed by default
+            train.setAnnouncements();
+            Assert.AreEqual(train.mAnnouncementsStatus, true);  // open
+            train.setAnnouncements();
+            Assert.AreEqual(train.mAnnouncementsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void DecrementTemperature()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
+            train.tempDecrease();
+            Assert.AreEqual(train.mTemperature, 71);  // 71 degrees F
+            for (int i = 0; i < 9; i++)
+            {
+                train.tempDecrease();
+            }
+            Assert.AreEqual(train.mTemperature, 62); // 62 degrees F
+        }
+
+        [TestMethod]
+        public void IncrementTemperature()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
+            train.tempIncrease();
+            Assert.AreEqual(train.mTemperature, 73);  // 73 degrees F
+            for (int i=0; i<9; i++)
+            {
+                train.tempIncrease();
+            }
+            Assert.AreEqual(train.mTemperature, 82); // 82 degrees F
+        }
+
+        [TestMethod]
+        public void SetKp()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mKp, 10000); // default 10000 Kp
+            train.setKp(500);
+            Assert.AreEqual(train.mKp, 500); // 500 Kp
+            train.setKp(0);
+            Assert.AreEqual(train.mKp, 0); // 0 Kp
+        }
+
+        [TestMethod]
+        public void SetKi()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = false;
+
+            Assert.AreEqual(train.mKi, 0); // default 0 Ki
+            train.setKp(500);
+            Assert.AreEqual(train.mKi, 500); // 500 Kp
+            train.setKp(10000);
+            Assert.AreEqual(train.mKi, 10000); // 10000 Ki
+        }
     }
 
     [TestClass]
-    public class TrainModel
+    public class TrainControllerHW
     {
-
-
         [TestMethod]
-        public void maxPowerLimited()
+        public void ToggleLeftDoors()
         {
-            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
-            chooChoo.setPowerCmd(500000000);
-            Assert.AreEqual(120000, chooChoo.getPowerCmd(), "Account not debited correctly");
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
 
+            Assert.AreEqual(train.mLeftDoorsStatus, false); // closed by default
+            train.setLeftDoors();
+            Assert.AreEqual(train.mLeftDoorsStatus, true);  // open
+            train.setLeftDoors();
+            Assert.AreEqual(train.mLeftDoorsStatus, false); // closed
         }
 
         [TestMethod]
-        public void nonVitals()
+        public void ToggleRightDoors()
         {
-            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
-            chooChoo.toggleDoorL();
-            chooChoo.toggleDoorR();
-            chooChoo.toggleInteriorLights();
-            chooChoo.toggleExteriorLights();
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
 
-            Assert.AreEqual(true, chooChoo.getDoorL(), "Door left not toggled correctly");
-            Assert.AreEqual(true, chooChoo.getDoorR(), "Door right not toggled correctly");
-            Assert.AreEqual(true, chooChoo.getInteriorLights(), "Interior lights not toggled correctly");
-            Assert.AreEqual(true, chooChoo.getExteriorLights(), "Exterior lights not toggled correctly");
+            Assert.AreEqual(train.mRightDoorsStatus, false); // closed by default
+            train.setRightDoors();
+            Assert.AreEqual(train.mRightDoorsStatus, true);  // open
+            train.setRightDoors();
+            Assert.AreEqual(train.mRightDoorsStatus, false); // closed
         }
-        
+
         [TestMethod]
-        public void accelerationTest()
+        public void ToggleInteriorLights()
         {
-            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
-            chooChoo.setPowerCmd(120000);
-            for(int i = 0;i<10000;i++)
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+
+            Assert.AreEqual(train.mInteriorLightsStatus, false); // closed by default
+            train.setInteriorLights();
+            Assert.AreEqual(train.mInteriorLightsStatus, true);  // open
+            train.setInteriorLights();
+            Assert.AreEqual(train.mInteriorLightsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void ToggleExteriorLights()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+
+            Assert.AreEqual(train.mExteriorLightsStatus, false); // closed by default
+            train.setExteriorLights();
+            Assert.AreEqual(train.mExteriorLightsStatus, true);  // open
+            train.setExteriorLights();
+            Assert.AreEqual(train.mExteriorLightsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void ToggleAnnouncements()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+
+            Assert.AreEqual(train.mAnnouncementsStatus, false); // closed by default
+            train.setAnnouncements();
+            Assert.AreEqual(train.mAnnouncementsStatus, true);  // open
+            train.setAnnouncements();
+            Assert.AreEqual(train.mAnnouncementsStatus, false); // closed
+        }
+
+        [TestMethod]
+        public void DecrementTemperature()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+
+            Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
+            train.tempDecrease();
+            Assert.AreEqual(train.mTemperature, 71);  // 71 degrees F
+            for (int i = 0; i < 9; i++)
             {
-                chooChoo.increment();
+                train.tempDecrease();
             }
-
-            Assert.IsTrue(chooChoo.getCurrentSpeedMPH() > 20, chooChoo.getCurrentSpeedMPH().ToString());
+            Assert.AreEqual(train.mTemperature, 62); // 62 degrees F
         }
-        
-        
 
+        [TestMethod]
+        public void IncrementTemperature()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+
+            Assert.AreEqual(train.mTemperature, 72); // 72 degrees F by default
+            train.tempIncrease();
+            Assert.AreEqual(train.mTemperature, 73);  // 73 degrees F
+            for (int i = 0; i < 9; i++)
+            {
+                train.tempIncrease();
+            }
+            Assert.AreEqual(train.mTemperature, 82); // 82 degrees F
+        }
+
+        [TestMethod]
+        public void SetKp()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+
+            Assert.AreEqual(train.mKp, 10000); // default 10000 Kp
+            train.setKp(500);
+            Assert.AreEqual(train.mKp, 500); // 500 Kp
+            train.setKp(0);
+            Assert.AreEqual(train.mKp, 0); // 0 Kp
+        }
+
+        [TestMethod]
+        public void SetKi()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+
+            Assert.AreEqual(train.mKi, 0); // default 0 Ki
+            train.setKp(500);
+            Assert.AreEqual(train.mKi, 500); // 500 Kp
+            train.setKp(10000);
+            Assert.AreEqual(train.mKi, 10000); // 10000 Ki
+        }
     }
-
-
-
-
-
-
 }

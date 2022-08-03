@@ -112,6 +112,15 @@ namespace CTC
                     Open.Background = System.Windows.Media.Brushes.LightGray;
                 }
                 //////////////////////// Check signal light color
+                if (((MainWindow)Application.Current.MainWindow).mRedLeftLights[blockIdx] == 0) //Check left lights
+                    SignalLeft.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.LightGray;
+                else if (((MainWindow)Application.Current.MainWindow).mRedLeftLights[blockIdx] == 1)
+                    SignalLeft.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.LightGreen;
+
+                if (((MainWindow)Application.Current.MainWindow).mRedRightLights[blockIdx] == 0) //Check right lights
+                    SignalRight.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.LightGray;
+                else if (((MainWindow)Application.Current.MainWindow).mRedRightLights[blockIdx] == 1)
+                    SignalRight.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.LightGreen;
 
 
                 ////////////////////////Check throughput for the line
