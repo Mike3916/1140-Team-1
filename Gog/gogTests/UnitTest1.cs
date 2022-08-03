@@ -605,9 +605,9 @@ namespace gogTests
             train.mControlType = false;
 
             Assert.AreEqual(train.mKi, 0);     // default 0 Ki
-            train.setKp(500);
+            train.setKi(500);
             Assert.AreEqual(train.mKi, 500);   // 500 Kp
-            train.setKp(10000);
+            train.setKi(10000);
             Assert.AreEqual(train.mKi, 10000); // 10000 Ki
         }
 
@@ -619,8 +619,8 @@ namespace gogTests
             train.mAutoMode = true;              // automatic mode
 
             Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
-            train.setCmdSpeed(5);
-            
+            train.setCmdSpeed(5 * 2.236936);     // set to 5 m/s (imperial input)
+
             for (int i=0; i<100; i++)
             {
                 train.UpdateSpeed();
@@ -636,8 +636,8 @@ namespace gogTests
             train.mAutoMode = false;             // manual mode
 
             Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
-            train.setCmdSpeed(5);
-            train.setSetSpeed(3);
+            train.setCmdSpeed(5 * 2.236936);     // set to 5 m/s (imperial input)
+            train.setSetSpeed(3 * 2.236936);
             
             for (int i=0; i<100; i++)
             {
@@ -649,7 +649,7 @@ namespace gogTests
         [TestMethod]
         public void UnableToSetSetSpeedAboveCommandedSpeed()
         {
-            TrainController.Controller train - new TrainController.Controller(false);
+            TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = false;
             train.mAutoMode = false;
 
@@ -668,7 +668,7 @@ namespace gogTests
 
             Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
             train.setCmdSpeed(5);                // set commanded speed to 5
-            train.SpeedUpdate();
+            train.UpdateSpeed();
             Assert.IsTrue(train.mCurSpeed > 0);  // train speed increments
         }
 
@@ -680,8 +680,8 @@ namespace gogTests
             train.mAutoMode = true;
 
             Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
-            train.setCurSpeed(5);                // set current speed to 5
-            train.SpeedUpdate();
+            train.setCurSpeed(5 * 2.236936);     // set current speed to 5 (imperial input)
+            train.UpdateSpeed();
             Assert.IsTrue(train.mCurSpeed < 5);  // train speed decrements
         }
 
@@ -693,9 +693,9 @@ namespace gogTests
             train.mAutoMode = true;
 
             Assert.AreEqual(train.mCurPower, 0); // train initially not moving, has no power
-            train.setCmdSpeed(100);
+            train.setCmdSpeed(100 * 2.236936);
             train.CalculatePowerSW();
-            Assert.IsTrue(train.mcurPower > 0);  // train accelerates towards commanded speed, calculates positive power
+            Assert.IsTrue(train.mCurPower > 0);  // train accelerates towards commanded speed, calculates positive power
         }
 
         [TestMethod]
@@ -706,13 +706,13 @@ namespace gogTests
             train.mAutoMode = true;
 
             Assert.AreEqual(train.mCurPower, 0); // train initially not moving, has no power
-            train.setCurSpeed(100);
+            train.setCurSpeed(100 * 2.236936);
             train.CalculatePowerSW();
-            Assert.IsTrue(train.mcurPower < 0);  // train decelerates towards commanded speed, calculates negative power
+            Assert.IsTrue(train.mCurPower < 0);  // train decelerates towards commanded speed, calculates negative power
         }
 
         [TestMethod]
-        public void TrainCalculatesPowerLimitedToMax()
+        public void TrainCalculatesMaxPower()
         {
             TrainController.Controller train = new TrainController.Controller(false);
             train.mControlType = false;
@@ -721,7 +721,7 @@ namespace gogTests
             Assert.AreEqual(train.mCurPower, 0);          // train initially not moving, has no power
             train.setCmdSpeed(1000000000000000000);       // train receives very large commanded speed
             train.CalculatePowerSW();                     // train calculates power
-            Assert.IsTrue(train.mcurPower == train.Pmax); // power set to max power
+            Assert.IsTrue(train.mCurPower == 120000); // power set to max power
         }
 
         [TestMethod]
@@ -732,7 +732,7 @@ namespace gogTests
             train.mAutoMode = true;
 
             Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
-            train.setCmdSpeed(5);
+            train.setCmdSpeed(5 * 2.236936);     // set to 5 m/s (imperial input)
             
             // train accelerates to commanded speed
             for (int i=0; i<100; i++)
@@ -754,8 +754,8 @@ namespace gogTests
             train.mAutoMode = true;
 
             Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
-            train.setCmdSpeed(5);
-            
+            train.setCmdSpeed(5 * 2.236936);     // set to 5 m/s (imperial input)
+
             // train accelerates to commanded speed
             for (int i=0; i<100; i++)
             {
@@ -889,9 +889,9 @@ namespace gogTests
             train.mControlType = true;
 
             Assert.AreEqual(train.mKi, 0); // default 0 Ki
-            train.setKp(500);
+            train.setKi(500);
             Assert.AreEqual(train.mKi, 500); // 500 Kp
-            train.setKp(10000);
+            train.setKi(10000);
             Assert.AreEqual(train.mKi, 10000); // 10000 Ki
         }
     }
