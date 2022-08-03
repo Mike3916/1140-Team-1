@@ -40,9 +40,12 @@ namespace CTC
         {
             int i;
             int DestStationIndex = 0; //This is just a placeholder, it should change
-            
-            DestLineCombo.Items.Add(lineName[0]);
-            DestLineCombo.Items.Add(lineName[1]);
+
+            DestLineCombo.Items.Clear(); //Clear DestLineCombo Items
+            DestStationCombo.Items.Clear(); //Clear DestStation Items
+
+            DestLineCombo.Items.Add(lineName[0]); //Add "RED" to DestLineCombo
+            DestLineCombo.Items.Add(lineName[1]); //Add "Green" to DestLineCombo
 
             //Access the TrainList, and select the Train object with the same index as the selected train, and then check which line this train is dispatched to, this line number is the same as the index that will be displayed (0="red", 1="green")
             DestLineCombo.SelectedIndex = ((MainWindow)Application.Current.MainWindow).TrainList[((MainWindow)Application.Current.MainWindow).SelectTrain.SelectedIndex].line;
