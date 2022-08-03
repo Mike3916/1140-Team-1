@@ -298,12 +298,27 @@ namespace TrackModel
             newLine.AddSections(lineInfo); //pawns off data processing to Line Class
             mLines.Add(newLine);
         }
-        public void AddTrain(int blockIdx, int lineIdx, int auth)
+        public bool AddTrain(int blockIdx, int lineIdx, int auth)
         {
             mtrainList.Add(new Train(blockIdx, lineIdx, auth));
             mLines[lineIdx].OccupyBlock(blockIdx);
             OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
             UpdateSelectRow(lineIdx, blockIdx);
+            return true;
+        }
+        public bool AddTrain(int lineIdx, int auth)
+        {
+            int blockIdx = 1;
+            if (lineIdx == 0)
+                blockIdx = 77;
+            else
+                blockIdx = 151;
+
+            mtrainList.Add(new Train(blockIdx, lineIdx, auth));
+            mLines[lineIdx].OccupyBlock(blockIdx);
+            OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
+            UpdateSelectRow(lineIdx, blockIdx);
+            return true;
         }
         public void RemoveTrain(int trainIDX)
         {

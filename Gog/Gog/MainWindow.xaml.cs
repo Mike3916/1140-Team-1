@@ -228,13 +228,14 @@ namespace Gog
                     mGreenLeftLights = ctc.mGreenLeftLights;
                     mGreenRightLights = ctc.mGreenRightLights;
                 }
-                /*
-                ctc.SetTrackData(track.mLines);
-                track.AddTrain(151, 1, 1, 12);
-                trainCtrl.checkUpdatedValues();
-                ctc.SetTrackData(track.);
-                track.GetT
-                */
+                
+                //if (ctc.mDispatch != -1 && ctc != null && track != null && trains != null && trainCtrl != null)
+                //{
+                //    track.AddTrain(ctc.mDispatch, ctc.mAuth);
+                //    trains.addTrain(ctc.mDispatch, ctc.mAuth);
+                //    trainCtrl.addController((ctc.mDispatch).ToBoolean());
+                //    ctc.mDispatch = -1;
+                //}
 
                 for (int j = 0; j < numTrains; j++)
                 {
