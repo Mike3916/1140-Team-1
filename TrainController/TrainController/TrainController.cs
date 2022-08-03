@@ -587,6 +587,61 @@ namespace TrainController
             updateSpeed.Start();*/
         }
 
+        public void UpdateSpeed()
+        {
+            if (mEmergencyBrakeStatus)
+            {
+                if (mCurSpeed <= 0)
+                {
+                    mEmergencyBrakeStatus = false;
+                }
+                else
+                {
+                    mCmdSpeed = 0;
+                    mSetSpeed = 0;
+
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) - 1);
+                }
+            }
+            else if (mServiceBrakeStatus)
+            {
+                if (mCurSpeed > 0)
+                {
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) - 1);
+                }
+            }
+            else if (mAutoMode)
+            {
+                if (Math.Abs(mCurSpeed - mCmdSpeed) < 0.5)
+                {
+                    mCurSpeed = mCmdSpeed;
+                }
+                else if (mCurSpeed < mCmdSpeed)
+                {
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) + 1);
+                }
+                else if (mCurSpeed > mCmdSpeed)
+                {
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) - 1);
+                }
+            }
+            else
+            {
+                if (Math.Abs(mCurSpeed - mSetSpeed) < 0.5)
+                {
+                    mCurSpeed = mSetSpeed;
+                }
+                else if (mCurSpeed < mSetSpeed)
+                {
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) + 1);
+                }
+                else if (mCurSpeed > mSetSpeed)
+                {
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) - 1);
+                }
+            }
+        }
+
         public void UpdateSpeed(object sender, EventArgs e)
         {
             if (mEmergencyBrakeStatus)
