@@ -225,7 +225,7 @@ namespace TrainModel
         {
 
             Trains[selectedTrain].increment();
-            physics.Text = "Power:\nCurrent Mass: " + Trains[selectedTrain].getMass().ToString() + " tons\nForce (P/V): " + Math.Round(Trains[selectedTrain].getForce(), 2).ToString() + " N\nAcceleration (F/M): " + Trains[selectedTrain].getAccelerationFPS().ToString() + " ft/s^2\nVelocity(V_(n - 1) + T / 2(A_n + A_(n - 1)): " + Trains[selectedTrain].getCurrentSpeedMPH().ToString() + " Mi/h";
+            physics.Text = "Power:\nCurrent Mass: " + Trains[selectedTrain].getMass().ToString() + " tons\nForce (P/V): " + Math.Round(Trains[selectedTrain].getForce(), 2).ToString() + " N\nAcceleration (F/M): " + Math.Round(Trains[selectedTrain].getAcceleration(),2).ToString() + " m/s^2\nVelocity(V_(n - 1) + T / 2(A_n + A_(n - 1)): " + Math.Round(Trains[selectedTrain].getCurrentSpeed(),2).ToString() + " m/s^2";
             Speed.Text = "Current Speed: " + Math.Round(Trains[selectedTrain].getCurrentSpeedMPH(), 2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(Trains[selectedTrain].getCommandedSpeedMPH(), 2).ToString() + "Mi/h\nCurrent Acceleration: " + Trains[selectedTrain].getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: " + Trains[selectedTrain].getTimeTillNextBlock() + "s";
             power.Text = Trains[selectedTrain].getPowerCmd().ToString() + " W";
             Beacon.Text = "Beacon: " + Trains[selectedTrain].getBeacon();
