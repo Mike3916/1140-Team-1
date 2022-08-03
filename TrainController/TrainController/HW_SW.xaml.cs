@@ -97,23 +97,35 @@ namespace TrainController
             }
             else
             {
-                // Set controller type to hardware, and show on main window:
-                ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mControlType = true;
-                ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mSetControlType = true;
-                ((ControlPanel)Application.Current.MainWindow).SelectType.Text = "Hardware Controller";
-                ((ControlPanel)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0x5F, 0xA0));
+                int port;
 
-                // Setup hardware controller port information:
-                ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setupHardware();
+                if (int.TryParse(Port.Text, out port))
+                {
+                    // Set controller COM port number:
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mPortName += port; 
 
-                // Disable both controller type buttons and exit to main window:
-                SoftwareController.IsEnabled = false;
-                HardwareController.IsEnabled = false;
+                    // Set controller type to hardware, and show on main window:
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mControlType = true;
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mSetControlType = true;
+                    ((ControlPanel)Application.Current.MainWindow).SelectType.Text = "Hardware Controller";
+                    ((ControlPanel)Application.Current.MainWindow).SelectType.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8F, 0x5F, 0xA0));
 
-                // Begin initTimer() for selected train controller:
-                ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.InitTimer();
+                    // Setup hardware controller port information:
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setupHardware();
 
-                this.Close();
+                    // Disable both controller type buttons and exit to main window:
+                    SoftwareController.IsEnabled = false;
+                    HardwareController.IsEnabled = false;
+
+                    // Begin initTimer() for selected train controller:
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.InitTimer();
+
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Enter an integer value for port number and try again!");
+                }
             }
         }
 

@@ -382,6 +382,40 @@ namespace Track_Controller_1._02
             return packet;
         }
 
+        //SendTrain: To add a train to the system
+        //<train>: bool to add train or not add train
+        //<void>
+        public void SendTrain(bool train = false)
+        {
+            if (mHardPLC == false)
+            {
+
+                mADS.SendTrain(train);
+            }
+            else
+            {
+                //What to communicate if there is a hardware controller
+            }
+            return;
+        }
+
+        //ReceiveRoute: Method to return whether a train should be added.
+        //<bool>: integer array of values returned from the PLC
+        public bool ReceiveTrain()
+        {
+            bool train = false;
+            if (mHardPLC == false)
+            {
+                train = mADS.ReceiveTrain();
+            }
+            else
+            {
+                //What to communicate if there is a hardware controller.
+            }
+            return train;
+        }
+
+
         private int mRouteLength;
         private int mPort;
         private ADSClient mADS;
