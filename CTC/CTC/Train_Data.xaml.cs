@@ -80,6 +80,22 @@ namespace CTC
 
         }
 
+        private void DestLineCombo_SelectionChanged(object sender, SelectionChangedEventArgs e) //When the DestLineCombo selection is changed, the DestStationCombo needs to be changed to only show the destination for that line
+        {
+            DestStationCombo.Items.Clear(); //Clear DestStatinCombo so it can be updated without adding to pre-existing
+
+            if (DestLineCombo.SelectedIndex == 0) //red line
+            {
+                for (int i = 0; i < redStation.GetLength(0); i++) //redStation.GetLength(0) returns the number of rows in the array
+                    DestStationCombo.Items.Add((String)redStation[i, 1]); //Add the station names, unbox from Object to String
+            }
+            else if (DestLineCombo.SelectedIndex == 1) //green line
+            {
+                for (int i = 0; i < greenStation.GetLength(0); i++) //greenStation.GetLength(0) returns the number of rows in the array
+                    DestStationCombo.Items.Add((String)greenStation[i, 1]); //Add the station names, unbox from Object to String
+            }
+        }
+
 
 
         private void UpdateTrain_Click(object sender, RoutedEventArgs e)
@@ -98,8 +114,7 @@ namespace CTC
             ((MainWindow)Application.Current.MainWindow).TrainList[i].calcDuration(); //Need to recalculate duration with new destination and ETA
             ((MainWindow)Application.Current.MainWindow).TrainList[i].calcRoute();    //recalculate the route with new destination and ETA
 
-
+            update_Train_Data(); //Call the update_Train_Data() function so the display for the ETA, Authority, and suggested speed will be updated
         }
-
     }
 }
