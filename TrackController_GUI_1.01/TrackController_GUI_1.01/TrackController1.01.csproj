@@ -32,7 +32,7 @@
       <HintPath>..\..\TrainController\TrainController\bin\Release\net6.0-windows\System.IO.Ports.dll</HintPath>
     </Reference>
     <Reference Include="TwinCAT.Ads">
-      <HintPath>..\..\..\..\..\..\..\..\TwinCAT\AdsApi\.NET\v4.0.30319\TwinCAT.Ads.dll</HintPath>
+      <HintPath>bin\Release\net6.0-windows\TwinCAT.Ads.dll</HintPath>
     </Reference>
   </ItemGroup>
 
