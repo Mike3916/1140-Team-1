@@ -21,15 +21,15 @@ namespace CTC
     /// </summary>
     public partial class Block_Data : Page
     {
-        int line;  //This hold the line, 0=red, 1=green
+        int line =0;  //This hold the line, 0=red, 1=green
         int blockNum; //This holds the block number (to get BlockIdx do this - 1)
-        int blockIdx;
-        int blockType; //This will indicate the type of block selected (0 = normal, 1 = switch, 2 = crossing);
+        int blockIdx =0;
+        int blockType = 0; //This will indicate the type of block selected (0 = normal, 1 = switch, 2 = crossing);
 
         public Block_Data()
         {
             InitializeComponent();
-            
+
         }
         public void loadBlockInfo()
         {
@@ -37,6 +37,8 @@ namespace CTC
             blockNum = Int32.Parse(((MainWindow)Application.Current.MainWindow).BlockCombo.SelectedValue.ToString()); //This holds the block number (starts at 1) (to get BlockID, do this - 1)
             blockIdx = blockNum - 1;
             blockType = 0; //This will indicate the type of block selected (0 = normal, 1 = switch, 2 = crossing);
+
+
 
 
             //Here the CTC loads only the necessary items depending on the type of block
@@ -62,10 +64,27 @@ namespace CTC
                 CrossingRect.Visibility = Visibility.Collapsed;
                 CrossingText.Visibility = Visibility.Collapsed;
 
+
+
                 if (line == 0)
+                {
                     SwitchNum.Text = ((MainWindow)Application.Current.MainWindow).mRedSwitches[blockIdx].ToString();
+                    // User can only toggle switch block if the CTC is in maintenance mode, AND the block is in maintenance mode
+                    if (((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] == 0)
+                        ToggleButton.IsEnabled = false;
+                    else if (((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] == 1 && ((MainWindow)Application.Current.MainWindow).Mode.IsChecked == true)
+                        ToggleButton.IsEnabled = true;
+                }
+
                 else if (line == 1)
+                {
                     SwitchNum.Text = ((MainWindow)Application.Current.MainWindow).mGreenSwitches[blockIdx].ToString();
+                    // User can only toggle switch block if the CTC is in maintenance mode, AND the block is in maintenance mode
+                    if (((MainWindow)Application.Current.MainWindow).mGreenMaintenanceBlocks[blockIdx] == 0)
+                        ToggleButton.IsEnabled = false;
+                    else if (((MainWindow)Application.Current.MainWindow).mGreenMaintenanceBlocks[blockIdx] == 1 && ((MainWindow)Application.Current.MainWindow).Mode.IsChecked == true)
+                        ToggleButton.IsEnabled = true;
+                }
             }
             else if (blockType == 2) //The block is a crossing block, hide switch info
             {
@@ -135,6 +154,19 @@ namespace CTC
 
         }
 
+        public void checkToggle() //If the main CTC maintenance mode is changed, this function is called to see if the toggleButton should be enabled
+        {
+            if (line== 0) //Red line
+                if (blockType == 1 && ((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] == 0) //mRedMaintenanceBlocks = 0 means it is NOT in maintenance
+                    ToggleButton.IsEnabled = false;
+                else if (blockType ==1 && ((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] == 1)
+                    ToggleButton.IsEnabled = true;
+            else if (line == 1) //Green line
+                if (blockType == 1 && ((MainWindow)Application.Current.MainWindow).mGreenMaintenanceBlocks[blockIdx] == 0)
+                    ToggleButton.IsEnabled = false;
+                else if (blockType == 1 && ((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] == 1)
+                        ToggleButton.IsEnabled = true;
+        }
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
