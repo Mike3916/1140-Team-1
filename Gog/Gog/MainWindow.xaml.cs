@@ -183,37 +183,9 @@ namespace Gog
             {
                 if (iter++ % 10 == 0) TimeBox.Text = (iter).ToString();
 
-
                 if (track != null && ctc != null && track.mLines.Count == 2 && iter % 20 == 10)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
                 {
-                    PLCgetCTC();
-                    PLCgetTrack();
-                }
-
-                if (track != null && ctc != null && track.mLines.Count == 2 && iter % 20 == 0)
-                {
-                    PLCsetCTC();
-                    PLCsetTrack();
-                }
-                    
-                
-
-                
-
-
-                if (track != null && ctc != null && gotTrack==false && track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
-                {                                                       
-                    if (track.mLines.Count > 0)                         //Make sure the track files are loaded into the TrackModel module BEFORE the CTC model (button) is pressed to make sure the CTC will always get the full track
-                    {
-                        ctc.GetTrackLayout(track.mLines);                 //Send the track data to the CTC
-                        gotTrack = true;                                //Set boolean to mark that the track data has been read by CTC
-                    }
-                }
-
-                if (track != null && ctc != null &&  track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
-                {
-                    ctc.GetTrackController(mRedMaintenanceBlocks, mRedOccupancies, mRedSpeeds, mRedAuthorities, mRedCrossings, mRedSwitches, mRedLeftLights, mRedRightLights, mGreenMaintenanceBlocks, mGreenOccupancies, mGreenSpeeds, mGreenAuthorities, mGreenCrossings, mGreenSwitches, mGreenLeftLights, mGreenRightLights); //Write function in CTC to read in these values
-                                                                                                                                                                                                                                                                                                                                  //Update Track Controller variables with values from CTC
+                    //Update Track Controller variables with values from CTC
                     mRedMaintenanceBlocks = ctc.mRedMaintenanceBlocks;
                     mRedOccupancies = ctc.mRedOccupancies;
                     mRedSpeeds = ctc.mRedSpeeds;
@@ -233,15 +205,55 @@ namespace Gog
                     mGreenLeftLights = ctc.mGreenLeftLights;
                     mGreenRightLights = ctc.mGreenRightLights;
                     //mGreenTrain = ctc.mGreenTrain;
+
+                    PLCgetCTC();
+                    PLCgetTrack();
                 }
-                
+
+                if (track != null && ctc != null && track.mLines.Count == 2 && iter % 20 == 0)
+                {
+                    PLCsetCTC();
+                    ctc.GetTrackController(mRedMaintenanceBlocks, mRedOccupancies, mRedSpeeds, mRedAuthorities, mRedCrossings, mRedSwitches, mRedLeftLights, mRedRightLights, mGreenMaintenanceBlocks, mGreenOccupancies, mGreenSpeeds, mGreenAuthorities, mGreenCrossings, mGreenSwitches, mGreenLeftLights, mGreenRightLights); //Write function in CTC to read in these values
+                    PLCsetTrack();
+                }
+
+                if (track != null && ctc != null && gotTrack==false && track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
+                {                                                       
+                    if (track.mLines.Count > 0)                         //Make sure the track files are loaded into the TrackModel module BEFORE the CTC model (button) is pressed to make sure the CTC will always get the full track
+                    {
+                        ctc.GetTrackLayout(track.mLines);                 //Send the track data to the CTC
+                        gotTrack = true;                                //Set boolean to mark that the track data has been read by CTC
+                    }
+                }
+
+                if (track != null && ctc != null &&  track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
+                {
+                    
+                                                                                                                                                                                                                                                                                                                                  
+                    
+                }
+
                 //if (ctc.mDispatch != -1 && ctc != null && track != null && trains != null && trainCtrl != null)
                 //{
+                //    if (mRedTrain == true)
+                //    {
+                //        ctc.mDispatch = 0;
+                //    }
+                //    if (mGreenTrain == true)
+                //    {
+                //        ctc.mDispatch = 1;
+                //    }
                 //    track.AddTrain(ctc.mDispatch, ctc.mAuth);
                 //    trains.addTrain(ctc.mDispatch, ctc.mAuth);
                 //    trainCtrl.addController((ctc.mDispatch).ToBoolean());
                 //    ctc.mDispatch = -1;
+                //mRedline1.SendTrain(false);
+                //mGreenLine1.SendTrain(false);
                 //}
+
+
+
+
 
                 for (int j = 0; j < numTrains; j++)
                 {
@@ -398,8 +410,9 @@ namespace Gog
             track.SetCrossings(mGreenCrossings, 1);
             track.SetSwitches(mGreenSwitches, 1);
 
-            mRedline1.SendTrain(false);
-            mGreenLine1.SendTrain(false);
+
+
+
         }
 
         private void ArraySplitter()
