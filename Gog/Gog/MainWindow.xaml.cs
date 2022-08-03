@@ -223,6 +223,7 @@ namespace Gog
                     mRedSwitches = ctc.mRedSwitches;
                     mRedLeftLights = ctc.mRedLeftLights;
                     mRedRightLights = ctc.mRedRightLights;
+                    //mRedTrain = ctc.mRedTrain;
 
                     mGreenMaintenanceBlocks = ctc.mGreenMaintenanceBlocks;
                     mGreenOccupancies = ctc.mGreenOccupancies;
@@ -232,6 +233,7 @@ namespace Gog
                     mGreenSwitches = ctc.mGreenSwitches;
                     mGreenLeftLights = ctc.mGreenLeftLights;
                     mGreenRightLights = ctc.mGreenRightLights;
+                    //mGreenTrain = ctc.mGreenTrain;
                 }
                 
                 //if (ctc.mDispatch != -1 && ctc != null && track != null && trains != null && trainCtrl != null)
@@ -244,7 +246,6 @@ namespace Gog
 
                 for (int j = 0; j < numTrains; j++)
                 {
-                    MessageBox.Show(j.ToString());
                     newBlock = trains.UpdateValues(trainCtrl.mTrainSetList[j],j);
                     trainCtrl.UpdateValues(trains.Trains[j].getCmdAuthority(), trains.Trains[j].getCurrAuthority(), trains.Trains[j].getCommandedSpeedMPH(), trains.Trains[j].getCurrentSpeedMPH(), trains.Trains[j].getBeacon(), trains.Trains[j].getUnderground(), trains.Trains[j].getDoorL(), trains.Trains[j].getDoorR(), j);
 
@@ -325,6 +326,9 @@ namespace Gog
             mGreenLine1.ReceiveSwitches(mGreen1Switches.Length);
             mGreenLine1.ReceiveRightLights(mGreen1RightLights.Length);
             mGreenLine1.ReceiveLeftLights(mGreen1LeftLights.Length);
+
+            //ctc.mRedTrain = false;
+            //ctc.mGreenTrain = false;
 
             ArrayMerger();
 

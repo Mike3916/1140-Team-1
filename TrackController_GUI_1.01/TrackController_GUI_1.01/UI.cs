@@ -139,10 +139,8 @@ namespace Track_Controller_1._02
 
                 if(mCurrentLineIndex == 0)
                 {
-                    MessageBox.Show("Entered if");
                     mRedMaintenanceBlocks[mCurrentPLCBlockIndex] = 1;
                     SplitArrays();
-                    MessageBox.Show(mCurrentPLCBlockIndex.ToString() + " " + mRedMaintenanceBlocks[mCurrentPLCBlockIndex].ToString());
                     mRedline1.SendMaintenance(mRed1MaintenanceBlocks);
                     mRedline2.SendMaintenance(mRed2MaintenanceBlocks);
                 }

@@ -15,9 +15,11 @@
         <Label Content="20 Blocks" HorizontalAlignment="Left" Margin="218,176,0,0" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="118,207,0,0" TextWrapping="Wrap" Text="Suggested Speed:" VerticalAlignment="Top"/>
         <Label Content="17 mph" HorizontalAlignment="Left" Margin="218,202,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Dest" HorizontalAlignment="Left" Margin="218,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Loaded="Dest_Loaded"/>
-        <TextBox x:Name="ETA" HorizontalAlignment="Left" Margin="218,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Loaded="ETA_Loaded"/>
+        <TextBox x:Name="Dest" HorizontalAlignment="Left" Margin="218,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="ETA" HorizontalAlignment="Left" Margin="218,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="UpdateTrain" Content="UpdateTrain" HorizontalAlignment="Left" Margin="360,210,0,0" VerticalAlignment="Top" Click="UpdateTrain_Click"/>
+        <ComboBox x:Name="DestStationCombo" HorizontalAlignment="Left" Margin="400,87,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name ="DestLineCombo" HorizontalAlignment="Left" Margin="260,87,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="DestLineCombo_SelectionChanged"/>
 
     </Grid>
 </Page>
