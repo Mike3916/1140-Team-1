@@ -37,37 +37,6 @@ namespace Track_Controller_1._02
             //mPi.WriteLine("?");
         }
 
-        //public int[] TrackSend(int[] mPacket)
-        //{
-        //    string mSentMessage = "";
-        //    for (int i = 0; i < mPacket.Length; i++)
-        //    {
-        //        mSentMessage = mSentMessage + mPacket[i].ToString();
-        //    }
-
-        //    mPi.WriteLine(mSentMessage + "\n");
-        //    string mReceivedMessage = "";
-        //    while (mReceivedMessage == "")
-        //    {
-        //        mReceivedMessage = mPi.ReadLine();
-        //    }
-        //    MessageBox.Show(mReceivedMessage);
-        //    // create an array with size as string
-        //    // length and initialize with 0
-        //    int[] temp = new int[mReceivedMessage.Length];
-
-
-        //    // Traverse the string
-        //    for (int i = 0; mReceivedMessage[i] != '\0'; i++)
-        //    {
-        //        // subtract str[i] by 48 to convert it to int
-        //        // Generate number by multiplying 10 and adding
-        //        // (int)(str[i])
-        //        temp[i] = temp[i] * 10 + (mReceivedMessage[i] - 48);
-        //    }
-        //    return temp;
-        //}
-
         public void SendSwitches(int[] mPacket)
         {
             //TODO

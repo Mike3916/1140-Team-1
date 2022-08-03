@@ -180,16 +180,19 @@ namespace Gog
                 if (iter++ % 10 == 0) TimeBox.Text = (iter).ToString();
 
 
-                if (track != null && ctc != null && track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
+                if (track != null && ctc != null && track.mLines.Count == 2 && iter % 20 == 10)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
                 {
                     PLCgetCTC();
                     PLCgetTrack();
+                }
 
-                    System.Threading.Thread.Sleep(1);
-
+                if (track != null && ctc != null && track.mLines.Count == 2 && iter % 20 == 0)
+                {
                     PLCsetCTC();
                     PLCsetTrack();
                 }
+                    
+                
 
                 
 

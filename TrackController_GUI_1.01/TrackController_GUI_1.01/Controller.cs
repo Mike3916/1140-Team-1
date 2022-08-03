@@ -21,7 +21,6 @@ namespace Track_Controller_1._02
                 mPort = mNewPort;
                 mIP = mNewIP;
                 mADS = new ADSClient(mPort);
-                //mTCP = new CommunicationClient(mIP, mPort);
             }
             else
             {
@@ -33,354 +32,354 @@ namespace Track_Controller_1._02
         }
 
         //SendSwitches: Calls the client class to send an integer array holding the switch positions.
-        //<[]mPacket>: integer holding switch positions
+        //<[]packet>: integer holding switch positions
         //<void>
-        public void SendSwitches(int[] mPacket)
+        public void SendSwitches(int[] packet)
         {
             if(mHardPLC == false)
             {
              
-                mADS.SendSwitches(mPacket);
+                mADS.SendSwitches(packet);
              
             }
             else
             {
                //What to communicate if there is a hardware controller.
-               mHWC.SendSwitches(mPacket);
+               mHWC.SendSwitches(packet);
             }
             return;
         }
 
-        //ReceiveSwitches: Calls the client class to receive an array of switch positions of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
-        //<mLength>: length of return array. This is when the client stops reading.
+        //ReceiveSwitches: Calls the client class to receive an array of switch positions of length[] packet. Failing to specify[] packet will return a 0 element array.
+        //<length>: length of return array. This is when the client stops reading.
         //<int[]>: array holding switch positions
-        public int[] ReceiveSwitches(int mLength = 0)
+        public int[] ReceiveSwitches(int length = 0)
         {
-            int[] mPacket = new int[mLength];
+            int[] packet = new int[length];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveSwitches(mLength);
+                packet = mADS.ReceiveSwitches(length);
 
             }
             else
             {
-                mPacket = mHWC.ReceiveSwitches(mLength);
+                packet = mHWC.ReceiveSwitches(length);
 
                 //What to communicate if there is a hardware controller.
             }
-            return mPacket;
+            return packet;
         }
 
         //SendOccupancies: Calls the client class to send an integer array holding the occupancies.
-        //<[]mPacket>: integer array holding occupancies
+        //<[]packet>: integer array holding occupancies
         //<void>
-        public void SendOccupancies(int[] mPacket)
+        public void SendOccupancies(int[] packet)
         {
             if (mHardPLC == false)
             {
 
-                mADS.SendOccupancies(mPacket);
+                mADS.SendOccupancies(packet);
                 
             }
             else
             {
                 //What to communicate if there is a hardware controller
-                mHWC.SendOccupancies(mPacket);
+                mHWC.SendOccupancies(packet);
             }
             return;
         }
 
-        //ReceiveOccupancies: Calls the client class to receive an array of occupancies of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
-        //<mLength>: length of return array. This is when the client stops reading.
+        //ReceiveOccupancies: Calls the client class to receive an array of occupancies of length[] packet. Failing to specify[] packet will return a 0 element array.
+        //<length>: length of return array. This is when the client stops reading.
         //<int[]>: array holding occupancies
-        public int[] ReceiveOccupancies(int mLength = 0)
+        public int[] ReceiveOccupancies(int length = 0)
         {
-            int[] mPacket = new int[mLength];
+            int[] packet = new int[length];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveOccupancies(mLength);
+                packet = mADS.ReceiveOccupancies(length);
 
             }
             else
             {
-                mPacket = mHWC.ReceiveOccupancies(mLength);
+                packet = mHWC.ReceiveOccupancies(length);
                 //What to communicate if there is a hardware controller.
             }
-            return mPacket;
+            return packet;
         }
 
         //SendSpeeds: Calls the client class to send an integer array holding the occupancies.
-        //<[]mPacket>: integer array holding occupancies
+        //<[]packet>: integer array holding occupancies
         //<void>
-        public void SendSpeeds(int[] mPacket)
+        public void SendSpeeds(int[] packet)
         {
             if (mHardPLC == false)
             {
 
-                mADS.SendSpeeds(mPacket);
+                mADS.SendSpeeds(packet);
 
             }
             else
             {
                 //What to communicate if there is a hardware controller
-                mHWC.SendSpeeds(mPacket);
+                mHWC.SendSpeeds(packet);
             }
             return;
         }
 
-        //ReceiveSpeeds: Calls the client class to receive an array of speeds of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
-        //<mLength>: length of return array. This is when the client stops reading.
+        //ReceiveSpeeds: Calls the client class to receive an array of speeds of length[] packet. Failing to specify[] packet will return a 0 element array.
+        //<length>: length of return array. This is when the client stops reading.
         //<int[]>: array holding speeds
-        public int[] ReceiveSpeeds(int mLength = 0)
+        public int[] ReceiveSpeeds(int length = 0)
         {
-            int[] mPacket = new int[mLength];
+            int[] packet = new int[length];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveSpeeds(mLength);
+                packet = mADS.ReceiveSpeeds(length);
 
             }
             else
             {
-                mPacket = mHWC.ReceiveSpeeds(mLength);
+                packet = mHWC.ReceiveSpeeds(length);
                 //What to communicate if there is a hardware controller.
             }
-            return mPacket;
+            return packet;
         }
 
         //SendAuthorities: Calls the client class to send an integer array holding the authorities.
-        //<[]mPacket>: integer array holding occupancies
+        //<[]packet>: integer array holding occupancies
         //<void>
-        public void SendAuthorities(int[] mPacket)
+        public void SendAuthorities(int[] packet)
         {
             if (mHardPLC == false)
             {
 
-                mADS.SendAuthorities(mPacket);
+                mADS.SendAuthorities(packet);
 
             }
             else
             {
                 //What to communicate if there is a hardware controller
-                mHWC.SendAuthorities(mPacket);
+                mHWC.SendAuthorities(packet);
             }
             return;
         }
 
-        //ReceiveAuthorities: Calls the client class to receive an array of authorities of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
-        //<mLength>: length of return array. This is when the client stops reading.
+        //ReceiveAuthorities: Calls the client class to receive an array of authorities of length[] packet. Failing to specify[] packet will return a 0 element array.
+        //<length>: length of return array. This is when the client stops reading.
         //<int[]>: array holding authorities
-        public int[] ReceiveAuthorities(int mLength = 0)
+        public int[] ReceiveAuthorities(int length = 0)
         {
-            int[] mPacket = new int[mLength];
+            int[] packet = new int[length];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveAuthorities(mLength);
+                packet = mADS.ReceiveAuthorities(length);
 
             }
             else
             {
-                mPacket = mHWC.ReceiveAuthorities(mLength);
+                packet = mHWC.ReceiveAuthorities(length);
                 //What to communicate if there is a hardware controller.
             }
-            return mPacket;
+            return packet;
         }
 
         //SendCrossings: Calls the client class to send an integer array holding the crossing states.
-        //<[]mPacket>: integer array holding occupancies
+        //<[]packet>: integer array holding occupancies
         //<void>
-        public void SendCrossings(int[] mPacket)
+        public void SendCrossings(int[] packet)
         {
             if (mHardPLC == false)
             {
 
-                mADS.SendCrossings(mPacket);
+                mADS.SendCrossings(packet);
 
             }
             else
             {
                 //What to communicate if there is a hardware controller
-                mHWC.SendCrossings(mPacket);
+                mHWC.SendCrossings(packet);
             }
             return;
         }
 
-        //ReceiveCrossings: Calls the client class to receive an array of crossings of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
-        //<mLength>: length of return array. This is when the client stops reading.
+        //ReceiveCrossings: Calls the client class to receive an array of crossings of length[] packet. Failing to specify[] packet will return a 0 element array.
+        //<length>: length of return array. This is when the client stops reading.
         //<int[]>: array holding authorities
-        public int[] ReceiveCrossings(int mLength = 0)
+        public int[] ReceiveCrossings(int length = 0)
         {
-            int[] mPacket = new int[mLength];
+            int[] packet = new int[length];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveCrossings(mLength);
+                packet = mADS.ReceiveCrossings(length);
 
             }
             else
             {
-                mPacket = mHWC.ReceiveCrossings(mLength);
+                packet = mHWC.ReceiveCrossings(length);
                 //What to communicate if there is a hardware controller.
             }
-            return mPacket;
+            return packet;
         }
 
         //SendLeftLights: Calls the client class to send an integer array holding the left transit light states.
-        //<[]mPacket>: integer array holding occupancies
+        //<[]packet>: integer array holding occupancies
         //<void>
-        public void SendLeftLights(int[] mPacket)
+        public void SendLeftLights(int[] packet)
         {
             if (mHardPLC == false)
             {
 
-                mADS.SendLeftLights(mPacket);
+                mADS.SendLeftLights(packet);
 
             }
             else
             {
                 //What to communicate if there is a hardware controller
-                mHWC.SendLeftLights(mPacket);
+                mHWC.SendLeftLights(packet);
             }
             return;
         }
 
-        //ReceiveLeftLights: Calls the client class to receive an array of left light states of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
-        //<mLength>: length of return array. This is when the client stops reading.
+        //ReceiveLeftLights: Calls the client class to receive an array of left light states of length[] packet. Failing to specify[] packet will return a 0 element array.
+        //<length>: length of return array. This is when the client stops reading.
         //<int[]>: array holding left light states
-        public int[] ReceiveLeftLights(int mLength = 0)
+        public int[] ReceiveLeftLights(int length = 0)
         {
-            int[] mPacket = new int[mLength];
+            int[] packet = new int[length];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveLeftLights(mLength);
+                packet = mADS.ReceiveLeftLights(length);
 
             }
             else
             {
-                mPacket = mHWC.ReceiveLeftLights(mLength);
+                packet = mHWC.ReceiveLeftLights(length);
                 //What to communicate if there is a hardware controller.
             }
-            return mPacket;
+            return packet;
         }
 
         //SendRightLights: Calls the client class to send an integer array holding the right transit light states.
-        //<[]mPacket>: integer array holding occupancies
+        //<[]packet>: integer array holding occupancies
         //<void>
-        public void SendRightLights(int[] mPacket)
+        public void SendRightLights(int[] packet)
         {
             if (mHardPLC == false)
             {
 
-                mADS.SendRightLights(mPacket);
+                mADS.SendRightLights(packet);
 
             }
             else
             {
                 //What to communicate if there is a hardware controller
-                mHWC.SendRightLights(mPacket);
+                mHWC.SendRightLights(packet);
             }
             return;
         }
 
-        //ReceiveRightLights: Calls the client class to receive an array of right light states of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
-        //<mLength>: length of return array. This is when the client stops reading.
+        //ReceiveRightLights: Calls the client class to receive an array of right light states of length[] packet. Failing to specify[] packet will return a 0 element array.
+        //<length>: length of return array. This is when the client stops reading.
         //<int[]>: array holding left right states
-        public int[] ReceiveRightLights(int mLength = 0)
+        public int[] ReceiveRightLights(int length = 0)
         {
-            int[] mPacket = new int[mLength];
+            int[] packet = new int[length];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveRightLights(mLength);
+                packet = mADS.ReceiveRightLights(length);
 
             }
             else
             {
-                mPacket = mHWC.ReceiveRightLights(mLength);
+                packet = mHWC.ReceiveRightLights(length);
                 //What to communicate if there is a hardware controller.
             }
-            return mPacket;
+            return packet;
         }
 
         //SendMaintenance: Calls the client class to send an integer array holding the maintenance states.
-        //<[]mPacket>: integer array holding occupancies
+        //<[]packet>: integer array holding occupancies
         //<void>
-        public void SendMaintenance(int[] mPacket)
+        public void SendMaintenance(int[] packet)
         {
             if (mHardPLC == false)
             {
 
-                mADS.SendMaintenance(mPacket);
+                mADS.SendMaintenance(packet);
 
             }
             else
             {
                 //What to communicate if there is a hardware controller
-                mHWC.SendMaintenance(mPacket);
+                mHWC.SendMaintenance(packet);
             }
             return;
         }
 
-        //ReceiveMaintenance: Calls the client class to receive an array of maintenance states of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
-        //<mLength>: length of return array. This is when the client stops reading.
+        //ReceiveMaintenance: Calls the client class to receive an array of maintenance states of length[] packet. Failing to specify[] packet will return a 0 element array.
+        //<length>: length of return array. This is when the client stops reading.
         //<int[]>: array holding maintenance states
-        public int[] ReceiveMaintenance(int mLength = 0)
+        public int[] ReceiveMaintenance(int length = 0)
         {
-            int[] mPacket = new int[mLength];
+            int[] packet = new int[length];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveMaintenance(mLength);
+                packet = mADS.ReceiveMaintenance(length);
 
             }
             else
             {
-                mPacket = mHWC.ReceiveMaintenance(mLength);
+                packet = mHWC.ReceiveMaintenance(length);
                 //What to communicate if there is a hardware controller.
             }
-            return mPacket;
+            return packet;
         }
 
         //SendRoute: Calls the client class to send an integer array holding the route.
-        //<[]mPacket>: integer array holding occupancies
+        //<[]packet>: integer array holding occupancies
         //<void>
-        public void SendRoute(int[] mPacket)
+        public void SendRoute(int[] packet)
         {
             if (mHardPLC == false)
             {
 
-                mADS.SendRoute(mPacket);
+                mADS.SendRoute(packet);
             }
             else
             {
                 //What to communicate if there is a hardware controller
-                mHWC.SendRoute(mPacket);
+                mHWC.SendRoute(packet);
             }
             return;
         }
 
-        //ReceiveMaintenance: Calls the client class to receive an array of maintenance states of length[] mPacket. Failing to specify[] mPacket will return a 0 element array.
-        //<mLength>: length of return array. This is when the client stops reading.
+        //ReceiveMaintenance: Calls the client class to receive an array of maintenance states of length[] packet. Failing to specify[] packet will return a 0 element array.
+        //<length>: length of return array. This is when the client stops reading.
         //<int[]>: array holding maintenance states
-        public int[] ReceiveRoute(int mLength = 0)
+        public int[] ReceiveRoute(int length = 0)
         {
-            int[] mPacket = new int[mLength];
+            int[] packet = new int[length];
             if (mHardPLC == false)
             {
 
-                mPacket = mADS.ReceiveRoute(mLength);
+                packet = mADS.ReceiveRoute(length);
 
             }
             else
             {
-                mPacket = mHWC.ReceiveRoute(mLength);
+                packet = mHWC.ReceiveRoute(length);
                 //What to communicate if there is a hardware controller.
             }
-            return mPacket;
+            return packet;
         }
 
         private int mRouteLength;

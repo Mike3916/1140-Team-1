@@ -11,6 +11,8 @@
 
   <ItemGroup>
     <Compile Remove="Client.cs" />
+    <Compile Remove="CommunicationClient.cs" />
+    <Compile Remove="CommunicationServer.cs" />
   </ItemGroup>
 
   <ItemGroup>
