@@ -20,15 +20,8 @@ namespace gogTests
             Assert.AreEqual(track.mtrainList[0].lineIdx, 0);
             Assert.AreEqual(track.mtrainList[0].commAuthority, 0);
         }
-        
-        [TestMethod]
-        public void maxPowerLimited()
-        {
-            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
-            chooChoo.setPowerCmd(500000000);
-            Assert.AreEqual(120000, chooChoo.getPowerCmd(), "Account not debited correctly");
 
-        }
+
 
         [TestMethod]
         public void TrainControllerSW_ToggleLeftDoors()
@@ -125,229 +118,229 @@ namespace gogTests
 
 
 
-        [TestMethod]
-        //Checks if program will crash when attempting to connect to an unconfigured port number
-        public void ConnectToBadPort()
-        {
-            Track_Controller_1._02.Controller RedlinePLC = new Track_Controller_1._02.Controller(855, false, "127.0.0.1");
+        /*  [TestMethod]
+          //Checks if program will crash when attempting to connect to an unconfigured port number
+          public void ConnectToBadPort()
+          {
+              Track_Controller_1._02.Controller RedlinePLC = new Track_Controller_1._02.Controller(855, false, "127.0.0.1");
 
-            int[] crossings = new int[45];
-            int[] returns = new int[45];
+              int[] crossings = new int[45];
+              int[] returns = new int[45];
 
-            RedlinePLC.SendCrossings(crossings);
-            (RedlinePLC.ReceiveCrossings(45)).CopyTo(returns,0);
-        }   
+              RedlinePLC.SendCrossings(crossings);
+              (RedlinePLC.ReceiveCrossings(45)).CopyTo(returns,0);
+          }   
 
-        [TestMethod]
-        //Test to see if PLC receives and sends the occupancies correctly
-        public void TrackControllerReceiveOccupancies()
-        {
-            Track_Controller_1._02.Controller RedlinePLC = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
+          [TestMethod]
+          //Test to see if PLC receives and sends the occupancies correctly
+          public void TrackControllerReceiveOccupancies()
+          {
+              Track_Controller_1._02.Controller RedlinePLC = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
 
-            int[] occupancies = new int[45];
-            int[] returns = new int[45];
+              int[] occupancies = new int[45];
+              int[] returns = new int[45];
 
-            //Send and receive zero arrays with wait in between
-            RedlinePLC.SendOccupancies(occupancies);
-            Thread.Sleep(10);
-            (RedlinePLC.ReceiveOccupancies(45)).CopyTo(returns, 0);
+              //Send and receive zero arrays with wait in between
+              RedlinePLC.SendOccupancies(occupancies);
+              Thread.Sleep(10);
+              (RedlinePLC.ReceiveOccupancies(45)).CopyTo(returns, 0);
 
-            //Change values of array
-            for (int i = 0; i < returns.Length; i++)
-            {
-                Assert.AreEqual(occupancies[i], returns[i]);
-            }
+              //Change values of array
+              for (int i = 0; i < returns.Length; i++)
+              {
+                  Assert.AreEqual(occupancies[i], returns[i]);
+              }
 
-            //Change occupancies to 1s
-            for (int i = 0; i < returns.Length; i++)
-            {
-                occupancies[i] = 1;
-            }
+              //Change occupancies to 1s
+              for (int i = 0; i < returns.Length; i++)
+              {
+                  occupancies[i] = 1;
+              }
 
-            //check that arrays no longer match
-            for (int i = 0; i < returns.Length; i++)
-            {
-                Assert.AreNotEqual(occupancies[i], returns[i]);
-            }
+              //check that arrays no longer match
+              for (int i = 0; i < returns.Length; i++)
+              {
+                  Assert.AreNotEqual(occupancies[i], returns[i]);
+              }
 
-            //Send. Wait. Receive
-            RedlinePLC.SendOccupancies(occupancies);
-            Thread.Sleep(10);
-            (RedlinePLC.ReceiveOccupancies(45)).CopyTo(returns, 0);
+              //Send. Wait. Receive
+              RedlinePLC.SendOccupancies(occupancies);
+              Thread.Sleep(10);
+              (RedlinePLC.ReceiveOccupancies(45)).CopyTo(returns, 0);
 
-            //Check for match
-            for (int i = 0; i < returns.Length; i++)
-            {
-                Assert.AreEqual(occupancies[i], returns[i]);
-            }
+              //Check for match
+              for (int i = 0; i < returns.Length; i++)
+              {
+                  Assert.AreEqual(occupancies[i], returns[i]);
+              }
 
-            //Test mismatch size.
-            int[] sizemismatch = new int[99];
+              //Test mismatch size.
+              int[] sizemismatch = new int[99];
 
-            RedlinePLC.SendOccupancies(sizemismatch);
-            (RedlinePLC.ReceiveOccupancies(99)).CopyTo(sizemismatch, 0);
-            (RedlinePLC.ReceiveOccupancies(45)).CopyTo(sizemismatch, 0);
-        }
-
-        [TestMethod]
+              RedlinePLC.SendOccupancies(sizemismatch);
+              (RedlinePLC.ReceiveOccupancies(99)).CopyTo(sizemismatch, 0);
+              (RedlinePLC.ReceiveOccupancies(45)).CopyTo(sizemismatch, 0);
+          }
+  */
+        // [TestMethod]
         //Test to see if PLC receives and sends the speeds correctly
-        public void TrackControllerReceiveSpeeds()
-        {
-            Track_Controller_1._02.Controller RedlinePLC = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
+        /*   public void TrackControllerReceiveSpeeds()
+           {
+               Track_Controller_1._02.Controller RedlinePLC = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
 
-            int[] speeds = new int[45];
-            int[] returns = new int[45];
+               int[] speeds = new int[45];
+               int[] returns = new int[45];
 
-            //Send and receive zero arrays with wait in between
-            RedlinePLC.SendSpeeds(speeds);
-            Thread.Sleep(10);
-            (RedlinePLC.ReceiveSpeeds(45)).CopyTo(returns, 0);
+               //Send and receive zero arrays with wait in between
+               RedlinePLC.SendSpeeds(speeds);
+               Thread.Sleep(10);
+               (RedlinePLC.ReceiveSpeeds(45)).CopyTo(returns, 0);
 
-            //Change values of array
-            for (int i = 0; i < returns.Length; i++)
-            {
-                Assert.AreEqual(speeds[i], returns[i]);
-            }
+               //Change values of array
+               for (int i = 0; i < returns.Length; i++)
+               {
+                   Assert.AreEqual(speeds[i], returns[i]);
+               }
 
-            //Change speeds to 1s
-            for (int i = 0; i < returns.Length; i++)
-            {
-                speeds[i] = 5;
-            }
+               //Change speeds to 1s
+               for (int i = 0; i < returns.Length; i++)
+               {
+                   speeds[i] = 5;
+               }
 
-            //check that arrays no longer match
-            for (int i = 0; i < returns.Length; i++)
-            {
-                Assert.AreNotEqual(speeds[i], returns[i]);
-            }
+               //check that arrays no longer match
+               for (int i = 0; i < returns.Length; i++)
+               {
+                   Assert.AreNotEqual(speeds[i], returns[i]);
+               }
 
-            //Send. Wait. Receive
-            RedlinePLC.SendSpeeds(speeds);
-            Thread.Sleep(10);
-            (RedlinePLC.ReceiveSpeeds(45)).CopyTo(returns, 0);
+               //Send. Wait. Receive
+               RedlinePLC.SendSpeeds(speeds);
+               Thread.Sleep(10);
+               (RedlinePLC.ReceiveSpeeds(45)).CopyTo(returns, 0);
 
-            //Check for match
-            for (int i = 0; i < returns.Length; i++)
-            {
-                Assert.AreEqual(speeds[i], returns[i]);
-            }
+               //Check for match
+               for (int i = 0; i < returns.Length; i++)
+               {
+                   Assert.AreEqual(speeds[i], returns[i]);
+               }
 
-            //Set speeds above speed limit
-            for (int i = 0; i < returns.Length; i++)
-            {
-                speeds[i] = 150;
-            }
+               //Set speeds above speed limit
+               for (int i = 0; i < returns.Length; i++)
+               {
+                   speeds[i] = 150;
+               }
 
-            RedlinePLC.SendSpeeds(speeds);
-            Thread.Sleep(10);
-            (RedlinePLC.ReceiveSpeeds(45)).CopyTo(returns, 0);
+               RedlinePLC.SendSpeeds(speeds);
+               Thread.Sleep(10);
+               (RedlinePLC.ReceiveSpeeds(45)).CopyTo(returns, 0);
 
-            //Speeds should not match
-            for (int i = 0; i < returns.Length; i++)
-            {
-                Assert.AreNotEqual(speeds[i], returns[i]);
-            }
+               //Speeds should not match
+               for (int i = 0; i < returns.Length; i++)
+               {
+                   Assert.AreNotEqual(speeds[i], returns[i]);
+               }
 
-            //Sample a few test blocks with known speed limits
-            Assert.AreEqual(speeds[0], 40);
-            Assert.AreEqual(speeds[16], 55);
-            Assert.AreEqual(speeds[17], 70);
+               //Sample a few test blocks with known speed limits
+               Assert.AreEqual(speeds[0], 40);
+               Assert.AreEqual(speeds[16], 55);
+               Assert.AreEqual(speeds[17], 70);
 
-            //Test mismatch size.
-            int[] sizemismatch = new int[99];
+               //Test mismatch size.
+               int[] sizemismatch = new int[99];
 
-            RedlinePLC.SendSpeeds(sizemismatch);
-            (RedlinePLC.ReceiveSpeeds(99)).CopyTo(sizemismatch, 0);
-            (RedlinePLC.ReceiveSpeeds(45)).CopyTo(sizemismatch, 0);
-        }
+               RedlinePLC.SendSpeeds(sizemismatch);
+               (RedlinePLC.ReceiveSpeeds(99)).CopyTo(sizemismatch, 0);
+               (RedlinePLC.ReceiveSpeeds(45)).CopyTo(sizemismatch, 0);
+           }
 
-        [TestMethod]
-        //Test to see if PLC receives the authorities correctly
-        public void TrackControllerReceiveAuthorities()
-        {
-            Track_Controller_1._02.Controller RedlinePLC = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
+           [TestMethod]
+           //Test to see if PLC receives the authorities correctly
+           public void TrackControllerReceiveAuthorities()
+           {
+               Track_Controller_1._02.Controller RedlinePLC = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
 
-            int[] authorities = new int[45];
-            int[] returns = new int[45];
+               int[] authorities = new int[45];
+               int[] returns = new int[45];
 
-            //Send and receive zero arrays with wait in between
-            RedlinePLC.SendAuthorities(authorities);
-            Thread.Sleep(10);
-            (RedlinePLC.ReceiveAuthorities(45)).CopyTo(returns, 0);
+               //Send and receive zero arrays with wait in between
+               RedlinePLC.SendAuthorities(authorities);
+               Thread.Sleep(10);
+               (RedlinePLC.ReceiveAuthorities(45)).CopyTo(returns, 0);
 
-            //Change values of array
-            for (int i = 0; i < returns.Length; i++)
-            {
-                Assert.AreEqual(authorities[i], returns[i]);
-            }
+               //Change values of array
+               for (int i = 0; i < returns.Length; i++)
+               {
+                   Assert.AreEqual(authorities[i], returns[i]);
+               }
 
-            //Change speeds to 1s
-            for (int i = 0; i < returns.Length; i++)
-            {
-                authorities[i] = i+1;
-            }
+               //Change speeds to 1s
+               for (int i = 0; i < returns.Length; i++)
+               {
+                   authorities[i] = i+1;
+               }
 
-            //check that arrays no longer match
-            for (int i = 0; i < returns.Length; i++)
-            {
-                Assert.AreNotEqual(authorities[i], returns[i]);
-            }
+               //check that arrays no longer match
+               for (int i = 0; i < returns.Length; i++)
+               {
+                   Assert.AreNotEqual(authorities[i], returns[i]);
+               }
 
-            //Send. Wait. Receive
-            RedlinePLC.SendAuthorities(authorities);
-            Thread.Sleep(10);
-            (RedlinePLC.ReceiveAuthorities(45)).CopyTo(returns, 0);
+               //Send. Wait. Receive
+               RedlinePLC.SendAuthorities(authorities);
+               Thread.Sleep(10);
+               (RedlinePLC.ReceiveAuthorities(45)).CopyTo(returns, 0);
 
-            //Check for match
-            for (int i = 0; i < returns.Length; i++)
-            {
-                Assert.AreEqual(authorities[i], returns[i]);
-            }
+               //Check for match
+               for (int i = 0; i < returns.Length; i++)
+               {
+                   Assert.AreEqual(authorities[i], returns[i]);
+               }
 
-            //Test mismatch size.
-            int[] sizemismatch = new int[99];
+               //Test mismatch size.
+               int[] sizemismatch = new int[99];
 
-            RedlinePLC.SendAuthorities(sizemismatch);
-            (RedlinePLC.ReceiveAuthorities(99)).CopyTo(sizemismatch, 0);
-            (RedlinePLC.ReceiveAuthorities(45)).CopyTo(sizemismatch, 0);
-        }
+               RedlinePLC.SendAuthorities(sizemismatch);
+               (RedlinePLC.ReceiveAuthorities(99)).CopyTo(sizemismatch, 0);
+               (RedlinePLC.ReceiveAuthorities(45)).CopyTo(sizemismatch, 0);
+           }*/
 
-        [TestMethod]
-        //Test to see if PLC changes the crossing value when occupied
-        public void TrackControllerChangeCrossing()
-        {
-            Track_Controller_1._02.Controller RedlinePLC2 = new Track_Controller_1._02.Controller(853, false, "127.0.0.1");
+        /*   [TestMethod]
+           //Test to see if PLC changes the crossing value when occupied
+           public void TrackControllerChangeCrossing()
+           {
+               Track_Controller_1._02.Controller RedlinePLC2 = new Track_Controller_1._02.Controller(853, false, "127.0.0.1");
 
-            //arrays for handling send receive values
-            int[] crossings = new int[39];
-            int[] occupancies = new int[39];
-            int[] returns1 = new int[39];
-            int[] returns2 = new int[39];
+               //arrays for handling send receive values
+               int[] crossings = new int[39];
+               int[] occupancies = new int[39];
+               int[] returns1 = new int[39];
+               int[] returns2 = new int[39];
 
-            //Send and receive zero arrays with wait in between
-            RedlinePLC2.SendOccupancies(occupancies);
-            Thread.Sleep(10);
-            (RedlinePLC2.ReceiveCrossings(39)).CopyTo(returns1, 0);
-            occupancies[14] = 1;
-            RedlinePLC2.SendOccupancies(occupancies);
-            Thread.Sleep(10);
-            (RedlinePLC2.ReceiveCrossings(39)).CopyTo(returns2, 0);
+               //Send and receive zero arrays with wait in between
+               RedlinePLC2.SendOccupancies(occupancies);
+               Thread.Sleep(10);
+               (RedlinePLC2.ReceiveCrossings(39)).CopyTo(returns1, 0);
+               occupancies[14] = 1;
+               RedlinePLC2.SendOccupancies(occupancies);
+               Thread.Sleep(10);
+               (RedlinePLC2.ReceiveCrossings(39)).CopyTo(returns2, 0);
 
-            //Check that Crossing changed state.
-            Assert.AreNotEqual(returns1[14], returns2[14]);
+               //Check that Crossing changed state.
+               Assert.AreNotEqual(returns1[14], returns2[14]);
 
-            //Test mismatch size.
-            int[] sizemismatch = new int[99];
-            RedlinePLC2.SendCrossings(sizemismatch);
-            (RedlinePLC2.ReceiveCrossings(99)).CopyTo(sizemismatch, 0);
-            (RedlinePLC2.ReceiveCrossings(45)).CopyTo(sizemismatch, 0);
-        }
+               //Test mismatch size.
+               int[] sizemismatch = new int[99];
+               RedlinePLC2.SendCrossings(sizemismatch);
+               (RedlinePLC2.ReceiveCrossings(99)).CopyTo(sizemismatch, 0);
+               (RedlinePLC2.ReceiveCrossings(45)).CopyTo(sizemismatch, 0);
+           }
 
-        [TestMethod]
+           [TestMethod]*/
         //Test to see if switch changes when in maintenance mode and commanded change given
         //Test to see if switch does not change when not in maintenance mode and commanded change given
         //Test to see if PLC code changes the switch value when some blocks occupied
-        public void TrackControllerChangeSwitch()
+        /*public void TrackControllerChangeSwitch()
         {
             Track_Controller_1._02.Controller RedlinePLC1 = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
 
@@ -529,38 +522,38 @@ namespace gogTests
             Assert.AreEqual(returns2[17], 1);
 
 
-        }
+        }*/
 
         //[TestMethod]
         //public void TrackReceiveOccupanciesGreen()
         //{
         //    Track_Controller_1._02.Controller GreenLinePLC = new Track_Controller_1._02.Controller(4, true, "127.0.0.1");
 
-            //int[] occupancies = new int[151];
-            //int[] returns = new int[151];
+        //int[] occupancies = new int[151];
+        //int[] returns = new int[151];
 
-            //GreenLinePLC.SendOccupancies(occupancies);
-            //returns = GreenLinePLC.ReceiveOccupancies(151);
+        //GreenLinePLC.SendOccupancies(occupancies);
+        //returns = GreenLinePLC.ReceiveOccupancies(151);
 
-            //for (int i = 0; i < returns.Length; i++)
-            //{
-            //    Assert.AreEqual(occupancies[i], returns[i]);
-            //}
+        //for (int i = 0; i < returns.Length; i++)
+        //{
+        //    Assert.AreEqual(occupancies[i], returns[i]);
+        //}
 
         //    for (int i = 0; i < returns.Length; i++)
         //    {
         //        occupancies[i] = 1;
         //    }
-            //for (int i = 0; i < returns.Length; i++)
-            //{
-            //    occupancies[i] = 1;
-            //    Assert.AreEqual(occupancies[i],returns[i]);
-            //}
+        //for (int i = 0; i < returns.Length; i++)
+        //{
+        //    occupancies[i] = 1;
+        //    Assert.AreEqual(occupancies[i],returns[i]);
+        //}
 
-            //GreenLinePLC.SendOccupancies(occupancies);
-            //returns = GreenLinePLC.ReceiveOccupancies(151);
+        //GreenLinePLC.SendOccupancies(occupancies);
+        //returns = GreenLinePLC.ReceiveOccupancies(151);
 
-        }
+        //}
         //[TestMethod]
         //public void TrackModel_AddTrain()
         //{
@@ -576,4 +569,58 @@ namespace gogTests
         //    Assert.AreEqual(track.mtrainList[0].lineIdx, 0);
         //    Assert.AreEqual(track.mtrainList[0].commAuthority, 0);
         //}
+
     }
+
+    [TestClass]
+    public class TrainModel
+    {
+
+
+        [TestMethod]
+        public void maxPowerLimited()
+        {
+            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
+            chooChoo.setPowerCmd(500000000);
+            Assert.AreEqual(120000, chooChoo.getPowerCmd(), "Account not debited correctly");
+
+        }
+
+        [TestMethod]
+        public void nonVitals()
+        {
+            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
+            chooChoo.toggleDoorL();
+            chooChoo.toggleDoorR();
+            chooChoo.toggleInteriorLights();
+            chooChoo.toggleExteriorLights();
+
+            Assert.AreEqual(true, chooChoo.getDoorL(), "Door left not toggled correctly");
+            Assert.AreEqual(true, chooChoo.getDoorR(), "Door right not toggled correctly");
+            Assert.AreEqual(true, chooChoo.getInteriorLights(), "Interior lights not toggled correctly");
+            Assert.AreEqual(true, chooChoo.getExteriorLights(), "Exterior lights not toggled correctly");
+        }
+        
+        [TestMethod]
+        public void accelerationTest()
+        {
+            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
+            chooChoo.setPowerCmd(120000);
+            for(int i = 0;i<10000;i++)
+            {
+                chooChoo.increment();
+            }
+
+            Assert.IsTrue(chooChoo.getCurrentSpeedMPH() > 20, chooChoo.getCurrentSpeedMPH().ToString());
+        }
+        
+        
+
+    }
+
+
+
+
+
+
+}

@@ -24,7 +24,7 @@
       <HintPath>..\..\Track Model\Track Model\bin\Release\net6.0-windows\Track Model.dll</HintPath>
     </Reference>
     <Reference Include="TrackController1.01">
-      <HintPath>..\..\TrackController_GUI_1.01\TrackController_GUI_1.01\obj\Release\net6.0-windows\TrackController1.01.dll</HintPath>
+      <HintPath>..\..\WaysideController1.01\WaysideController1.01\bin\Release\net6.0-windows\TrackController1.01.dll</HintPath>
     </Reference>
     <Reference Include="TrainModel">
       <HintPath>..\..\Train Model\TrainModel\bin\Release\net6.0-windows\TrainModel.dll</HintPath>
