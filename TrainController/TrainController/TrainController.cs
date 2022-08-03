@@ -43,6 +43,7 @@ namespace TrainController
         public int mCmdAuthority = 0;
         public int mCurAuthority = 0;
         public string mBeacon = "-";
+        public string mPortName = "COM";
         public double mCurPower = 0;
 
         public const float Pmax = 120000; // 120 kW
@@ -59,7 +60,7 @@ namespace TrainController
         public void setupHardware()
         {
             // Setup serial port information: 
-            pi.PortName = "COM3";
+            pi.PortName = mPortName;
             pi.BaudRate = 115200;
             pi.Parity = Parity.None;
             pi.DataBits = 8;

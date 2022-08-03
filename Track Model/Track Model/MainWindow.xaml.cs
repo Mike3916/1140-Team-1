@@ -95,7 +95,7 @@ namespace TrackModel
             
             timer.Interval = new TimeSpan(0, 0, 1);
             timer.Tick += dispatcherTimer_Tick;
-            timer.Start();
+            //timer.Start();
         }
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
@@ -129,35 +129,39 @@ namespace TrackModel
                 interval = 0;
             }
         }
-        public void UpdateTick()
+        public void UpdateTick(int mult)
         {
-            //update train
-            interval++;
-
-            if (interval >= 5)
+            for (int i = 0; i < mult; i++)
             {
-                if (testWindow.traingo)
+                //update train
+                interval++;
+
+                if (interval >= 5000)
                 {
-                    for (int i = 0; i < mtrainList.Count; i++)
-                        UpdateTrain(i);
-                }
-                if (mblockIdx != -1)
-                {
-                    double currentTemp = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].getmtrackTemp();
-                    if (currentTemp < 32)
+                    if (testWindow.traingo)
                     {
-                        mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackTemp(currentTemp + 1);
-                        HeatBox.Text = (currentTemp + 1).ToString();
+                        for (int j = 0; j < mtrainList.Count; j++)
+                            UpdateTrain(j);
                     }
-                    else if (currentTemp == 32)
+                    if (mblockIdx != -1)
                     {
-                        //do nothing 
+                        double currentTemp = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].getmtrackTemp();
+                        if (currentTemp < 32)
+                        {
+                            mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackTemp(currentTemp + 1);
+                            HeatBox.Text = (currentTemp + 1).ToString();
+                        }
+                        else if (currentTemp == 32)
+                        {
+                            //do nothing 
+                        }
+                        else
+                        {
+                            mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackTemp(currentTemp - 1);
+                            HeatBox.Text = (currentTemp - 1).ToString();
+                        }
                     }
-                    else
-                    {
-                        mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackTemp(currentTemp - 1);
-                        HeatBox.Text = (currentTemp - 1).ToString();
-                    }
+                    interval = 0;
                 }
             }
         }
@@ -298,12 +302,27 @@ namespace TrackModel
             newLine.AddSections(lineInfo); //pawns off data processing to Line Class
             mLines.Add(newLine);
         }
-        public void AddTrain(int blockIdx, int lineIdx, int auth)
+        public bool AddTrain(int blockIdx, int lineIdx, int auth)
         {
             mtrainList.Add(new Train(blockIdx, lineIdx, auth));
             mLines[lineIdx].OccupyBlock(blockIdx);
             OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
             UpdateSelectRow(lineIdx, blockIdx);
+            return true;
+        }
+        public bool AddTrain(int lineIdx, int auth)
+        {
+            int blockIdx = 1;
+            if (lineIdx == 0)
+                blockIdx = 77;
+            else
+                blockIdx = 151;
+
+            mtrainList.Add(new Train(blockIdx, lineIdx, auth));
+            mLines[lineIdx].OccupyBlock(blockIdx);
+            OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
+            UpdateSelectRow(lineIdx, blockIdx);
+            return true;
         }
         public void RemoveTrain(int trainIDX)
         {
