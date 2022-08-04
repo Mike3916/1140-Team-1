@@ -629,6 +629,47 @@ namespace gogTests
             Assert.IsTrue(mSwitches[76] == 101);
             Assert.IsTrue(mSwitches[84] == 86);
         }
+
+        [TestMethod]
+        public void OverrideSwitches()
+        {
+            //Test valid constructor
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            int[] mSwitches = new int[151];
+            int[] returns = new int[151];
+            Random rnd = new Random();
+
+            green.SendSwitches(mSwitches);
+            returns = green.ReceiveSwitches(151);
+
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreEqual(mSwitches[i], returns[i]);
+            }
+
+            for (int i = 0; i < returns.Length; i++)
+            {
+                mSwitches[i] = rnd.Next(1);
+            }
+            mSwitches[62] = 0;
+
+            green.SendSwitches(mSwitches);
+            returns = green.ReceiveSwitches(151);
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreEqual(mSwitches[i], returns[i]);
+            }
+
+            int[] mMaint = new int[151];
+            for (int i = 1; i < mMaint.Length; i++)
+            {
+                mMaint[i] = 0;
+            }
+            green.SendMaintenance(mMaint);
+            returns = green.ReceiveSwitches(151);
+            Assert.IsFalse(0 == returns[62]);
+
+        }
     }
     [TestClass]
     public class TrainControllerSW
