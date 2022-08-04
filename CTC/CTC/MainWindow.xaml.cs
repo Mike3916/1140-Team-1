@@ -147,7 +147,8 @@ namespace CTC
                 LoadSchedule.IsEnabled = true; //enabled the load schedule button
                 Dispatch.IsEnabled = true; //enable dispatch new train button
 
-                train_data.Dest.IsEnabled = true; //on the train_data page, enable editing of the Destination box if the user is in manual mode
+                train_data.DestLineCombo.IsEnabled = true; //on the train_data page, enable editing of the Destination box if the user is in manual mode
+                train_data.DestStationCombo.IsEnabled = true;
                 train_data.ETA.IsEnabled = true; // on the train_data page, enable editing of the ETA box
 
                 block_data.checkToggle(); //Call checkToggle() to make sure not only the CTC is in maintenance mode, but the block is in maintenance mode too
@@ -164,7 +165,8 @@ namespace CTC
                 LoadSchedule.IsEnabled = false; //disables the load schedule button
                 Dispatch.IsEnabled = false; //disable dispath new train button
 
-                train_data.Dest.IsEnabled = false; //on the train_data page, disable editing of the Destination box
+                train_data.DestLineCombo.IsEnabled = false; //on the train_data page, disable editing of the Destination box
+                train_data.DestStationCombo.IsEnabled = false;
                 train_data.ETA.IsEnabled = false; //on the train_data page, disable the editing of the ETA box
 
                 block_data.ToggleButton.IsEnabled = false; //on block_data page, disable editing of toggle switch button
