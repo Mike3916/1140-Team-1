@@ -133,6 +133,7 @@ namespace CTC
                     {
                         TrainList.Add(new Train {line = trackLine[i], name = name[i], destination = destination[i], ETD = ETD[i], ETA = ETA[i] });
                         TrainList[i].calcDuration();
+                        TrainList[i].calcRoute();
                         SelectTrain.Items.Add(name[i]); //This populates the drop down list of trains with the train names
                     }
                 } 
@@ -237,12 +238,10 @@ namespace CTC
 
         }
 
-
         private void Frame_ContentRendered(object sender, EventArgs e) ///Every time the frame changes, it readjusts to fit. Without this code, the page that is sent to the frame gets cut off. Not sure if this is the best implimentation because it causes the entire window to resize a bit, look into later.
         {
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
-
 
         private void Clear_Click(object sender, RoutedEventArgs e)
         {

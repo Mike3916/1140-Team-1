@@ -410,6 +410,7 @@ namespace TrackModel
             LengthBox.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mLength + "";
             GradeBox.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mGrade + "";
             ElevationBox.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mElevation + "";
+            LightText.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mSignal;
 
             if (mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mhasCross)
             {
@@ -754,6 +755,7 @@ namespace TrackModel
             if (!(mblockIdx == -1) && mLines.Count != 0)
             {
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackRail(false);
+                mLines[mlineIdx].OccupyBlock(mblockIdx);
                 BreakTrackButton.Background = Brushes.Red;
                 FixTrackButton.Background = Brushes.Gray;
                 OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
@@ -766,6 +768,7 @@ namespace TrackModel
             if (!(mblockIdx == -1) && mLines.Count != 0)
             { 
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackRail(true);
+                mLines[mlineIdx].UnOccupyBlock(mblockIdx);
                 FixTrackButton.Background = Brushes.Green;
                 BreakTrackButton.Background = Brushes.Gray;
                 OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
@@ -778,6 +781,7 @@ namespace TrackModel
             if (!(mblockIdx == -1) && mLines.Count != 0)
             {
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmPower(true);
+                mLines[mlineIdx].UnOccupyBlock(mblockIdx);
                 FixPowerButton.Background = Brushes.Green;
                 BreakPowerButton.Background = Brushes.Gray;
                 OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
@@ -797,6 +801,7 @@ namespace TrackModel
             if (!(mblockIdx == -1) && mLines.Count != 0)
             {
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmPower(false);
+                mLines[mlineIdx].OccupyBlock(mblockIdx);
                 BreakPowerButton.Background = Brushes.Red;
                 FixPowerButton.Background = Brushes.Gray;
                 OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
@@ -826,6 +831,7 @@ namespace TrackModel
             if (!(mblockIdx == -1) && mLines.Count != 0)
             {
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackCircuit(true);
+                mLines[mlineIdx].UnOccupyBlock(mblockIdx);
                 FixCircuitButton.Background = Brushes.Green;
                 BreakCircuitButton.Background = Brushes.Gray;
                 OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
@@ -857,6 +863,7 @@ namespace TrackModel
             if (!(mblockIdx == -1) && mLines.Count != 0)
             {
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackCircuit(false);
+                mLines[mlineIdx].OccupyBlock(mblockIdx);
                 BreakCircuitButton.Background = Brushes.Red;
                 FixCircuitButton.Background = Brushes.Gray;
                 OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";

@@ -77,6 +77,9 @@ namespace CTC
             i = ((MainWindow)Application.Current.MainWindow).SelectTrain.SelectedIndex; //Right now, the combobox index 0 is blank, so the first train (w/ index zero) appears at index 1. Therefore, subtract 1 to get the correct train
             ETA.Text = ((MainWindow)Application.Current.MainWindow).TrainList[i].ETA.ToString();
 
+            Authority.Text = ((MainWindow)Application.Current.MainWindow).TrainList[i].authority.ToString();
+            Speed.Text = ((MainWindow)Application.Current.MainWindow).TrainList[i].speed.ToString();
+
         }
 
         private void DestLineCombo_SelectionChanged(object sender, SelectionChangedEventArgs e) //When the DestLineCombo selection is changed, the DestStationCombo needs to be changed to only show the destination for that line

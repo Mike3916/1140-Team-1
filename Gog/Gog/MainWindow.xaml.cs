@@ -285,7 +285,10 @@ namespace Gog
                     mRedLeftLights = ctc.mRedLeftLights;
                     mRedRightLights = ctc.mRedRightLights;
                     mRedTrain = ctc.mRedTrain;
-
+                    if(ctc.mRedTrain == true)
+                    {
+                        MessageBox.Show(mRedTrain.ToString() + " " + ctc.mRedTrain.ToString());
+                    }
                     mGreenMaintenanceBlocks = ctc.mGreenMaintenanceBlocks;
                     mGreenOccupancies = ctc.mGreenOccupancies;
                     mGreenSpeeds = ctc.mGreenSpeeds;
@@ -306,9 +309,9 @@ namespace Gog
                     PLCsetCTC();
                     ctc.GetTrackController(mRedMaintenanceBlocks, mRedOccupancies, mRedSpeeds, mRedAuthorities, mRedCrossings, mRedSwitches, mRedLeftLights, mRedRightLights, mGreenMaintenanceBlocks, mGreenOccupancies, mGreenSpeeds, mGreenAuthorities, mGreenCrossings, mGreenSwitches, mGreenLeftLights, mGreenRightLights); //Write function in CTC to read in these values 
                 }
-                if (track != null && ctc != null) //This sends current simulation time to ctc (needed for ETD for dispatching a train)
+                if (ctc != null) //This sends current simulation time to ctc (needed for ETD for dispatching a train)
                 {
-                    var now = new DateTime(0,0,0,hour, minute, second);
+                    var now = new DateTime(1,1,1, hour, minute, second);
                     ctc.getTime(now);
                 }
                     
@@ -329,23 +332,24 @@ namespace Gog
                     
                 }
 
-                //if (ctc.mDispatch != -1 && ctc != null && track != null && trains != null && trainCtrl != null)
-                //{
-                //    if (mRedTrain == true)
-                //    {
-                //        ctc.mDispatch = 0;
-                //    }
-                //    if (mGreenTrain == true)
-                //    {
-                //        ctc.mDispatch = 1;
-                //    }
-                //    track.AddTrain(ctc.mDispatch, ctc.mAuth);
-                //    trains.addTrain(ctc.mDispatch, ctc.mAuth);
-                //    trainCtrl.addController((ctc.mDispatch).ToBoolean());
-                //    ctc.mDispatch = -1;
-                //mRedline1.SendTrain(false);
-                //mGreenLine1.SendTrain(false);
-                //}
+                if (mRedTrain == true)
+                {
+                    MessageBox.Show("Authority Passed : " + mRedAuthorities[76].ToString());
+                    track.AddTrain(0, mRedAuthorities[76]);
+                    trains.addTrain(0, mRedAuthorities[76]);
+                    trainCtrl.addController((false));
+                }
+                if(mGreenTrain == true)
+                {
+                    track.AddTrain(1, mGreenAuthorities[150]);
+                    trains.addTrain(1, mGreenAuthorities[150]);
+                    trainCtrl.addController((true));
+                }
+               
+                mRedline1.SendTrain(false);
+                mGreenLine1.SendTrain(false);
+                ctc.mRedTrain = false;
+                ctc.mGreenTrain = false;
 
 
 
