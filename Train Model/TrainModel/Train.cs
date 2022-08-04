@@ -22,6 +22,7 @@ namespace TrainObject
         private bool emergencyBrake;
         private bool serviceBrake;
         private bool engineFailure;
+        private bool brakeFailure;
         private bool signalPickUp;
         private int cmdAuthority;
         private int currAuthority;
@@ -284,7 +285,7 @@ namespace TrainObject
             {//if acceleration greater than limit and no brakes on
                 return accelerationLimit;
             }
-            else if (serviceBrake && !emergencyBrake)
+            else if (serviceBrake && !emergencyBrake &&!brakeFailure)
             {
                 powerCmd = 0;
                 if (Math.Abs(accelerationCalc) + decelerationLimitService > 0)
@@ -495,7 +496,7 @@ namespace TrainObject
                 currAuthority = 0;
             }
 
-            commandedSpeed = b.mspeedLimit;
+            commandedSpeed=b.mspeedLimit;
 
             blockID = b.mblockNum;
 
@@ -607,6 +608,15 @@ namespace TrainObject
         public void setGrade(double g)
         {
             gradient = g;
+        }
+
+        public void toggleBrakeFailure(){
+            brakeFailure = !brakeFailure;
+        }
+
+        public bool getBrakeFailure()
+        {
+            return brakeFailure;
         }
 
     }
