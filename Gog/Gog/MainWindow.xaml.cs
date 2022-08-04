@@ -271,6 +271,27 @@ namespace Gog
 
                 if (track != null && ctc != null && track.mLines.Count == 2 && iter % 20 == 10)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
                 {
+                    //Update Track Controller variables with values from CTC
+                    mRedMaintenanceBlocks = ctc.mRedMaintenanceBlocks;
+                    mRedOccupancies = ctc.mRedOccupancies;
+                    mRedSpeeds = ctc.mRedSpeeds;
+                    mRedAuthorities = ctc.mRedAuthorities;
+                    mRedCrossings = ctc.mRedCrossings;
+                    mRedSwitches = ctc.mRedSwitches;
+                    mRedLeftLights = ctc.mRedLeftLights;
+                    mRedRightLights = ctc.mRedRightLights;
+                    //mRedTrain = ctc.mRedTrain;
+
+                    mGreenMaintenanceBlocks = ctc.mGreenMaintenanceBlocks;
+                    mGreenOccupancies = ctc.mGreenOccupancies;
+                    mGreenSpeeds = ctc.mGreenSpeeds;
+                    mGreenAuthorities = ctc.mGreenAuthorities;
+                    mGreenCrossings = ctc.mGreenCrossings;
+                    mGreenSwitches = ctc.mGreenSwitches;
+                    mGreenLeftLights = ctc.mGreenLeftLights;
+                    mGreenRightLights = ctc.mGreenRightLights;
+                    //mGreenTrain = ctc.mGreenTrain;
+
                     PLCgetCTC();
                     PLCgetTrack();
                 }
@@ -278,6 +299,7 @@ namespace Gog
                 if (track != null && ctc != null && track.mLines.Count == 2 && iter % 20 == 0)
                 {
                     PLCsetCTC();
+                    ctc.GetTrackController(mRedMaintenanceBlocks, mRedOccupancies, mRedSpeeds, mRedAuthorities, mRedCrossings, mRedSwitches, mRedLeftLights, mRedRightLights, mGreenMaintenanceBlocks, mGreenOccupancies, mGreenSpeeds, mGreenAuthorities, mGreenCrossings, mGreenSwitches, mGreenLeftLights, mGreenRightLights); //Write function in CTC to read in these values
                     PLCsetTrack();
                 }
 
@@ -292,34 +314,32 @@ namespace Gog
 
                 if (track != null && ctc != null &&  track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
                 {
-                    ctc.GetTrackController(mRedMaintenanceBlocks, mRedOccupancies, mRedSpeeds, mRedAuthorities, mRedCrossings, mRedSwitches, mRedLeftLights, mRedRightLights, mGreenMaintenanceBlocks, mGreenOccupancies, mGreenSpeeds, mGreenAuthorities, mGreenCrossings, mGreenSwitches, mGreenLeftLights, mGreenRightLights); //Write function in CTC to read in these values
-                                                                                                                                                                                                                                                                                                                                  //Update Track Controller variables with values from CTC
-                    mRedMaintenanceBlocks = ctc.mRedMaintenanceBlocks;
-                    mRedOccupancies = ctc.mRedOccupancies;
-                    mRedSpeeds = ctc.mRedSpeeds;
-                    mRedAuthorities = ctc.mRedAuthorities;
-                    mRedCrossings = ctc.mRedCrossings;
-                    mRedSwitches = ctc.mRedSwitches;
-                    mRedLeftLights = ctc.mRedLeftLights;
-                    mRedRightLights = ctc.mRedRightLights;
-
-                    mGreenMaintenanceBlocks = ctc.mGreenMaintenanceBlocks;
-                    mGreenOccupancies = ctc.mGreenOccupancies;
-                    mGreenSpeeds = ctc.mGreenSpeeds;
-                    mGreenAuthorities = ctc.mGreenAuthorities;
-                    mGreenCrossings = ctc.mGreenCrossings;
-                    mGreenSwitches = ctc.mGreenSwitches;
-                    mGreenLeftLights = ctc.mGreenLeftLights;
-                    mGreenRightLights = ctc.mGreenRightLights;
+                    
+                                                                                                                                                                                                                                                                                                                                  
+                    
                 }
-                
+
                 //if (ctc.mDispatch != -1 && ctc != null && track != null && trains != null && trainCtrl != null)
                 //{
+                //    if (mRedTrain == true)
+                //    {
+                //        ctc.mDispatch = 0;
+                //    }
+                //    if (mGreenTrain == true)
+                //    {
+                //        ctc.mDispatch = 1;
+                //    }
                 //    track.AddTrain(ctc.mDispatch, ctc.mAuth);
                 //    trains.addTrain(ctc.mDispatch, ctc.mAuth);
                 //    trainCtrl.addController((ctc.mDispatch).ToBoolean());
                 //    ctc.mDispatch = -1;
+                //mRedline1.SendTrain(false);
+                //mGreenLine1.SendTrain(false);
                 //}
+
+
+
+
 
                 for (int j = 0; j < numTrains; j++)
                 {
@@ -404,6 +424,9 @@ namespace Gog
             mGreenLine1.ReceiveRightLights(mGreen1RightLights.Length);
             mGreenLine1.ReceiveLeftLights(mGreen1LeftLights.Length);
 
+            //ctc.mRedTrain = false;
+            //ctc.mGreenTrain = false;
+
             ArrayMerger();
 
             /*77 element integer arrays for red line
@@ -473,8 +496,9 @@ namespace Gog
             track.SetCrossings(mGreenCrossings, 1);
             track.SetSwitches(mGreenSwitches, 1);
 
-            mRedline1.SendTrain(false);
-            mGreenLine1.SendTrain(false);
+
+
+
         }
 
         private void ArraySplitter()

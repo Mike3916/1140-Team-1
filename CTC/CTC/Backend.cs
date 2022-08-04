@@ -73,10 +73,10 @@ namespace Backend
             }
             else if (line == 1) //The green line
             {
-                while (destination != mgreenRoute[i])
+                while (true)
                 {
                     route.Add(mgreenRoute[i]);
-                    length += ((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(mredRoute[i]).mLength; //Add the length of the block. GetBlock() is sent the Block ID (starts at 1), not block index
+                    length += ((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(mgreenRoute[i]).mLength; //Add the length of the block. GetBlock() is sent the Block ID (starts at 1), not block index
                     if (destination == mgreenRoute[i])
                         break;
                     i++;
