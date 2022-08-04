@@ -18,7 +18,7 @@
             <Border.Effect>
                 <DropShadowEffect/>
             </Border.Effect>
-            <TextBlock Name="Position" Margin="6,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="71" Foreground="Black" HorizontalAlignment="Left" Width="273"><Run Text="Current Block:"/><LineBreak/><Run Text="Authority:"/><LineBreak/><Run Text="Last Station:"/><LineBreak/><Run Text="Next Station:"/></TextBlock>
+            <TextBlock x:Name="Position" Margin="6,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="71" Foreground="Black" HorizontalAlignment="Left" Width="273"><Run Text="Current Block:"/><LineBreak/><Run Text="Authority:"/><LineBreak/><Run Text="Length of block:"/><LineBreak/><Run Text="Distance left on block:"/></TextBlock>
 
         </Border>
         <Label Content="Speed" HorizontalAlignment="Left" Margin="60,172,0,0" VerticalAlignment="Top" FontSize="8" Padding="0,0,0,0" Background="White" Height="10" Panel.ZIndex="2" Width="23"/>
@@ -69,19 +69,21 @@
             <TextBlock x:Name="Beacon" HorizontalAlignment="Left" Margin="6,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="273" Foreground="Black" Text="Beacon Announcements would be displayed here as the train passes over them"/>
         </Border>
         <TextBlock HorizontalAlignment="Left" Margin="43,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16"><Run Text="Select a train"/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
-        <Button Content="Add Train" HorizontalAlignment="Left" Margin="509,43,0,0" VerticalAlignment="Top" Click="Button_Click"/>
-        <Button Content="Close" HorizontalAlignment="Left" Margin="669,43,0,0" VerticalAlignment="Top" Click="Button_Click_1" RenderTransformOrigin="0.489,0.453"/>
+        <Button x:Name="addTrainButton" Content="Add Train" HorizontalAlignment="Left" Margin="509,43,0,0" VerticalAlignment="Top" Click="Button_Click" IsEnabled="False"/>
+        <Button Content="Close" HorizontalAlignment="Left" Margin="722,44,0,0" VerticalAlignment="Top" Click="Button_Click_1" RenderTransformOrigin="0.489,0.453"/>
         <TextBlock HorizontalAlignment="Left" Margin="187,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16"><Run Text="Train Line:"/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
         <TextBlock x:Name="currLine"  HorizontalAlignment="Left" Margin="187,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16"><Run Text=""/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
-        <Button Content="Remove Train" HorizontalAlignment="Left" Margin="570,42,0,0" VerticalAlignment="Top" Click="Button_Click_2"/>
+        <Button x:Name="removeTrainButton" Content="Remove Train" HorizontalAlignment="Left" Margin="570,42,0,0" VerticalAlignment="Top" Click="Button_Click_2" IsEnabled="False"/>
         <Button x:Name="exteriorLights" Content="Toggle" HorizontalAlignment="Left" Margin="705,248,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="16" Padding="0,-1,0,0" Grid.IsSharedSizeScope="True" FontSize="9" Click="Exterior_Lights_Click" IsEnabled="False"/>
 
         <TextBlock x:Name="ExteriorLight"  HorizontalAlignment="Left" Margin="677,248,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         <TextBlock x:Name="InteriorLight" HorizontalAlignment="Left" Margin="523,248,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock x:Name="LDoor"  HorizontalAlignment="Left"  TextWrapping="Wrap"  Margin="652,264,0,0" VerticalAlignment="Top" Panel.ZIndex="3"/>
         <TextBlock x:Name="RDoor"  HorizontalAlignment="Left"  TextWrapping="Wrap" Margin="515,262,0,0" VerticalAlignment="Top" Panel.ZIndex="6" />
-        <TextBox   x:Name="cmdSpeed" HorizontalAlignment="Left" Margin="157,197,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox   x:Name="Authority" HorizontalAlignment="Left" Margin="103,94,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox   x:Name="cmdSpeed" HorizontalAlignment="Left" Margin="157,197,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox   x:Name="Authority" HorizontalAlignment="Left" Margin="103,94,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <Button x:Name="testMode"  Content="Test Mode" HorizontalAlignment="Left" Margin="652,42,0,0" VerticalAlignment="Top" Click="testMode_Click"/>
+        <TextBox   x:Name="length" HorizontalAlignment="Left" Margin="138,112,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
 
 
 
