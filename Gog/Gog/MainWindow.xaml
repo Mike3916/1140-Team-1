@@ -5,19 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gog"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Activated="StartUpActivated" Deactivated="StartUpInactive">
-    <Grid>
+        Title="MainWindow" Height="395" Width="772" Activated="StartUpActivated" Deactivated="StartUpInactive">
+    <Grid Margin="0,0,10,20">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="689*"/>
-            <ColumnDefinition Width="111*"/>
+            <ColumnDefinition Width="789*"/>
+            <ColumnDefinition Width="11*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="TrackModelButton" Content="Track Model" HorizontalAlignment="Left" Margin="298,187,0,0" VerticalAlignment="Top" Click="TrackModelButton_Click" Height="51" Width="85"/>
-        <Button x:Name="TrainModelButton" Content="Train Model" HorizontalAlignment="Left" Margin="426,187,0,0" VerticalAlignment="Top" Click="TrainModelButton_Click" Height="51" Width="83"/>
-        <Button x:Name="TrainCtrlButton" Content="Train Controller" HorizontalAlignment="Left" Margin="548,187,0,0" VerticalAlignment="Top" Click="TrainCtrlButton_Click" Height="51" Width="107"/>
-        <Button x:Name="CTC_Button" Content="CTC" HorizontalAlignment="Left" Margin="76,187,0,0" VerticalAlignment="Top" Click="CTC_Button_Click" RenderTransformOrigin="-1.47,0.613" Height="51" Width="31"/>
-        <Button x:Name="TrackCtrlButton" Content="Track Controller" HorizontalAlignment="Left" Margin="147,187,0,0" VerticalAlignment="Top" Click="Button_Click" Height="51" Width="109"/>
-        <TextBlock HorizontalAlignment="Left" Margin="207,117,0,0" TextWrapping="Wrap" Text="Current Time:" VerticalAlignment="Top"/>
-        <TextBlock x:Name="TimeBox" HorizontalAlignment="Left" Margin="298,117,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <Label x:Name="LiveTimeLabel" HorizontalContentAlignment="Center"  Content="%TIME%" HorizontalAlignment="Left" Margin="286,18,0,0" VerticalAlignment="Top" Height="55" Width="186" FontSize="36" FontWeight="Bold" Foreground="Red" />
+        <Button x:Name="TrackModelButton" Content="Track Model" HorizontalAlignment="Left" Margin="228,248,0,0" VerticalAlignment="Top" Click="TrackModelButton_Click" Height="51" Width="140"/>
+        <Button x:Name="TrainModelButton" Content="Train Model" HorizontalAlignment="Left" Margin="395,248,0,0" VerticalAlignment="Top" Click="TrainModelButton_Click" Height="51" Width="140"/>
+        <Button x:Name="TrainCtrlButton" Content="Train Controller" HorizontalAlignment="Left" Margin="395,180,0,0" VerticalAlignment="Top" Click="TrainCtrlButton_Click" Height="51" Width="140"/>
+        <Button x:Name="CTC_Button" Content="CTC" HorizontalAlignment="Left" Margin="228,180,0,0" VerticalAlignment="Top" Click="CTC_Button_Click" RenderTransformOrigin="-1.47,0.613" Height="51" Width="140"/>
+        <Button x:Name="SpeedMultiplier" Content="Clock speed (1x)" Click="SpeedControl" ClickMode="Press" HorizontalAlignment="Left" Margin="400,132,0,0" VerticalAlignment="Top" Height="30" Width="130" Background="#FF28C347"/>
+        <Button x:Name="Pause" Content="Proceeding" Click="PauseControl" ClickMode="Press" HorizontalAlignment="Left" Margin="233,132,0,0" VerticalAlignment="Top" Height="30" Width="130" Background="#FF28C347"/>
+        <TextBlock TextAlignment="Center" HorizontalAlignment="Left" Margin="254,94,0,0" TextWrapping="Wrap" Text="Toggle Pause:" VerticalAlignment="Top" Width="88" Background="Gainsboro" Height="25"/>
+        <TextBlock TextAlignment="Center" HorizontalAlignment="Left" Margin="421,94,0,0" TextWrapping="Wrap" Text="Toggle Speed:" VerticalAlignment="Top" Width="88" Background="Gainsboro" Height="25"/>
 
     </Grid>
 </Window>
