@@ -80,6 +80,7 @@ namespace Backend
                 for (i=0; i<= maxAuthority; i++)
                 {
                     ((MainWindow)Application.Current.MainWindow).mRedAuthorities[route[i] - 1] = tempAuthority; //The route values are 1-indexed, but the redAuthorities are 0-indexed, so subtract one
+                    MessageBox.Show(((MainWindow)Application.Current.MainWindow).mRedAuthorities[route[i] - 1].ToString());
                     tempAuthority--; //Decrease the authority for each iteration
                 }
             }
