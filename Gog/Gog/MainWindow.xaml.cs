@@ -285,7 +285,10 @@ namespace Gog
                     mRedLeftLights = ctc.mRedLeftLights;
                     mRedRightLights = ctc.mRedRightLights;
                     mRedTrain = ctc.mRedTrain;
-
+                    if(ctc.mRedTrain == true)
+                    {
+                        MessageBox.Show(mRedTrain.ToString() + " " + ctc.mRedTrain.ToString());
+                    }
                     mGreenMaintenanceBlocks = ctc.mGreenMaintenanceBlocks;
                     mGreenOccupancies = ctc.mGreenOccupancies;
                     mGreenSpeeds = ctc.mGreenSpeeds;
@@ -329,23 +332,24 @@ namespace Gog
                     
                 }
 
-                //if (ctc.mDispatch != -1 && ctc != null && track != null && trains != null && trainCtrl != null)
-                //{
-                //    if (mRedTrain == true)
-                //    {
-                //        ctc.mDispatch = 0;
-                //    }
-                //    if (mGreenTrain == true)
-                //    {
-                //        ctc.mDispatch = 1;
-                //    }
-                //    track.AddTrain(ctc.mDispatch, ctc.mAuth);
-                //    trains.addTrain(ctc.mDispatch, ctc.mAuth);
-                //    trainCtrl.addController((ctc.mDispatch).ToBoolean());
-                //    ctc.mDispatch = -1;
-                //mRedline1.SendTrain(false);
-                //mGreenLine1.SendTrain(false);
-                //}
+                if (mRedTrain == true)
+                {
+                    MessageBox.Show("Authority Passed : " + mRedAuthorities[76].ToString());
+                    track.AddTrain(0, mRedAuthorities[76]);
+                    trains.addTrain(0, mRedAuthorities[76]);
+                    trainCtrl.addController((false));
+                }
+                if(mGreenTrain == true)
+                {
+                    track.AddTrain(1, mGreenAuthorities[150]);
+                    trains.addTrain(1, mGreenAuthorities[150]);
+                    trainCtrl.addController((true));
+                }
+               
+                mRedline1.SendTrain(false);
+                mGreenLine1.SendTrain(false);
+                ctc.mRedTrain = false;
+                ctc.mGreenTrain = false;
 
 
 
