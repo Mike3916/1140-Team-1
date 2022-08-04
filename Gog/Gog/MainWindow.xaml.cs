@@ -105,7 +105,7 @@ namespace Gog
             InitializeComponent();
 
             DateTime now = DateTime.Now;
-            LiveTimeLabel.Content = now.ToString("HH:mm");
+            LiveTimeLabel.Content = now.ToString("HH:mm:ss");
 
             hour = now.Hour;
             minute = now.Minute;
@@ -113,7 +113,7 @@ namespace Gog
 
             InitTimer();
         }
-
+        
         //events 
         private void TrackModelButton_Click(object sender, RoutedEventArgs e)
         {
@@ -306,6 +306,12 @@ namespace Gog
                     PLCsetCTC();
                     ctc.GetTrackController(mRedMaintenanceBlocks, mRedOccupancies, mRedSpeeds, mRedAuthorities, mRedCrossings, mRedSwitches, mRedLeftLights, mRedRightLights, mGreenMaintenanceBlocks, mGreenOccupancies, mGreenSpeeds, mGreenAuthorities, mGreenCrossings, mGreenSwitches, mGreenLeftLights, mGreenRightLights); //Write function in CTC to read in these values 
                 }
+                if (ctc != null) //This sends current simulation time to ctc (needed for ETD for dispatching a train)
+                {
+                    var now = new DateTime(1,1,1, hour, minute, second);
+                    ctc.getTime(now);
+                }
+                    
 
                 if (track != null && ctc != null && gotTrack==false && track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
                 {                                                       
@@ -375,7 +381,10 @@ namespace Gog
         {
 
             ArraySplitter();
-
+            if(mRedTrain == true)
+            {
+                MessageBox.Show(mRedAuthorities[76].ToString() + " " + mRed1Authorities[43].ToString());
+            }
             mRedline1.SendMaintenance(mRed1MaintenanceBlocks);
             mRedline1.SendSpeeds(mRed1Speeds);
             mRedline1.SendAuthorities(mRed1Authorities);
@@ -525,14 +534,14 @@ namespace Gog
             Array.Copy(mRed1LeftLights, 0, mRedLeftLights, 0, 38);
             Array.Copy(mRed1RightLights, 0, mRedRightLights, 0, 38);
 
-            Array.Copy(mRed1MaintenanceBlocks, 37, mRedMaintenanceBlocks, 71, 6);
-            Array.Copy(mRed1Occupancies, 37, mRedOccupancies, 71, 6);
-            Array.Copy(mRed1Speeds, 37, mRedSpeeds, 71, 6);
-            Array.Copy(mRed1Authorities, 37, mRedAuthorities, 71, 6);
-            Array.Copy(mRed1Crossings, 37, mRedCrossings, 71, 6);
-            Array.Copy(mRed1Switches, 37, mRedSwitches, 71, 6);
-            Array.Copy(mRed1LeftLights, 37, mRedLeftLights, 71, 6);
-            Array.Copy(mRed1RightLights, 37, mRedRightLights, 71, 6);
+            Array.Copy(mRed1MaintenanceBlocks, 38, mRedMaintenanceBlocks, 71, 6);
+            Array.Copy(mRed1Occupancies, 38, mRedOccupancies, 71, 6);
+            Array.Copy(mRed1Speeds, 38, mRedSpeeds, 71, 6);
+            Array.Copy(mRed1Authorities, 38, mRedAuthorities, 71, 6);
+            Array.Copy(mRed1Crossings, 38, mRedCrossings, 71, 6);
+            Array.Copy(mRed1Switches, 38, mRedSwitches, 71, 6);
+            Array.Copy(mRed1LeftLights, 38, mRedLeftLights, 71, 6);
+            Array.Copy(mRed1RightLights, 38, mRedRightLights, 71, 6);
 
             Array.Copy(mRed2MaintenanceBlocks, 0, mRedMaintenanceBlocks, 32, 39);
             Array.Copy(mRed2Occupancies, 0, mRedOccupancies, 32, 39);
