@@ -118,6 +118,11 @@ namespace Track_Controller_1._02
             }
         }
 
+        ~HWController()
+        {
+            mPi.Close();
+        }
+
         public void SendLeftLights(int[] mPacket)
         {
             //todo
@@ -192,44 +197,60 @@ namespace Track_Controller_1._02
         {
             //todo
             mSentMessage = new byte[11];
-            mReceivedMessage = new byte[12];
+            mReceivedMessage = new byte[13];
             for (int i = 0; i < 86; i++)
             {
                 if (mOccupancies[i + 57] + mMaintenance[i + 57] >= 1)
                 {
-                    mSentMessage[i / 8] = Convert.ToByte((mSentMessage[i / 8] | (1<<(i % 8))));
+                    mSentMessage[i / 8] = Convert.ToByte(mSentMessage[i / 8] | (1<<(i % 8)));
                 }
             }
 
-            //for (int i = 0; i < mSentMessage.Length; i++)
-            //{
-            //    mSentMessage[i] = FileStream.ReadByte(mTempSend, 8 * i);
-            //}
-            mPi.Write(mSentMessage, 0, 11);
-            mPi.Read(mReceivedMessage, 0, 12);
             
+            mPi.Write(mSentMessage, 0, 11);
+            count = 0;
+            while (count < mReceivedMessage.Length)
+            {
+                try
+                {
+                    count += mPi.Read(mReceivedMessage, count, mReceivedMessage.Length - count);
+                }
+                catch 
+                {
+                    throw new TimeoutException();
+                }
+            }
+
 
 
             // Traverse the string
             for (int i = 0; i < 86; i++)
             {
-                if ((mReceivedMessage[i / 8] & (1<<(i % 8))) != 0)
+                if ((mReceivedMessage[i / 8] & (1 << (i % 8))) != 0)
                 {
                     mRightLights[i + 57] = 1;
-                    mLeftLights[i + 57] = 1;
                 }
                 else
                 {
                     mRightLights[i + 57] = 0;
+                }
+            }
+
+            for (int i = 0; i < 9; i++)
+            {
+                if ((mReceivedMessage[(i + 86) / 8] & (1 << ((i + 86) % 8))) != 0)
+                {
+                    mLeftLights[i + 57] = 1;
+                }
+                else
+                {
                     mLeftLights[i + 57] = 0;
                 }
             }
 
-
-            mSwitches[61] = ((mReceivedMessage[86 / 8] & (1 << (86 % 8))) != 0) ? 62 : 150;
-            mSwitches[76] = ((mReceivedMessage[87 / 8] & (1 << (87 % 8))) != 0) ? 100 : 75;
-            mSwitches[84] = ((mReceivedMessage[88 / 8] & (1 << (88 % 8))) != 0) ? 85 : 99;
-
+            mSwitches[61] = ((mReceivedMessage[95 / 8] & (1 << (95 % 8))) != 0) ? 63 : 151;
+            mSwitches[76] = ((mReceivedMessage[96 / 8] & (1 << (96 % 8))) != 0) ? 101 : 76;
+            mSwitches[84] = ((mReceivedMessage[97 / 8] & (1 << (97 % 8))) != 0) ? 86 : 100;
 
             mSwUpToDate = true;
             mRLUpToDate = true;
@@ -253,5 +274,6 @@ namespace Track_Controller_1._02
         private bool mCrUpToDate;
         private byte[] mSentMessage;
         private byte[] mReceivedMessage;
-    }
+        private int count;
+    }   
 }
