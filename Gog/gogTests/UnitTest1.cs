@@ -1080,5 +1080,162 @@ namespace gogTests
             train.setKi(10000);
             Assert.AreEqual(train.mKi, 10000); // 10000 Ki
         }
+
+        [TestMethod]
+        public void TrainMovesTowardsCommandedSpeedInAutomaticMode()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+            train.mAutoMode = true;              // automatic mode
+
+            Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
+            train.setCmdSpeed(5 * 2.236936);     // set to 5 m/s (imperial input)
+
+            for (int i = 0; i < 100; i++)
+            {
+                train.UpdateSpeed();
+            }
+            Assert.IsTrue(train.mCurSpeed == 5); // train reaches commanded speed
+        }
+
+        [TestMethod]
+        public void TrainMovesTowardsSetSpeedInManualMode()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+            train.mAutoMode = false;             // manual mode
+
+            Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
+            train.setCmdSpeed(5 * 2.236936);     // set to 5 m/s (imperial input)
+            train.setSetSpeed(3 * 2.236936);
+
+            for (int i = 0; i < 100; i++)
+            {
+                train.UpdateSpeed();
+            }
+            Assert.IsTrue(train.mCurSpeed == 3); // train reaches set speed
+        }
+
+        [TestMethod]
+        public void UnableToSetSetSpeedAboveCommandedSpeed()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+            train.mAutoMode = false;
+
+            Assert.AreEqual(train.mSetSpeed, 0); // set speed initiialy zero
+            train.setCmdSpeed(5);
+            train.setSetSpeed(10);
+            Assert.AreEqual(train.mSetSpeed, 0); // set speed does not change because input is above commanded speed
+        }
+
+        [TestMethod]
+        public void TrainSpeedIncrements()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+            train.mAutoMode = true;
+
+            Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
+            train.setCmdSpeed(5);                // set commanded speed to 5
+            train.UpdateSpeed();
+            Assert.IsTrue(train.mCurSpeed > 0);  // train speed increments
+        }
+
+        [TestMethod]
+        public void TrainSpeedDecrements()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+            train.mAutoMode = true;
+
+            Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
+            train.setCurSpeed(5 * 2.236936);     // set current speed to 5 (imperial input)
+            train.UpdateSpeed();
+            Assert.IsTrue(train.mCurSpeed < 5);  // train speed decrements
+        }
+
+        [TestMethod]
+        public void TrainCalculatesPositivePower()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+            train.mAutoMode = true;
+
+            Assert.AreEqual(train.mCurPower, 0); // train initially not moving, has no power
+            train.setCmdSpeed(100 * 2.236936);
+            train.CalculatePowerHW();
+            Assert.IsTrue(train.mCurPower > 0);  // train accelerates towards commanded speed, calculates positive power
+        }
+
+        [TestMethod]
+        public void TrainCalculatesNegativePower()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+            train.mAutoMode = true;
+
+            Assert.AreEqual(train.mCurPower, 0); // train initially not moving, has no power
+            train.setCurSpeed(100 * 2.236936);
+            train.CalculatePowerHW();
+            Assert.IsTrue(train.mCurPower < 0);  // train decelerates towards commanded speed, calculates negative power
+        }
+
+        [TestMethod]
+        public void TrainCalculatesMaxPower()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+            train.mAutoMode = true;
+
+            Assert.AreEqual(train.mCurPower, 0);          // train initially not moving, has no power
+            train.setCmdSpeed(1000000000000000000);       // train receives very large commanded speed
+            train.CalculatePowerHW();                     // train calculates power
+            Assert.IsTrue(train.mCurPower == 120000); // power set to max power
+        }
+
+        [TestMethod]
+        public void TrainDeceleratesWhileEmergencyBrakeActivated()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+            train.mAutoMode = true;
+
+            Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
+            train.setCmdSpeed(5 * 2.236936);     // set to 5 m/s (imperial input)
+
+            // train accelerates to commanded speed
+            for (int i = 0; i < 100; i++)
+            {
+                train.UpdateSpeed();
+            }
+            Assert.IsTrue(train.mCurSpeed == 5);
+
+            train.setEmergencyBrake();
+            train.UpdateSpeed();
+            Assert.IsTrue(train.mCurSpeed < 5); // train decelerates from emergency brake
+        }
+
+        [TestMethod]
+        public void TrainDeceleratesWhileServiceBrakeActivated()
+        {
+            TrainController.Controller train = new TrainController.Controller(false);
+            train.mControlType = true;
+            train.mAutoMode = true;
+
+            Assert.AreEqual(train.mCurSpeed, 0); // train initially not moving, has no speed
+            train.setCmdSpeed(5 * 2.236936);     // set to 5 m/s (imperial input)
+
+            // train accelerates to commanded speed
+            for (int i = 0; i < 100; i++)
+            {
+                train.UpdateSpeed();
+            }
+            Assert.IsTrue(train.mCurSpeed == 5);
+
+            train.setServiceBrake();
+            train.UpdateSpeed();
+            Assert.IsTrue(train.mCurSpeed < 5); // train decelerates from emergency brake
+        }
     }
 }
