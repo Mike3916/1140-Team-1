@@ -340,6 +340,7 @@ namespace Gog
                 }
                 if(mGreenTrain == true)
                 {
+                    MessageBox.Show("Authority Passed : " + mGreenAuthorities[150].ToString());
                     track.AddTrain(1, mGreenAuthorities[150]);
                     trains.addTrain(1, mGreenAuthorities[150]);
                     trainCtrl.addController((true));
@@ -358,6 +359,7 @@ namespace Gog
 
                 for (int j = 0; j < numTrains; j++)
                 {
+
                     newBlock = trains.UpdateValues(trainCtrl.mTrainSetList[j],j);
                     trainCtrl.UpdateValues(trains.Trains[j].getCmdAuthority(), trains.Trains[j].getCurrAuthority(), trains.Trains[j].getCommandedSpeedMPH(), trains.Trains[j].getCurrentSpeedMPH(), trains.Trains[j].getBeacon(), trains.Trains[j].getUnderground(), trains.Trains[j].getStationLeft(), trains.Trains[j].getStationRight(), j);
 
@@ -416,6 +418,7 @@ namespace Gog
             mRedline1.SendTrain(mRedTrain);
             Array.Clear(mRedRoute,0,mRedRoute.Length);
 
+            
             mGreenLine1.SendMaintenance(mGreen1MaintenanceBlocks);
             mGreenLine1.SendSpeeds(mGreen1Speeds);
             mGreenLine1.SendAuthorities(mGreen1Authorities);
@@ -510,7 +513,6 @@ namespace Gog
 
         private void ArraySplitter()
         {
-            
              Array.Copy(mRedMaintenanceBlocks,0,mRed1MaintenanceBlocks,0,38);
              Array.Copy(mRedOccupancies,0,mRed1Occupancies,0,38);
              Array.Copy(mRedSpeeds,0,mRed1Speeds,0,38);
@@ -543,7 +545,6 @@ namespace Gog
 
         private void ArrayMerger()
         {
- 
             Array.Copy(mRed1MaintenanceBlocks, 0, mRedMaintenanceBlocks, 0, 38);
             Array.Copy(mRed1Occupancies, 0, mRedOccupancies, 0, 38);
             Array.Copy(mRed1Speeds, 0, mRedSpeeds, 0, 38);
