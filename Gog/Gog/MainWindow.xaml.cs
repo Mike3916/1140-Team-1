@@ -510,7 +510,6 @@ namespace Gog
 
         private void ArraySplitter()
         {
-            MessageBox.Show("Splitter");
             
              Array.Copy(mRedMaintenanceBlocks,0,mRed1MaintenanceBlocks,0,38);
              Array.Copy(mRedOccupancies,0,mRed1Occupancies,0,38);
@@ -544,7 +543,7 @@ namespace Gog
 
         private void ArrayMerger()
         {
-            MessageBox.Show("Merger");
+ 
             Array.Copy(mRed1MaintenanceBlocks, 0, mRedMaintenanceBlocks, 0, 38);
             Array.Copy(mRed1Occupancies, 0, mRedOccupancies, 0, 38);
             Array.Copy(mRed1Speeds, 0, mRedSpeeds, 0, 38);
