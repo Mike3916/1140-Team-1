@@ -92,14 +92,25 @@ namespace Gog
         */
 
         DispatcherTimer mGlobalTimer;
-        int mIterationMultiplier = 10, numTrains = 0, iter = 0;
+        int mIterationMultiplier = 1, numTrains = 0, iter = 0;
         bool newBlock;
         bool gotTrack = false;
         bool paused = true;
 
+        int hour, minute, second;
+        string hourString, minuteString, secondString;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            DateTime now = DateTime.Now;
+            LiveTimeLabel.Content = now.ToString("HH:mm");
+
+            hour = now.Hour;
+            minute = now.Minute;
+            second = now.Second;
+
             InitTimer();
         }
 
