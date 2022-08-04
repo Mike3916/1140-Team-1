@@ -44,7 +44,7 @@ namespace TrainModel
         public bool actualClose = false;
         public int selectedTrain = 0;
         public bool testModeSet = false;
-
+        public int click = 0;
 
 
 
@@ -59,15 +59,20 @@ namespace TrainModel
         public void addTrain(int line, int authority = 12)
         {
             Trains.Add(new Train(authority, line));
-
-            Select_a_Train.Items.Insert(Trains[Trains.Count - 1].getID(), "Train " + Trains[Trains.Count - 1].getID());
+            string name = "Train " + Trains[Trains.Count - 1].getID().ToString();
+            Select_a_Train.Items.Insert(Trains.Count - 1, name);
 
         }
 
         public void RemoveTrain(int index)
         {
+            for (int i = 0; i < Trains.Count; i++)
+                System.Diagnostics.Debug.WriteLine(Trains[i].ToString() + " " + i.ToString() + " " + Trains.Count.ToString());
             Trains.RemoveAt(index);
+            for (int i = 0; i < Trains.Count; i++)
+                System.Diagnostics.Debug.WriteLine(Trains[i].ToString() + " " + i.ToString() + " " + Trains.Count.ToString());
             Select_a_Train.Items.RemoveAt(index);
+
         }
 
 
@@ -107,6 +112,11 @@ namespace TrainModel
             Beacon.Text = "Beacon: " + Trains[i].getBeacon();
             cmdSpeed.Text = Trains[i].getCommandedSpeedMPH().ToString() + "Mi/h";
             non_Vitals.Text = "Number of Passengers: " + Trains[i].getPassengers() + "\nNumber of Crew: " + Trains[i].getCrew() + "\nNumber of Cars: " + Trains[i].getCars().ToString() + "\nCapacity: " + Trains[i].getCapacity().ToString() + "\nInterior Lights:\t\tExterior Lights: \nLeft Doors:\t\tRight Doors: \nTemperature: " + Trains[i].getTemperature().ToString() + "F";
+            Position.Text = "Current Block: " + Trains[selectedTrain].getBlockID() + "\nAuthority: " + Trains[selectedTrain].getCmdAuthority().ToString() + " Blocks\nLength of Block:\nDistance left on block:" + Trains[selectedTrain].getRemainingDistMF() + " Ft\nGrade:";
+
+            Authority.Text = Trains[selectedTrain].getCmdAuthority().ToString() + " Blocks";
+            Grade.Text = Trains[selectedTrain].getGrade().ToString();
+            cmdSpeed.Text = Trains[selectedTrain].getCommandedSpeedMPH().ToString() + " mph";
 
             if (Trains[selectedTrain].getInteriorLights())
                 InteriorLight.Text = "On";
@@ -145,17 +155,19 @@ namespace TrainModel
                 Trains[i].growUp();
                 return true;
             }
-                
+
             return Trains[i].askForInfo();
+
+
 
         }
 
 
-        public void UpdateBlock(TrackModel.Block block,int auth, int i)
+        public void UpdateBlock(TrackModel.Block block, int auth, int i)
         {
             Trains[i].setBlockInfo(block, auth);
             length.Text = block.mLength.ToString() + "ft";
-            
+
         }
 
 
@@ -263,25 +275,37 @@ namespace TrainModel
 
         private void increment_Click(object sender, RoutedEventArgs e)
         {
+            for (int i = 0; i < 10; i++)
+                Trains[selectedTrain].increment();
 
-            Trains[selectedTrain].increment();
-            physics.Text = "Power:\nCurrent Mass: " + Trains[selectedTrain].getMass().ToString() + " tons\nForce (P/V): " + Math.Round(Trains[selectedTrain].getForce(), 2).ToString() + " N\nAcceleration (F/M): " + Math.Round(Trains[selectedTrain].getAcceleration(),2).ToString() + " m/s^2\nVelocity(V_(n - 1) + T / 2(A_n + A_(n - 1)): " + Math.Round(Trains[selectedTrain].getCurrentSpeed(),2).ToString() + " m/s^2";
+
+            Position.Text = "Current Block: " + Trains[selectedTrain].getBlockID() + "\nAuthority: " + Trains[selectedTrain].getCmdAuthority().ToString() + " Blocks\nLength of Block:\nDistance left on block:" + Trains[selectedTrain].getRemainingDistMF() + " Ft\nGrade:";
+            physics.Text = "Power:\nCurrent Mass: " + Trains[selectedTrain].getMass().ToString() + " tons\nForce (P/V): " + Math.Round(Trains[selectedTrain].getForce(), 2).ToString() + " N\nAcceleration (F/M): " + Math.Round(Trains[selectedTrain].getAcceleration(), 2).ToString() + " m/s^2\nVelocity(V_(n - 1) + T / 2(A_n + A_(n - 1)): " + Math.Round(Trains[selectedTrain].getCurrentSpeed(), 2).ToString() + " m/s^2";
             Speed.Text = "Current Speed: " + Math.Round(Trains[selectedTrain].getCurrentSpeedMPH(), 2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(Trains[selectedTrain].getCommandedSpeedMPH(), 2).ToString() + "Mi/h\nCurrent Acceleration: " + Trains[selectedTrain].getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: " + Trains[selectedTrain].getTimeTillNextBlock() + "s";
             power.Text = Trains[selectedTrain].getPowerCmd().ToString() + " W";
             Beacon.Text = "Beacon: " + Trains[selectedTrain].getBeacon();
             Authority.Text = Trains[selectedTrain].getCmdAuthority().ToString() + " Blocks";
+            Grade.Text = Trains[selectedTrain].getGrade().ToString();
+            non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nInterior Lights:\t\tExterior Lights: \nLeft Doors:\t\tRight Doors: \nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
+
+            cmdSpeed.Text = Trains[selectedTrain].getCommandedSpeedMPH().ToString() + " mph";
+
+
+            click++;
+
+
         }
 
         private void Internal_Lights_Click(object sender, RoutedEventArgs e)
         {
             Trains[selectedTrain].toggleInteriorLights();
-            if(Trains[selectedTrain].getInteriorLights())
+            if (Trains[selectedTrain].getInteriorLights())
                 InteriorLight.Text = "On";
             else
-                {
-                    InteriorLight.Text = "Off";
-                }
-          
+            {
+                InteriorLight.Text = "Off";
+            }
+
         }
 
         private void Exterior_Lights_Click(object sender, RoutedEventArgs e)
@@ -302,7 +326,7 @@ namespace TrainModel
             if (Trains[selectedTrain].getDoorL())
             {
 
-                LDoor.Text= "Open";
+                LDoor.Text = "Open";
             }
             else
             {
@@ -324,7 +348,7 @@ namespace TrainModel
             }
         }
 
-      
+
         protected override void OnClosing(CancelEventArgs e)
         {
             if (!actualClose)
@@ -354,9 +378,8 @@ namespace TrainModel
             if (selectedTrain != -1)
             {
 
-                Position.Text = "Current Block: 10\nAuthority: " + Trains[selectedTrain].getCmdAuthority().ToString() + " Blocks\nLast Station: Castle Shannon\nNext Station: Dormont";
+                Position.Text = "Current Block: " + Trains[selectedTrain].getBlockID() + "\nAuthority: " + Trains[selectedTrain].getCmdAuthority().ToString() + " Blocks\nLength of Block:\nDistance left on block:" + Trains[selectedTrain].getRemainingDistMF() + " Ft\nGrade:";
                 Speed.Text = "Current Speed: " + Math.Round(Trains[selectedTrain].getCurrentSpeedMPH(), 2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(Trains[selectedTrain].getCommandedSpeedMPH(), 2).ToString() + "Mi/h\nCurrent Acceleration: " + Trains[selectedTrain].getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: " + Trains[selectedTrain].getTimeTillNextBlock() + "s";
-                Passed_Through_Variables.Text = "Speed Limit: 50Mi/h\nCommanded Authority: 85 Blocks";
                 eBrake.Foreground = Brushes.White;
                 eBrake.Background = Brushes.Green;
                 eBrake.IsEnabled = true;
@@ -370,7 +393,7 @@ namespace TrainModel
                 engineFailure.Background = Brushes.Green;
                 engineFailure.IsEnabled = true;
                 testMode.IsEnabled = true;
-             
+
 
                 power.Text = Trains[selectedTrain].getPowerCmd().ToString() + " W";
 
@@ -409,9 +432,14 @@ namespace TrainModel
                 else
                 {
                     RDoor.Text = "Closed";
-                } 
+                }
 
                 currLine.Text = Trains[selectedTrain].getLineName();
+
+                Authority.Text = Trains[selectedTrain].getCmdAuthority().ToString() + " Blocks";
+                length.Text = Trains[selectedTrain].getBlockDistMF().ToString() + "Ft";
+                cmdSpeed.Text = Trains[selectedTrain].getCommandedSpeedMPH().ToString()+ " mph";
+
             }
         }
 
@@ -434,6 +462,9 @@ namespace TrainModel
                 doorL.IsEnabled = true;
                 doorR.IsEnabled = true;
                 testModeSet = true;
+                length.IsEnabled = true;
+                Grade.IsEnabled = true;
+                cmdSpeed.IsEnabled = true;
             }
             else
             {
@@ -448,6 +479,79 @@ namespace TrainModel
                 doorL.IsEnabled = false;
                 doorR.IsEnabled = false;
                 testModeSet = false;
+                length.IsEnabled = false;
+                Grade.IsEnabled = false;
+                cmdSpeed.IsEnabled = false;
+            }
+        }
+
+        private void length_TextChanged(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                string l = length.Text;
+                if (length.Text.Contains("Ft"))
+                    l = length.Text.Substring(0, length.Text.Length - 3);
+                int L;
+                bool worked = int.TryParse(l, out L);
+                if (worked)
+                    Trains[selectedTrain].setBlockDistFM(L);
+
+                Position.Text = "Current Block: " + Trains[selectedTrain].getBlockID() + "\nAuthority: " + Trains[selectedTrain].getCmdAuthority().ToString() + " Blocks\nLength of Block:\nDistance left on block:" + Trains[selectedTrain].getRemainingDistMF() + " Ft\nGrade:";
+                length.Text = L.ToString() + " Ft";
+
+            }
+
+
+        }
+
+        private void Authority_TextChanged(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                int i;
+                int.TryParse(Authority.Text, out i);
+                if (i == 0 && Authority.Text.Length > 6)
+                {
+
+                    int.TryParse(Authority.Text.Substring(0, Authority.Text.Length - 7), out i);
+                }
+
+                Trains[selectedTrain].setCmdAuthority(i);
+
+                Authority.Text = Trains[selectedTrain].getCmdAuthority().ToString() + " Blocks";
+
+
+            }
+        }
+
+        private void Grade_Changed(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                double i;
+                double.TryParse(Grade.Text, out i);
+
+
+                Trains[selectedTrain].setGrade(i);
+            }
+        }
+
+        private void cmdSpeed_Changed(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                double i;
+                double.TryParse(cmdSpeed.Text, out i);
+                if (i == 0 && cmdSpeed.Text.Length > 3)
+                {
+
+                    double.TryParse(cmdSpeed.Text.Substring(0, cmdSpeed.Text.Length - 3), out i);
+                }
+
+                Trains[selectedTrain].setCommandedSpeedMPH(i);
+
+                cmdSpeed.Text = Trains[selectedTrain].getCommandedSpeedMPH().ToString() + " mph";
             }
         }
     }

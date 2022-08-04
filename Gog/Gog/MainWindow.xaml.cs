@@ -359,7 +359,7 @@ namespace Gog
                 for (int j = 0; j < numTrains; j++)
                 {
                     newBlock = trains.UpdateValues(trainCtrl.mTrainSetList[j],j);
-                    trainCtrl.UpdateValues(trains.Trains[j].getCmdAuthority(), trains.Trains[j].getCurrAuthority(), trains.Trains[j].getCommandedSpeedMPH(), trains.Trains[j].getCurrentSpeedMPH(), trains.Trains[j].getBeacon(), trains.Trains[j].getUnderground(), trains.Trains[j].getDoorL(), trains.Trains[j].getDoorR(), j);
+                    trainCtrl.UpdateValues(trains.Trains[j].getCmdAuthority(), trains.Trains[j].getCurrAuthority(), trains.Trains[j].getCommandedSpeedMPH(), trains.Trains[j].getCurrentSpeedMPH(), trains.Trains[j].getBeacon(), trains.Trains[j].getUnderground(), trains.Trains[j].getStationLeft(), trains.Trains[j].getStationRight(), j);
 
                     if (newBlock)                  //if train at j enters a new block
                     { 
@@ -594,9 +594,6 @@ namespace Gog
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
+       
     }
 }

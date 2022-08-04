@@ -14,11 +14,11 @@
         <TextBlock HorizontalAlignment="Left" Margin="26,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text=""/>
         <ComboBox x:Name="Select_a_Train" Text ="Select a Train" HorizontalAlignment="Left" Margin="43,33,0,0" VerticalAlignment="Top" Width="120" IsReadOnly="True" SelectionChanged="Select_a_Train_SelectionChanged_1"/>
         <Label Content="Position" HorizontalAlignment="Left" Margin="60,69,0,0" VerticalAlignment="Top" Background="White" Foreground="Black" Panel.ZIndex="2" Height="10" Width="29" Padding="0,0,0,0" FontSize="8"/>
-        <Border BorderThickness="1,1,1,1" BorderBrush="Black" CornerRadius="15,15,15,15" Background="White" Width="315" Height="75" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,74,0,0">
+        <Border BorderThickness="1,1,1,1" BorderBrush="Black" CornerRadius="15,15,15,15" Background="White" Width="315" Height="93" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,74,0,0">
             <Border.Effect>
                 <DropShadowEffect/>
             </Border.Effect>
-            <TextBlock x:Name="Position" Margin="6,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="71" Foreground="Black" HorizontalAlignment="Left" Width="273"><Run Text="Current Block:"/><LineBreak/><Run Text="Authority:"/><LineBreak/><Run Text="Length of block:"/><LineBreak/><Run Text="Distance left on block:"/></TextBlock>
+            <TextBlock x:Name="Position" Margin="6,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="96" Foreground="Black" HorizontalAlignment="Left" Width="273"><Run Text="Current Block:"/><LineBreak/><Run Text="Authority:"/><LineBreak/><Run Text="Length of block:"/><LineBreak/><Run Text="Distance left on block:"/><LineBreak/><Run Text="Grade:"/></TextBlock>
 
         </Border>
         <Label Content="Speed" HorizontalAlignment="Left" Margin="60,172,0,0" VerticalAlignment="Top" FontSize="8" Padding="0,0,0,0" Background="White" Height="10" Panel.ZIndex="2" Width="23"/>
@@ -27,13 +27,6 @@
                 <DropShadowEffect/>
             </Border.Effect>
             <TextBlock x:Name="Speed" HorizontalAlignment="Left" Margin="6,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="75" Width="273" Foreground="Black"><Run Text="Current Speed:"/><LineBreak/><Run Text="Commanded Speed:"/><LineBreak/><Run Text="Current Acceleration:"/><LineBreak/><Run Text="Time to Next Block:"/></TextBlock>
-        </Border>
-        <Label Content="Passed Through Variables&#xD;&#xA;" HorizontalAlignment="Left" Margin="60,275,0,0" VerticalAlignment="Top" FontSize="8" Padding="0,0,0,0" Background="White" Height="11" Panel.ZIndex="500" Width="90"/>
-        <Border BorderThickness="1,1,1,1" BorderBrush="Black" CornerRadius="15,15,15,15" Background="White" Width="315" Height="39" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,280,0,0">
-            <Border.Effect>
-                <DropShadowEffect/>
-            </Border.Effect>
-            <TextBlock x:Name="Passed_Through_Variables" HorizontalAlignment="Left" Margin="6,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="273" Foreground="Black"><Run Text="Speed Limit:"/><LineBreak/><Run Text="Commanded Authority:"/></TextBlock>
         </Border>
         <Button x:Name ="eBrake" Content="Emergency Brake&#xD;&#xA;Off" HorizontalAlignment="Left" Margin="43,339,0,0" VerticalAlignment="Top" Height="30" Width="156" Background="#FF268646" Click="Emergency_Brake" FontSize="9" HorizontalContentAlignment="Center" IsEnabled="False" />
         <Button x:Name="signalPickUp" Content="Signal Pick-up&#xD;&#xA;Working" HorizontalAlignment="Left" Margin="199,339,0,0" VerticalAlignment="Top" Height="30" Width="156" Click="Signal_Pick_Up" FontSize="9" IsEnabled="False"/>
@@ -80,10 +73,18 @@
         <TextBlock x:Name="InteriorLight" HorizontalAlignment="Left" Margin="523,248,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock x:Name="LDoor"  HorizontalAlignment="Left"  TextWrapping="Wrap"  Margin="652,264,0,0" VerticalAlignment="Top" Panel.ZIndex="3"/>
         <TextBlock x:Name="RDoor"  HorizontalAlignment="Left"  TextWrapping="Wrap" Margin="515,262,0,0" VerticalAlignment="Top" Panel.ZIndex="6" />
-        <TextBox   x:Name="cmdSpeed" HorizontalAlignment="Left" Margin="157,197,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox   x:Name="Authority" HorizontalAlignment="Left" Margin="103,94,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox   x:Name="cmdSpeed" HorizontalAlignment="Left" Margin="157,197,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" KeyUp="cmdSpeed_Changed" IsEnabled="False"/>
+        <TextBox   x:Name="Authority" HorizontalAlignment="Left" Margin="103,94,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsEnabled="False" KeyUp="Authority_TextChanged"/>
         <Button x:Name="testMode"  Content="Test Mode" HorizontalAlignment="Left" Margin="652,42,0,0" VerticalAlignment="Top" Click="testMode_Click"/>
-        <TextBox   x:Name="length" HorizontalAlignment="Left" Margin="138,112,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox   x:Name="length" HorizontalAlignment="Left" Margin="138,112,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsEnabled="False" KeyUp="length_TextChanged"/>
+        <TextBox x:Name="Grade" HorizontalAlignment="Left" Margin="90,142,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="40" IsEnabled="False" KeyUp="Grade_Changed"/>
+        <Border BorderThickness="1,1,1,1" BorderBrush="Black" CornerRadius="15,15,15,15" Background="White" Width="315" Height="57" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="43,264,0,0">
+            <Border.Effect>
+                <DropShadowEffect/>
+            </Border.Effect>
+            <TextBlock x:Name="Speed1" HorizontalAlignment="Left" Margin="6,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="53" Width="273" Foreground="Black"><Run Text="Length: 106 ft"/><LineBreak/><Run Text="Height: 11 ft"/><LineBreak/><Run Text="Width: 8.7 ft"/></TextBlock>
+        </Border>
+        <Label Content="Train Facts" HorizontalAlignment="Left" Margin="60,257,0,0" VerticalAlignment="Top" FontSize="8" Padding="0,0,0,0" Background="White" Height="10" Panel.ZIndex="2" Width="38"/>
 
 
 
