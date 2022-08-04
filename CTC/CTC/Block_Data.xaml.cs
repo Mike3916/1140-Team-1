@@ -208,6 +208,9 @@ namespace CTC
                 ((MainWindow)Application.Current.MainWindow).mRedSwitches[blockIdx] = 1; //To indicate that the switch should be toggled, set the switch to 1
             else if (line==1) //green line
                 ((MainWindow)Application.Current.MainWindow).mGreenSwitches[blockIdx] = 1;
+
+            loadBlockInfo(); //update all values, which will update the displayed switch number
         }
+       
     }
 }
