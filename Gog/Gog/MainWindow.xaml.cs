@@ -97,7 +97,7 @@ namespace Gog
         bool gotTrack = false;
         bool paused = true;
 
-        int hour, minute, second;
+        int hour, minute, second, timeElapsed = 0;
         string hourString, minuteString, secondString;
 
         public MainWindow()
@@ -230,6 +230,7 @@ namespace Gog
 
                     if (second++ == 59)
                     {
+                        elapsedTime++;
                         second = 0;
                         
                         if (minute++ == 59)
