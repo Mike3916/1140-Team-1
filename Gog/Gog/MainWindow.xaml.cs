@@ -334,6 +334,7 @@ namespace Gog
 
                 if (mRedTrain == true)
                 {
+                    MessageBox.Show("Authority Passed : " + mRedAuthorities[76].ToString());
                     track.AddTrain(0, mRedAuthorities[76]);
                     trains.addTrain(0, mRedAuthorities[76]);
                     trainCtrl.addController((false));
