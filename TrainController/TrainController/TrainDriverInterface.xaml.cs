@@ -59,7 +59,7 @@ namespace TrainController
             InitTimer();
         }
 
-        public void UpdateValues(int cmdAuthority,int curAuthority,double cmdVelocity,double curVelocity,string beacon,bool trainUnderground,bool trainLeftDoors,bool trainRightDoors,int i)
+        public void UpdateValues(int cmdAuthority,int curAuthority,double cmdVelocity,double curVelocity,string beacon,bool trainUnderground,bool trainLeftDoors,bool trainRightDoors,bool trainEmergencyBrakes,int i)
         {
             // Update power:
             if (!mTrainSetList[i].mControlType)
@@ -69,6 +69,12 @@ namespace TrainController
             else
             {
                 mTrainSetList[i].CalculatePowerHW();
+            }
+
+            // Update emergency brakes:
+            if (trainEmergencyBrakes)
+            {
+                mTrainSetList[i].setEmergencyBrake();
             }
 
             // Update commanded authority (only at instantiation of train):

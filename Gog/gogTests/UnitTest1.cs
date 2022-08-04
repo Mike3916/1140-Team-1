@@ -452,7 +452,7 @@ namespace gogTests
         [TestMethod]
         public void TrackReceiveOccupanciesGreen()
         {
-            Track_Controller_1._02.Controller GreenLinePLC = new Track_Controller_1._02.Controller(4, true, "127.0.0.1");
+            Track_Controller_1._02.Controller GreenLinePLC = new Track_Controller_1._02.Controller(1, true, "127.0.0.1");
 
             int[] occupancies = new int[151];
             int[] returns = new int[151];
@@ -486,7 +486,7 @@ namespace gogTests
         public void ReceiveAuthoritiesGreen()
         {
             //Test valid constructor
-            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(1, true);
             int[] mAuthorities = new int[151];
             int[] returns = new int[151];
             Random rnd = new Random();
@@ -517,7 +517,7 @@ namespace gogTests
         public void ReceiveSpeedsGreen()
         {
             //Test valid constructor
-            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(1, true);
             int[] mSpeeds = new int[151];
             int[] returns = new int[151];
             Random rnd = new Random();
@@ -547,7 +547,7 @@ namespace gogTests
         [TestMethod]
         public void ReceiveSwitches()
         {
-            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(1, true);
             int[] mOcc = new int[151];
             green.SendOccupancies(mOcc);
             int[] mSwitches = green.ReceiveSwitches(151);
@@ -584,7 +584,7 @@ namespace gogTests
         [TestMethod]
         public void Maintenance()
         {
-            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(1, true);
             int[] mOcc = new int[151];
             int[] mMaint = new int[151];
             green.SendOccupancies(mOcc);
@@ -627,7 +627,7 @@ namespace gogTests
         public void OverrideSwitches()
         {
             //Test valid constructor
-            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(1, true);
             int[] mSwitches = new int[151];
             int[] returns = new int[151];
             Random rnd = new Random();
@@ -667,7 +667,7 @@ namespace gogTests
         [TestMethod]
         public void TransitLights()
         {
-            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(1, true);
             int[] mOcc = new int[151];
             int[] mMaint = new int[151];
             green.SendOccupancies(mOcc);
