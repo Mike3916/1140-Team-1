@@ -105,7 +105,7 @@ namespace Gog
             InitializeComponent();
 
             DateTime now = DateTime.Now;
-            LiveTimeLabel.Content = now.ToString("HH:mm");
+            LiveTimeLabel.Content = now.ToString("HH:mm:ss");
 
             hour = now.Hour;
             minute = now.Minute;
