@@ -42,7 +42,7 @@ namespace TrainModel
         public List<Train> Trains = new List<Train>();
 
         public bool actualClose = false;
-        public int selectedTrain = -1;
+        public int selectedTrain = 0;
         public bool testModeSet = false;
         public int click = 0;
 
