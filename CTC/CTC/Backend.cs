@@ -103,6 +103,7 @@ namespace Backend
             }
 
             speed = length / duration.TotalSeconds; //This will give speed in meters per second
+            speed = Math.Round(speed, 3); //This rounds to 3 decimal points
         }
     }
 
