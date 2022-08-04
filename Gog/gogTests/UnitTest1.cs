@@ -446,7 +446,7 @@ namespace gogTests
     //    Assert.AreEqual(track.mtrainList[0].lineIdx, 0);
     //    Assert.AreEqual(track.mtrainList[0].commAuthority, 0);
     //}
-    [TestClass]
+   /* [TestClass]
     public class TrackControllerHW
     {
         [TestMethod]
@@ -730,7 +730,7 @@ namespace gogTests
         }
 
         
-    }
+    }*/
     [TestClass]
     public class TrainControllerSW
     {
@@ -1346,7 +1346,7 @@ namespace gogTests
             chooChoo.increment();
             chooChoo.increment();
             Assert.AreEqual(0.5, chooChoo.getAcceleration(), "Acceleration not working");
-            for(int i = 0; i < 1000; i++)
+            for(int i = 0; i < 10000; i++)
             {
                 chooChoo.increment();
             }

@@ -102,8 +102,8 @@ namespace Gog
         int hour, minute, second, timeElapsed = 0;
         string hourString, minuteString, secondString;
 
-        public MainWindow()
-        {
+      public MainWindow()
+ {
             InitializeComponent();
 
             DateTime now = DateTime.Now;
@@ -217,7 +217,9 @@ namespace Gog
         private void InitTimer()    
         {
             mGlobalTimer = new DispatcherTimer();
+#pragma warning disable CS8622 // Nullability of reference types in type of parameter 'sender' of 'void MainWindow.updateTick(object sender, EventArgs e)' doesn't match the target delegate 'EventHandler' (possibly because of nullability attributes).
             mGlobalTimer.Tick += new EventHandler(updateTick);
+#pragma warning restore CS8622 // Nullability of reference types in type of parameter 'sender' of 'void MainWindow.updateTick(object sender, EventArgs e)' doesn't match the target delegate 'EventHandler' (possibly because of nullability attributes).
 
             mGlobalTimer.Interval = new TimeSpan(0, 0, 0, 0, 10); //1 millisecond
         }
@@ -332,7 +334,9 @@ namespace Gog
                 if (mRedTrain == true)
                 {
                     MessageBox.Show("Authority Passed : " + mRedAuthorities[76].ToString());
+
                     track.AddTrain(0, mRedAuthorities[76]);
+
                     trains.addTrain(0, mRedAuthorities[76]);
                     trainCtrl.addController((false));
                     numTrains++;
@@ -341,15 +345,22 @@ namespace Gog
                 if(mGreenTrain == true)
                 {
                     MessageBox.Show("Authority Passed : " + mGreenAuthorities[150].ToString());
+
                     track.AddTrain(1, mGreenAuthorities[150]);
+
                     trains.addTrain(1, mGreenAuthorities[150]);
                     trainCtrl.addController((true));
                     numTrains++;
                    
                 }
                
+
                 mRedline1.SendTrain(false);
                 mGreenLine1.SendTrain(false);
+                mRedTrain = false;
+                mGreenTrain = false;
+
+
                 ctc.mRedTrain = false;
                 ctc.mGreenTrain = false;
 
@@ -361,12 +372,13 @@ namespace Gog
                 {
 
                     newBlock = trains.UpdateValues(trainCtrl.mTrainSetList[j],j);
-                    trainCtrl.UpdateValues(trains.Trains[j].getCmdAuthority(), trains.Trains[j].getCurrAuthority(), trains.Trains[j].getCommandedSpeedMPH(), trains.Trains[j].getCurrentSpeedMPH(), trains.Trains[j].getBeacon(), trains.Trains[j].getUnderground(), trains.Trains[j].getStationLeft(), trains.Trains[j].getStationRight(),trains.Trains[j].getEmergencyBrake(), j);
+
+                    trainCtrl.UpdateValues(trains.Trains[j].getCmdAuthority(), trains.Trains[j].getCurrAuthority(), trains.Trains[j].getCommandedSpeedMPH(), trains.Trains[j].getCurrentSpeedMPH(), trains.Trains[j].getBeacon(), trains.Trains[j].getUnderground(), trains.Trains[j].getStationLeft(), trains.Trains[j].getStationRight(), j);
 
                     if (newBlock)                  //if train at j enters a new block
                     { 
                         TrackModel.Block bl = track.UpdateTrain(j); //get next block
-                        if (bl != null)                             //if that block exists
+                      if (bl != null)                             //if that block exists
                         {
                             MessageBox.Show("I am in the block");
                             trains.UpdateBlock(bl, track.mtrainList[j].commAuthority , j);              //update the train pos
@@ -419,10 +431,10 @@ namespace Gog
             Array.Clear(mRedRoute,0,mRedRoute.Length);
 
             
-            mGreenLine1.SendMaintenance(mGreen1MaintenanceBlocks);
-            mGreenLine1.SendSpeeds(mGreen1Speeds);
-            mGreenLine1.SendAuthorities(mGreen1Authorities);
-            mGreenLine1.SendSwitches(mGreen1Switches);
+            mGreenLine1.SendMaintenance(mGreenMaintenanceBlocks);
+            mGreenLine1.SendSpeeds(mGreenSpeeds);
+            mGreenLine1.SendAuthorities(mGreenAuthorities);
+            mGreenLine1.SendSwitches(mGreenSwitches);
             mGreenLine1.SendRoute(mGreenRoute);
             mGreenLine1.SendTrain(mGreenTrain);
 
@@ -440,11 +452,11 @@ namespace Gog
             mRedline2.ReceiveSwitches(mRed2Switches.Length);
             mRedline2.ReceiveRightLights(mRed2RightLights.Length);
             mRedline2.ReceiveLeftLights(mRed2LeftLights.Length);
-            mGreenLine1.ReceiveOccupancies(mGreen1Occupancies.Length);
-            mGreenLine1.ReceiveCrossings(mGreen1Crossings.Length);
-            mGreenLine1.ReceiveSwitches(mGreen1Switches.Length);
-            mGreenLine1.ReceiveRightLights(mGreen1RightLights.Length);
-            mGreenLine1.ReceiveLeftLights(mGreen1LeftLights.Length);
+            mGreenLine1.ReceiveOccupancies(mGreenOccupancies.Length);
+            mGreenLine1.ReceiveCrossings(mGreenCrossings.Length);
+            mGreenLine1.ReceiveSwitches(mGreenSwitches.Length);
+            mGreenLine1.ReceiveRightLights(mGreenRightLights.Length);
+            mGreenLine1.ReceiveLeftLights(mGreenLeftLights.Length);
 
             ctc.mRedTrain = false;
             ctc.mGreenTrain = false;
