@@ -96,6 +96,7 @@ namespace Gog
         int mIterationMultiplier = 1, numTrains = 0, iter = 0;
         bool newBlock;
         bool gotTrack = false;
+        bool paused = true;
 
         int hour, minute, second;
         string hourString, minuteString, secondString;
@@ -168,26 +169,30 @@ namespace Gog
             if (mIterationMultiplier == 1)
             {
                 mIterationMultiplier = 10;
-                //SpeedMultiplier.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                SpeedMultiplier.Content = "Clock speed (10x)";
             }
             else
             {
                 mIterationMultiplier = 1;
-
+                SpeedMultiplier.Content = "Clock speed (1x)";
             }
         }
 
         public void PauseControl(object sender, RoutedEventArgs e)
         {
-            if (mIterationMultiplier == 1)
+            if (paused)
             {
-                mIterationMultiplier = 10;
-                Pause.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                paused = false;
+                mGlobalTimer.Start();
+                Pause.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF28C347"));
+                Pause.Content = "Running";
             }
             else
             {
-                mIterationMultiplier = 1;
-
+                paused = true;
+                mGlobalTimer.Stop();
+                Pause.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                Pause.Content = "Paused";
             }
         }
 
@@ -213,14 +218,13 @@ namespace Gog
             mGlobalTimer.Tick += new EventHandler(updateTick);
 
             mGlobalTimer.Interval = new TimeSpan(0, 0, 0, 0, 10); //1 millisecond
-            mGlobalTimer.Start();
         }
 
         private void updateTick(object sender, EventArgs e)
         {
             for (int i = 0; i < mIterationMultiplier; i++)
             {
-                if (iter++ == 1000)
+                if (iter++ == 63)
                 {
                     iter = 0;
 
@@ -266,7 +270,7 @@ namespace Gog
                         hourString = hour.ToString();
                     }
 
-                    LiveTimeLabel.Content = hourString + ":" + minuteString; // + ":" + secondString;
+                    LiveTimeLabel.Content = hourString + ":" + minuteString + ":" + secondString;
                 }
 
                 if (track != null && ctc != null && track.mLines.Count == 2 && iter % 20 == 10)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
