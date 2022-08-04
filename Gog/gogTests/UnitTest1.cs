@@ -552,7 +552,7 @@ namespace gogTests
         }
 
         [TestMethod]
-        public void Switches()
+        public void ReceiveSwitches()
         {
             Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
             int[] mOcc = new int[151];
@@ -581,6 +581,48 @@ namespace gogTests
 
             mOcc[76] = 0;
             mOcc[84] = 1;
+            green.SendOccupancies(mOcc);
+            mSwitches = green.ReceiveSwitches(151);
+            Assert.IsTrue(mSwitches[62] == 151);
+            Assert.IsTrue(mSwitches[76] == 101);
+            Assert.IsTrue(mSwitches[84] == 86);
+        }
+
+        [TestMethod]
+        public void Maintenance()
+        {
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            int[] mOcc = new int[151];
+            int[] mMaint = new int[151];
+            green.SendOccupancies(mOcc);
+            green.SendMaintenance(mMaint);
+            int[] mSwitches = green.ReceiveSwitches(151);
+
+
+            Assert.IsTrue(mSwitches[62] == 151);
+            Assert.IsTrue(mSwitches[76] == 76);
+            Assert.IsTrue(mSwitches[84] == 100);
+
+            mMaint[61] = 1;
+            green.SendMaintenance(mMaint);
+            mSwitches = green.ReceiveSwitches(151);
+            Assert.IsTrue(mSwitches[62] == 62);
+            Assert.IsTrue(mSwitches[76] == 76);
+            Assert.IsTrue(mSwitches[84] == 100);
+
+            mOcc[61] = 1;
+            mOcc[76] = 1;
+            green.SendOccupancies(mOcc);
+            mSwitches = green.ReceiveSwitches(151);
+            Assert.IsTrue(mSwitches[62] == 62);
+            Assert.IsTrue(mSwitches[76] == 101);
+            Assert.IsTrue(mSwitches[84] == 86);
+
+            mOcc[61] = 0;
+            mMaint[61] = 0;
+            mMaint[76] = 0;
+            mMaint[84] = 1;
+            green.SendMaintenance(mMaint);
             green.SendOccupancies(mOcc);
             mSwitches = green.ReceiveSwitches(151);
             Assert.IsTrue(mSwitches[62] == 151);
