@@ -102,12 +102,12 @@ namespace CTC
                     if (((MainWindow)Application.Current.MainWindow).mRedCrossings[blockIdx] == 0) //no crossing light
                         CrossingRect.Fill = System.Windows.Media.Brushes.LightGray;
                     else if (((MainWindow)Application.Current.MainWindow).mRedCrossings[blockIdx] == 1) //crossing light on
-                        CrossingRect.Fill = System.Windows.Media.Brushes.LightGreen;
+                        CrossingRect.Fill = System.Windows.Media.Brushes.Red;
                     else if (line == 1) //green line
                         if (((MainWindow)Application.Current.MainWindow).mGreenCrossings[blockIdx] == 0) //no crossing light
                             CrossingRect.Fill = System.Windows.Media.Brushes.LightGray;
                         else if (((MainWindow)Application.Current.MainWindow).mGreenCrossings[blockIdx] == 1) //crossing light on
-                            CrossingRect.Fill = System.Windows.Media.Brushes.LightGreen;
+                            CrossingRect.Fill = System.Windows.Media.Brushes.Red;
 
             }
 
