@@ -446,7 +446,7 @@ namespace gogTests
     //    Assert.AreEqual(track.mtrainList[0].lineIdx, 0);
     //    Assert.AreEqual(track.mtrainList[0].commAuthority, 0);
     //}
-   /* [TestClass]
+    [TestClass]
     public class TrackControllerHW
     {
         [TestMethod]
@@ -730,7 +730,7 @@ namespace gogTests
         }
 
         
-    }*/
+    }
     [TestClass]
     public class TrainControllerSW
     {

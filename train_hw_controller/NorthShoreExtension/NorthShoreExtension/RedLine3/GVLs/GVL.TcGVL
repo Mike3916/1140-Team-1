@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <GVL Name="GVL" Id="{e116494b-008e-4148-a200-cfa04c206013}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+
+//Block States IO
+mInSwitch : ARRAY[0..43] OF DINT;
+mOutSwitch : ARRAY[0..43] OF DINT;
+mInOccupancies : ARRAY[0..43] OF DINT;
+mOutOccupancies : ARRAY[0..43] OF DINT;
+mInSpeeds : ARRAY[0..43] OF DINT;
+mOutSpeeds : ARRAY[0..43] OF DINT;
+mInAuthorities : ARRAY[0..43] OF DINT;
+mOutAuthorities : ARRAY[0..43] OF DINT;
+mInCrossings : ARRAY[0..43] OF DINT;
+mOutCrossings : ARRAY[0..43] OF DINT;
+mInLeftLights : ARRAY[0..43] OF DINT;
+mOutLeftLights : ARRAY[0..43] OF DINT;
+mInRightLights : ARRAY[0..43] OF DINT;
+mOutRightLights : ARRAY[0..43] OF DINT;
+mInMaintenance : ARRAY[0..43] OF DINT;
+mOutMaintenance : ARRAY[0..43] OF DINT;
+mSpeedLimits : ARRAY[0..43] OF DINT := [40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,55,70,70,70,55,55,55,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,55,55,55,55,55,70];
+mInRoute : ARRAY[0..76] OF DINT;
+mOutRoute : ARRAY[0..76] OF DINT;
+mInTrain : BOOL := FALSE;
+mOutTrain : BOOL := FALSE;
+
+
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
