@@ -138,23 +138,66 @@ namespace CTC
                 }
                 //////////////////////// Check signal light color
                 if (((MainWindow)Application.Current.MainWindow).mRedLeftLights[blockIdx] == 0) //Check left lights
-                    SignalLeft.Fill = System.Windows.Media.Brushes.LightGray;
+                    SignalLeft.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.Red;
                 else if (((MainWindow)Application.Current.MainWindow).mRedLeftLights[blockIdx] == 1)
-                    SignalLeft.Fill = System.Windows.Media.Brushes.LightGreen;
+                    SignalLeft.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.LightYellow;
+                else if (((MainWindow)Application.Current.MainWindow).mRedLeftLights[blockIdx] == 2)
+                    SignalLeft.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.LightGreen;
 
                 if (((MainWindow)Application.Current.MainWindow).mRedRightLights[blockIdx] == 0) //Check right lights
-                    SignalRight.Fill = System.Windows.Media.Brushes.LightGray;
+                    SignalRight.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.Red;
                 else if (((MainWindow)Application.Current.MainWindow).mRedRightLights[blockIdx] == 1)
-                    SignalRight.Fill = System.Windows.Media.Brushes.LightGreen;
+                    SignalRight.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.LightYellow;
+                else if (((MainWindow)Application.Current.MainWindow).mRedRightLights[blockIdx] == 2)
+                    SignalRight.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.LightGreen;
 
 
-                ////////////////////////Check throughput for the line
-
+                //Fill throughput data
+                ThroughputText.Text = ((MainWindow)Application.Current.MainWindow).redThroughput.ToString();
 
             }
             else if (line == 1) //The selected line is green, put the info here that should always show up for every type of block
             {
-                //Copy above but for greeninfo insead of red
+                //Check occupancy
+                if (((MainWindow)Application.Current.MainWindow).mGreenOccupancies[blockIdx] == 0) //the block is unoccupied
+                {
+                    UnoccupiedRect.Fill = System.Windows.Media.Brushes.LightGreen;
+                    OccupiedRect.Fill = System.Windows.Media.Brushes.LightGray;
+                }
+                else if (((MainWindow)Application.Current.MainWindow).mGreenOccupancies[blockIdx] == 1)
+                {
+                    UnoccupiedRect.Fill = System.Windows.Media.Brushes.LightGray;
+                    OccupiedRect.Fill = System.Windows.Media.Brushes.LightGreen;
+                }
+                //////////////////////// Check maintenance
+                if (((MainWindow)Application.Current.MainWindow).mGreenMaintenanceBlocks[blockIdx] == 0) //the block is not in maintenance (open)
+                {
+                    Close.Background = System.Windows.Media.Brushes.LightGray;
+                    Open.Background = System.Windows.Media.Brushes.LightGreen;
+                }
+                else if (((MainWindow)Application.Current.MainWindow).mGreenMaintenanceBlocks[blockIdx] == 1) //The block is in maintenance (closed)
+                {
+                    Close.Background = System.Windows.Media.Brushes.LightGreen;
+                    Open.Background = System.Windows.Media.Brushes.LightGray;
+                }
+                //////////////////////// Check signal light color
+                if (((MainWindow)Application.Current.MainWindow).mGreenLeftLights[blockIdx] == 0) //Check left lights
+                    SignalLeft.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.Red;
+                else if (((MainWindow)Application.Current.MainWindow).mGreenLeftLights[blockIdx] == 1)
+                    SignalLeft.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.LightYellow;
+                else if (((MainWindow)Application.Current.MainWindow).mGreenLeftLights[blockIdx] == 2)
+                    SignalLeft.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.LightGreen;
+
+                if (((MainWindow)Application.Current.MainWindow).mGreenRightLights[blockIdx] == 0) //Check right lights
+                    SignalRight.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.Red;
+                else if (((MainWindow)Application.Current.MainWindow).mGreenRightLights[blockIdx] == 1)
+                    SignalRight.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.LightYellow;
+                else if (((MainWindow)Application.Current.MainWindow).mGreenRightLights[blockIdx] == 2)
+                    SignalRight.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.LightGreen;
+
+                //Fill throughput data
+                ThroughputText.Text = ((MainWindow)Application.Current.MainWindow).greenThroughput.ToString();
+
             }
 
 

@@ -43,6 +43,7 @@ namespace TrainModel
 
         public bool actualClose = false;
         public int selectedTrain = 0;
+        public bool testModeSet = false;
 
 
 
@@ -102,10 +103,42 @@ namespace TrainModel
             Trains[i].increment();
             physics.Text = "Power:\nCurrent Mass: " + Trains[i].getMass().ToString() + " tons\nForce (P/V): " + Math.Round(Trains[i].getForce(), 2).ToString() + " N\nAcceleration (F/M): " + Trains[i].getAccelerationFPS().ToString() + " ft/s^2\nVelocity(V_(n - 1) + T / 2(A_n + A_(n - 1)): " + Trains[i].getCurrentSpeedMPH().ToString() + " Mi/h";
             Speed.Text = "Current Speed: " + Math.Round(Trains[i].getCurrentSpeedMPH(), 2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(Trains[i].getCommandedSpeedMPH(), 2).ToString() + "Mi/h\nCurrent Acceleration: " + Trains[i].getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: " + Trains[i].getTimeTillNextBlock() + "s";
-            power.Text = Trains[i].getPowerCmd().ToString() + " kW";
+            power.Text = Trains[i].getPowerCmd().ToString() + " W";
             Beacon.Text = "Beacon: " + Trains[i].getBeacon();
+            cmdSpeed.Text = Trains[i].getCommandedSpeedMPH().ToString() + "Mi/h";
+            non_Vitals.Text = "Number of Passengers: " + Trains[i].getPassengers() + "\nNumber of Crew: " + Trains[i].getCrew() + "\nNumber of Cars: " + Trains[i].getCars().ToString() + "\nCapacity: " + Trains[i].getCapacity().ToString() + "\nInterior Lights:\t\tExterior Lights: \nLeft Doors:\t\tRight Doors: \nTemperature: " + Trains[i].getTemperature().ToString() + "F";
 
-            non_Vitals.Text = "Number of Passengers: " + Trains[i].getPassengers() + "\nNumber of Crew: " + Trains[i].getCrew() + "\nNumber of Cars: " + Trains[i].getCars().ToString() + "\nCapacity: " + Trains[i].getCapacity().ToString() + "\nInterior Lights: " + Trains[i].getInteriorLights() + "Exterior Lights: " + Trains[i].getExteriorLights() + "\nDoors: L-Open\t\tR-Closed\nTemperature: " + Trains[i].getTemperature().ToString() + "F";
+            if (Trains[selectedTrain].getInteriorLights())
+                InteriorLight.Text = "On";
+            else
+            {
+                InteriorLight.Text = "Off";
+            }
+
+            if (Trains[selectedTrain].getExteriorLights())
+                ExteriorLight.Text = "On";
+            else
+            {
+                ExteriorLight.Text = "Off";
+            }
+            if (Trains[selectedTrain].getDoorL())
+            {
+
+                LDoor.Text = "Open";
+            }
+            else
+            {
+                LDoor.Text = "Closed";
+            }
+            if (Trains[selectedTrain].getDoorR())
+            {
+
+                RDoor.Text = "Open";
+            }
+            else
+            {
+                RDoor.Text = "Closed";
+            }
 
             if (Trains[i].getBaby())
             {
@@ -118,10 +151,10 @@ namespace TrainModel
         }
 
 
-        public void UpdateBlock(TrackModel.Block block,int auth, int i)
+        public void UpdateBlock(TrackModel.Block block, int i)
         {
-
-            Trains[i].setBlockInfo(block,auth);
+            Trains[i].setBlockInfo(block);
+            length.Text = block.mLength.ToString() + "ft";
         }
 
 
@@ -235,6 +268,7 @@ namespace TrainModel
             Speed.Text = "Current Speed: " + Math.Round(Trains[selectedTrain].getCurrentSpeedMPH(), 2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(Trains[selectedTrain].getCommandedSpeedMPH(), 2).ToString() + "Mi/h\nCurrent Acceleration: " + Trains[selectedTrain].getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: " + Trains[selectedTrain].getTimeTillNextBlock() + "s";
             power.Text = Trains[selectedTrain].getPowerCmd().ToString() + " W";
             Beacon.Text = "Beacon: " + Trains[selectedTrain].getBeacon();
+            Authority.Text = Trains[selectedTrain].getCmdAuthority().ToString() + " Blocks";
         }
 
         private void Internal_Lights_Click(object sender, RoutedEventArgs e)
@@ -334,12 +368,8 @@ namespace TrainModel
                 engineFailure.Foreground = Brushes.White;
                 engineFailure.Background = Brushes.Green;
                 engineFailure.IsEnabled = true;
-                power.IsEnabled = true;
-                increment.IsEnabled = true;
-                exteriorLights.IsEnabled = true;
-                interiorLights.IsEnabled = true;
-                doorL.IsEnabled = true;
-                doorR.IsEnabled = true;
+                testMode.IsEnabled = true;
+             
 
                 power.Text = Trains[selectedTrain].getPowerCmd().ToString() + " W";
 
@@ -387,6 +417,38 @@ namespace TrainModel
         private void Button_Click_2(object sender, RoutedEventArgs e)
         { RemoveTrain(selectedTrain); }
 
+        private void testMode_Click(object sender, RoutedEventArgs e)
+        {
+            if (!testModeSet)
+            {
+
+                cmdSpeed.IsEnabled = true;
+                Authority.IsEnabled = true;
+                power.IsEnabled = true;
+                increment.IsEnabled = true;
+                addTrainButton.IsEnabled = true;
+                removeTrainButton.IsEnabled = true;
+                interiorLights.IsEnabled = true;
+                exteriorLights.IsEnabled = true;
+                doorL.IsEnabled = true;
+                doorR.IsEnabled = true;
+                testModeSet = true;
+            }
+            else
+            {
+                cmdSpeed.IsEnabled = false;
+                Authority.IsEnabled = false;
+                power.IsEnabled = false;
+                increment.IsEnabled = false;
+                addTrainButton.IsEnabled = false;
+                removeTrainButton.IsEnabled = false;
+                interiorLights.IsEnabled = false;
+                exteriorLights.IsEnabled = false;
+                doorL.IsEnabled = false;
+                doorR.IsEnabled = false;
+                testModeSet = false;
+            }
+        }
     }
 }
 

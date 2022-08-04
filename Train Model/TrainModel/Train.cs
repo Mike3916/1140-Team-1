@@ -445,7 +445,7 @@ namespace TrainObject
             baby = false;
         }
             
-        public void setBlockInfo(TrackModel.Block b, int auth)
+        public void setBlockInfo(TrackModel.Block b)
         {
             blockDist = b.mLength;
             gradient = b.mGrade*90;
@@ -463,19 +463,13 @@ namespace TrainObject
             mass = 56.7 * 907.1850030836 + 65 * passengers + 65 * crew;
 
             currDist = 0;
-            cmdAuthority--;
+            currAuthority++;    
 
             if(signalPickUp)
                 beaconMessage = b.mBeacon;
             else
                 beaconMessage = "";
 
-            if (cmdAuthority == 0)
-            {
-                cmdAuthority = auth;
-            }
-
-            commandedSpeed = b.mspeedLimit;
         }
 
         public int UpdatePassenger(int p)
