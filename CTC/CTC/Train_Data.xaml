@@ -14,7 +14,7 @@
         <Label Content="Authority:" HorizontalAlignment="Left" Margin="151,176,0,0" VerticalAlignment="Top"/>
         <Label Content="Blocks" HorizontalAlignment="Left" Margin="278,176,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,0.578"/>
         <TextBlock HorizontalAlignment="Left" Margin="118,207,0,0" TextWrapping="Wrap" Text="Suggested Speed:" VerticalAlignment="Top"/>
-        <Label Content="mph" HorizontalAlignment="Left" Margin="278,203,0,0" VerticalAlignment="Top"/>
+        <Label Content="m/s" HorizontalAlignment="Left" Margin="278,203,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="ETA" HorizontalAlignment="Left" Margin="218,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="UpdateTrain" Content="UpdateTrain" HorizontalAlignment="Left" Margin="348,203,0,0" VerticalAlignment="Top" Click="UpdateTrain_Click"/>
         <ComboBox x:Name="DestStationCombo" HorizontalAlignment="Left" Margin="302,114,0,0" VerticalAlignment="Top" Width="92"/>
