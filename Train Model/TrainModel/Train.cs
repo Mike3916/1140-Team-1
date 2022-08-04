@@ -481,7 +481,8 @@ namespace TrainObject
             underground = b.mUnderground;
           
             currDist = 0;
-            currAuthority--;    
+            cmdAuthority--;
+            currAuthority++;
 
             if(signalPickUp)
                 beaconMessage = b.mBeacon;
@@ -491,6 +492,7 @@ namespace TrainObject
             if (cmdAuthority == 0)
             {
                 cmdAuthority = auth;
+                currAuthority = 0;
             }
 
             blockID = b.mblockNum;
@@ -520,6 +522,7 @@ namespace TrainObject
             return StationLeft;
             return StationLeft;
         }
+
 
         public int UpdatePassenger(int p)
         {
