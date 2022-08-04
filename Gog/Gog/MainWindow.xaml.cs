@@ -230,7 +230,7 @@ namespace Gog
 
                     if (second++ == 59)
                     {
-                        elapsedTime++;
+                        timeElapsed++;
                         second = 0;
                         
                         if (minute++ == 59)
