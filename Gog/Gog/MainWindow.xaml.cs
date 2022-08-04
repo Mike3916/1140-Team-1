@@ -273,7 +273,7 @@ namespace Gog
                     LiveTimeLabel.Content = hourString + ":" + minuteString + ":" + secondString;
                 }
 
-                if (track != null && ctc != null && track.mLines.Count == 2 && iter % 20 == 10)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
+                if (track != null && ctc != null && track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
                 {
                     //Update Track Controller variables with values from CTC
                     mRedMaintenanceBlocks = ctc.mRedMaintenanceBlocks;
