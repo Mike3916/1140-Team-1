@@ -92,25 +92,14 @@ namespace Gog
         */
 
         DispatcherTimer mGlobalTimer;
-
-        int mIterationMultiplier = 1, numTrains = 0, iter = 0;
+        int mIterationMultiplier = 10, numTrains = 0, iter = 0;
         bool newBlock;
         bool gotTrack = false;
         bool paused = true;
 
-        int hour, minute, second;
-        string hourString, minuteString, secondString;
-
         public MainWindow()
         {
             InitializeComponent();
-
-            LiveTimeLabel.Content = DateTime.Now.ToString("HH:mm");
-            DateTime now = DateTime.Now;
-            hour = now.Hour;
-            minute = now.Minute;
-            second = now.Second;
-
             InitTimer();
         }
 
@@ -284,7 +273,7 @@ namespace Gog
                     mRedSwitches = ctc.mRedSwitches;
                     mRedLeftLights = ctc.mRedLeftLights;
                     mRedRightLights = ctc.mRedRightLights;
-                    //mRedTrain = ctc.mRedTrain;
+                    mRedTrain = ctc.mRedTrain;
 
                     mGreenMaintenanceBlocks = ctc.mGreenMaintenanceBlocks;
                     mGreenOccupancies = ctc.mGreenOccupancies;
@@ -294,7 +283,7 @@ namespace Gog
                     mGreenSwitches = ctc.mGreenSwitches;
                     mGreenLeftLights = ctc.mGreenLeftLights;
                     mGreenRightLights = ctc.mGreenRightLights;
-                    //mGreenTrain = ctc.mGreenTrain;
+                    mGreenTrain = ctc.mGreenTrain;
 
                     PLCgetCTC();
                     PLCgetTrack();
@@ -302,9 +291,9 @@ namespace Gog
 
                 if (track != null && ctc != null && track.mLines.Count == 2 && iter % 20 == 0)
                 {
-                    PLCsetCTC();
-                    ctc.GetTrackController(mRedMaintenanceBlocks, mRedOccupancies, mRedSpeeds, mRedAuthorities, mRedCrossings, mRedSwitches, mRedLeftLights, mRedRightLights, mGreenMaintenanceBlocks, mGreenOccupancies, mGreenSpeeds, mGreenAuthorities, mGreenCrossings, mGreenSwitches, mGreenLeftLights, mGreenRightLights); //Write function in CTC to read in these values
                     PLCsetTrack();
+                    PLCsetCTC();
+                    ctc.GetTrackController(mRedMaintenanceBlocks, mRedOccupancies, mRedSpeeds, mRedAuthorities, mRedCrossings, mRedSwitches, mRedLeftLights, mRedRightLights, mGreenMaintenanceBlocks, mGreenOccupancies, mGreenSpeeds, mGreenAuthorities, mGreenCrossings, mGreenSwitches, mGreenLeftLights, mGreenRightLights); //Write function in CTC to read in these values 
                 }
 
                 if (track != null && ctc != null && gotTrack==false && track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
@@ -373,19 +362,6 @@ namespace Gog
 
         private void PLCgetCTC()
         {
-            /*77 element integer arrays for red line
-            mRedMaintenanceBlocks = CTCReturnMaintenanceFunction;
-            mRedSpeeds = CTCReturnSpeedsFunction;
-            mRedAuthorities = CTCRetrunAuthoritiesFunction;
-            mRedSwitches = CTCReturnSwitchesFunction;
-            */
-
-            /*151 element integer arrays for red line
-            mGreenMaintenanceBlocks = CTCReturnMaintenanceFunction;
-            mGreenSpeeds = CTCReturnSpeedsFunction;
-            mGreenAuthorities = CTCReturnAuhtorityFunction;
-            mGreenSwitches = CTCReturnSwitchesFunction;
-            */
 
             ArraySplitter();
 
@@ -428,22 +404,10 @@ namespace Gog
             mGreenLine1.ReceiveRightLights(mGreen1RightLights.Length);
             mGreenLine1.ReceiveLeftLights(mGreen1LeftLights.Length);
 
-            //ctc.mRedTrain = false;
-            //ctc.mGreenTrain = false;
+            ctc.mRedTrain = false;
+            ctc.mGreenTrain = false;
 
             ArrayMerger();
-
-            /*77 element integer arrays for red line
-            
-            = mRedOccupancies;
-            = mRedCrossings;
-            = mRedSwitches;
-         */
-            /*151 element integer arrays for green line
-             = mGreenOccupancies;
-             = mGreenCrossings;
-             = mGreenSwitches;
-       */
            
         }
 

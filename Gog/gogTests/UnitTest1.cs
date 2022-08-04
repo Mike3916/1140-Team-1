@@ -436,6 +436,26 @@ namespace gogTests
 
         }
 
+        
+    }
+    //[TestMethod]
+    //public void TrackModel_AddTrain()
+    //{
+    //    int blockIdx = 0;
+    //    int lineIdx = 0;
+    //    int authority = 0;
+
+    //    TrackModel.MainWindow track = new TrackModel.MainWindow();
+    //    track.AddTrain(blockIdx, lineIdx, authority);
+
+    //    Assert.AreEqual(track.mtrainList.Count, 1);
+    //    Assert.AreEqual(track.mtrainList[0].blockIdx, 0);
+    //    Assert.AreEqual(track.mtrainList[0].lineIdx, 0);
+    //    Assert.AreEqual(track.mtrainList[0].commAuthority, 0);
+    //}
+    [TestClass]
+    public class TrackControllerHW
+    {
         [TestMethod]
         public void TrackReceiveOccupanciesGreen()
         {
@@ -469,22 +489,6 @@ namespace gogTests
 
         }
     }
-    //[TestMethod]
-    //public void TrackModel_AddTrain()
-    //{
-    //    int blockIdx = 0;
-    //    int lineIdx = 0;
-    //    int authority = 0;
-
-    //    TrackModel.MainWindow track = new TrackModel.MainWindow();
-    //    track.AddTrain(blockIdx, lineIdx, authority);
-
-    //    Assert.AreEqual(track.mtrainList.Count, 1);
-    //    Assert.AreEqual(track.mtrainList[0].blockIdx, 0);
-    //    Assert.AreEqual(track.mtrainList[0].lineIdx, 0);
-    //    Assert.AreEqual(track.mtrainList[0].commAuthority, 0);
-    //}
-
     [TestClass]
     public class TrainControllerSW
     {
