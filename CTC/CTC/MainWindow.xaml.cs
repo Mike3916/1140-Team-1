@@ -31,6 +31,8 @@ namespace CTC
     {
         public List<Train> TrainList = new List<Train>(); //Global TrainList
         public int totalTrains; //This will keep track of total number of trains in a day (it does NOT go down even when a train reaches destination). It is also used to assign train names in Dispatch
+        public int redThroughput; //This is the number red line tickets sold per hour
+        public int greenThroughput; //This is the number of green line tickets sold per hour
 
         public List<TrackModel.Line> mLines;    //Hold the track model
         public bool trackLoaded = false;        //Keep track of whether the track has been loaded or not
@@ -198,6 +200,11 @@ namespace CTC
                     LineCombo.Items.Add(mLines[i].GetmnameLine());  //This populates the LineCombo Box on the Main Window Page
                 }
             }
+        }
+        public void getThroughput(int redTP, int greenTP)
+        {
+            redThroughput = redTP;
+            greenThroughput = greenTP;
         }
 
         public void GetTrackController(int[] RedMaintenanceBlocks, int[] RedOccupancies, int[] RedSpeeds, int[] RedAuthorities, int[] RedCrossings, int[] RedSwitches, int[] RedLeftLights, int[] RedRightLights, int[] GreenMaintenanceBlocks, int[] GreenOccupancies, int[] GreenSpeeds, int[] GreenAuthorities, int[] GreenCrossings, int[] GreenSwitches, int[] GreenLeftLights, int[] GreenRightLights) //Write function in CTC to read in these values
