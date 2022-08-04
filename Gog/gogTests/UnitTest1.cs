@@ -707,7 +707,36 @@ namespace gogTests
             green.SendOccupancies(mOcc);
             mLeftLights = green.ReceiveLeftLights(151);
             Assert.AreEqual(mLeftLights[76], 0);
+
+            Random rnd = new Random();
+            int[] results = new int[151];
+            int[] stuff = new int[151];
+            for (int i = 0; i < mRightLights.Length; i++)
+            {
+                stuff[i] = rnd.Next(1);
+            }
+            green.SendLeftLights(stuff);
+            results = green.ReceiveLeftLights(151);
+            for (int i = 0; i < mLeftLights.Length; i++)
+            {
+                Assert.AreEqual(stuff[i], results[i]);
+            }
+
+            stuff = new int[151];
+            results = new int[151];
+            for (int i = 0; i < mRightLights.Length; i++)
+            {
+                stuff[i] = rnd.Next(1);
+            }
+            green.SendRightLights(stuff);
+            results = green.ReceiveRightLights(151);
+            for (int i = 0; i < mLeftLights.Length; i++)
+            {
+                Assert.AreEqual(stuff[i], results[i]);
+            }
         }
+
+        
     }
     [TestClass]
     public class TrainControllerSW
