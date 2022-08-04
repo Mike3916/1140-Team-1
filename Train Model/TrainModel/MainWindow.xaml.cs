@@ -61,6 +61,7 @@ namespace TrainModel
             Trains.Add(new Train(authority, line));
             string name = "Train " + Trains[Trains.Count - 1].getID().ToString();
             Select_a_Train.Items.Insert(Trains.Count - 1, name);
+            Select_a_Train.SelectedIndex = Trains.Count - 1;
 
         }
 
