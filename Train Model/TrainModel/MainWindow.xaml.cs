@@ -42,7 +42,7 @@ namespace TrainModel
         public List<Train> Trains = new List<Train>();
 
         public bool actualClose = false;
-        public int selectedTrain = -1;
+        public int selectedTrain = 0;
         public bool testModeSet = false;
         public int click = 0;
 
@@ -61,6 +61,7 @@ namespace TrainModel
             Trains.Add(new Train(authority, line));
             string name = "Train " + Trains[Trains.Count - 1].getID().ToString();
             Select_a_Train.Items.Insert(Trains.Count - 1, name);
+            Select_a_Train.SelectedIndex = Trains.Count - 1;
 
         }
 
