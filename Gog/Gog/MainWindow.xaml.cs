@@ -338,12 +338,16 @@ namespace Gog
                     track.AddTrain(0, mRedAuthorities[76]);
                     trains.addTrain(0, mRedAuthorities[76]);
                     trainCtrl.addController((false));
+                    numTrains++;
+                    
                 }
                 if(mGreenTrain == true)
                 {
                     track.AddTrain(1, mGreenAuthorities[150]);
                     trains.addTrain(1, mGreenAuthorities[150]);
                     trainCtrl.addController((true));
+                    numTrains++;
+                   
                 }
                
                 mRedline1.SendTrain(false);
@@ -365,7 +369,8 @@ namespace Gog
                         TrackModel.Block bl = track.UpdateTrain(j); //get next block
                         if (bl != null)                             //if that block exists
                         {
-                            trains.UpdateBlock(bl, j);              //update the train pos
+                            MessageBox.Show("I am in the block");
+                            trains.UpdateBlock(bl, track.mtrainList[j].commAuthority , j);              //update the train pos
                             if (bl.mStation)
                             {
                                 track.SetPopulation(trains.Trains[j].UpdatePassenger(bl.mPop), bl);
@@ -375,6 +380,7 @@ namespace Gog
                         {                                         //if that block doesn't exist ...
                             trains.RemoveTrain(j);             //delete the train
                             track.RemoveTrain(j);              //remove the train from the track
+                            numTrains--;
                         }
                     }
                 }

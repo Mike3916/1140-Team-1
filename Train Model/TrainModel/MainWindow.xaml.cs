@@ -118,9 +118,10 @@ namespace TrainModel
         }
 
 
-        public void UpdateBlock(TrackModel.Block block, int i)
+        public void UpdateBlock(TrackModel.Block block,int auth, int i)
         {
-            Trains[i].setBlockInfo(block);
+
+            Trains[i].setBlockInfo(block,auth);
         }
 
 
