@@ -106,11 +106,11 @@ namespace TrainModel
             Trains[i].setPowerCmd(ctrl.mCurPower);
             Trains[i].setTemperature(ctrl.mTemperature);
             Trains[i].increment();
-            physics.Text = "Power:\nCurrent Mass: " + Math.Round(Trains[i].getMass(),2).ToString() + " tons\nForce (P/V): " + Math.Round(Trains[i].getForce(), 2).ToString() + " N\nAcceleration (F/M): " + Trains[i].getAccelerationFPS().ToString() + " ft/s^2\nVelocity(V_(n - 1) + T / 2(A_n + A_(n - 1)): " + Trains[i].getCurrentSpeedMPH().ToString() + " Mi/h";
-            Speed.Text = "Current Speed: " + Math.Round(Trains[i].getCurrentSpeedMPH(), 2).ToString() + "Mi/h\nCommanded Speed: \nCurrent Acceleration: " + Trains[i].getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: " + Trains[i].getTimeTillNextBlock() + "s";
-            power.Text = Trains[i].getPowerCmd().ToString() + " W";
-            Beacon.Text = "Beacon: " + Trains[i].getBeacon();
-            non_Vitals.Text = "Number of Passengers: " + Trains[i].getPassengers() + "\nNumber of Crew: " + Trains[i].getCrew() + "\nNumber of Cars: " + Trains[i].getCars().ToString() + "\nCapacity: " + Trains[i].getCapacity().ToString() + "\nInterior Lights:\t\tExterior Lights: \nLeft Doors:\t\tRight Doors: \nTemperature: " + Trains[i].getTemperature().ToString() + "F";
+            physics.Text = "Power:\nCurrent Mass: " + Math.Round(Trains[selectedTrain].getMass(),2).ToString() + " tons\nForce (P/V): " + Math.Round(Trains[selectedTrain].getForce(), 2).ToString() + " N\nAcceleration (F/M): " + Trains[selectedTrain].getAccelerationFPS().ToString() + " ft/s^2\nVelocity(V_(n - 1) + T / 2(A_n + A_(n - 1)): " + Trains[selectedTrain].getCurrentSpeedMPH().ToString() + " Mi/h";
+            Speed.Text = "Current Speed: " + Math.Round(Trains[selectedTrain].getCurrentSpeedMPH(), 2).ToString() + "Mi/h\nCommanded Speed: \nCurrent Acceleration: " + Trains[selectedTrain].getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: " + Trains[selectedTrain].getTimeTillNextBlock() + "s";
+            power.Text = Trains[selectedTrain].getPowerCmd().ToString() + " W";
+            Beacon.Text = "Beacon: " + Trains[selectedTrain].getBeacon();
+            non_Vitals.Text = "Number of Passengers: " + Trains[selectedTrain].getPassengers() + "\nNumber of Crew: " + Trains[selectedTrain].getCrew() + "\nNumber of Cars: " + Trains[selectedTrain].getCars().ToString() + "\nCapacity: " + Trains[selectedTrain].getCapacity().ToString() + "\nInterior Lights:\t\tExterior Lights: \nLeft Doors:\t\tRight Doors: \nTemperature: " + Trains[selectedTrain].getTemperature().ToString() + "F";
             Position.Text = "Current Block: " + Trains[selectedTrain].getBlockID() + "\nAuthority: \nLength of Block:\nDistance left on block:" + Trains[selectedTrain].getRemainingDistMF() + " Ft\nGrade:";
 
             Authority.Text = Trains[selectedTrain].getCmdAuthority().ToString() + " Blocks";
