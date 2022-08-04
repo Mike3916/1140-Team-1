@@ -35,7 +35,7 @@
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Occupied}" Value="True"> 
+                        <DataTrigger Binding="{Binding Occupied}" Value="True">
                             <Setter Property="Background" Value="Blue" />
                             <Setter Property="Foreground" Value="White" />
                         </DataTrigger>
@@ -44,7 +44,7 @@
             </DataGrid.RowStyle>
         </DataGrid>
         <Button x:Name ="BrowseFile" Grid.Column="1" Content="Browse" HorizontalAlignment="Left" Margin="14,5,0,0" VerticalAlignment="Top" Click="BrowseFile_Click" Grid.ColumnSpan="4" Height="20" Width="42"/>
-        <TextBlock x:Name="Info_Text" Grid.Column="8" HorizontalAlignment="Left" Margin="50,55,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.204,-0.249" Grid.ColumnSpan="2" Height="388" Width="145" Foreground="#FFD4D1D1" TextAlignment="Left" LineHeight="6" ><Run/><LineBreak/><Run Text="Station:"/><LineBreak/><Run/><LineBreak/><Run Text="Occupied:"/><LineBreak/><Run/><LineBreak/><Run Text="Infrastructure:"/><LineBreak/><Run/><LineBreak/><Run Text="Speed Limit:"/><LineBreak/><Run/><LineBreak/><Run Text="Length:"/><LineBreak/><Run/><LineBreak/><Run Text="Grade:"/><LineBreak/><Run/><LineBreak/><Run Text="Elevation:"/><LineBreak/><LineBreak/><Run Text="Crossbar:"/><LineBreak/><LineBreak/><Run Text="Population:"/><LineBreak/><Run/><LineBreak/><Run Text="Signal:"/><LineBreak/><Run/><LineBreak/><Run Text="Switch:"/><LineBreak/><Run/><LineBreak/><Run Text="Track Heaters"/><LineBreak/><Run/></TextBlock>
+        <TextBlock x:Name="Info_Text" Grid.Column="8" HorizontalAlignment="Left" Margin="50,55,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.204,-0.249" Grid.ColumnSpan="2" Height="388" Width="145" Foreground="#FFD4D1D1" TextAlignment="Left" LineHeight="6" ><Run/><LineBreak/><Run Text="Station:"/><LineBreak/><Run/><LineBreak/><Run Text="Occupied:"/><LineBreak/><Run Text="Light:"/><LineBreak/><Run/><LineBreak/><Run Text="Infrastructure:"/><LineBreak/><Run/><LineBreak/><Run Text="Speed Limit:"/><LineBreak/><Run/><LineBreak/><Run Text="Length:"/><LineBreak/><Run/><LineBreak/><Run Text="Grade:"/><LineBreak/><Run/><LineBreak/><Run Text="Elevation:"/><LineBreak/><LineBreak/><Run Text="Crossbar:"/><LineBreak/><LineBreak/><Run Text="Population:"/><LineBreak/><Run/><LineBreak/><Run Text="Signal:"/><LineBreak/><Run/><LineBreak/><Run Text="Switch:"/><LineBreak/><Run/><LineBreak/><Run Text="Track Heaters"/><LineBreak/><Run/></TextBlock>
         <TextBlock x:Name="BlockText" Grid.Column="8" HorizontalAlignment="Left" Margin="49,52,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Block Information" VerticalAlignment="Top" Width="125" Height="16"/>
         <TextBox x:Name="SpeedBox" Grid.Column="8" HorizontalAlignment="Left" Margin="158,168,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="86" TextAlignment="Right" Height="18" TextChanged="SpeedBox_TextChanged" Grid.ColumnSpan="2" />
         <TextBox x:Name="LengthBox" Grid.Column="8" HorizontalAlignment="Left" Margin="158,199,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="86" TextAlignment="Right" Height="18" TextChanged="LengthBox_TextChanged" Grid.ColumnSpan="2" />
@@ -72,5 +72,6 @@
         <Button x:Name="ToggleCrossbar" Grid.Column="8" Content="Button" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="159,292,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.463,-0.385" Width="85" Click="ToggleCrossbar_Click"/>
         <TextBlock x:Name="Population" Grid.Column="8" HorizontalAlignment="Left" Margin="138,328,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="128" TextAlignment="Right" Height="16"/>
         <Button x:Name="AddTrainButton" Grid.Column="8" Content="Add Train" HorizontalAlignment="Left" Margin="87,312,0,0" Grid.Row="1" VerticalAlignment="Top" Click="AddTrain_Click"/>
+        <TextBlock x:Name="LightText" Grid.Column="8" HorizontalAlignment="Left" Margin="139,119,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="128" TextAlignment="Right" Height="16"/>
     </Grid>
 </Window>
