@@ -16,8 +16,8 @@
         <Button x:Name="TrainModelButton" Content="Train Model" HorizontalAlignment="Left" Margin="395,248,0,0" VerticalAlignment="Top" Click="TrainModelButton_Click" Height="51" Width="140"/>
         <Button x:Name="TrainCtrlButton" Content="Train Controller" HorizontalAlignment="Left" Margin="395,180,0,0" VerticalAlignment="Top" Click="TrainCtrlButton_Click" Height="51" Width="140"/>
         <Button x:Name="CTC_Button" Content="CTC" HorizontalAlignment="Left" Margin="228,180,0,0" VerticalAlignment="Top" Click="CTC_Button_Click" RenderTransformOrigin="-1.47,0.613" Height="51" Width="140"/>
-        <Button x:Name="SpeedMultiplier" Content="Clock speed (1x)" Click="SpeedControl" ClickMode="Press" HorizontalAlignment="Left" Margin="400,132,0,0" VerticalAlignment="Top" Height="30" Width="130" Background="#FF28C347"/>
-        <Button x:Name="Pause" Content="Proceeding" Click="PauseControl" ClickMode="Press" HorizontalAlignment="Left" Margin="233,132,0,0" VerticalAlignment="Top" Height="30" Width="130" Background="#FF28C347"/>
+        <Button x:Name="SpeedMultiplier" Content="Clock speed (1x)" Click="SpeedControl" ClickMode="Press" HorizontalAlignment="Left" Margin="400,132,0,0" VerticalAlignment="Top" Height="30" Width="130" Background="#FF288EC3"/>
+        <Button x:Name="Pause" Content="Paused" Click="PauseControl" ClickMode="Press" HorizontalAlignment="Left" Margin="233,132,0,0" VerticalAlignment="Top" Height="30" Width="130" Background="#FFFF5050"/>
         <TextBlock TextAlignment="Center" HorizontalAlignment="Left" Margin="254,94,0,0" TextWrapping="Wrap" Text="Toggle Pause:" VerticalAlignment="Top" Width="88" Background="Gainsboro" Height="25"/>
         <TextBlock TextAlignment="Center" HorizontalAlignment="Left" Margin="421,94,0,0" TextWrapping="Wrap" Text="Toggle Speed:" VerticalAlignment="Top" Width="88" Background="Gainsboro" Height="25"/>
 

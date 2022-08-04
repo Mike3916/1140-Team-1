@@ -95,6 +95,7 @@ namespace Gog
         int mIterationMultiplier = 10, numTrains = 0, iter = 0;
         bool newBlock;
         bool gotTrack = false;
+        bool paused = true;
 
         public MainWindow()
         {
@@ -152,6 +153,38 @@ namespace Gog
                 ctc.Activate();
         }
 
+        public void SpeedControl(object sender, RoutedEventArgs e)
+        {
+            if (mIterationMultiplier == 1)
+            {
+                mIterationMultiplier = 10;
+                SpeedMultiplier.Content = "Clock speed (10x)";
+            }
+            else
+            {
+                mIterationMultiplier = 1;
+                SpeedMultiplier.Content = "Clock speed (1x)";
+            }
+        }
+
+        public void PauseControl(object sender, RoutedEventArgs e)
+        {
+            if (paused)
+            {
+                paused = false;
+                mGlobalTimer.Start();
+                Pause.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF28C347"));
+                Pause.Content = "Running";
+            }
+            else
+            {
+                paused = true;
+                mGlobalTimer.Stop();
+                Pause.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                Pause.Content = "Paused";
+            }
+        }
+
         private void StartUpActivated(object sender, EventArgs e)
         {
             Application.Current.MainWindow = trainCtrl;
@@ -174,14 +207,60 @@ namespace Gog
             mGlobalTimer.Tick += new EventHandler(updateTick);
 
             mGlobalTimer.Interval = new TimeSpan(0, 0, 0, 0, 10); //1 millisecond
-            mGlobalTimer.Start();
         }
 
         private void updateTick(object sender, EventArgs e)
         {
             for (int i = 0; i < mIterationMultiplier; i++)
             {
-                if (iter++ % 10 == 0) TimeBox.Text = (iter).ToString();
+                if (iter++ == 63)
+                {
+                    iter = 0;
+
+                    if (second++ == 59)
+                    {
+                        second = 0;
+                        
+                        if (minute++ == 59)
+                        {
+                            minute = 0;
+
+                            if (hour++ == 23)
+                            {
+                                hour = 0;
+                            }
+                        }
+                    }
+
+                    if (second < 10)
+                    {
+                        secondString = "0" + second.ToString();
+                    }
+                    else
+                    {
+                        secondString = second.ToString();
+                    }
+
+                    if (minute < 10)
+                    {
+                        minuteString = "0" + minute.ToString();
+                    }
+                    else
+                    {
+                        minuteString = minute.ToString();
+                    }
+
+                    if (hour < 10)
+                    {
+                        hourString = "0" + hour.ToString();
+                    }
+                    else
+                    {
+                        hourString = hour.ToString();
+                    }
+
+                    LiveTimeLabel.Content = hourString + ":" + minuteString + ":" + secondString;
+                }
 
                 if (track != null && ctc != null && track.mLines.Count == 2 && iter % 20 == 10)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
                 {
