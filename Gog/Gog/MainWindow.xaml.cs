@@ -543,7 +543,7 @@ namespace Gog
 
         private void ArrayMerger()
         {
-
+ 
             Array.Copy(mRed1MaintenanceBlocks, 0, mRedMaintenanceBlocks, 0, 38);
             Array.Copy(mRed1Occupancies, 0, mRedOccupancies, 0, 38);
             Array.Copy(mRed1Speeds, 0, mRedSpeeds, 0, 38);
