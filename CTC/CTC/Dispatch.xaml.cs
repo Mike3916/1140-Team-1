@@ -68,10 +68,19 @@ namespace CTC
                 destNum = greenStation[StationCombo.SelectedIndex];
 
 
-            ((MainWindow)Application.Current.MainWindow).TrainList.Add(new Train { line = LineCombo.SelectedIndex, name = tempName, destination = destNum, ETA = DateTime.Parse(ETABox.Text) }); //NEED TO ADD ETD (which should be set to current simulation time)
+            ((MainWindow)Application.Current.MainWindow).TrainList.Add(new Train { line = LineCombo.SelectedIndex, name = tempName, destination = destNum, ETD = ((MainWindow)Application.Current.MainWindow).currentTime, ETA = DateTime.Parse(ETABox.Text) }); //NEED TO ADD ETD (which should be set to current simulation time)
             ((MainWindow)Application.Current.MainWindow).SelectTrain.Items.Add(tempName); //Add the new train's name to the SelectTrain ComboBox so the user will be able to see data about it.
-            
-            //((MainWindow)Application.Current.MainWindow).TrainList[((MainWindow)Application.Current.MainWindow).TrainList.Count - 1].calcDuration();  //This is the function call to set duration. Uncomment this after I've added the ETD to the "new Train{...ETD= ...}" statement
+
+            ((MainWindow)Application.Current.MainWindow).TrainList[((MainWindow)Application.Current.MainWindow).TrainList.Count - 1].calcDuration();  //This is the function call to set duration.
+            ((MainWindow)Application.Current.MainWindow).TrainList[((MainWindow)Application.Current.MainWindow).TrainList.Count - 1].calcRoute();
+
+
+
+            //Set boolean to indicate that a new train was dispatched on the red line
+            if (LineCombo.SelectedIndex == 0)
+                ((MainWindow)Application.Current.MainWindow).mRedTrain = true;
+            else if (LineCombo.SelectedIndex == 1)
+                ((MainWindow)Application.Current.MainWindow).mGreenTrain = true;
         }
 
         

@@ -95,7 +95,7 @@ namespace TrackModel
             
             timer.Interval = new TimeSpan(0, 0, 1);
             timer.Tick += dispatcherTimer_Tick;
-            timer.Start();
+            //timer.Start();
         }
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
@@ -129,35 +129,39 @@ namespace TrackModel
                 interval = 0;
             }
         }
-        public void UpdateTick()
+        public void UpdateTick(int mult)
         {
-            //update train
-            interval++;
-
-            if (interval >= 5)
+            for (int i = 0; i < mult; i++)
             {
-                if (testWindow.traingo)
+                //update train
+                interval++;
+
+                if (interval >= 5000)
                 {
-                    for (int i = 0; i < mtrainList.Count; i++)
-                        UpdateTrain(i);
-                }
-                if (mblockIdx != -1)
-                {
-                    double currentTemp = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].getmtrackTemp();
-                    if (currentTemp < 32)
+                    if (testWindow.traingo)
                     {
-                        mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackTemp(currentTemp + 1);
-                        HeatBox.Text = (currentTemp + 1).ToString();
+                        for (int j = 0; j < mtrainList.Count; j++)
+                            UpdateTrain(j);
                     }
-                    else if (currentTemp == 32)
+                    if (mblockIdx != -1)
                     {
-                        //do nothing 
+                        double currentTemp = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].getmtrackTemp();
+                        if (currentTemp < 32)
+                        {
+                            mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackTemp(currentTemp + 1);
+                            HeatBox.Text = (currentTemp + 1).ToString();
+                        }
+                        else if (currentTemp == 32)
+                        {
+                            //do nothing 
+                        }
+                        else
+                        {
+                            mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackTemp(currentTemp - 1);
+                            HeatBox.Text = (currentTemp - 1).ToString();
+                        }
                     }
-                    else
-                    {
-                        mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackTemp(currentTemp - 1);
-                        HeatBox.Text = (currentTemp - 1).ToString();
-                    }
+                    interval = 0;
                 }
             }
         }
@@ -298,12 +302,27 @@ namespace TrackModel
             newLine.AddSections(lineInfo); //pawns off data processing to Line Class
             mLines.Add(newLine);
         }
-        public void AddTrain(int blockIdx, int lineIdx, int auth)
+        public bool AddTrain(int blockIdx, int lineIdx, int auth)
         {
             mtrainList.Add(new Train(blockIdx, lineIdx, auth));
             mLines[lineIdx].OccupyBlock(blockIdx);
             OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
             UpdateSelectRow(lineIdx, blockIdx);
+            return true;
+        }
+        public bool AddTrain(int lineIdx, int auth)
+        {
+            int blockIdx = 1;
+            if (lineIdx == 0)
+                blockIdx = 77;
+            else
+                blockIdx = 151;
+
+            mtrainList.Add(new Train(blockIdx, lineIdx, auth));
+            mLines[lineIdx].OccupyBlock(blockIdx);
+            OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
+            UpdateSelectRow(lineIdx, blockIdx);
+            return true;
         }
         public void RemoveTrain(int trainIDX)
         {
@@ -391,6 +410,7 @@ namespace TrackModel
             LengthBox.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mLength + "";
             GradeBox.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mGrade + "";
             ElevationBox.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mElevation + "";
+            LightText.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mSignal;
 
             if (mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mhasCross)
             {
@@ -735,6 +755,7 @@ namespace TrackModel
             if (!(mblockIdx == -1) && mLines.Count != 0)
             {
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackRail(false);
+                mLines[mlineIdx].OccupyBlock(mblockIdx);
                 BreakTrackButton.Background = Brushes.Red;
                 FixTrackButton.Background = Brushes.Gray;
                 OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
@@ -747,6 +768,7 @@ namespace TrackModel
             if (!(mblockIdx == -1) && mLines.Count != 0)
             { 
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackRail(true);
+                mLines[mlineIdx].UnOccupyBlock(mblockIdx);
                 FixTrackButton.Background = Brushes.Green;
                 BreakTrackButton.Background = Brushes.Gray;
                 OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
@@ -759,6 +781,7 @@ namespace TrackModel
             if (!(mblockIdx == -1) && mLines.Count != 0)
             {
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmPower(true);
+                mLines[mlineIdx].UnOccupyBlock(mblockIdx);
                 FixPowerButton.Background = Brushes.Green;
                 BreakPowerButton.Background = Brushes.Gray;
                 OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
@@ -778,6 +801,7 @@ namespace TrackModel
             if (!(mblockIdx == -1) && mLines.Count != 0)
             {
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmPower(false);
+                mLines[mlineIdx].OccupyBlock(mblockIdx);
                 BreakPowerButton.Background = Brushes.Red;
                 FixPowerButton.Background = Brushes.Gray;
                 OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
@@ -807,6 +831,7 @@ namespace TrackModel
             if (!(mblockIdx == -1) && mLines.Count != 0)
             {
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackCircuit(true);
+                mLines[mlineIdx].UnOccupyBlock(mblockIdx);
                 FixCircuitButton.Background = Brushes.Green;
                 BreakCircuitButton.Background = Brushes.Gray;
                 OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";
@@ -838,6 +863,7 @@ namespace TrackModel
             if (!(mblockIdx == -1) && mLines.Count != 0)
             {
                 mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].setmtrackCircuit(false);
+                mLines[mlineIdx].OccupyBlock(mblockIdx);
                 BreakCircuitButton.Background = Brushes.Red;
                 FixCircuitButton.Background = Brushes.Gray;
                 OccupiedBlock.Text = mLines[mlineIdx].mSections[msectIdx].mBlocks[mblockIdx].mOccupied + "";

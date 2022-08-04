@@ -214,6 +214,20 @@ namespace TrainController
                     ((ControlPanel)Application.Current.MainWindow).removeController(int.Parse(Index.Text));
                 }
             }
+
+            else if (sender == Increment)
+            {
+                ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.UpdateSpeed();
+
+                if (((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mControlType)
+                {
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.CalculatePowerHW();
+                }
+                else
+                {
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.CalculatePowerSW();
+                }
+            }
         }
 
         private void KeyDownButton(object sender, KeyEventArgs e)

@@ -25,6 +25,8 @@ namespace CTC
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
+
+    //MessageBox.Show();
     public partial class MainWindow : Window
     {
         public List<Train> TrainList = new List<Train>(); //Global TrainList
@@ -32,6 +34,7 @@ namespace CTC
 
         public List<TrackModel.Line> mLines;    //Hold the track model
         public bool trackLoaded = false;        //Keep track of whether the track has been loaded or not
+        public DateTime currentTime; //This holds the current time
 
         Default_Page default_page = new Default_Page(); //Create the center-pane windows that will be switched between
         Dispatch dispatch = new Dispatch();
@@ -62,6 +65,9 @@ namespace CTC
         public int[] mGreenLeftLights = new int[151];
         public int[] mGreenRightLights = new int[151];
 
+        public bool mRedTrain = false; //This is set to true immediately after dispatching a train on the red line, gog will set it back to false after
+        public bool mGreenTrain = false; 
+
         
 
         public MainWindow()
@@ -79,6 +85,7 @@ namespace CTC
 
         private void SelectTrain_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            train_data.update_Train_Data(); //Update the train data
             Frame.NavigationService.Navigate(train_data);
         }
 
@@ -126,6 +133,7 @@ namespace CTC
                     {
                         TrainList.Add(new Train {line = trackLine[i], name = name[i], destination = destination[i], ETD = ETD[i], ETA = ETA[i] });
                         TrainList[i].calcDuration();
+                        TrainList[i].calcRoute();
                         SelectTrain.Items.Add(name[i]); //This populates the drop down list of trains with the train names
                     }
                 } 
@@ -141,13 +149,16 @@ namespace CTC
                 LoadSchedule.IsEnabled = true; //enabled the load schedule button
                 Dispatch.IsEnabled = true; //enable dispatch new train button
 
-                train_data.Dest.IsEnabled = true; //on the train_data page, enable editing of the Destination box if the user is in manual mode
+                train_data.DestLineCombo.IsEnabled = true; //on the train_data page, enable editing of the Destination box if the user is in manual mode
+                train_data.DestStationCombo.IsEnabled = true;
                 train_data.ETA.IsEnabled = true; // on the train_data page, enable editing of the ETA box
-               
-                block_data.ToggleButton.IsEnabled = true; //on block_data page, enable editing of toggle switch button
+
+                block_data.checkToggle(); //Call checkToggle() to make sure not only the CTC is in maintenance mode, but the block is in maintenance mode too
                 block_data.Close.IsEnabled = true; //on block_data page, disabled editing of close/open block status
                 block_data.Open.IsEnabled = true;
                 train_data.UpdateTrain.IsEnabled = true; //on train_data page, make the update train button available
+
+
 
 
             }
@@ -156,7 +167,8 @@ namespace CTC
                 LoadSchedule.IsEnabled = false; //disables the load schedule button
                 Dispatch.IsEnabled = false; //disable dispath new train button
 
-                train_data.Dest.IsEnabled = false; //on the train_data page, disable editing of the Destination box
+                train_data.DestLineCombo.IsEnabled = false; //on the train_data page, disable editing of the Destination box
+                train_data.DestStationCombo.IsEnabled = false;
                 train_data.ETA.IsEnabled = false; //on the train_data page, disable the editing of the ETA box
 
                 block_data.ToggleButton.IsEnabled = false; //on block_data page, disable editing of toggle switch button
@@ -209,6 +221,10 @@ namespace CTC
             mGreenRightLights = GreenRightLights;
 
         }
+        public void getTime(DateTime gogNow)
+        {
+            currentTime = gogNow; //This holds the current system time
+        }
 
         private void LineCombo_SelectionChanged(object sender, SelectionChangedEventArgs e) //Once user selects a line, populate the SectionCombo box with all the sections in that line
         {
@@ -222,12 +238,10 @@ namespace CTC
 
         }
 
-
         private void Frame_ContentRendered(object sender, EventArgs e) ///Every time the frame changes, it readjusts to fit. Without this code, the page that is sent to the frame gets cut off. Not sure if this is the best implimentation because it causes the entire window to resize a bit, look into later.
         {
             this.SizeToContent = SizeToContent.WidthAndHeight;
         }
-
 
         private void Clear_Click(object sender, RoutedEventArgs e)
         {

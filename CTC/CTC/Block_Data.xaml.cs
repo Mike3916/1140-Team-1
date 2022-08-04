@@ -21,15 +21,15 @@ namespace CTC
     /// </summary>
     public partial class Block_Data : Page
     {
-        int line;  //This hold the line, 0=red, 1=green
+        int line =0;  //This hold the line, 0=red, 1=green
         int blockNum; //This holds the block number (to get BlockIdx do this - 1)
-        int blockIdx;
-        int blockType; //This will indicate the type of block selected (0 = normal, 1 = switch, 2 = crossing);
+        int blockIdx =0;
+        int blockType = 0; //This will indicate the type of block selected (0 = normal, 1 = switch, 2 = crossing);
 
         public Block_Data()
         {
             InitializeComponent();
-            
+
         }
         public void loadBlockInfo()
         {
@@ -37,6 +37,8 @@ namespace CTC
             blockNum = Int32.Parse(((MainWindow)Application.Current.MainWindow).BlockCombo.SelectedValue.ToString()); //This holds the block number (starts at 1) (to get BlockID, do this - 1)
             blockIdx = blockNum - 1;
             blockType = 0; //This will indicate the type of block selected (0 = normal, 1 = switch, 2 = crossing);
+
+
 
 
             //Here the CTC loads only the necessary items depending on the type of block
@@ -49,7 +51,7 @@ namespace CTC
 
             if (blockType == 0) //If the selecte block is just a normal block, it doesn't have a switch or crossing light, so hide these properties
             {
-                ToggleButton.Visibility = Visibility.Collapsed;
+                ToggleButton.Visibility = Visibility.Collapsed; //Hide switching and crossing info
                 SwitchText.Visibility = Visibility.Collapsed;
                 SwitchNum.Visibility = Visibility.Collapsed;
 
@@ -59,19 +61,42 @@ namespace CTC
             }
             else if (blockType == 1) //The selected block is a switch block, hide crossing info
             {
-                CrossingRect.Visibility = Visibility.Collapsed;
+                ToggleButton.Visibility = Visibility.Visible; //Show switch info
+                SwitchText.Visibility = Visibility.Visible;
+                SwitchNum.Visibility = Visibility.Visible;
+
+                CrossingRect.Visibility = Visibility.Collapsed; //Hide crossing info
                 CrossingText.Visibility = Visibility.Collapsed;
 
+
                 if (line == 0)
+                {
                     SwitchNum.Text = ((MainWindow)Application.Current.MainWindow).mRedSwitches[blockIdx].ToString();
+                    // User can only toggle switch block if the CTC is in maintenance mode, AND the block is in maintenance mode
+                    if (((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] == 0)
+                        ToggleButton.IsEnabled = false;
+                    else if (((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] == 1 && ((MainWindow)Application.Current.MainWindow).Mode.IsChecked == true)
+                        ToggleButton.IsEnabled = true;
+                }
+
                 else if (line == 1)
+                {
                     SwitchNum.Text = ((MainWindow)Application.Current.MainWindow).mGreenSwitches[blockIdx].ToString();
+                    // User can only toggle switch block if the CTC is in maintenance mode, AND the block is in maintenance mode
+                    if (((MainWindow)Application.Current.MainWindow).mGreenMaintenanceBlocks[blockIdx] == 0)
+                        ToggleButton.IsEnabled = false;
+                    else if (((MainWindow)Application.Current.MainWindow).mGreenMaintenanceBlocks[blockIdx] == 1 && ((MainWindow)Application.Current.MainWindow).Mode.IsChecked == true)
+                        ToggleButton.IsEnabled = true;
+                }
             }
-            else if (blockType == 2) //The block is a crossing block, hide switch info
+            else if (blockType == 2) //The block is a crossing block
             {
-                ToggleButton.Visibility = Visibility.Collapsed;
+                ToggleButton.Visibility = Visibility.Collapsed; //Hide switch info
                 SwitchText.Visibility = Visibility.Collapsed;
                 SwitchNum.Visibility = Visibility.Collapsed;
+
+                CrossingRect.Visibility = Visibility.Visible; //Show crossing info
+                CrossingText.Visibility = Visibility.Visible;
 
                 if (line == 0) //red line
                     if (((MainWindow)Application.Current.MainWindow).mRedCrossings[blockIdx] == 0) //no crossing light
@@ -135,16 +160,32 @@ namespace CTC
 
         }
 
+        public void checkToggle() //If the main CTC maintenance mode is changed, this function is called to see if the toggleButton should be enabled
+        {
+            if (line== 0) //Red line
+                if (blockType == 1 && ((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] == 0) //mRedMaintenanceBlocks = 0 means it is NOT in maintenance
+                    ToggleButton.IsEnabled = false;
+                else if (blockType ==1 && ((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] == 1)
+                    ToggleButton.IsEnabled = true;
+            else if (line == 1) //Green line
+                if (blockType == 1 && ((MainWindow)Application.Current.MainWindow).mGreenMaintenanceBlocks[blockIdx] == 0)
+                    ToggleButton.IsEnabled = false;
+                else if (blockType == 1 && ((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] == 1)
+                        ToggleButton.IsEnabled = true;
+        }
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
             Open.Background = Brushes.LightGreen;
             Close.Background = Brushes.LightGray;
 
+
             if (line==0)
                 ((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] = 0; //Block is out of maintenance, send 0
             else if(line==1)
                 ((MainWindow)Application.Current.MainWindow).mGreenMaintenanceBlocks[blockIdx] = 0; //Block is out of maintenance, send 0
+
+            checkToggle(); //Changing the maintenance status to closed may allow the toggle button to be shown, so call this function
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -152,10 +193,13 @@ namespace CTC
             Close.Background = Brushes.LightGreen;
             Open.Background = Brushes.LightGray;
 
+
             if (line == 0)
                 ((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] = 1; //Block is out of maintenance, send 1
             else if (line == 1)
                 ((MainWindow)Application.Current.MainWindow).mGreenMaintenanceBlocks[blockIdx] = 1; //Block is out of maintenance, send 1
+
+            checkToggle(); //Changing the maintenance status to closed may allow the toggle button to be shown, so call this function
         }
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e) //Change the switch to it's opposite position
@@ -164,6 +208,9 @@ namespace CTC
                 ((MainWindow)Application.Current.MainWindow).mRedSwitches[blockIdx] = 1; //To indicate that the switch should be toggled, set the switch to 1
             else if (line==1) //green line
                 ((MainWindow)Application.Current.MainWindow).mGreenSwitches[blockIdx] = 1;
+
+            loadBlockInfo(); //update all values, which will update the displayed switch number
         }
+       
     }
 }

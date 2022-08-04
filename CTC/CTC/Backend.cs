@@ -26,7 +26,7 @@ namespace Backend
 		public string name;
 		public DateTime ETD;    //DateTime saves time in format such that TimeSpan can be found later between ETD and ETA via: Timespan duration = ETA.Subtract(ETD)
 		public DateTime ETA;	
-		public int destination;
+		public int destination; //holds the block number of the destination
 		public TimeSpan duration; //TimeSpan variable to keep track of time duration between ETD and ETA
         public double length = 0;  //The length of the route
         public int authority;
@@ -59,27 +59,49 @@ namespace Backend
         }
         public void calcRoute()
         {
-            int i = -1; //Start at -1
-            if (line == 0) //The red line
+            int tempAuthority;
+
+            int i = 0; //Start at 0
+            if (line == 0) //The red line   [mRedAuthorities is 0 through 76]
             {
-                while (destination != mredRoute[i])
+                while (true)
                 {
-                    i++; //increment i and add info to document, so it's already added by the time the while loop ends. (i=-1 before the while loop starts)
                     route.Add(mredRoute[i]);
                     length += ((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(mredRoute[i]).mLength; //Add the length of the block. GetBlock() is sent the Block ID (starts at 1), not block index
+                    if (destination == mredRoute[i])
+                        break;
+                    i++; //increment i and add info to document, so it's already added by the time the while loop ends. (i=-1 before the while loop starts)
+                }
+
+                authority = route.Count - 1; //If there are 5 blocks in the route, we want the authority to be 0 on the fifth block, so the max authority should be 4, or 1 less than the number of block in the route
+                tempAuthority = authority;  //This is the temporary authority, it will decrease by 1 as authorities are consecutively assigned
+                
+                for (i=0; i<= authority; i++)
+                {
+                    ((MainWindow)Application.Current.MainWindow).mRedAuthorities[route[i] - 1] = tempAuthority; //The route values are 1-indexed, but the redAuthorities are 0-indexed, so subtract one
+                    tempAuthority--; //Decrease the authority for each iteration
                 }
             }
             else if (line == 1) //The green line
             {
-                while (destination != mgreenRoute[i])
+                while (true)
                 {
-                    i++;
                     route.Add(mgreenRoute[i]);
-                    length += ((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(mredRoute[i]).mLength; //Add the length of the block. GetBlock() is sent the Block ID (starts at 1), not block index
+                    length += ((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(mgreenRoute[i]).mLength; //Add the length of the block. GetBlock() is sent the Block ID (starts at 1), not block index
+                    if (destination == mgreenRoute[i])
+                        break;
+                    i++;
+                }
+                authority = route.Count - 1; //If there are 5 blocks in the route, we want the authority to be 0 on the fifth block, so the max authority should be 4, or 1 less than the number of block in the route
+                tempAuthority = authority;  //This is the temporary authority, it will decrease by 1 as authorities are consecutively assigned
+
+                for (i = 0; i <= authority; i++)
+                {
+                    ((MainWindow)Application.Current.MainWindow).mGreenAuthorities[route[i] - 1] = tempAuthority; //The route values are 1-indexed, but the redAuthorities are 0-indexed, so subtract one
+                    tempAuthority--; //Decrease the authority for each iteration
                 }
             }
 
-            authority = route.Count; //maybe make this equal to (route.Count-1)?
             speed = length / duration.TotalSeconds; //This will give speed in meters per second
         }
     }

@@ -55,6 +55,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="333,456,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" Width="106" Background="Gainsboro" TextAlignment="Center" Text="Remove Train:"/>
         <Button x:Name="RemoveTrain" Content="-1 Train" HorizontalAlignment="Left" Margin="453,456,0,0" VerticalAlignment="Top" Height="25" Width="89" Click="Button_Click" ClickMode="Press" FontSize="14" Background="#FFFF8128"/>
         <TextBox x:Name="Index" Margin="547,456,64,0" TextWrapping="Wrap" Text="-" HorizontalContentAlignment="Center" VerticalAlignment="Top" Height="25"/>
+        <Button x:Name="Increment" Content="Increment" HorizontalAlignment="Left" Margin="49,438,0,0" VerticalAlignment="Top" Height="43" Width="269" Click="Button_Click" ClickMode="Press"/>
 
     </Grid>
 </Window>
