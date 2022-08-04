@@ -43,6 +43,7 @@ namespace TrainObject
         private double currDist;
         private double gradient;
         private int RailLine;
+        private bool baby;
 
 
 
@@ -89,6 +90,7 @@ namespace TrainObject
             currAuthority = 0;
             underground = false;
             RailLine = 0; //0=Red
+            baby = true;
 
         }
 
@@ -110,6 +112,7 @@ namespace TrainObject
             cmdAuthority = authority;
             underground = false;
             RailLine = line;
+            baby = true;
         }
 
 
@@ -432,6 +435,16 @@ namespace TrainObject
             announcement = a;
         }
 
+        public bool getBaby()
+        {
+            return baby;
+        }
+        
+        public void growUp()
+        {
+            baby = false;
+        }
+            
         public void setBlockInfo(TrackModel.Block b)
         {
             blockDist = b.mLength;
