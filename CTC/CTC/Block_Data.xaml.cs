@@ -152,9 +152,8 @@ namespace CTC
                     SignalRight.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.LightGreen;
 
 
-
-                ////////////////////////Check throughput for the line
-
+                //Fill throughput data
+                ThroughputText.Text = ((MainWindow)Application.Current.MainWindow).redThroughput.ToString();
 
             }
             else if (line == 1) //The selected line is green, put the info here that should always show up for every type of block
@@ -196,7 +195,8 @@ namespace CTC
                 else if (((MainWindow)Application.Current.MainWindow).mGreenRightLights[blockIdx] == 2)
                     SignalRight.Fill = OccupiedRect.Fill = System.Windows.Media.Brushes.LightGreen;
 
-                //Add thorughput
+                //Fill throughput data
+                ThroughputText.Text = ((MainWindow)Application.Current.MainWindow).greenThroughput.ToString();
 
             }
 

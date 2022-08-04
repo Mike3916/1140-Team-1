@@ -25,7 +25,7 @@
                 </TransformGroup>
             </Rectangle.RenderTransform>
         </Rectangle>
-        <TextBlock x:Name="ThrougputText" HorizontalAlignment="Left" Margin="151,236,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top"/>
+        <TextBlock x:Name="ThroughputText" HorizontalAlignment="Left" Margin="151,236,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top"/>
         <Rectangle x:Name="SignalLeft" Fill="LightGray" HorizontalAlignment="Left" Height="29" Margin="205,117,0,0" Stroke="Black" VerticalAlignment="Top" Width="69"/>
         <TextBlock HorizontalAlignment="Left" Margin="209,124,0,0" TextWrapping="Wrap" Text="Signal Left" VerticalAlignment="Top"/>
         <Rectangle x:Name="CrossingRect" Fill="LightGray" HorizontalAlignment="Left" Height="42" Margin="228,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="92"/>

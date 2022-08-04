@@ -97,7 +97,7 @@ namespace Gog
         bool gotTrack = false;
         bool paused = true;
 
-        int mthroughPut, mtotalSales;
+        int mredThroughPut = 0, mgreenThroughPut = 0, mredTotalSales, mgreenTotalSales;
 
         int hour, minute, second, timeElapsed = 0;
         string hourString, minuteString, secondString;
@@ -316,24 +316,18 @@ namespace Gog
                 {
                     var now = new DateTime(1,1,1, hour, minute, second);
                     ctc.getTime(now);
+                    ctc.getThroughput(mredThroughPut, mgreenThroughPut); //Read in throughput for the red and green line (ticket sales per hour)
                 }
                     
 
                 if (track != null && ctc != null && gotTrack==false && track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
                 {                                                       
-                    if (track.mLines.Count > 0)                         //Make sure the track files are loaded into the TrackModel module BEFORE the CTC model (button) is pressed to make sure the CTC will always get the full track
-                    {
-                        ctc.GetTrackLayout(track.mLines);                 //Send the track data to the CTC
-                        gotTrack = true;                                //Set boolean to mark that the track data has been read by CTC
-                    }
+                    
+                    ctc.GetTrackLayout(track.mLines);                 //Send the track data to the CTC
+                    gotTrack = true;                                //Set boolean to mark that the track data has been read by CTC
+                    
                 }
 
-                if (track != null && ctc != null &&  track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
-                {
-                    
-                                                                                                                                                                                                                                                                                                                                  
-                    
-                }
 
                 if (mRedTrain == true)
                 {
@@ -374,8 +368,16 @@ namespace Gog
                                 int temp1 = bl.mPop;
                                 int temp2 = trains.Trains[j].UpdatePassenger(bl.mPop);
                                 track.SetPopulation(temp2, bl);
-                                mtotalSales += temp1 - temp2;
-                                mthroughPut = mtotalSales / timeElapsed;
+                                if(bl.mlineName == "Red")
+                                {
+                                    mredTotalSales += temp1 - temp2;
+                                    mredThroughPut = mredTotalSales / timeElapsed;
+                                }
+                                else
+                                {
+                                    mgreenTotalSales += temp1 - temp2;
+                                    mgreenThroughPut = mgreenTotalSales / timeElapsed;
+                                }
                             }
                         }
                         else
