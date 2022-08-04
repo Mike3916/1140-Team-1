@@ -620,7 +620,7 @@ namespace TrackModel
 
         private void SectionCombo_Close(object sender, EventArgs e)
         {
-            if (SectionCombo.Items.Count > 0)
+            if (SectionCombo.Items.Count > 0 && SectionCombo.SelectedIndex != -1)
             {
                 int lineIdx = LineCombo.SelectedIndex;
                 int sectionIdx = SectionCombo.SelectedIndex;
@@ -672,7 +672,8 @@ namespace TrackModel
             {
                 ResetBlockInfo();
             }
-            msectIdx = SectionCombo.SelectedIndex;
+            if (SectionCombo.SelectedIndex != -1)
+                msectIdx = SectionCombo.SelectedIndex;
 
             SwitchCombo.Items.Clear();                  //removes previous block's switch information
             BlockCombo.Items.Clear();                   //removes previous section's block information
