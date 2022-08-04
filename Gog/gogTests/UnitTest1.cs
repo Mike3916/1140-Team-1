@@ -21,14 +21,7 @@ namespace gogTests
             Assert.AreEqual(track.mtrainList[0].commAuthority, 0);
         }
 
-        [TestMethod]
-        public void maxPowerLimited()
-        {
-            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
-            chooChoo.setPowerCmd(500000000);
-            Assert.AreEqual(120000, chooChoo.getPowerCmd(), "Account not debited correctly");
-
-        }
+       
 
         [TestMethod]
         //Checks if program will crash when attempting to connect to an unconfigured port number
@@ -453,13 +446,13 @@ namespace gogTests
     //    Assert.AreEqual(track.mtrainList[0].lineIdx, 0);
     //    Assert.AreEqual(track.mtrainList[0].commAuthority, 0);
     //}
-    [TestClass]
+   /* [TestClass]
     public class TrackControllerHW
     {
         [TestMethod]
         public void TrackReceiveOccupanciesGreen()
         {
-            Track_Controller_1._02.Controller GreenLinePLC = new Track_Controller_1._02.Controller(4, true, "127.0.0.1");
+            Track_Controller_1._02.Controller GreenLinePLC = new Track_Controller_1._02.Controller(1, true, "127.0.0.1");
 
             int[] occupancies = new int[151];
             int[] returns = new int[151];
@@ -493,7 +486,7 @@ namespace gogTests
         public void ReceiveAuthoritiesGreen()
         {
             //Test valid constructor
-            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(1, true);
             int[] mAuthorities = new int[151];
             int[] returns = new int[151];
             Random rnd = new Random();
@@ -524,7 +517,7 @@ namespace gogTests
         public void ReceiveSpeedsGreen()
         {
             //Test valid constructor
-            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(1, true);
             int[] mSpeeds = new int[151];
             int[] returns = new int[151];
             Random rnd = new Random();
@@ -554,7 +547,7 @@ namespace gogTests
         [TestMethod]
         public void ReceiveSwitches()
         {
-            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(1, true);
             int[] mOcc = new int[151];
             green.SendOccupancies(mOcc);
             int[] mSwitches = green.ReceiveSwitches(151);
@@ -591,7 +584,7 @@ namespace gogTests
         [TestMethod]
         public void Maintenance()
         {
-            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(1, true);
             int[] mOcc = new int[151];
             int[] mMaint = new int[151];
             green.SendOccupancies(mOcc);
@@ -634,7 +627,7 @@ namespace gogTests
         public void OverrideSwitches()
         {
             //Test valid constructor
-            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(1, true);
             int[] mSwitches = new int[151];
             int[] returns = new int[151];
             Random rnd = new Random();
@@ -674,7 +667,7 @@ namespace gogTests
         [TestMethod]
         public void TransitLights()
         {
-            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(1, true);
             int[] mOcc = new int[151];
             int[] mMaint = new int[151];
             green.SendOccupancies(mOcc);
@@ -707,8 +700,37 @@ namespace gogTests
             green.SendOccupancies(mOcc);
             mLeftLights = green.ReceiveLeftLights(151);
             Assert.AreEqual(mLeftLights[76], 0);
+
+            Random rnd = new Random();
+            int[] results = new int[151];
+            int[] stuff = new int[151];
+            for (int i = 0; i < mRightLights.Length; i++)
+            {
+                stuff[i] = rnd.Next(1);
+            }
+            green.SendLeftLights(stuff);
+            results = green.ReceiveLeftLights(151);
+            for (int i = 0; i < mLeftLights.Length; i++)
+            {
+                Assert.AreEqual(stuff[i], results[i]);
+            }
+
+            stuff = new int[151];
+            results = new int[151];
+            for (int i = 0; i < mRightLights.Length; i++)
+            {
+                stuff[i] = rnd.Next(1);
+            }
+            green.SendRightLights(stuff);
+            results = green.ReceiveRightLights(151);
+            for (int i = 0; i < mLeftLights.Length; i++)
+            {
+                Assert.AreEqual(stuff[i], results[i]);
+            }
         }
-    }
+
+        
+    }*/
     [TestClass]
     public class TrainControllerSW
     {
@@ -1275,5 +1297,81 @@ namespace gogTests
             train.UpdateSpeed();
             Assert.IsTrue(train.mCurSpeed < 5); // train decelerates from emergency brake
         }
+    }
+
+    [TestClass]
+    public class TrainModel
+    {
+        [TestMethod]
+        public void maxPowerLimited()
+        {
+            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
+            chooChoo.setPowerCmd(500000000);
+            Assert.AreEqual(120000, chooChoo.getPowerCmd(), "Power not limited");
+
+        }
+
+        [TestMethod]
+        public void emergencyBrake()
+        {
+            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
+            chooChoo.toggleEmergencyBrake();
+            Assert.AreEqual(0, chooChoo.getPowerCmd(), "Emergency brake not activated");
+            Assert.AreEqual(true, chooChoo.getEmergencyBrake(), "Emergency brake not activated");
+            Assert.AreEqual(true, chooChoo.getAcceleration()<0, "Emergency brake not activated");
+        }
+        [TestMethod]
+        public void serviceBrake()
+        {
+            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
+            chooChoo.toggleServiceBrake();
+            Assert.AreEqual(0, chooChoo.getPowerCmd(), "Service brake not activated");
+            Assert.AreEqual(true, chooChoo.getServiceBrake(), "Service brake not activated");
+            Assert.AreEqual(true, chooChoo.getAcceleration() < 0, "Emergency brake not activated");
+        }
+        [TestMethod]
+        public void brakeFailure()
+        {
+            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
+            chooChoo.setPowerCmd(120000);
+            chooChoo.toggleBrakeFailure();
+            chooChoo.toggleServiceBrake();
+            Assert.AreNotEqual(0, chooChoo.getPowerCmd(), "Brake failure not activated");
+            Assert.AreEqual(true, chooChoo.getServiceBrake(), "Service brake not activated");
+        }
+
+        [TestMethod]
+        public void accelerationTest()
+        {
+            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
+            chooChoo.setPowerCmd(120000);
+            chooChoo.increment();
+            chooChoo.increment();
+            Assert.AreEqual(0.5, chooChoo.getAcceleration(), "Acceleration not working");
+            for(int i = 0; i < 10000; i++)
+            {
+                chooChoo.increment();
+            }
+            Assert.IsTrue(chooChoo.getAcceleration() < 0.5, "Acceleration not working");
+        }
+
+        [TestMethod]
+        public void gradTest()
+        {
+            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
+            chooChoo.setPowerCmd(120000);
+            for (int i = 0; i < 1000; i++)
+            {
+                chooChoo.increment();
+            }
+            chooChoo.toggleServiceBrake();
+            double dec = chooChoo.getAcceleration();
+            chooChoo.setGrade(5);
+            Assert.IsTrue(dec > chooChoo.getAcceleration(), "Grad not working");
+
+        }
+
+        
+
     }
 }

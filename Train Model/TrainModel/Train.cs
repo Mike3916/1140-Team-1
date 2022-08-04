@@ -22,10 +22,11 @@ namespace TrainObject
         private bool emergencyBrake;
         private bool serviceBrake;
         private bool engineFailure;
+        private bool brakeFailure;
         private bool signalPickUp;
         private int cmdAuthority;
         private int currAuthority;
-        private int passengers=58;
+        private int passengers=0;
         private int crew=6;
         private bool interiorLights;
         private bool exteriorLights;
@@ -45,6 +46,10 @@ namespace TrainObject
         private int RailLine;
         private bool baby;
 
+        private int blockID=0;
+
+        private bool StationRight;
+        private bool StationLeft;
 
 
 
@@ -187,6 +192,11 @@ namespace TrainObject
             commandedSpeed = s;
         }
 
+        public void setCommandedSpeedMPH(double s)
+        {
+            commandedSpeed = s / 2.23694;
+        }
+
         public double getCommandedSpeed() { 
             return commandedSpeed; 
         }
@@ -231,6 +241,11 @@ namespace TrainObject
             return underground;
         }
 
+        public int getBlockID()
+        {
+            return blockID;
+        }
+
         public double getForce()
         {
             double force=0;
@@ -239,7 +254,7 @@ namespace TrainObject
                 force = 0;
             }
 
-            if(currentSpeed!=0)
+            else if(currentSpeed!=0)
             {
                 force= powerCmd / currentSpeed;
             }
@@ -252,11 +267,11 @@ namespace TrainObject
                 force= 1000;
             }
 
-            force -= (mass * 9.81 * Math.Sin(gradient));//gravitational force
-
+            force -= (mass * 9.81 * Math.Sin(Math.Atan(gradient/100)));//gravitational force
+            
             if (currentSpeed > 0)
             {
-                force -= (mass * 9.81 * Math.Cos(gradient)) * frictionCoefficient;//friction force
+                force -= (mass * 9.81 * Math.Cos(Math.Atan(gradient/100 ))) * frictionCoefficient;//friction force
             }
             
             return force;
@@ -270,7 +285,7 @@ namespace TrainObject
             {//if acceleration greater than limit and no brakes on
                 return accelerationLimit;
             }
-            else if (serviceBrake && !emergencyBrake)
+            else if (serviceBrake && !emergencyBrake &&!brakeFailure)
             {
                 powerCmd = 0;
                 if (Math.Abs(accelerationCalc) + decelerationLimitService > 0)
@@ -338,7 +353,10 @@ namespace TrainObject
             return timeTillNextBlock;
         }
 
-
+        public int getAuthority()
+        {
+            return cmdAuthority;
+        }
 
         public int getPassengers()
         {
@@ -445,7 +463,7 @@ namespace TrainObject
             baby = false;
         }
             
-        public void setBlockInfo(TrackModel.Block b)
+        public void setBlockInfo(TrackModel.Block b, int auth)
         {
             blockDist = b.mLength;
             gradient = b.mGrade*90;
@@ -461,8 +479,10 @@ namespace TrainObject
             
            
             mass = 56.7 * 907.1850030836 + 65 * passengers + 65 * crew;
-
+            underground = b.mUnderground;
+          
             currDist = 0;
+            cmdAuthority--;
             currAuthority++;
 
             if(signalPickUp)
@@ -470,7 +490,42 @@ namespace TrainObject
             else
                 beaconMessage = "";
 
+            if (cmdAuthority == 0)
+            {
+                cmdAuthority = auth;
+                currAuthority = 0;
+            }
+
+            commandedSpeed=b.mspeedLimit;
+
+            blockID = b.mblockNum;
+
+            if (b.mstationSide.Contains("Left"))
+            {
+                StationLeft = true;
+            }
+            else
+                StationLeft = false;
+            if (b.mstationSide.Contains("Right"))
+            {
+                StationRight = true;
+            }
+            else
+                StationRight = false;
+
         }
+
+        public bool getStationRight()
+        {
+            return StationRight;
+        }
+
+        public bool getStationLeft()
+        {
+            return StationLeft;
+            return StationLeft;
+        }
+
 
         public int UpdatePassenger(int p)
         {
@@ -499,6 +554,35 @@ namespace TrainObject
             }
         }
 
+        public void setBlockDist(double dist)
+        {
+            blockDist = dist;
+            currDist = 0;
+
+        }
+
+        public void setBlockDistFM(double dist)
+        {
+            blockDist = dist / 3.280839;
+            currDist = 0;
+
+        }
+
+        public double getBlockDist()
+        {
+            return blockDist;
+        }
+        
+        public double getBlockDistMF(){
+            return blockDist * 3.280839;
+        }
+
+        public double getRemainingDistMF()
+        {
+            return (blockDist-currDist) * 3.280839;
+        }
+        
+
         public int getLine()
         {
             return RailLine;
@@ -514,6 +598,25 @@ namespace TrainObject
         public int getID()
         {
             return ID;
+        }
+
+        public double getGrade()
+        {
+            return gradient;
+        }
+
+        public void setGrade(double g)
+        {
+            gradient = g;
+        }
+
+        public void toggleBrakeFailure(){
+            brakeFailure = !brakeFailure;
+        }
+
+        public bool getBrakeFailure()
+        {
+            return brakeFailure;
         }
 
     }
