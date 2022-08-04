@@ -27,7 +27,7 @@ namespace Track_Controller_1._02
                 mHardPLC = true;
                 mPort = mNewPort;
                 mIP = mNewIP;
-                mHWC = new HWController(mNewPort,230400);
+                mHWC = new HWController(mNewPort,115200);
             }
         }
 
