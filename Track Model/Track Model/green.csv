@@ -60,8 +60,8 @@ Green,J,58,50,0,30,SWITCH (58-151:58-57),,0,0.5
 Green,J,59,50,0,30,,,0,0.5
 Green,J,60,50,0,30,,,0,0.5
 Green,J,61,50,0,30,,,0,0.5
-Green,J,62,50,0,30,SWITCH (62-151:62-63),,0,0.5
-Green,K,63,100,0,70,,,0,0.5
+Green,J,62,50,0,30,,,0,0.5
+Green,K,63,100,0,70,SWITCH (63-151:62-63),,0,0.5
 Green,K,64,100,0,70,,,0,0.5
 Green,K,65,200,0,70,STATION; GLENBURY,Right,0,0.5
 Green,K,66,200,0,70,,,0,0.5
@@ -74,8 +74,8 @@ Green,L,72,100,0,40,,,0,0.5
 Green,L,73,100,0,40,STATION; DORMONT,Right,0,0.5
 Green,M,74,100,0,40,,,0,0.5
 Green,M,75,100,0,40,,,0,0.5
-Green,M,76,100,0,40,SWITCH (76-77:76-101),,0,0.5
-Green,N,77,300,0,70,STATION; MT LEBANON,Left/Right,0,0.5
+Green,M,76,100,0,40,,,0,0.5
+Green,N,77,300,0,70,STATION; MT LEBANON; SWITCH(76-77:77-101),Left/Right,0,0.5
 Green,N,78,300,0,70,,,0,0.5
 Green,N,79,300,0,70,,,0,0.5
 Green,N,80,300,0,70,,,0,0.5
