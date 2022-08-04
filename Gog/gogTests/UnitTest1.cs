@@ -488,6 +488,105 @@ namespace gogTests
 
 
         }
+
+        [TestMethod]
+        public void ReceiveAuthoritiesGreen()
+        {
+            //Test valid constructor
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            int[] mAuthorities = new int[151];
+            int[] returns = new int[151];
+            Random rnd = new Random();
+
+            green.SendAuthorities(mAuthorities);
+            returns = green.ReceiveAuthorities(151);
+
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreEqual(mAuthorities[i], returns[i]);
+            }
+
+            for (int i = 0; i < returns.Length; i++)
+            {
+                mAuthorities[i] = rnd.Next(1);
+            }
+
+
+            green.SendAuthorities(mAuthorities);
+            returns = green.ReceiveAuthorities(151);
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreEqual(mAuthorities[i], returns[i]);
+            }
+        }
+
+        [TestMethod]
+        public void ReceiveSpeedsGreen()
+        {
+            //Test valid constructor
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            int[] mSpeeds = new int[151];
+            int[] returns = new int[151];
+            Random rnd = new Random();
+
+            green.SendSpeeds(mSpeeds);
+            returns = green.ReceiveSpeeds(151);
+
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreEqual(mSpeeds[i], returns[i]);
+            }
+
+            for (int i = 0; i < returns.Length; i++)
+            {
+                mSpeeds[i] = rnd.Next(1);
+            }
+
+
+            green.SendSpeeds(mSpeeds);
+            returns = green.ReceiveSpeeds(151);
+            for (int i = 0; i < returns.Length; i++)
+            {
+                Assert.AreEqual(mSpeeds[i], returns[i]);
+            }
+        }
+
+        [TestMethod]
+        public void Switches()
+        {
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            int[] mOcc = new int[151];
+            green.SendOccupancies(mOcc);
+            int[] mSwitches = green.ReceiveSwitches(151);
+
+            
+            Assert.IsTrue(mSwitches[62] == 151);
+            Assert.IsTrue(mSwitches[76] == 76);
+            Assert.IsTrue(mSwitches[84] == 100);
+
+            mOcc[61] = 1;
+            green.SendOccupancies(mOcc);
+            mSwitches = green.ReceiveSwitches(151);
+            Assert.IsTrue(mSwitches[62] == 62);
+            Assert.IsTrue(mSwitches[76] == 76);
+            Assert.IsTrue(mSwitches[84] == 100);
+
+            mOcc[61] = 0;
+            mOcc[76] = 1;
+            green.SendOccupancies(mOcc);
+            mSwitches = green.ReceiveSwitches(151);
+            Assert.IsTrue(mSwitches[62] == 151);
+            Assert.IsTrue(mSwitches[76] == 101);
+            Assert.IsTrue(mSwitches[84] == 86);
+
+            mOcc[76] = 0;
+            mOcc[84] = 1;
+            green.SendOccupancies(mOcc);
+            mSwitches = green.ReceiveSwitches(151);
+            Assert.IsTrue(mSwitches[62] == 151);
+            Assert.IsTrue(mSwitches[76] == 101);
+            Assert.IsTrue(mSwitches[84] == 86);
+        }
     }
     [TestClass]
     public class TrainControllerSW
