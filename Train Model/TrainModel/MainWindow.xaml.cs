@@ -107,7 +107,12 @@ namespace TrainModel
 
             non_Vitals.Text = "Number of Passengers: " + Trains[i].getPassengers() + "\nNumber of Crew: " + Trains[i].getCrew() + "\nNumber of Cars: " + Trains[i].getCars().ToString() + "\nCapacity: " + Trains[i].getCapacity().ToString() + "\nInterior Lights: " + Trains[i].getInteriorLights() + "Exterior Lights: " + Trains[i].getExteriorLights() + "\nDoors: L-Open\t\tR-Closed\nTemperature: " + Trains[i].getTemperature().ToString() + "F";
 
-
+            if (Trains[i].getBaby())
+            {
+                Trains[i].growUp();
+                return true;
+            }
+                
             return Trains[i].askForInfo();
 
         }

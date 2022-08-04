@@ -80,6 +80,8 @@
         <TextBlock x:Name="InteriorLight" HorizontalAlignment="Left" Margin="523,248,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock x:Name="LDoor"  HorizontalAlignment="Left"  TextWrapping="Wrap"  Margin="652,264,0,0" VerticalAlignment="Top" Panel.ZIndex="3"/>
         <TextBlock x:Name="RDoor"  HorizontalAlignment="Left"  TextWrapping="Wrap" Margin="515,262,0,0" VerticalAlignment="Top" Panel.ZIndex="6" />
+        <TextBox   x:Name="cmdSpeed" HorizontalAlignment="Left" Margin="157,197,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox   x:Name="Authority" HorizontalAlignment="Left" Margin="103,94,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
 
 
 
