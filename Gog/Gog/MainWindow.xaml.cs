@@ -361,7 +361,7 @@ namespace Gog
                 {
 
                     newBlock = trains.UpdateValues(trainCtrl.mTrainSetList[j],j);
-                    trainCtrl.UpdateValues(trains.Trains[j].getCmdAuthority(), trains.Trains[j].getCurrAuthority(), trains.Trains[j].getCommandedSpeedMPH(), trains.Trains[j].getCurrentSpeedMPH(), trains.Trains[j].getBeacon(), trains.Trains[j].getUnderground(), trains.Trains[j].getStationLeft(), trains.Trains[j].getStationRight(), j);
+                    trainCtrl.UpdateValues(trains.Trains[j].getCmdAuthority(), trains.Trains[j].getCurrAuthority(), trains.Trains[j].getCommandedSpeedMPH(), trains.Trains[j].getCurrentSpeedMPH(), trains.Trains[j].getBeacon(), trains.Trains[j].getUnderground(), trains.Trains[j].getStationLeft(), trains.Trains[j].getStationRight(),trains.Trains[j].getEmergencyBrake(), j);
 
                     if (newBlock)                  //if train at j enters a new block
                     { 

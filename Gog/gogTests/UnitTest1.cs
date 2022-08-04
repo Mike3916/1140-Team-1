@@ -21,14 +21,7 @@ namespace gogTests
             Assert.AreEqual(track.mtrainList[0].commAuthority, 0);
         }
 
-        [TestMethod]
-        public void maxPowerLimited()
-        {
-            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
-            chooChoo.setPowerCmd(500000000);
-            Assert.AreEqual(120000, chooChoo.getPowerCmd(), "Power not limited");
-
-        }
+       
 
         [TestMethod]
         //Checks if program will crash when attempting to connect to an unconfigured port number
@@ -1304,5 +1297,48 @@ namespace gogTests
             train.UpdateSpeed();
             Assert.IsTrue(train.mCurSpeed < 5); // train decelerates from emergency brake
         }
+    }
+
+    [TestClass]
+    public class TrainModel
+    {
+        [TestMethod]
+        public void maxPowerLimited()
+        {
+            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
+            chooChoo.setPowerCmd(500000000);
+            Assert.AreEqual(120000, chooChoo.getPowerCmd(), "Power not limited");
+
+        }
+
+        [TestMethod]
+        public void emergencyBrake()
+        {
+            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
+            chooChoo.toggleEmergencyBrake();
+            Assert.AreEqual(0, chooChoo.getPowerCmd(), "Emergency brake not activated");
+            Assert.AreEqual(true, chooChoo.getEmergencyBrake(), "Emergency brake not activated");
+        }
+        [TestMethod]
+        public void serviceBrake()
+        {
+            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
+            chooChoo.toggleServiceBrake();
+            Assert.AreEqual(0, chooChoo.getPowerCmd(), "Service brake not activated");
+            Assert.AreEqual(true, chooChoo.getServiceBrake(), "Service brake not activated");
+        }
+        [TestMethod]
+        public void brakeFailure()
+        {
+            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
+            chooChoo.setPowerCmd(120000);
+            chooChoo.toggleBrakeFailure();
+            chooChoo.toggleServiceBrake();
+            Assert.AreNotEqual(0, chooChoo.getPowerCmd(), "Brake failure not activated");
+            Assert.AreEqual(true, chooChoo.getServiceBrake(), "Service brake not activated");
+        }
+
+        
+
     }
 }
