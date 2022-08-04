@@ -463,7 +463,7 @@ namespace TrainObject
             mass = 56.7 * 907.1850030836 + 65 * passengers + 65 * crew;
 
             currDist = 0;
-            currAuthority++;
+            currAuthority++;    
 
             if(signalPickUp)
                 beaconMessage = b.mBeacon;

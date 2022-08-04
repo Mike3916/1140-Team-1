@@ -26,7 +26,7 @@ namespace gogTests
         {
             TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
             chooChoo.setPowerCmd(500000000);
-            Assert.AreEqual(120000, chooChoo.getPowerCmd(), "Account not debited correctly");
+            Assert.AreEqual(120000, chooChoo.getPowerCmd(), "Power not limited");
 
         }
 
