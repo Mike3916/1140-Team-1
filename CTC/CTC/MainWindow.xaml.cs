@@ -34,6 +34,7 @@ namespace CTC
 
         public List<TrackModel.Line> mLines;    //Hold the track model
         public bool trackLoaded = false;        //Keep track of whether the track has been loaded or not
+        public DateTime currentTime; //This holds the current time
 
         Default_Page default_page = new Default_Page(); //Create the center-pane windows that will be switched between
         Dispatch dispatch = new Dispatch();
@@ -218,6 +219,10 @@ namespace CTC
             mGreenLeftLights = GreenLeftLights;
             mGreenRightLights = GreenRightLights;
 
+        }
+        public void getTime(DateTime gogNow)
+        {
+            currentTime = gogNow; //This holds the current system time
         }
 
         private void LineCombo_SelectionChanged(object sender, SelectionChangedEventArgs e) //Once user selects a line, populate the SectionCombo box with all the sections in that line

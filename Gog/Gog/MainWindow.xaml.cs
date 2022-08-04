@@ -113,7 +113,7 @@ namespace Gog
 
             InitTimer();
         }
-
+        
         //events 
         private void TrackModelButton_Click(object sender, RoutedEventArgs e)
         {
@@ -306,6 +306,12 @@ namespace Gog
                     PLCsetCTC();
                     ctc.GetTrackController(mRedMaintenanceBlocks, mRedOccupancies, mRedSpeeds, mRedAuthorities, mRedCrossings, mRedSwitches, mRedLeftLights, mRedRightLights, mGreenMaintenanceBlocks, mGreenOccupancies, mGreenSpeeds, mGreenAuthorities, mGreenCrossings, mGreenSwitches, mGreenLeftLights, mGreenRightLights); //Write function in CTC to read in these values 
                 }
+                if (track != null && ctc != null) //This sends current simulation time to ctc (needed for ETD for dispatching a train)
+                {
+                    var now = new DateTime(hour, minute, second);
+                    ctc.getTime(now);
+                }
+                    
 
                 if (track != null && ctc != null && gotTrack==false && track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
                 {                                                       
