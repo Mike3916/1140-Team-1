@@ -233,23 +233,23 @@ namespace Gog
                     
                 }
 
-                if (ctc.mDispatch != -1 && ctc != null && track != null && trains != null && trainCtrl != null)
-                {
-                    if (mRedTrain == true)
-                    {
-                        ctc.mDispatch = 0;
-                    }
-                    if (mGreenTrain == true)
-                    {
-                        ctc.mDispatch = 1;
-                    }
-                    track.AddTrain(ctc.mDispatch, ctc.mAuth);
-                    trains.addTrain(ctc.mDispatch, ctc.mAuth);
-                    trainCtrl.addController((ctc.mDispatch).ToBoolean());
-                    ctc.mDispatch = -1;
-                mRedline1.SendTrain(false);
-                mGreenLine1.SendTrain(false);
-                }
+                //if (ctc.mDispatch != -1 && ctc != null && track != null && trains != null && trainCtrl != null)
+                //{
+                //    if (mRedTrain == true)
+                //    {
+                //        ctc.mDispatch = 0;
+                //    }
+                //    if (mGreenTrain == true)
+                //    {
+                //        ctc.mDispatch = 1;
+                //    }
+                //    track.AddTrain(ctc.mDispatch, ctc.mAuth);
+                //    trains.addTrain(ctc.mDispatch, ctc.mAuth);
+                //    trainCtrl.addController((ctc.mDispatch).ToBoolean());
+                //    ctc.mDispatch = -1;
+                //mRedline1.SendTrain(false);
+                //mGreenLine1.SendTrain(false);
+                //}
 
 
 
