@@ -252,6 +252,7 @@ namespace TrackModel
 
         public bool OccupyBlock(int blockIdx)
         {
+            bool occ = false;
             for (int i = 0; i < this.GetmnumSections(); i++)
             {
                 for (int j = 0; j < this.mSections[i].getmnumBlocks(); j++)
@@ -263,17 +264,18 @@ namespace TrackModel
                         else if (this.mSections[i].mBlocks[j].mOccupied == false)
                         {
                             this.mSections[i].mBlocks[j].mOccupied = true;
-                            return this.mSections[i].mBlocks[j].mOccupied; //successful occupy
+                            occ =  this.mSections[i].mBlocks[j].mOccupied; //successful occupy
                         }
                     }
                 }
             }
-
-            return false; //failed to find 
+            UpdateSignal();
+            return occ; //failed to find 
         }
 
         public bool UnOccupyBlock(int blockIdx)
         {
+            bool occ = false;
             for (int i = 0; i < this.GetmnumSections(); i++)
             {
                 for (int j = 0; j < this.mSections[i].getmnumBlocks(); j++)
@@ -285,13 +287,14 @@ namespace TrackModel
                         else if (this.mSections[i].mBlocks[j].mOccupied == true)
                         {
                             this.mSections[i].mBlocks[j].mOccupied = false;
-                            return this.mSections[i].mBlocks[j].mOccupied; //successful unoccupy
+                            occ =  this.mSections[i].mBlocks[j].mOccupied; //successful unoccupy
+                            break;
                         }
                     }
                 }
             }
-
-            return false; //failed to find 
+            UpdateSignal();
+            return occ; //failed to find 
         }
 
         int[] mredRoute = {77, 9, 8, 7, 6, 5, 4, 3, 2, 1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 76, 75,
