@@ -308,7 +308,7 @@ namespace Gog
                 }
                 if (track != null && ctc != null) //This sends current simulation time to ctc (needed for ETD for dispatching a train)
                 {
-                    var now = new DateTime(hour, minute, second);
+                    var now = new DateTime(0,0,0,hour, minute, second);
                     ctc.getTime(now);
                 }
                     
