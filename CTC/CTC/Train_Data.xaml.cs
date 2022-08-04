@@ -106,7 +106,7 @@ namespace CTC
 
             if (DestLineCombo.SelectedIndex == 0) //Red line
             {
-                ((MainWindow)Application.Current.MainWindow).TrainList[i].destination = (int)redStation[DestStationCombo.SelectedIndex,0];
+                ((MainWindow)Application.Current.MainWindow).TrainList[i].destination = (int)redStation[DestStationCombo.SelectedIndex,0]; //Update destination using the selected index and the corresponding station block number
             }
             else if (DestLineCombo.SelectedIndex == 1) //Green line
             {
