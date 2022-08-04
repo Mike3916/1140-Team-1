@@ -19,9 +19,17 @@ namespace TrainController
     /// </summary>
     public partial class TestPanel : Window
     {
+        ControlPanel main;
         public TestPanel()
         {
             InitializeComponent();
+        }
+        public TestPanel(ControlPanel win)
+        {
+            InitializeComponent();
+
+            main = win;
+            Application.Current.MainWindow = main;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -33,21 +41,22 @@ namespace TrainController
                 ManualMode.Content = "OFF";
                 ManualMode.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
 
-                ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).AutoMode, e);
+                ((ControlPanel)Application.Current.MainWindow).Button_Click(((ControlPanel)Application.Current.MainWindow).AutoMode, e);
 
-                ((MainWindow)Application.Current.MainWindow).AutoMode.IsEnabled = false;
-                ((MainWindow)Application.Current.MainWindow).ManualMode.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).LeftDoors.IsEnabled = false;
-                ((MainWindow)Application.Current.MainWindow).RightDoors.IsEnabled = false;
-                ((MainWindow)Application.Current.MainWindow).InteriorLights.IsEnabled = false;
-                ((MainWindow)Application.Current.MainWindow).ExteriorLights.IsEnabled = false;
-                ((MainWindow)Application.Current.MainWindow).Announcements.IsEnabled = false;
-                ((MainWindow)Application.Current.MainWindow).TempIncrease.IsEnabled = false;
-                ((MainWindow)Application.Current.MainWindow).TempDecrease.IsEnabled = false;
-                ((MainWindow)Application.Current.MainWindow).SetSpeedBox.IsEnabled = false;
-                ((MainWindow)Application.Current.MainWindow).SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0x30, 0, 0, 0));
-                ((MainWindow)Application.Current.MainWindow).mAutoMode = true;
+                ((ControlPanel)Application.Current.MainWindow).AutoMode.IsEnabled = false;
+                ((ControlPanel)Application.Current.MainWindow).ManualMode.IsEnabled = true;
+                ((ControlPanel)Application.Current.MainWindow).LeftDoors.IsEnabled = false;
+                ((ControlPanel)Application.Current.MainWindow).RightDoors.IsEnabled = false;
+                ((ControlPanel)Application.Current.MainWindow).InteriorLights.IsEnabled = false;
+                ((ControlPanel)Application.Current.MainWindow).ExteriorLights.IsEnabled = false;
+                ((ControlPanel)Application.Current.MainWindow).Announcements.IsEnabled = false;
+                ((ControlPanel)Application.Current.MainWindow).TempIncrease.IsEnabled = false;
+                ((ControlPanel)Application.Current.MainWindow).TempDecrease.IsEnabled = false;
+                ((ControlPanel)Application.Current.MainWindow).SetSpeedBox.IsEnabled = false;
+                ((ControlPanel)Application.Current.MainWindow).SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0x30, 0, 0, 0));
+                ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setAutoMode();
             }
+
             else if (sender == ManualMode)
             {
                 ManualMode.Content = "ON";
@@ -55,54 +64,56 @@ namespace TrainController
                 AutoMode.Content = "OFF";
                 AutoMode.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
 
-                ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).ManualMode, e);
+                ((ControlPanel)Application.Current.MainWindow).Button_Click(((ControlPanel)Application.Current.MainWindow).ManualMode, e);
 
-                ((MainWindow)Application.Current.MainWindow).ManualMode.IsEnabled = false;
-                ((MainWindow)Application.Current.MainWindow).AutoMode.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).LeftDoors.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).RightDoors.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).InteriorLights.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).ExteriorLights.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).Announcements.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).TempIncrease.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).TempDecrease.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).SetSpeedBox.IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xDF, 0x20));
-                ((MainWindow)Application.Current.MainWindow).mAutoMode = false;
+                ((ControlPanel)Application.Current.MainWindow).ManualMode.IsEnabled = false;
+                ((ControlPanel)Application.Current.MainWindow).AutoMode.IsEnabled = true;
+                ((ControlPanel)Application.Current.MainWindow).LeftDoors.IsEnabled = true;
+                ((ControlPanel)Application.Current.MainWindow).RightDoors.IsEnabled = true;
+                ((ControlPanel)Application.Current.MainWindow).InteriorLights.IsEnabled = true;
+                ((ControlPanel)Application.Current.MainWindow).ExteriorLights.IsEnabled = true;
+                ((ControlPanel)Application.Current.MainWindow).Announcements.IsEnabled = true;
+                ((ControlPanel)Application.Current.MainWindow).TempIncrease.IsEnabled = true;
+                ((ControlPanel)Application.Current.MainWindow).TempDecrease.IsEnabled = true;
+                ((ControlPanel)Application.Current.MainWindow).SetSpeedBox.IsEnabled = true;
+                ((ControlPanel)Application.Current.MainWindow).SetSpeed.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xDF, 0x20));
+                ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setManualMode();
             }
 
             else if (sender == EmergencyBrake)
             {
-                ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).EmergencyBrake, e);
+                ((ControlPanel)Application.Current.MainWindow).Button_Click(((ControlPanel)Application.Current.MainWindow).EmergencyBrake, e);
                 EmergencyBrake.Content = "ON";
+                EmergencyBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
             }
 
             else if (sender == LeftDoors)
             {
-                if (!((MainWindow)Application.Current.MainWindow).mLeftDoorsStatus)
+                if (!((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mLeftDoorsStatus)
                 {
-                    ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).LeftDoors, e);
+                    ((ControlPanel)Application.Current.MainWindow).Button_Click(((ControlPanel)Application.Current.MainWindow).LeftDoors, e);
                     LeftDoors.Content = "OPEN";
                     LeftDoors.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
                 }
                 else
                 {
-                    ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).LeftDoors, e);
+                    ((ControlPanel)Application.Current.MainWindow).Button_Click(((ControlPanel)Application.Current.MainWindow).LeftDoors, e);
                     LeftDoors.Content = "CLOSED";
                     LeftDoors.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
                 }
             }
+
             else if (sender == RightDoors)
             {
-                if (!((MainWindow)Application.Current.MainWindow).mRightDoorsStatus)
+                if (!((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mRightDoorsStatus)
                 {
-                    ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).RightDoors, e);
+                    ((ControlPanel)Application.Current.MainWindow).Button_Click(((ControlPanel)Application.Current.MainWindow).RightDoors, e);
                     RightDoors.Content = "OPEN";
                     RightDoors.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
                 }
                 else
                 {
-                    ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).RightDoors, e);
+                    ((ControlPanel)Application.Current.MainWindow).Button_Click(((ControlPanel)Application.Current.MainWindow).RightDoors, e);
                     RightDoors.Content = "CLOSED";
                     RightDoors.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
                 }
@@ -110,30 +121,31 @@ namespace TrainController
 
             else if (sender == InteriorLights)
             {
-                if (!((MainWindow)Application.Current.MainWindow).mInteriorLightsStatus)
+                if (!((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mInteriorLightsStatus)
                 {
-                    ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).InteriorLights, e);
+                    ((ControlPanel)Application.Current.MainWindow).Button_Click(((ControlPanel)Application.Current.MainWindow).InteriorLights, e);
                     InteriorLights.Content = "ON";
                     InteriorLights.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
                 }
                 else
                 {
-                    ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).InteriorLights, e);
+                    ((ControlPanel)Application.Current.MainWindow).Button_Click(((ControlPanel)Application.Current.MainWindow).InteriorLights, e);
                     InteriorLights.Content = "OFF";
                     InteriorLights.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
                 }
             }
+
             else if (sender == ExteriorLights)
             {
-                if (!((MainWindow)Application.Current.MainWindow).mExteriorLightsStatus)
+                if (!((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mExteriorLightsStatus)
                 {
-                    ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).ExteriorLights, e);
+                    ((ControlPanel)Application.Current.MainWindow).Button_Click(((ControlPanel)Application.Current.MainWindow).ExteriorLights, e);
                     ExteriorLights.Content = "ON";
                     ExteriorLights.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
                 }
                 else
                 {
-                    ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).ExteriorLights, e);
+                    ((ControlPanel)Application.Current.MainWindow).Button_Click(((ControlPanel)Application.Current.MainWindow).ExteriorLights, e);
                     ExteriorLights.Content = "OFF";
                     ExteriorLights.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
                 }
@@ -141,28 +153,79 @@ namespace TrainController
 
             else if (sender == TempIncrease)
             {
-                ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).TempIncrease, e);
-                Temperature.Text = ((MainWindow)Application.Current.MainWindow).mTemperature.ToString();
+                ((ControlPanel)Application.Current.MainWindow).Button_Click(((ControlPanel)Application.Current.MainWindow).TempIncrease, e);
+                Temperature.Text = ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mTemperature.ToString();
             }
+
             else if (sender == TempDecrease)
             {
-                ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).TempDecrease, e);
-                Temperature.Text = ((MainWindow)Application.Current.MainWindow).mTemperature.ToString();
+                ((ControlPanel)Application.Current.MainWindow).Button_Click(((ControlPanel)Application.Current.MainWindow).TempDecrease, e);
+                Temperature.Text = ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mTemperature.ToString();
             }
 
             else if (sender == Announcements)
             {
-                if (!((MainWindow)Application.Current.MainWindow).mAnnouncementsStatus)
+                if (!((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mAnnouncementsStatus)
                 {
-                    ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).Announcements, e);
+                    ((ControlPanel)Application.Current.MainWindow).Button_Click(((ControlPanel)Application.Current.MainWindow).Announcements, e);
                     Announcements.Content = "ON";
                     Announcements.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
                 }
                 else
                 {
-                    ((MainWindow)Application.Current.MainWindow).Button_Click(((MainWindow)Application.Current.MainWindow).Announcements, e);
+                    ((ControlPanel)Application.Current.MainWindow).Button_Click(((ControlPanel)Application.Current.MainWindow).Announcements, e);
                     Announcements.Content = "OFF";
                     Announcements.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                }
+            }
+
+            else if (sender == ServiceBrake)
+            {
+                if (!((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mServiceBrakeStatus)
+                {
+                    ((ControlPanel)Application.Current.MainWindow).Button_Click(((ControlPanel)Application.Current.MainWindow).ServiceBrake, e);
+                    ServiceBrake.Content = "ON";
+                    ServiceBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF70D060"));
+                }
+                else
+                {
+                    ((ControlPanel)Application.Current.MainWindow).Button_Click(((ControlPanel)Application.Current.MainWindow).ServiceBrake, e);
+                    ServiceBrake.Content = "OFF";
+                    ServiceBrake.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                }
+            }
+
+            else if (sender == AddTrain)
+            {
+                if (Line.Text == "Red")
+                {
+                    ((ControlPanel)Application.Current.MainWindow).addController(false);
+                }
+                else if (Line.Text == "Green")
+                {
+                    ((ControlPanel)Application.Current.MainWindow).addController(true);
+                }
+            }
+
+            else if (sender == RemoveTrain)
+            {
+                if (((ControlPanel)Application.Current.MainWindow).mTrainSetList.Count > 0)
+                {
+                    ((ControlPanel)Application.Current.MainWindow).removeController(int.Parse(Index.Text));
+                }
+            }
+
+            else if (sender == Increment)
+            {
+                ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.UpdateSpeed();
+
+                if (((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mControlType)
+                {
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.CalculatePowerHW();
+                }
+                else
+                {
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.CalculatePowerSW();
                 }
             }
         }
@@ -173,47 +236,62 @@ namespace TrainController
             {
                 if (sender == SetKp)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setKp(int.Parse(SetKp.Text));
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setKp(int.Parse(SetKp.Text));
                 }
                 else if (sender == SetKi)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setKi(int.Parse(SetKi.Text));
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setKi(int.Parse(SetKi.Text));
                 }
                 else if (sender == CmdSpeed)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setCmdSpeed(int.Parse(CmdSpeed.Text));
-                    ((MainWindow)Application.Current.MainWindow).CmdSpeed.Text = "Cmd Speed:\n" + ((MainWindow)Application.Current.MainWindow).mCmdSpeed.ToString() + " mph";
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setCmdSpeed(double.Parse(CmdSpeed.Text));
+                    ((ControlPanel)Application.Current.MainWindow).CmdSpeed.Text = "Cmd Speed:\n" + convertToImperial(((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mCmdSpeed).ToString("F2") + " mph";
                 }
                 else if (sender == SetSpeed)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setSetSpeed(int.Parse(SetSpeed.Text));
-                    SetSpeed.Text = ((MainWindow)Application.Current.MainWindow).mSetSpeed.ToString();
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setSetSpeed(double.Parse(SetSpeed.Text));
+                    ((ControlPanel)Application.Current.MainWindow).SetSpeedBox.Text = convertToImperial(((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mSetSpeed).ToString("F2");
                 }
                 else if (sender == CurSpeed)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setCurSpeed(int.Parse(CurSpeed.Text));
-                    ((MainWindow)Application.Current.MainWindow).CurSpeed.Text = "Current Speed:\n" + ((MainWindow)Application.Current.MainWindow).mCurSpeed.ToString() + " mph";
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setCurSpeed(double.Parse(CurSpeed.Text));
+                    ((ControlPanel)Application.Current.MainWindow).CurSpeed.Text = "Current Speed:\n" + convertToImperial(((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mCurSpeed).ToString("F2") + " mph";
                 }
                 else if (sender == CmdAuthority)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setCmdAuthority(int.Parse(CmdAuthority.Text));
-                    ((MainWindow)Application.Current.MainWindow).CmdAuthority.Text = "Commanded Authority:\n" + ((MainWindow)Application.Current.MainWindow).mCmdAuthority + " blocks";
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setCmdAuthority(int.Parse(CmdAuthority.Text));
+                    ((ControlPanel)Application.Current.MainWindow).CmdAuthority.Text = "Commanded Authority:\n" + ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mCmdAuthority + " blocks";
                 }
                 else if (sender == CurAuthority)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setCurAuthority(int.Parse(CurAuthority.Text));
-                    ((MainWindow)Application.Current.MainWindow).CurAuthority.Text = "Current Authority:\n" + ((MainWindow)Application.Current.MainWindow).mCurAuthority + " blocks";
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setCurAuthority(int.Parse(CurAuthority.Text));
+                    ((ControlPanel)Application.Current.MainWindow).CurAuthority.Text = "Current Authority:\n" + ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mCurAuthority + " blocks";
                 }
                 else if (sender == CurBeacon)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setBeacon(CurBeacon.Text);
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setBeacon(CurBeacon.Text);
+                    ((ControlPanel)Application.Current.MainWindow).Beacon.Text = "Nearest Beacon:\n" + ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mBeacon;
                 }
                 else if (sender == CurPower)
                 {
-                    ((MainWindow)Application.Current.MainWindow).setPower(int.Parse(CurPower.Text));
-                    ((MainWindow)Application.Current.MainWindow).CurPower.Text = "Power: " + ((MainWindow)Application.Current.MainWindow).mCurPower + " kW";
+                    ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.setPower(int.Parse(CurPower.Text));
+                    ((ControlPanel)Application.Current.MainWindow).CurPower.Text = "Power: " + ((ControlPanel)Application.Current.MainWindow).mSelectedTrain.mCurPower + " kW";
                 }
             }
+        }
+
+        private void TestPanelActive(object sender, EventArgs e)
+        {
+            Application.Current.MainWindow = main;
+        }
+        private double convertToImperial(double metricSpeed)
+        {
+            return metricSpeed * 2.236936;
+        }
+
+        private double convertToMetric(double imperialSpeed)
+        {
+            return imperialSpeed / 2.236936;
         }
     }
 }

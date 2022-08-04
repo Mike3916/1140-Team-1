@@ -11,27 +11,46 @@ namespace TrainObject
 {
     public class Train
     {
+        static public int nextID = 0;
+        private int ID;
         private double currentSpeed;
         private double previousAcceleration;
         private double commandedSpeed;
-        private double mass = 56.7 * 2000;
+        private double mass = 56.7 * 907.1850030836;
         private double powerCmd;
         public static double powerMax = 120000;
         private bool emergencyBrake;
         private bool serviceBrake;
         private bool engineFailure;
+        private bool brakeFailure;
         private bool signalPickUp;
-        private int authority;
-        private int passengers=58;
+        private int cmdAuthority;
+        private int currAuthority;
+        private int passengers=0;
         private int crew=6;
-        private bool lights;
+        private bool interiorLights;
+        private bool exteriorLights;
         private int cars = 5;
         private const int capacity = 74;
         private bool doorR;
         private bool doorL;
         private int temperature=74;
-   
-        
+        private double timeTillNextBlock;
+        private bool announcement;
+        private string beaconMessage = "No beacon";
+        private bool underground;
+
+        private double blockDist;
+        private double currDist;
+        private double gradient;
+        private int RailLine;
+        private bool baby;
+
+        private int blockID=0;
+
+        private bool StationRight;
+        private bool StationLeft;
+
 
 
 
@@ -42,8 +61,9 @@ namespace TrainObject
         private const double decelerationLimitEmergency = -2.73;
         private const double velocityLimit = 19.4444;
 
-        private const double samplePeriod = 2;
+        private const double samplePeriod = 0.001;
 
+        private const double frictionCoefficient = 0.01;
 
         /* self.MAX_FORCE = 18551.9333
             self.GRAVITY = 9.8
@@ -59,15 +79,45 @@ namespace TrainObject
 
         public Train()
         {
+            ID = nextID;
+            nextID++;
             emergencyBrake = false;
             serviceBrake = false;
             engineFailure = false;
             signalPickUp = false;
             currentSpeed = 0;
             previousAcceleration = 0;
-            lights = false;
+            interiorLights = false;
+            exteriorLights = false;
+            doorL = false;
+            doorR = false;
+            announcement = false;
+            currAuthority = 0;
+            underground = false;
+            RailLine = 0; //0=Red
+            baby = true;
 
+        }
 
+        public Train(int authority, int line)
+        {
+            ID = nextID;
+            nextID++;
+            emergencyBrake = false;
+            serviceBrake = false;
+            engineFailure = false;
+            signalPickUp = false;
+            currentSpeed = 0;
+            previousAcceleration = 0;
+            interiorLights = false;
+            exteriorLights = false;
+            doorL = false;
+            doorR = false;
+            announcement = false;
+            cmdAuthority = authority;
+            underground = false;
+            RailLine = line;
+            baby = true;
         }
 
 
@@ -120,7 +170,10 @@ namespace TrainObject
             {
                 powerCmd = powerMax;
             }
-          
+
+            if(power<0)
+                toggleServiceBrake();
+
 
         }
 
@@ -131,12 +184,17 @@ namespace TrainObject
 
         public double getMass()
         {
-            return mass/2000* 1.10231;
+            return mass/ 907.1850030836;
         }
 
         public void setCommandedSpeed( double s)
         {
             commandedSpeed = s;
+        }
+
+        public void setCommandedSpeedMPH(double s)
+        {
+            commandedSpeed = s / 2.23694;
         }
 
         public double getCommandedSpeed() { 
@@ -158,35 +216,65 @@ namespace TrainObject
             return Math.Round(currentSpeed * 2.23694,2);
         }
 
-        public void setAuthority(int a)
+        public void setCmdAuthority(int a)
         {
-            authority = a;
+            cmdAuthority = a;
         }
 
-        public int getAuthority()
+        public int getCmdAuthority()
         {
-            return authority;
+            return cmdAuthority;
+        }
+
+        public int getCurrAuthority()
+        {
+            return currAuthority;
+        }
+
+        public string getBeacon()
+        {
+            return beaconMessage;
+        }
+
+        public bool getUnderground()
+        {
+            return underground;
+        }
+
+        public int getBlockID()
+        {
+            return blockID;
         }
 
         public double getForce()
         {
+            double force=0;
             if (engineFailure)
             {
-                powerCmd = 0;
+                force = 0;
             }
 
-            if(currentSpeed!=0)
+            else if(currentSpeed!=0)
             {
-                return powerCmd / currentSpeed;
+                force= powerCmd / currentSpeed;
             }
             else if (powerCmd == 0)
             {
-                return 0;
+                force= 0;
             }
             else
             {
-                return 1000;
+                force= 1000;
             }
+
+            force -= (mass * 9.81 * Math.Sin(Math.Atan(gradient/100)));//gravitational force
+            
+            if (currentSpeed > 0)
+            {
+                force -= (mass * 9.81 * Math.Cos(Math.Atan(gradient/100 ))) * frictionCoefficient;//friction force
+            }
+            
+            return force;
         }
 
         public double getAcceleration()
@@ -197,13 +285,33 @@ namespace TrainObject
             {//if acceleration greater than limit and no brakes on
                 return accelerationLimit;
             }
-            else if (serviceBrake && !emergencyBrake)
+            else if (serviceBrake && !emergencyBrake &&!brakeFailure)
             {
-                return decelerationLimitService;
+                powerCmd = 0;
+                if (Math.Abs(accelerationCalc) + decelerationLimitService > 0)
+                {
+                    if (accelerationCalc > 0)
+                    {
+                        return accelerationCalc + decelerationLimitService;
+                    }
+                    else
+                        return accelerationCalc - decelerationLimitService;
+                }
+                else return decelerationLimitService;
             }
             else if (emergencyBrake)
             {
-                return decelerationLimitEmergency;
+                powerCmd = 0;
+                if (Math.Abs(accelerationCalc) + decelerationLimitEmergency > 0)
+                {
+                    if (accelerationCalc > 0)
+                    {
+                        return accelerationCalc + decelerationLimitEmergency;
+                    }
+                    else
+                        return accelerationCalc - decelerationLimitEmergency;
+                }
+                else return decelerationLimitEmergency;
             }
             else
             {
@@ -220,7 +328,7 @@ namespace TrainObject
 
         public double getVelocity()
         {
-            double velocityCalc = currentSpeed + ((samplePeriod / 2) * (getAcceleration() + previousAcceleration));
+            double velocityCalc = currentSpeed + ((samplePeriod ) * (getAcceleration() + previousAcceleration));
 
             if (velocityCalc > velocityLimit)
                 return velocityLimit;
@@ -234,10 +342,21 @@ namespace TrainObject
         {
             previousAcceleration = getAcceleration();
             currentSpeed = getVelocity();
+            currDist += currentSpeed * samplePeriod;
+            timeTillNextBlock = (blockDist - currDist)/currentSpeed;
+
+
         }
 
+        public double getTimeTillNextBlock()
+        {
+            return timeTillNextBlock;
+        }
 
-
+        public int getAuthority()
+        {
+            return cmdAuthority;
+        }
 
         public int getPassengers()
         {
@@ -258,16 +377,32 @@ namespace TrainObject
             crew = c;
         }
 
-        public void toggleLights()
+        public void toggleInteriorLights()
         {
-            lights = !lights;
+            interiorLights = !interiorLights;
+        }
+
+        public bool getInteriorLights()
+        {
+            return interiorLights;
+        }
+
+        public void toggleExteriorLights()
+        {
+            exteriorLights = !exteriorLights;
+        }
+
+        public bool getExteriorLights()
+        {
+            return exteriorLights;
         }
 
         public bool getLights()
         {
-            return lights;
+            return false;
         }
-
+        
+      
         public int getCars()
         {
             return cars;
@@ -312,8 +447,181 @@ namespace TrainObject
         {
             temperature = t;
         }
+
+        public void setAnnouncement(bool a)
+        {
+            announcement = a;
+        }
+
+        public bool getBaby()
+        {
+            return baby;
+        }
         
+        public void growUp()
+        {
+            baby = false;
+        }
+            
+        public void setBlockInfo(TrackModel.Block b, int auth)
+        {
+            blockDist = b.mLength;
+            gradient = b.mGrade*90;
+            if (b.mPop > 0)
+            {
+                int min =  passengers/4;
+                int max = 3*passengers/4;
+                Random r = new Random();
+                int leaveCount = r.Next(min,max);
+                passengers -= leaveCount;
+
+            }
+            
+           
+            mass = 56.7 * 907.1850030836 + 65 * passengers + 65 * crew;
+            underground = b.mUnderground;
+          
+            currDist = 0;
+            cmdAuthority--;
+            currAuthority++;
+
+            if(signalPickUp)
+                beaconMessage = b.mBeacon;
+            else
+                beaconMessage = "";
+
+            if (cmdAuthority == 0)
+            {
+                cmdAuthority = auth;
+                currAuthority = 0;
+            }
+
+            commandedSpeed=b.mspeedLimit;
+
+            blockID = b.mblockNum;
+
+            if (b.mstationSide.Contains("Left"))
+            {
+                StationLeft = true;
+            }
+            else
+                StationLeft = false;
+            if (b.mstationSide.Contains("Right"))
+            {
+                StationRight = true;
+            }
+            else
+                StationRight = false;
+
+        }
+
+        public bool getStationRight()
+        {
+            return StationRight;
+        }
+
+        public bool getStationLeft()
+        {
+            return StationLeft;
+            return StationLeft;
+        }
+
+
+        public int UpdatePassenger(int p)
+        {
+            int temp= passengers + p;
+            int ret = 0;
+            if (temp > capacity)
+            {
+                passengers = capacity;
+                ret = temp - capacity;
+            }
+            else
+                passengers += p;
+            return ret;
+
+        }
+
+        public bool askForInfo()
+        {
+            if (currDist < blockDist)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public void setBlockDist(double dist)
+        {
+            blockDist = dist;
+            currDist = 0;
+
+        }
+
+        public void setBlockDistFM(double dist)
+        {
+            blockDist = dist / 3.280839;
+            currDist = 0;
+
+        }
+
+        public double getBlockDist()
+        {
+            return blockDist;
+        }
         
+        public double getBlockDistMF(){
+            return blockDist * 3.280839;
+        }
+
+        public double getRemainingDistMF()
+        {
+            return (blockDist-currDist) * 3.280839;
+        }
+        
+
+        public int getLine()
+        {
+            return RailLine;
+        }
+
+        public String getLineName()
+        {
+            if (RailLine == 1)
+                return "Green";
+            else
+                return "Red";
+        }
+        public int getID()
+        {
+            return ID;
+        }
+
+        public double getGrade()
+        {
+            return gradient;
+        }
+
+        public void setGrade(double g)
+        {
+            gradient = g;
+        }
+
+        public void toggleBrakeFailure(){
+            brakeFailure = !brakeFailure;
+        }
+
+        public bool getBrakeFailure()
+        {
+            return brakeFailure;
+        }
+
     }
 
-}
+
+
+    }
+

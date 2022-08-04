@@ -11,7 +11,8 @@ class serialConnect
 {
 	public:
 		bool mEmergencyBrakeStatus=false;
-		bool mAutoMode=false;
+		bool mServiceBrakeStatus=false;
+		bool mAutoMode=true;
 		bool mLeftDoors=false;
 		bool mRightDoors=false;
 		bool mInteriorLights=false;
@@ -19,17 +20,23 @@ class serialConnect
 		bool mAnnouncementsStatus=false;
 		
 		int mTemperature=72;
-		int mKp=0;
+		int mKp=10000;
 		int mKi=0;
 		
-		int mCmdSpeed=0;
-		int mSetSpeed=0;
-		int mCurSpeed=0;
+		float mCmdSpeed=0;
+		float mSetSpeed=0;
+		float mCurSpeed=0;
 		
 		int mCmdAuthority=0;
 		int mCurAuthority=0;
-		int mCurPower=0;
+		float mCurPower=0;
 		int fd;
+		
+		const float Pmax=120000;
+		float Uk=0;
+		float Ek=0;
+		float Ek_prev=0;
+		int T=1; // 1 ms
 		
 		string mCurBeacon="-";
 		
@@ -45,6 +52,7 @@ class serialConnect
 		{
 			cout << "\n\n-------------------------------------------------------\n"
 				 << "mEmergencyBrakeStatus = " << mEmergencyBrakeStatus << "\n"
+				 << "mServiceBrakeStatus = " << mServiceBrakeStatus << "\n"
 				 << "mAutoMode = " << mAutoMode << "\n"
 				 << "mLeftDoors = " << mLeftDoors << "\n"
 				 << "mRightDoors = " << mRightDoors << "\n"
@@ -69,7 +77,8 @@ class serialConnect
 		{
 			// Vital bools:
 			mEmergencyBrakeStatus = false;
-			mAutoMode = false;
+			mServiceBrakeStatus = false;
+			mAutoMode = true;
 			
 			// Non-vital bools:
 			mLeftDoors = false;
@@ -78,10 +87,13 @@ class serialConnect
 			mExteriorLights = false;
 			mAnnouncementsStatus = false;
 			
-			// Misc Ints:
+			// Misc Value:
 			mTemperature = 72;
-			mKp = 0;
+			mKp = 10000;
 			mKi = 0;
+			Uk = 0;
+			Ek = 0;
+			Ek_prev = 0;
 			
 			// Speed:
 			mCmdSpeed = 0;
@@ -105,6 +117,8 @@ class serialConnect
 			{
 				case 'e': 
 					return status==false ? "Off\n" : "On\n";
+				case 'u':
+					return status==false ? "Off\n" : "On\n";
 				case 'm':
 					return status==true ? "Auto\n" : "Manual\n";
 				case 'l':
@@ -112,11 +126,11 @@ class serialConnect
 				case 'r':
 					return status==true ? "Open\n" : "Closed\n";
 				case 'i':
-					return status==true ? "On\n" : "Closed\n";
+					return status==true ? "On\n" : "Off\n";
 				case 'x':
-					return status==true ? "On\n" : "Closed\n";
+					return status==true ? "On\n" : "Off\n";
 				case 'a':
-					return status==true ? "On\n" : "Closed\n";
+					return status==true ? "On\n" : "Off\n";
 			}
 			return "";
 		}
@@ -144,7 +158,7 @@ class serialConnect
 			{
 				numChar = serialGetchar(fd);
 				
-				if(numChar>47 && numChar<58)
+				if((numChar>47 && numChar<58) || numChar == 46)
 				{
 					str += numChar;
 				}
@@ -176,6 +190,127 @@ class serialConnect
 				
 			return str+"\n";
 		}
+		
+		const char* calculatePower()
+		{
+			float powerOutput[3];
+            float powerCheck = 0;
+
+            // calculate power three times for vitality
+            for (int i = 0; i < 3; i++)
+            {
+                if (mAutoMode)
+                {
+                    Ek_prev = Ek;
+                    Ek = mCmdSpeed - mCurSpeed;
+
+                    if (mCurSpeed < mCmdSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else if (mCurSpeed > mCmdSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else
+                    {
+                        mCurPower = 0;
+                    }
+                }
+                else
+                {
+                    Ek_prev = Ek;
+                    Ek = mSetSpeed - mCurSpeed;
+
+                    if (mCurSpeed < mSetSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else if (mCurSpeed > mSetSpeed)
+                    {
+                        if (mCurPower < Pmax)
+                        {
+                            Uk = Uk + (T / 1000) / 2 * (Ek + Ek_prev);
+                        }
+                        else
+                        {
+                            Uk = Uk;
+                        }
+
+                        powerOutput[i] = (mKp * Ek) + (mKi * Uk);
+                    }
+                    else
+                    {
+                        mCurPower = 0;
+                    }
+                }
+            }
+
+            // Any pair of outputs are equal (Modal calc):
+            if (powerOutput[0] == powerOutput[1])
+                powerCheck = powerOutput[0];
+
+            else if (powerOutput[0] == powerOutput[2])
+                powerCheck = powerOutput[0];
+
+            else if (powerOutput[1] == powerOutput[2])
+                powerCheck = powerOutput[1];
+
+            // No outputs match, choose smallest:
+            else if (powerOutput[0] <= powerOutput[1] && powerOutput[0] <= powerOutput[2])
+                powerCheck = powerOutput[0];
+
+            else if (powerOutput[1] <= powerOutput[0] && powerOutput[1] <= powerOutput[2])
+                powerCheck = powerOutput[1];
+
+            else
+                powerCheck = powerOutput[2];
+
+            // Check calculate power not above max
+            if (powerCheck > Pmax)
+            {
+                mCurPower = Pmax;
+            }
+            else if (powerCheck < -Pmax)
+            {
+                mCurPower = -Pmax;
+            }
+            else
+            {
+                mCurPower = powerCheck;
+            }
+            
+            string power = to_string(mCurPower) + "\n";
+
+            return power.c_str();
+		}
 };
 
 int main ()
@@ -195,7 +330,7 @@ int main ()
 		if(input == '?')
 		{
 			comm.resetValues();
-		}	
+		}
 				
 		// Display all current values:
 		else if(input == '`')
@@ -207,6 +342,14 @@ int main ()
 		else if(input == 'e')
 		{
 			output = comm.toggleBool(comm.mEmergencyBrakeStatus,'e');
+			serialPrintf(comm.fd,output);
+			//printf(output);
+		}
+		
+		// Toggle Service Brakes:
+		else if(input == 'u')
+		{
+			output = comm.toggleBool(comm.mServiceBrakeStatus,'u');
 			serialPrintf(comm.fd,output);
 			//printf(output);
 		}
@@ -280,6 +423,7 @@ int main ()
 		{
 			comm.mKp = comm.getValue(comm.fd);
 			serialPrintf(comm.fd,"valueReceived\n");
+			//printf("valueReceived\n");
 		}
 		
 		// Accept Ki:
@@ -287,6 +431,7 @@ int main ()
 		{			
 			comm.mKi = comm.getValue(comm.fd);
 			serialPrintf(comm.fd,"valueReceived\n");
+			//printf("valueReceived\n");
 		}
 		
 		// Accept Commanded Speed:
@@ -294,6 +439,7 @@ int main ()
 		{			
 			comm.mCmdSpeed = comm.getValue(comm.fd);
 			serialPrintf(comm.fd,"valueReceived\n");
+			//printf("valueReceived\n");
 		}
 		
 		// Accept Set Speed:
@@ -304,11 +450,13 @@ int main ()
 			if(compare>comm.mCmdSpeed)
 			{
 				serialPrintf(comm.fd,"tooHigh\n");
+				//printf("tooHigh\n");
 			}
 			else
 			{
 				comm.mSetSpeed = compare;
 				serialPrintf(comm.fd,"good\n");
+				//printf("good\n");
 			}
 		}
 		
@@ -317,6 +465,7 @@ int main ()
 		{			
 			comm.mCurSpeed = comm.getValue(comm.fd);
 			serialPrintf(comm.fd,"valueReceived\n");
+			//printf("valueReceived\n");
 		}
 		
 		// Accept Set Power:
@@ -324,6 +473,7 @@ int main ()
 		{			
 			comm.mCurPower = comm.getValue(comm.fd);
 			serialPrintf(comm.fd,"valueReceived\n");
+			//printf("valueReceived\n");
 		}
 		
 		// Accept Commanded Authority:
@@ -331,6 +481,7 @@ int main ()
 		{			
 			comm.mCmdAuthority = comm.getValue(comm.fd);
 			serialPrintf(comm.fd,"valueReceived\n");
+			//printf("valueReceived\n");
 		}
 		
 		// Accept Current Authority:
@@ -338,6 +489,7 @@ int main ()
 		{			
 			comm.mCurAuthority = comm.getValue(comm.fd);
 			serialPrintf(comm.fd,"valueReceived\n");
+			//printf("valueReceived\n");
 		}
 		
 		// Accept Current Beacon:
@@ -345,24 +497,15 @@ int main ()
 		{
 			comm.mCurBeacon = comm.getString(comm.fd);
 			serialPrintf(comm.fd,comm.mCurBeacon.c_str());
+			//printf("comm.mCurBeacon\n");
 		}
 		
-		// Accept Set Power:
-		else if(input == 'p')
-		{			
-			comm.mCurPower = comm.getValue(comm.fd);
-		}
-		
-		// Accept Commanded Authority:
-		else if(input == 's')
-		{			
-			comm.mCmdAuthority = comm.getValue(comm.fd);
-		}
-		
-		// Accept Current Authority:
-		else if(input == 'd')
-		{			
-			comm.mCurAuthority = comm.getValue(comm.fd);
+		// Calculate Power:
+		else if(input == 'o')
+		{
+			output = comm.calculatePower();
+			serialPrintf(comm.fd,output);
+			//printf(output);
 		}
 	}
 }

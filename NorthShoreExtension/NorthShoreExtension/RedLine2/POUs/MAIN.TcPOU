@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="MAIN" Id="{69187435-809b-4891-bd33-8412f100ec57}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+
+inc1 : DINT := 0;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[FOR inc1 := 0 TO 40 DO
+	//Sets Red Lights
+	IF GVL.mInOccupancies[inc1] = 0
+	THEN
+		GVL.mOutLeftLights[inc1] := 0;
+		GVL.mOutRightLights[inc1] := 0;
+	//Sets green lights
+	ELSE
+		GVL.mOutLeftLights[inc1] := 2;
+		GVL.mOutRightLights[inc1] := 2;
+	END_IF
+END_FOR
+
+FOR inc1 := 1 TO 39 DO
+	//Sets Yellow Lights
+	IF GVL.mInOccupancies[inc1-1] = 0 AND GVL.mInOccupancies[inc1] <> 0
+	THEN
+		GVL.mOutRightLights[inc1] := 1;
+	END_IF
+	IF GVL.mInOccupancies[inc1+1] = 0 AND GVL.mInOccupancies[inc1] <> 0
+	THEN
+	GVL.mOutLeftLights[inc1] := 1;
+	END_IF
+END_FOR
+
+//0 to 40 correspond to blocks 33 to 71
+//copies inputs to outputs for blocks 33 to 71
+FOR inc1 := 0 TO 40 DO
+
+	GVL.mOutOccupancies[inc1] := GVL.mInOccupancies[inc1];
+	IF GVL.mInSpeeds[inc1] < GVL.mSpeedLimits[inc1]
+	THEN
+		GVL.mOutSpeeds[inc1] := GVL.mInSpeeds[inc1];
+	ELSE
+		GVL.mOutSpeeds[inc1] := GVL.mSpeedLimits[inc1];
+	END_IF
+	GVL.mOutAuthorities[inc1] := GVL.mInAuthorities[inc1];
+	GVL.mOutMaintenance[inc1] := GVL.mInMaintenance[inc1];
+	GVL.mOutRoute[inc1] := 1;
+	
+END_FOR
+
+//This copies route over from input to output
+FOR inc1 := 0 TO 76 DO
+
+	GVL.mOutRoute[inc1] := GVL.mInRoute[inc1];
+	
+END_FOR
+
+inc1 := 0;
+
+//This starts the main track logic section
+
+//Crossing Logic
+IF GVL.mInOccupancies[14] = 0 THEN
+	GVL.mOutCrossings[14] := 1;
+ELSE
+	GVL.mOutCrossings[14] := 0;
+END_IF
+
+//Switch Logic
+
+//Sets switch on block 40
+IF GVL.mInMaintenance[5] = 1 
+THEN
+   IF GVL.mInSwitch[5] = 1
+	THEN
+		IF GVL.mOutSwitch[5] = 40
+		THEN
+			GVL.mOutSwitch[5] := 70;
+		ELSE
+			GVL.mOutSwitch[5] := 40;
+		END_IF
+		GVL.mInSwitch[5] := 0;
+	END_IF
+ELSE
+    IF GVL.mInOccupancies[6] = 0 THEN
+    FOR inc1 := 0 TO 5 DO 
+        IF GVL.mInOccupancies[inc1] = 0 THEN
+            GVL.mOutSwitch[5] := 40;
+            Exit;
+        ELSE 
+            GVL.mOutSwitch[5] := 70;
+        END_IF
+    END_FOR
+	END_IF
+END_IF
+
+//Set switch on block 44
+IF GVL.mInMaintenance[10] = 1 
+THEN
+    IF GVL.mInSwitch[10] = 1
+	THEN
+		IF GVL.mOutSwitch[10] = 40
+		THEN
+			GVL.mOutSwitch[10] := 70;
+		ELSE
+			GVL.mOutSwitch[10] := 40;
+		END_IF
+		GVL.mInSwitch[10] := 0;
+	END_IF
+ELSE
+    IF GVL.mInOccupancies[9] = 0 THEN
+    FOR inc1 := 10 TO 18 DO 
+        IF GVL.mInOccupancies[inc1] = 0 THEN
+            GVL.mOutSwitch[10] := 66;
+            Exit;
+        ELSE 
+            GVL.mOutSwitch[10] := 42;
+        END_IF
+    END_FOR
+	END_IF
+END_IF
+
+//Set switch on block 52
+IF GVL.mInMaintenance[18] = 1 
+THEN
+    IF GVL.mInSwitch[18] = 1
+	THEN
+		IF GVL.mOutSwitch[18] = 52
+		THEN
+			GVL.mOutSwitch[18] := 65;
+		ELSE
+			GVL.mOutSwitch[18] := 52;
+		END_IF
+		GVL.mInSwitch[18] := 0;
+	END_IF
+ELSE
+    IF GVL.mInOccupancies[32] = 0 THEN
+    FOR inc1 := 10 TO 18 DO 
+        IF GVL.mInOccupancies[inc1] = 0 THEN
+            GVL.mOutSwitch[18] := 52;
+            Exit;
+        ELSE 
+            GVL.mOutSwitch[18] := 65;
+        END_IF
+    END_FOR
+	END_IF
+END_IF
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="512" Count="22" />
+      <LineId Id="510" Count="1" />
+      <LineId Id="353" Count="0" />
+      <LineId Id="508" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="350" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="497" Count="4" />
+      <LineId Id="351" Count="0" />
+      <LineId Id="355" Count="0" />
+      <LineId Id="357" Count="0" />
+      <LineId Id="477" Count="0" />
+      <LineId Id="356" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="490" Count="0" />
+      <LineId Id="484" Count="0" />
+      <LineId Id="486" Count="3" />
+      <LineId Id="485" Count="0" />
+      <LineId Id="372" Count="0" />
+      <LineId Id="352" Count="0" />
+      <LineId Id="373" Count="0" />
+      <LineId Id="55" Count="1" />
+      <LineId Id="365" Count="0" />
+      <LineId Id="364" Count="0" />
+      <LineId Id="366" Count="0" />
+      <LineId Id="368" Count="1" />
+      <LineId Id="367" Count="0" />
+      <LineId Id="406" Count="0" />
+      <LineId Id="421" Count="0" />
+      <LineId Id="494" Count="0" />
+      <LineId Id="493" Count="0" />
+      <LineId Id="422" Count="0" />
+      <LineId Id="544" Count="0" />
+      <LineId Id="535" Count="8" />
+      <LineId Id="423" Count="10" />
+      <LineId Id="467" Count="0" />
+      <LineId Id="420" Count="0" />
+      <LineId Id="495" Count="0" />
+      <LineId Id="435" Count="1" />
+      <LineId Id="554" Count="0" />
+      <LineId Id="545" Count="8" />
+      <LineId Id="437" Count="10" />
+      <LineId Id="468" Count="0" />
+      <LineId Id="434" Count="0" />
+      <LineId Id="496" Count="0" />
+      <LineId Id="448" Count="1" />
+      <LineId Id="564" Count="0" />
+      <LineId Id="555" Count="8" />
+      <LineId Id="450" Count="10" />
+      <LineId Id="469" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="462" Count="0" />
+      <LineId Id="461" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,26 @@
+﻿<Page x:Class="CTC.Train_Data"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CTC"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Train_Data">
+
+    <Grid Background="White">
+        <Label Content="Destination:" HorizontalAlignment="Left" Margin="140,114,0,0" VerticalAlignment="Top"/>
+        <Label Content="ETA:" HorizontalAlignment="Left" Margin="181,145,0,0" VerticalAlignment="Top"/>
+        <Label Content="Authority:" HorizontalAlignment="Left" Margin="151,176,0,0" VerticalAlignment="Top"/>
+        <Label Content="Blocks" HorizontalAlignment="Left" Margin="341,176,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,0.578"/>
+        <TextBlock HorizontalAlignment="Left" Margin="118,207,0,0" TextWrapping="Wrap" Text="Suggested Speed:" VerticalAlignment="Top"/>
+        <Label Content="m/s" HorizontalAlignment="Left" Margin="348,202,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="ETA" HorizontalAlignment="Left" Margin="218,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="UpdateTrain" Content="UpdateTrain" HorizontalAlignment="Left" Margin="220,257,0,0" VerticalAlignment="Top" Click="UpdateTrain_Click"/>
+        <ComboBox x:Name="DestStationCombo" HorizontalAlignment="Left" Margin="302,114,0,0" VerticalAlignment="Top" Width="92"/>
+        <ComboBox x:Name ="DestLineCombo" HorizontalAlignment="Left" Margin="218,114,0,0" VerticalAlignment="Top" Width="70" SelectionChanged="DestLineCombo_SelectionChanged"/>
+        <TextBlock x:Name="Authority" HorizontalAlignment="Left" Margin="219,181,0,0" TextWrapping="Wrap" Text="Num" VerticalAlignment="Top"/>
+        <TextBlock x:Name="Speed" HorizontalAlignment="Left" Margin="219,208,0,0" TextWrapping="Wrap" Text="Num" VerticalAlignment="Top"/>
+
+    </Grid>
+</Page>

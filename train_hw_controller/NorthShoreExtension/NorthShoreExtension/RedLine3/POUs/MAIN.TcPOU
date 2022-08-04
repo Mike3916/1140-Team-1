@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="MAIN" Id="{fa45f2f2-925a-467e-8b80-1fe2692585de}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+
+inc1 : DINT := 0;
+
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[GVL.mOutTrain := GVL.mInTrain;
+
+//0 to 37 map to blocks 1-38
+//38 to 43 map to 72-76,yard
+//Lights Logic
+FOR inc1 := 0 TO 43 DO
+	//Sets Red Lights
+	IF GVL.mInOccupancies[inc1] = 1
+	THEN
+		GVL.mOutLeftLights[inc1] := 0;
+		GVL.mOutRightLights[inc1] := 0;
+	//Sets green lights
+	ELSE
+		GVL.mOutLeftLights[inc1] := 2;
+		GVL.mOutRightLights[inc1] := 2;
+	END_IF
+END_FOR
+
+FOR inc1 := 1 TO 43 DO
+	//Sets Yellow Lights
+	IF GVL.mInOccupancies[inc1-1] = 1 AND GVL.mInOccupancies[inc1] <> 1
+	THEN
+		GVL.mOutRightLights[inc1] := 1;
+	END_IF
+	IF GVL.mInOccupancies[inc1+1] = 1 AND GVL.mInOccupancies[inc1] <> 1
+	THEN
+	GVL.mOutLeftLights[inc1] := 1;
+	END_IF
+END_FOR
+
+//0 to 37 map to blocks 1-38
+//39 to 43 map to blocks 72-76,yard
+//Passes occupancy, authority, maintenance, and speeds from input to output.
+FOR inc1 := 0 TO 43 DO
+	
+	GVL.mOutOccupancies[inc1] := GVL.mInOccupancies[inc1];
+	GVL.mOutAuthorities[inc1] := GVL.mInAuthorities[inc1];
+	GVL.mOutMaintenance[inc1] := GVL.mInMaintenance[inc1];
+	IF GVL.mInSpeeds[inc1] < GVL.mSpeedLimits[inc1] AND GVL.mInSpeeds[inc1] <> 0
+	THEN
+		GVL.mOutSpeeds[inc1] := GVL.mInSpeeds[inc1];
+	ELSE
+		GVL.mOutSpeeds[inc1] := GVL.mSpeedLimits[inc1];
+	END_IF
+	
+END_FOR
+
+FOR inc1 := 0 TO 43 DO
+
+	GVL.mOutRoute[inc1] := GVL.mInRoute[inc1];
+	
+END_FOR
+
+inc1 := 0;
+
+//This starts the main track logic section
+
+//0 to 37 map to blocks 1-38
+//39 to 43 map to 72-76,yard
+//Switch Logic
+IF GVL.mInMaintenance[8] = 1 
+THEN
+	IF GVL.mInSwitch[8] = 1
+	THEN
+		IF GVL.mOutSwitch[8] = 9
+			THEN
+			GVL.mOutSwitch[8] := 76;
+			GVL.mInSwitch[8] := 0;
+		ELSE
+			GVL.mOutSwitch[8] := 9;
+			GVL.mInSwitch[8] := 0;
+		END_IF
+	END_IF
+ELSE
+    IF GVL.mInOccupancies[43] = 1 
+	THEN
+    	GVL.mOutSwitch[8] := 76;
+    ELSE
+		GVL.mOutSwitch[8] := 9;
+	END_IF
+END_IF
+
+//0 to 37 map to blocks 1-38
+//39 to 43 map to 72-76,yard
+IF GVL.mInMaintenance[15] = 1 
+THEN
+    IF GVL.mInSwitch[15] = 1
+	THEN
+		IF GVL.mOutSwitch[15] = 0
+			THEN
+			GVL.mOutSwitch[15] := 16;
+			GVL.mInSwitch[15] := 0;
+		ELSE
+			GVL.mOutSwitch[15] := 0;
+			GVL.mInSwitch[15] := 0;
+		END_IF
+	END_IF
+ELSE
+    IF GVL.mInOccupancies[14] = 1 
+	THEN
+	    GVL.mOutSwitch[15] := 14;
+    ELSE
+        GVL.mOutSwitch[15] := 0;
+    END_IF
+END_IF
+
+//0 to 37 map to blocks 1-38
+//39 to 43 map to 72-76,yard
+IF GVL.mInMaintenance[26] = 1 
+THEN
+    IF GVL.mInSwitch[26] = 1
+	THEN
+		IF GVL.mOutSwitch[26] = 75
+			THEN
+			GVL.mOutSwitch[26] := 27;
+			GVL.mInSwitch[26] := 0;
+		ELSE
+			GVL.mOutSwitch[26] := 75;
+			GVL.mInSwitch[26] := 0;
+		END_IF
+	END_IF
+ELSE
+    IF GVL.mInOccupancies[42] = 1 
+	THEN
+	    GVL.mOutSwitch[26] := 75;
+    ELSE
+        GVL.mOutSwitch[26] := 27;
+    END_IF
+END_IF
+
+//0 to 37 map to blocks 1-38
+//39 to 43 map to 72-76,yard
+IF GVL.mInMaintenance[32] = 1 
+THEN
+  IF GVL.mInSwitch[32] = 1
+	THEN
+		IF GVL.mOutSwitch[32] = 31
+			THEN
+			GVL.mOutSwitch[32] := 71;
+			GVL.mInSwitch[32] := 0;
+		ELSE
+			GVL.mOutSwitch[32] := 31;
+			GVL.mInSwitch[32] := 0;
+		END_IF
+	END_IF
+ELSE
+    IF GVL.mInOccupancies[31] = 1 
+	THEN
+	    GVL.mOutSwitch[32] := 31;
+    ELSE
+        GVL.mOutSwitch[32] := 71;
+    END_IF
+END_IF
+
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="891" Count="1" />
+      <LineId Id="691" Count="8" />
+      <LineId Id="711" Count="0" />
+      <LineId Id="735" Count="0" />
+      <LineId Id="712" Count="1" />
+      <LineId Id="703" Count="0" />
+      <LineId Id="689" Count="0" />
+      <LineId Id="811" Count="10" />
+      <LineId Id="810" Count="0" />
+      <LineId Id="690" Count="0" />
+      <LineId Id="353" Count="0" />
+      <LineId Id="505" Count="0" />
+      <LineId Id="769" Count="0" />
+      <LineId Id="519" Count="0" />
+      <LineId Id="941" Count="0" />
+      <LineId Id="521" Count="0" />
+      <LineId Id="523" Count="1" />
+      <LineId Id="556" Count="0" />
+      <LineId Id="558" Count="0" />
+      <LineId Id="560" Count="2" />
+      <LineId Id="559" Count="0" />
+      <LineId Id="526" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="528" Count="1" />
+      <LineId Id="534" Count="2" />
+      <LineId Id="527" Count="0" />
+      <LineId Id="372" Count="0" />
+      <LineId Id="352" Count="0" />
+      <LineId Id="373" Count="0" />
+      <LineId Id="498" Count="0" />
+      <LineId Id="644" Count="0" />
+      <LineId Id="507" Count="0" />
+      <LineId Id="375" Count="0" />
+      <LineId Id="370" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="545" Count="0" />
+      <LineId Id="770" Count="0" />
+      <LineId Id="775" Count="0" />
+      <LineId Id="901" Count="1" />
+      <LineId Id="771" Count="0" />
+      <LineId Id="893" Count="0" />
+      <LineId Id="885" Count="0" />
+      <LineId Id="776" Count="0" />
+      <LineId Id="894" Count="0" />
+      <LineId Id="904" Count="0" />
+      <LineId Id="772" Count="0" />
+      <LineId Id="339" Count="1" />
+      <LineId Id="546" Count="0" />
+      <LineId Id="347" Count="1" />
+      <LineId Id="390" Count="1" />
+      <LineId Id="338" Count="0" />
+      <LineId Id="508" Count="1" />
+      <LineId Id="377" Count="1" />
+      <LineId Id="547" Count="0" />
+      <LineId Id="905" Count="9" />
+      <LineId Id="788" Count="0" />
+      <LineId Id="380" Count="1" />
+      <LineId Id="548" Count="0" />
+      <LineId Id="384" Count="0" />
+      <LineId Id="386" Count="2" />
+      <LineId Id="376" Count="0" />
+      <LineId Id="510" Count="1" />
+      <LineId Id="393" Count="1" />
+      <LineId Id="550" Count="0" />
+      <LineId Id="915" Count="9" />
+      <LineId Id="395" Count="0" />
+      <LineId Id="848" Count="5" />
+      <LineId Id="465" Count="0" />
+      <LineId Id="392" Count="0" />
+      <LineId Id="512" Count="1" />
+      <LineId Id="407" Count="1" />
+      <LineId Id="553" Count="0" />
+      <LineId Id="925" Count="9" />
+      <LineId Id="409" Count="0" />
+      <LineId Id="854" Count="5" />
+      <LineId Id="466" Count="0" />
+      <LineId Id="406" Count="0" />
+      <LineId Id="830" Count="0" />
+      <LineId Id="884" Count="0" />
+      <LineId Id="838" Count="0" />
+      <LineId Id="461" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

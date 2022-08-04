@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://www.plcopen.org/xml/tc6_0200">
+  <fileHeader companyName="Beckhoff Automation GmbH" productName="TwinCAT PLC Control" productVersion="3.5.13.21" creationDateTime="2022-07-30T14:47:54.2878237" />
+  <contentHeader name="RedLine3" modificationDateTime="2022-07-30T14:47:54.2918246">
+    <coordinateInfo>
+      <fbd>
+        <scaling x="1" y="1" />
+      </fbd>
+      <ld>
+        <scaling x="1" y="1" />
+      </ld>
+      <sfc>
+        <scaling x="1" y="1" />
+      </sfc>
+    </coordinateInfo>
+    <addData>
+      <data name="http://www.3s-software.com/plcopenxml/projectinformation" handleUnknown="implementation">
+        <ProjectInformation />
+      </data>
+    </addData>
+  </contentHeader>
+  <types>
+    <dataTypes />
+    <pous>
+      <pou name="MAIN" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="inc1">
+              <type>
+                <DINT />
+              </type>
+              <initialValue>
+                <simpleValue value="0" />
+              </initialValue>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">//0 to 37 map to blocks 1-38
+//39 to 44 map to blocks 72-76,yard
+FOR inc1 := 0 TO 44 DO
+
+	GVL.mOutOccupancies[inc1] := GVL.mInOccupancies[inc1];
+	GVL.mOutSpeeds[inc1] := GVL.mInSpeeds[inc1];
+	GVL.mOutAuthorities[inc1] := GVL.mInAuthorities[inc1];
+	GVL.mOutMaintenance[inc1] := GVL.mInMaintenance[inc1];
+	
+END_FOR
+
+FOR inc1 := 0 TO 44 DO
+
+	GVL.mOutRoute[inc1] := GVL.mInRoute[inc1];
+	
+END_FOR
+
+inc1 := 0;
+
+//This starts the main track logic section
+
+//0 to 37 map to blocks 1-38
+//39 to 44 map to 72-76,yard
+//Switch Logic
+IF GVL.mInMaintenance[8] = 1 THEN
+    GVL.mOutSwitch[8] := GVL.mInSwitch[8];
+ELSE
+    IF GVL.mInOccupancies[43] = 0 THEN
+    	GVL.mOutSwitch[8] := 76;
+    ELSE
+		GVL.mOutSwitch[8] := 9;
+	END_IF
+END_IF
+
+//0 to 37 map to blocks 1-38
+//39 to 44 map to 72-76,yard
+IF GVL.mInMaintenance[15] = 1 THEN
+    GVL.mOutSwitch[15] := GVL.mInSwitch[15];
+ELSE
+    IF GVL.mInOccupancies[14] = 0 THEN
+    FOR inc1 := 16 TO 26 DO 
+        IF GVL.mInOccupancies[inc1] = 0 THEN
+            GVL.mOutSwitch[15] := 1;
+            Exit;
+        ELSE 
+            GVL.mOutSwitch[15] := 14;
+        END_IF
+    END_FOR
+	END_IF
+END_IF
+
+//0 to 37 map to blocks 1-38
+//39 to 44 map to 72-76,yard
+IF GVL.mInMaintenance[26] = 1 THEN
+    GVL.mOutSwitch[26] := GVL.mInSwitch[26];
+ELSE
+    IF GVL.mInOccupancies[43] = 0 THEN
+    FOR inc1 := 16 TO 26 DO 
+        IF GVL.mInOccupancies[inc1] = 0 THEN
+            GVL.mOutSwitch[26] := 27;
+            Exit;
+        ELSE 
+            GVL.mOutSwitch[26] := 75;
+        END_IF
+    END_FOR
+	END_IF
+END_IF
+
+//0 to 37 map to blocks 1-38
+//39 to 44 map to 72-76,yard
+IF GVL.mInMaintenance[32] = 1 THEN
+    GVL.mOutSwitch[32] := GVL.mInSwitch[32];
+ELSE
+    IF GVL.mInOccupancies[31] = 0 THEN
+    FOR inc1 := 32 TO 37 DO 
+        IF GVL.mInOccupancies[inc1] = 0 THEN
+            GVL.mOutSwitch[32] := 71;
+            Exit;
+        ELSE 
+            GVL.mOutSwitch[32] := 31;
+        END_IF
+    END_FOR
+	END_IF
+END_IF
+</xhtml>
+          </ST>
+        </body>
+        <addData>
+          <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+            <InterfaceAsPlainText>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml">PROGRAM MAIN
+VAR
+
+inc1 : DINT := 0;
+	
+END_VAR
+</xhtml>
+            </InterfaceAsPlainText>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+            <ObjectId>fa45f2f2-925a-467e-8b80-1fe2692585de</ObjectId>
+          </data>
+        </addData>
+      </pou>
+    </pous>
+  </types>
+  <instances>
+    <configurations />
+  </instances>
+  <addData>
+    <data name="http://www.3s-software.com/plcopenxml/projectstructure" handleUnknown="discard">
+      <ProjectStructure>
+        <Object Name="MAIN" ObjectId="fa45f2f2-925a-467e-8b80-1fe2692585de" />
+      </ProjectStructure>
+    </data>
+  </addData>
+</project>
