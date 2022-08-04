@@ -22,7 +22,8 @@ namespace Track_Controller_1._02
             mPi.DataBits = 8;
             mPi.StopBits = StopBits.One;
             mPi.Handshake = Handshake.None;
-            mPi.WriteTimeout = 500;
+            mPi.WriteTimeout = 5;
+            mPi.ReadTimeout = 5;
 
             mOccupancies = new int[151];
             mSwitches = new int[151];
@@ -197,7 +198,7 @@ namespace Track_Controller_1._02
         {
             //todo
             mSentMessage = new byte[11];
-            mReceivedMessage = new byte[13];
+            
             for (int i = 0; i < 86; i++)
             {
                 if (mOccupancies[i + 57] + mMaintenance[i + 57] >= 1)
@@ -206,21 +207,27 @@ namespace Track_Controller_1._02
                 }
             }
 
-            
-            mPi.Write(mSentMessage, 0, 11);
-            count = 0;
-            while (count < mReceivedMessage.Length)
+            bool redo = true;
+            while (redo)
             {
-                try
+                mReceivedMessage = new byte[13];
+                mPi.Write(mSentMessage, 0, 11);
+                count = 0;
+            
+                while (count < mReceivedMessage.Length)
                 {
-                    count += mPi.Read(mReceivedMessage, count, mReceivedMessage.Length - count);
-                }
-                catch 
-                {
-                    throw new TimeoutException();
+                    try
+                    {
+                        count += mPi.Read(mReceivedMessage, count, mReceivedMessage.Length - count);
+                        redo = false;
+                    }
+                    catch
+                    {
+                        //throw new TimeoutException();
+                        redo = true;
+                    }
                 }
             }
-
 
 
             // Traverse the string
@@ -248,7 +255,7 @@ namespace Track_Controller_1._02
                 }
             }
 
-            mSwitches[61] = ((mReceivedMessage[95 / 8] & (1 << (95 % 8))) != 0) ? 63 : 151;
+            mSwitches[62] = ((mReceivedMessage[95 / 8] & (1 << (95 % 8))) != 0) ? 62 : 151;
             mSwitches[76] = ((mReceivedMessage[96 / 8] & (1 << (96 % 8))) != 0) ? 101 : 76;
             mSwitches[84] = ((mReceivedMessage[97 / 8] & (1 << (97 % 8))) != 0) ? 86 : 100;
 
