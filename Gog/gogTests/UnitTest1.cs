@@ -1318,6 +1318,7 @@ namespace gogTests
             chooChoo.toggleEmergencyBrake();
             Assert.AreEqual(0, chooChoo.getPowerCmd(), "Emergency brake not activated");
             Assert.AreEqual(true, chooChoo.getEmergencyBrake(), "Emergency brake not activated");
+            Assert.AreEqual(true, chooChoo.getAcceleration()<0, "Emergency brake not activated");
         }
         [TestMethod]
         public void serviceBrake()
@@ -1326,6 +1327,7 @@ namespace gogTests
             chooChoo.toggleServiceBrake();
             Assert.AreEqual(0, chooChoo.getPowerCmd(), "Service brake not activated");
             Assert.AreEqual(true, chooChoo.getServiceBrake(), "Service brake not activated");
+            Assert.AreEqual(true, chooChoo.getAcceleration() < 0, "Emergency brake not activated");
         }
         [TestMethod]
         public void brakeFailure()
@@ -1367,8 +1369,9 @@ namespace gogTests
             chooChoo.setGrade(5);
             Assert.IsTrue(dec > chooChoo.getAcceleration(), "Grad not working");
 
-
         }
+
+        
 
     }
 }
