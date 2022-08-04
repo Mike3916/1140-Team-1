@@ -247,11 +247,11 @@ namespace Track_Controller_1._02
             {
                 if ((mReceivedMessage[(i + 86) / 8] & (1 << ((i + 86) % 8))) != 0)
                 {
-                    mLeftLights[i + 57] = 1;
+                    mLeftLights[i + 76] = 1;
                 }
                 else
                 {
-                    mLeftLights[i + 57] = 0;
+                    mLeftLights[i + 76] = 0;
                 }
             }
 

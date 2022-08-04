@@ -670,6 +670,44 @@ namespace gogTests
             Assert.IsFalse(0 == returns[62]);
 
         }
+
+        [TestMethod]
+        public void TransitLights()
+        {
+            Track_Controller_1._02.Controller green = new Track_Controller_1._02.Controller(4, true);
+            int[] mOcc = new int[151];
+            int[] mMaint = new int[151];
+            green.SendOccupancies(mOcc);
+            green.SendMaintenance(mMaint);
+            int[] mRightLights = new int[151];
+            mRightLights = green.ReceiveRightLights(151);
+            int[] mLeftLights = new int[151];
+            mLeftLights =  green.ReceiveLeftLights(151);
+            for (int i = 58; i < 142; i++)
+            {
+                Assert.AreEqual(mRightLights[i], 1);
+                
+            }
+            for (int i = 76; i < 85; i++)
+            {
+                Assert.AreEqual(mLeftLights[i], 1);
+            }
+
+            mOcc[98] = 1;
+            mMaint[79] = 1;
+            green.SendOccupancies(mOcc);
+            green.SendMaintenance(mMaint);
+            mRightLights = green.ReceiveRightLights(151);
+            mLeftLights = green.ReceiveLeftLights(151);
+            Assert.AreEqual(mRightLights[97], 0);
+            Assert.AreEqual(mLeftLights[80], 0);
+            Assert.AreEqual(mRightLights[99], 0);
+            Assert.AreEqual(mRightLights[75], 0);
+            mOcc[100] = 1;
+            green.SendOccupancies(mOcc);
+            mLeftLights = green.ReceiveLeftLights(151);
+            Assert.AreEqual(mLeftLights[76], 0);
+        }
     }
     [TestClass]
     public class TrainControllerSW
