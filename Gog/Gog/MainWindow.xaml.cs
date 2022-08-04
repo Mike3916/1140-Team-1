@@ -97,7 +97,7 @@ namespace Gog
         bool gotTrack = false;
         bool paused = true;
 
-        int mredThroughPut, mgreenThroughPut, mredTotalSales, mgreenTotalSales;
+        int mredThroughPut = 0, mgreenThroughPut = 0, mredTotalSales, mgreenTotalSales;
 
         int hour, minute, second, timeElapsed = 0;
         string hourString, minuteString, secondString;
@@ -316,7 +316,7 @@ namespace Gog
                 {
                     var now = new DateTime(1,1,1, hour, minute, second);
                     ctc.getTime(now);
-                    ctc.getThroughput(mthroughPut, );
+                    ctc.getThroughput(mredThroughPut, mgreenThroughPut); //Read in throughput for the red and green line (ticket sales per hour)
                 }
                     
 
@@ -328,12 +328,6 @@ namespace Gog
                     
                 }
 
-                if (track != null && ctc != null &&  track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
-                {
-                    
-                                                                                                                                                                                                                                                                                                                                  
-                    
-                }
 
                 if (mRedTrain == true)
                 {
