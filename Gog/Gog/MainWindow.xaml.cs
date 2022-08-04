@@ -92,24 +92,13 @@ namespace Gog
         */
 
         DispatcherTimer mGlobalTimer;
-
-        int mIterationMultiplier = 1, numTrains = 0, iter = 0;
+        int mIterationMultiplier = 10, numTrains = 0, iter = 0;
         bool newBlock;
         bool gotTrack = false;
-
-        int hour, minute, second;
-        string hourString, minuteString, secondString;
 
         public MainWindow()
         {
             InitializeComponent();
-
-            LiveTimeLabel.Content = DateTime.Now.ToString("HH:mm");
-            DateTime now = DateTime.Now;
-            hour = now.Hour;
-            minute = now.Minute;
-            second = now.Second;
-
             InitTimer();
         }
 
@@ -163,34 +152,6 @@ namespace Gog
                 ctc.Activate();
         }
 
-        public void SpeedControl(object sender, RoutedEventArgs e)
-        {
-            if (mIterationMultiplier == 1)
-            {
-                mIterationMultiplier = 10;
-                //SpeedMultiplier.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
-            }
-            else
-            {
-                mIterationMultiplier = 1;
-
-            }
-        }
-
-        public void PauseControl(object sender, RoutedEventArgs e)
-        {
-            if (mIterationMultiplier == 1)
-            {
-                mIterationMultiplier = 10;
-                Pause.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
-            }
-            else
-            {
-                mIterationMultiplier = 1;
-
-            }
-        }
-
         private void StartUpActivated(object sender, EventArgs e)
         {
             Application.Current.MainWindow = trainCtrl;
@@ -220,54 +181,7 @@ namespace Gog
         {
             for (int i = 0; i < mIterationMultiplier; i++)
             {
-                if (iter++ == 1000)
-                {
-                    iter = 0;
-
-                    if (second++ == 59)
-                    {
-                        second = 0;
-                        
-                        if (minute++ == 59)
-                        {
-                            minute = 0;
-
-                            if (hour++ == 23)
-                            {
-                                hour = 0;
-                            }
-                        }
-                    }
-
-                    if (second < 10)
-                    {
-                        secondString = "0" + second.ToString();
-                    }
-                    else
-                    {
-                        secondString = second.ToString();
-                    }
-
-                    if (minute < 10)
-                    {
-                        minuteString = "0" + minute.ToString();
-                    }
-                    else
-                    {
-                        minuteString = minute.ToString();
-                    }
-
-                    if (hour < 10)
-                    {
-                        hourString = "0" + hour.ToString();
-                    }
-                    else
-                    {
-                        hourString = hour.ToString();
-                    }
-
-                    LiveTimeLabel.Content = hourString + ":" + minuteString; // + ":" + secondString;
-                }
+                if (iter++ % 10 == 0) TimeBox.Text = (iter).ToString();
 
                 if (track != null && ctc != null && track.mLines.Count == 2 && iter % 20 == 10)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
                 {
@@ -415,18 +329,6 @@ namespace Gog
             ctc.mGreenTrain = false;
 
             ArrayMerger();
-
-            /*77 element integer arrays for red line
-            
-            = mRedOccupancies;
-            = mRedCrossings;
-            = mRedSwitches;
-         */
-            /*151 element integer arrays for green line
-             = mGreenOccupancies;
-             = mGreenCrossings;
-             = mGreenSwitches;
-       */
            
         }
 
