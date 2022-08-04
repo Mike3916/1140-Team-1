@@ -97,6 +97,8 @@ namespace Gog
         bool gotTrack = false;
         bool paused = true;
 
+        int mthroughPut, mtotalSales;
+
         int hour, minute, second, timeElapsed = 0;
         string hourString, minuteString, secondString;
 
@@ -369,7 +371,11 @@ namespace Gog
                             trains.UpdateBlock(bl, j);              //update the train pos
                             if (bl.mStation)
                             {
-                                track.SetPopulation(trains.Trains[j].UpdatePassenger(bl.mPop), bl);
+                                int temp1 = bl.mPop;
+                                int temp2 = trains.Trains[j].UpdatePassenger(bl.mPop);
+                                track.SetPopulation(temp2, bl);
+                                mtotalSales += temp1 - temp2;
+                                mthroughPut = mtotalSales / timeElapsed;
                             }
                         }
                         else
