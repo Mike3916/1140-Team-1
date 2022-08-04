@@ -30,7 +30,7 @@
         </Border>
         <Button x:Name ="eBrake" Content="Emergency Brake&#xD;&#xA;Off" HorizontalAlignment="Left" Margin="43,339,0,0" VerticalAlignment="Top" Height="30" Width="156" Background="#FF268646" Click="Emergency_Brake" FontSize="9" HorizontalContentAlignment="Center" IsEnabled="False" />
         <Button x:Name="signalPickUp" Content="Signal Pick-up&#xD;&#xA;Working" HorizontalAlignment="Left" Margin="199,339,0,0" VerticalAlignment="Top" Height="30" Width="156" Click="Signal_Pick_Up" FontSize="9" IsEnabled="False"/>
-        <Button x:Name="sBrake"  Content="Service Brake&#xD;&#xA;Off" HorizontalAlignment="Left" Margin="43,369,0,0" VerticalAlignment="Top" Height="30" Width="156" Click="Service_Brake" FontSize="9" IsEnabled="False" HorizontalContentAlignment="Center"/>
+        <Button x:Name="sBrake"  Content="Brake Failure&#xD;&#xA;Off" HorizontalAlignment="Left" Margin="43,369,0,0" VerticalAlignment="Top" Height="30" Width="156" Click="Service_Brake" FontSize="9" IsEnabled="False" HorizontalContentAlignment="Center"/>
         <Button x:Name="engineFailure"  Content="Engine Failure&#xD;&#xA;Off" HorizontalAlignment="Left" Margin="199,369,0,0" VerticalAlignment="Top" Height="30" Width="156" Click="Engine_Failure" FontSize="9" IsEnabled="False"/>
         <Label Content="Physics" HorizontalAlignment="Left" Margin="460,69,0,0" VerticalAlignment="Top" Background="White" Foreground="Black" Panel.ZIndex="2" Height="10" Width="29" Padding="0,0,0,0" FontSize="8"/>
         <Border BorderThickness="1,1,1,1" BorderBrush="Black" CornerRadius="15,15,15,15" Background="White" Width="315" Height="90" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="440,74,0,0">
