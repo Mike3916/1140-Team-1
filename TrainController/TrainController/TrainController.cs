@@ -13,7 +13,7 @@ namespace TrainController
     public class Controller
     {
         // Serial port for connecting to Raspberry Pi:
-        SerialPort pi = new SerialPort();
+        public SerialPort pi = new SerialPort();
 
         // Dispatcher timers for power calculation and speed updating:
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
