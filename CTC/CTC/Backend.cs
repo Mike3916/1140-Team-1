@@ -26,7 +26,7 @@ namespace Backend
 		public string name;
 		public DateTime ETD;    //DateTime saves time in format such that TimeSpan can be found later between ETD and ETA via: Timespan duration = ETA.Subtract(ETD)
 		public DateTime ETA;	
-		public int destination;
+		public int destination; //holds the block number of the destination
 		public TimeSpan duration; //TimeSpan variable to keep track of time duration between ETD and ETA
         public double length = 0;  //The length of the route
         public int authority;
@@ -59,23 +59,27 @@ namespace Backend
         }
         public void calcRoute()
         {
-            int i = -1; //Start at -1
+            int i = 0; //Start at 0
             if (line == 0) //The red line
             {
-                while (destination != mredRoute[i])
+                while (true)
                 {
-                    i++; //increment i and add info to document, so it's already added by the time the while loop ends. (i=-1 before the while loop starts)
                     route.Add(mredRoute[i]);
                     length += ((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(mredRoute[i]).mLength; //Add the length of the block. GetBlock() is sent the Block ID (starts at 1), not block index
+                    if (destination == mredRoute[i])
+                        break;
+                    i++; //increment i and add info to document, so it's already added by the time the while loop ends. (i=-1 before the while loop starts)
                 }
             }
             else if (line == 1) //The green line
             {
-                while (destination != mgreenRoute[i])
+                while (true)
                 {
-                    i++;
                     route.Add(mgreenRoute[i]);
-                    length += ((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(mredRoute[i]).mLength; //Add the length of the block. GetBlock() is sent the Block ID (starts at 1), not block index
+                    length += ((MainWindow)Application.Current.MainWindow).mLines[line].GetBlock(mgreenRoute[i]).mLength; //Add the length of the block. GetBlock() is sent the Block ID (starts at 1), not block index
+                    if (destination == mgreenRoute[i])
+                        break;
+                    i++;
                 }
             }
 

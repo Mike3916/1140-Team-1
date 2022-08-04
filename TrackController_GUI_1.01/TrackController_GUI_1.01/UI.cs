@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace Track_Controller_1._02
 {
-    //[Serializable]
+
     //Track_Controller_1._02
     public partial class Form_WC : Form
     {
@@ -27,10 +27,49 @@ namespace Track_Controller_1._02
         private int mCurrentBlockIndex = -1;
         private int mCurrentAuthority = 0;
         private int mCurrentSuggestedSpeed = 0;
+        private int mCurrentPLCBlockIndex = 0;
         List<Controller> mPLCs = new List<Controller>();
         List<int> mControllerBlocks = new List<int>();
         List<int> mControllerSections = new List<int>();
-        int mControllerLine = -1;
+        private int mControllerLine = -1;
+        private Track_Controller_1._02.Controller mRedline1 = new Track_Controller_1._02.Controller(851, false, "127.0.0.1");
+        private Track_Controller_1._02.Controller mRedline2 = new Track_Controller_1._02.Controller(853, false, "127.0.0.1");
+        private Track_Controller_1._02.Controller mGreenLine1 = new Track_Controller_1._02.Controller(852, false, "127.0.0.1");
+
+        private int[] mRedMaintenanceBlocks = new int[77];
+        private int[] mRedOccupancies = new int[77];
+        private int[] mRedSpeeds = new int[77];
+        private int[] mRedAuthorities = new int[77];
+        private int[] mRedCrossings = new int[77];
+        private int[] mRedSwitches = new int[77];
+        private int[] mRedLeftLights = new int[77];
+        private int[] mRedRightLights = new int[77];
+
+        private int[] mRed1MaintenanceBlocks = new int[44];
+        private int[] mRed1Occupancies = new int[44];
+        private int[] mRed1Speeds = new int[44];
+        private int[] mRed1Authorities = new int[44];
+        private int[] mRed1Crossings = new int[44];
+        private int[] mRed1Switches = new int[44];
+        private int[] mRed1LeftLights = new int[44];
+        private int[] mRed1RightLights = new int[44];
+        private int[] mRed2MaintenanceBlocks = new int[41];
+        private int[] mRed2Occupancies = new int[41];
+        private int[] mRed2Speeds = new int[41];
+        private int[] mRed2Authorities = new int[41];
+        private int[] mRed2Crossings = new int[41];
+        private int[] mRed2Switches = new int[41];
+        private int[] mRed2LeftLights = new int[41];
+        private int[] mRed2RightLights = new int[41];
+
+        private int[] mGreenMaintenanceBlocks = new int[151];
+        private int[] mGreenOccupancies = new int[151];
+        private int[] mGreenSpeeds = new int[151];
+        private int[] mGreenAuthorities = new int[151];
+        private int[] mGreenCrossings = new int[151];
+        private int[] mGreenSwitches = new int[151];
+        private int[] mGreenLeftLights = new int[151];
+        private int[] mGreenRightLights = new int[151];
 
 
         //Form_WC(): Instantiates new test UI.
@@ -38,9 +77,6 @@ namespace Track_Controller_1._02
         {
             InitializeComponent();
         }
-
-
-        
 
         //****************************************************************************************************************************************
         //Form_WC_Load: Loads the Wayside Controller UI with all form controls
@@ -51,42 +87,9 @@ namespace Track_Controller_1._02
         {
             mOFD = new OpenFileDialog();
 
-            this.FormClosing += new FormClosingEventHandler(Form_WC_FormClosing_1);
-
-
-
         }
 
-        //****************************************************************************************************************************************
-        //Form_WC_FormClosing_1: Originally serialized the runtime environment on closing for recovery purposes. This became redundant once the 
-        //Wayside Controller UI was no longer managing PLC to CTC connections. I've left the code here in comments in the event a change requires it.
-        //<sender>: reference to object that raises the form load event in this case "Track_Controller_<version #>.main()".
-        //<e>: Argument containing event data.
-        //<void>
-        private void Form_WC_FormClosing_1(object sender, FormClosingEventArgs e)
-        {
-            
-        //    if (File.Exists("C:\Users\Michael\Downloads\mPLCs.json") == true)
-        //    {
-
-        //        mPLCs= JsonConvert.DeserializeObject<Controller>("C:\Users\Michael\Downloads\mPLCs.json");
-        //    }
-           
-        //    string output = JsonConvert.SerializeObject(mPLCs);
-        //    File.WriteAllText(@"C:\Users\Michael\Downloads\mPLCs.json", output);
-        //    output = JsonConvert.SerializeObject(mLines);
-        //    File.WriteAllText(@"C:\Users\Michael\Downloads\mLines.json", output);
-        //    output = JsonConvert.SerializeObject(mLineData);
-        //    File.WriteAllText(@"C:\Users\Michael\Downloads\mLineData.json", output);
-        //    output = JsonConvert.SerializeObject(mSectNames);
-        //    File.WriteAllText(@"C:\Users\Michael\Downloads\mSectNames.json", output);
-            
-           
-
-        
-        //Product deserializedProduct = JsonConvert.DeserializeObject<Product>(output);
-        
-        }
+ 
 
 
         //****************************************************************************************************************************************
@@ -95,13 +98,13 @@ namespace Track_Controller_1._02
         //<sender>: reference to object that raises the form load event in this case "Form_WC.Toggle_TestMode()".
         //<e>: Argument containing event data.
         //<void>
-        private void mButton_Lock_Local_Click(object sender, EventArgs e)
+        private void mButtonLockLocal_Click(object sender, EventArgs e)
         {
-            int mLocalState = 0;
+            int localState = 0;
             try
             {
                 mCurrentBlockIndex = mComboBox_Select_Block.SelectedIndex - 1;
-                mLocalState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
+                localState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
             }
             catch
             {
@@ -109,16 +112,10 @@ namespace Track_Controller_1._02
                 return;
             }
 
-            if((mLocalState & 0x00002000) == 0x00002000)
+            if (this.mButtonLockLocal.BackColor == Color.FromArgb(0,192,0))
             {
-                MessageBox.Show("CTC must authorize block for maintenance.");
-                    return;
-            }
-
-            if (this.mButton_Lock_Local.BackColor == Color.FromArgb(0,192,0))
-            {
-                this.mButton_Lock_Local.Image = Track_Controller_1._02.Properties.Resources.Lock_Closed;
-                this.mButton_Lock_Local.BackColor = Color.Red;
+                this.mButtonLockLocal.Image = Track_Controller_1._02.Properties.Resources.Lock_Closed;
+                this.mButtonLockLocal.BackColor = Color.Red;
                 this.mButton_Toggle_Track_Occupancy.Enabled = true;
                 this.mButton_Toggle_Track_Occupancy.BackColor = SystemColors.ButtonFace;
                 this.mButton_Toggle_Lights_Left.Enabled = true;
@@ -127,18 +124,6 @@ namespace Track_Controller_1._02
                 this.mButton_Toggle_Lights_Right.BackColor = SystemColors.ButtonFace;
                 this.mButton_Toggle_Switch.Enabled = true;
                 this.mButton_Toggle_Switch.BackColor = SystemColors.ButtonFace;
-                this.mButton_Toggle_Rail.Enabled = true;
-                this.mButton_Toggle_Rail.BackColor = SystemColors.ButtonFace;
-                this.mButton_Toggle_Signal.Enabled = true;
-                this.mButton_Toggle_Signal.BackColor = SystemColors.ButtonFace;
-                this.mButton_Toggle_Bar.Enabled = true;
-                this.mButton_Toggle_Bar.BackColor = SystemColors.ButtonFace;
-                this.mButton_Toggle_Crossing_Lights.Enabled = true;
-                this.mButton_Toggle_Crossing_Lights.BackColor = SystemColors.ButtonFace;
-                this.mButton_SetBlockSpeed.Enabled = true;
-                this.mButton_SetBlockSpeed.BackColor = SystemColors.ButtonFace;
-                this.mTextBox_SetBlockSpeed.Enabled = true;
-                this.mRichText_Serial_Data.Enabled = true;
                 this.button3.Enabled = true;
                 this.button3.BackColor = SystemColors.ButtonFace;
                 this.mButton_SetSuggestedSpeed.Enabled = true;
@@ -147,16 +132,30 @@ namespace Track_Controller_1._02
                 this.mTextBox_Authority.Enabled = true;
                 this.mButton_SetAuthority.Enabled = true;
                 this.mButton_SetAuthority.BackColor = SystemColors.ButtonFace;
+                this.mButton_Toggle_Bar.Enabled = true;
+                this.mButton_Toggle_Bar.BackColor = SystemColors.ButtonFace;
 
+                localState = localState | 0x00004000;
 
-
-                mLocalState = mLocalState | 0x00004000;
+                if(mCurrentLineIndex == 0)
+                {
+                    mRedMaintenanceBlocks[mCurrentPLCBlockIndex] = 1;
+                    SplitArrays();
+                    mRedline1.SendMaintenance(mRed1MaintenanceBlocks);
+                    mRedline2.SendMaintenance(mRed2MaintenanceBlocks);
+                }
+                else
+                {
+                    mGreenMaintenanceBlocks[mCurrentPLCBlockIndex] = 1;
+                    SplitArrays();
+                    mGreenLine1.SendMaintenance(mGreenMaintenanceBlocks);
+                }
 
             }
             else
             {
-                this.mButton_Lock_Local.Image = Track_Controller_1._02.Properties.Resources.Lock_Open;
-                this.mButton_Lock_Local.BackColor = Color.FromArgb(0, 192, 0);
+                this.mButtonLockLocal.Image = Track_Controller_1._02.Properties.Resources.Lock_Open;
+                this.mButtonLockLocal.BackColor = Color.FromArgb(0, 192, 0);
                 this.mButton_Toggle_Track_Occupancy.Enabled = false;
                 this.mButton_Toggle_Track_Occupancy.BackColor = SystemColors.ControlDark;
                 this.mButton_Toggle_Lights_Left.Enabled = false;
@@ -165,19 +164,8 @@ namespace Track_Controller_1._02
                 this.mButton_Toggle_Lights_Right.BackColor = SystemColors.ControlDark;
                 this.mButton_Toggle_Switch.Enabled = false;
                 this.mButton_Toggle_Switch.BackColor = SystemColors.ControlDark;
-                this.mButton_Toggle_Rail.Enabled = false;
-                this.mButton_Toggle_Rail.BackColor = SystemColors.ControlDark;
-                this.mButton_Toggle_Signal.Enabled = false;
-                this.mButton_Toggle_Signal.BackColor = SystemColors.ControlDark;
                 this.mButton_Toggle_Bar.Enabled = false;
                 this.mButton_Toggle_Bar.BackColor = SystemColors.ControlDark;
-                this.mButton_Toggle_Crossing_Lights.Enabled = false;
-                this.mButton_Toggle_Crossing_Lights.BackColor = SystemColors.ControlDark;
-                this.mButton_SetBlockSpeed.Enabled = false;
-                this.mButton_SetBlockSpeed.BackColor = SystemColors.ControlDark;
-                this.mTextBox_SetBlockSpeed.Text = "";
-                this.mTextBox_SetBlockSpeed.Enabled = false;
-                this.mRichText_Serial_Data.Enabled = false;
                 this.button3.Enabled = false;
                 this.button3.BackColor = SystemColors.ControlDark;
                 this.mButton_SetSuggestedSpeed.Enabled = false;
@@ -187,10 +175,24 @@ namespace Track_Controller_1._02
                 this.mButton_SetAuthority.Enabled = false;
                 this.mButton_SetAuthority.BackColor = SystemColors.ControlDark;
 
-                mLocalState = mLocalState & 0x0FFFBFFF;
+                localState = localState & 0x0FFFBFFF;
+
+                if (mCurrentLineIndex == 0)
+                {
+                    mRedMaintenanceBlocks[mCurrentPLCBlockIndex] = 0;
+                    SplitArrays();
+                    mRedline1.SendMaintenance(mRed1MaintenanceBlocks);
+                    mRedline2.SendMaintenance(mRed2MaintenanceBlocks);
+                }
+                else
+                {
+                    mGreenMaintenanceBlocks[mCurrentPLCBlockIndex] = 0;
+                    SplitArrays();
+                    mGreenLine1.SendMaintenance(mGreenMaintenanceBlocks);
+                }
             }
 
-            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, mLocalState);
+            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, localState);
         }
 
 
@@ -200,47 +202,25 @@ namespace Track_Controller_1._02
         //<void>
         private void mButton_Controller_Connect_Click(object sender, EventArgs e)
         {
-            int[] mRoutes = new int[45];
-            int[] mOccupancies = new int[45];
+            int[] routes = new int[45];
+            int[] occupancies = new int[45];
             int length = 45;
 
             for(int i=0; i<45; i++)
             {
-                mOccupancies[i] = 1;
-                mRoutes[i] = i;
+                occupancies[i] = 1;
+                routes[i] = i;
             }
 
             Controller mRedLine1 = new Controller(851, false, "127.0.0.1");
 
-            mRedLine1.SendRoute(mRoutes);
-            mRoutes = mRedLine1.ReceiveRoute(length);
+            mRedLine1.SendRoute(routes);
+            routes = mRedLine1.ReceiveRoute(length);
 
-            mRedLine1.SendOccupancies(mOccupancies);
-            mOccupancies = mRedLine1.ReceiveOccupancies(length);
+            mRedLine1.SendOccupancies(occupancies);
+            occupancies = mRedLine1.ReceiveOccupancies(length);
 
         }
-
-
-        //private void CreateSoftwareController()
-        //{
-
-            
-
-        //    string[] mSelectedBlocks = new string[mRichText_BlockInfo.Lines.Count()];
-        //    for (int i=0; i<mRichText_BlockInfo.Lines.Count(); i++)
-        //    {
-        //        mSelectedBlocks[i] = mRichText_BlockInfo.Lines[i];
-        //    }
-
-        //    Controller mTempPLC = new Controller();
-
-        //    //mPLCs.Add(mTempPLC);
-        //}
-
-        //private void CreateHardwareController()
-        //{
-
-        //}
 
 
         //***************************************************************************************************************************************
@@ -298,7 +278,7 @@ namespace Track_Controller_1._02
         //<DataTable>: returns the data table object
         private DataTable MakeLineDataTable(int lineIdx)
         {
-            List<string[]> newlineInfo = mLines[lineIdx].getlineInfo();
+            List<string[]> newLineInfo = mLines[lineIdx].getlineInfo();
 
             DataTable lineData = new DataTable(mLines[lineIdx].getmnameLine());
 
@@ -320,7 +300,7 @@ namespace Track_Controller_1._02
                 blockData.Add(lineData.NewRow());
                 for (int valueIdx = 0; valueIdx < 10; valueIdx++)
                 {
-                    blockData[blockIdx][valueIdx] = newlineInfo[blockIdx][valueIdx];
+                    blockData[blockIdx][valueIdx] = newLineInfo[blockIdx][valueIdx];
                 }
                 lineData.Rows.Add(blockData[blockIdx]);
             }
@@ -344,18 +324,17 @@ namespace Track_Controller_1._02
             mCurrentSectionIndex = mComboBox_Section.SelectedIndex - 1;
             mCurrentBlockIndex = -1;
 
-            List<string> mBlockNumberz = new List<string>();
+            List<string> blockNumberz = new List<string>();
 
-            mBlockNumberz = mLines[mCurrentLineIndex].getSectBlockNum(mCurrentSectionIndex);
+            blockNumberz = mLines[mCurrentLineIndex].getSectBlockNum(mCurrentSectionIndex);
 
-            for(int i = 0; i < mBlockNumberz.Count; i++)
+            for(int i = 0; i < blockNumberz.Count; i++)
             {
-                mComboBox_Select_Block.Items.Add(mBlockNumberz[i]);
+                mComboBox_Select_Block.Items.Add(blockNumberz[i]);
             }
 
 
-            mLabel_Section.Text = "Section: " + mComboBox_Section.Text;
-            mLabel_Block.Text = "Block: ";
+
         }
 
 
@@ -370,7 +349,6 @@ namespace Track_Controller_1._02
             mComboBox_Section.Items.Add("Select Section");
             mComboBox_Select_Block.Items.Clear();
             mComboBox_Select_Block.Items.Add("Select Block to View");
-            mRichText_BlockInfo.Clear();
             mCurrentLineIndex = -1;
             mControllerBlocks.Clear();
             mControllerSections.Clear();
@@ -388,19 +366,6 @@ namespace Track_Controller_1._02
                 mComboBox_Section.Items.Add(mSectNames[i]);
             }
 
-            mLabel_Line.Text = "Line: " + mLines[mCurrentLineIndex].getmnameLine();
-            mLabel_Section.Text = "Section: ";
-            mLabel_Block.Text = "Block: ";
-        }
-
-
-        //****************************************************************************************************************************************
-        //mComboBox_ControllerSelect_SelectedIndexChanged: Updates the code window with the code associated with selected controller and populates 
-        //the block select comboBox. Did not need for test functionality. Left empty.
-        private void mComboBox_ControllerSelect_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-
         }
 
         //*****************************************************************************************************************************************
@@ -410,35 +375,16 @@ namespace Track_Controller_1._02
         private void mComboBox_Select_Block_SelectedIndexChanged(object sender, EventArgs e)
         {
             mCurrentBlockIndex = mComboBox_Select_Block.SelectedIndex - 1;
+            mCurrentPLCBlockIndex = Int32.Parse(mComboBox_Select_Block.Text) - 1;
 
             int mLocalState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
             mCurrentAuthority = mLines[mCurrentLineIndex].getSuggested(mCurrentSectionIndex, mCurrentBlockIndex);
             mCurrentSuggestedSpeed = mLines[mCurrentLineIndex].getAuthority(mCurrentSectionIndex, mCurrentBlockIndex);
 
-            mLabel_Block.Text = "Block: " + mComboBox_Select_Block.Text;
+
 
             this.RefreshWindow(mLocalState);
 
-
-            /*
-            0x00000002 = contains switch on siding
-            0x00000003 = contains switch on main
-            0x00000004 = contains station
-            0x00000040 = contains crossing, all open
-            0x00000060 = contains crossing, bar closed
-            0x00000050 = contains crossing, lights on
-            0x00100000 = transit light left is green
-            0x00200000 = transit light left is yellow
-            0x00300000 = transit light left is red
-            0x00010000 = transit light right is green
-            0x00020000 = transit light right is Yellow
-            0x00030000 = tranist light right is red
-            0x00000400 = track is broken
-            0x00000800 = no track signal
-            0x00001000 = block occupied
-            0x00002000 = CTC has not locked out
-            0x00004000 = Wayside controller has locked out
-            */
         }
 
 
@@ -450,11 +396,37 @@ namespace Track_Controller_1._02
         private void mButton_Toggle_Switch_Click(object sender, EventArgs e)
         {
             mCurrentBlockIndex = mComboBox_Select_Block.SelectedIndex - 1;
-            int mLocalState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
-            mLocalState = mLocalState ^ 0x00000001;
-            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, mLocalState);
-            this.RefreshWindow(mLocalState);
-            MessageBox.Show(mLocalState.ToString());
+            int localState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
+            localState = localState ^ 0x00000001;
+            if(mCurrentLineIndex == 0)
+            {
+                mRedSwitches[mCurrentPLCBlockIndex] = 1;
+                SplitArrays();
+                try
+                {
+                    mRedline1.SendOccupancies(mRed1Occupancies);
+                    mRedline2.SendOccupancies(mRed2Occupancies);
+                }
+                catch
+                {
+                    MessageBox.Show("Red line PLC not connected.");
+                }
+            }
+            else
+            {
+                mGreenSwitches[mCurrentPLCBlockIndex] = 1;
+                try
+                {
+                    mGreenLine1.SendOccupancies(mGreenOccupancies);
+                }
+                catch
+                {
+                    MessageBox.Show("Green line PLC not connected.");
+                }
+            }
+            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, localState);
+            Thread.Sleep(10);
+            this.RefreshWindow(localState);
         }
 
         //*******************************************************************************************************************************************
@@ -464,11 +436,37 @@ namespace Track_Controller_1._02
         private void mButton_Toggle_Track_Occupancy_Click(object sender, EventArgs e)
         {
             mCurrentBlockIndex = mComboBox_Select_Block.SelectedIndex - 1;
-            int mLocalState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
-            mLocalState = mLocalState ^ 0x00001000;
-            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, mLocalState);
-            this.RefreshWindow(mLocalState);
-            MessageBox.Show(mLocalState.ToString());
+            int localState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
+            localState = localState ^ 0x00001000;
+            if(mCurrentLineIndex == 0)
+            {
+                mRedOccupancies[mCurrentPLCBlockIndex] = ((localState & 0x00001000) >> 12);
+                SplitArrays();
+                try
+                {
+                    mRedline1.SendOccupancies(mRed1Occupancies);
+                    mRedline2.SendOccupancies(mRed2Occupancies);
+                }
+                catch
+                {
+                    MessageBox.Show("Red line PLC not connected.");
+                }
+            }
+            else
+            {
+                mGreenOccupancies[mCurrentPLCBlockIndex] = ((localState & 0x00001000) >> 12);
+                try
+                {
+                    mGreenLine1.SendOccupancies(mGreenOccupancies);
+                }
+                catch
+                {
+                    MessageBox.Show("Green line PLC not connected.");
+                }
+            }
+            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, localState);
+            Thread.Sleep(10);
+            this.RefreshWindow(localState);            
         }
 
         //*******************************************************************************************************************************************
@@ -478,26 +476,51 @@ namespace Track_Controller_1._02
         private void mButton_Toggle_Lights_Left_Click(object sender, EventArgs e)
         {
             mCurrentBlockIndex = mComboBox_Select_Block.SelectedIndex - 1;
-            int mLocalState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
-            mLocalState = mLocalState ^ 0x00100000;
-            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, mLocalState);
-            this.RefreshWindow(mLocalState);
-            MessageBox.Show(mLocalState.ToString());
+            int localState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
+            localState = localState ^ 0x00100000;
+            if (mCurrentLineIndex == 0)
+            {
+                mRedOccupancies[mCurrentPLCBlockIndex] = ((localState & 0x00100000) >> 20);
+                SplitArrays();
+                try
+                {
+                    mRedline1.SendLeftLights(mRed1LeftLights);
+                    mRedline2.SendLeftLights(mRed2LeftLights);
+                }
+                catch
+                {
+                    MessageBox.Show("Red line PLC not connected.");
+                }
+            }
+            else
+            {
+                mGreenOccupancies[mCurrentPLCBlockIndex] = ((localState & 0x00100000) >> 20);
+                try
+                {
+                    mGreenLine1.SendLeftLights(mGreenLeftLights);
+                }
+                catch
+                {
+                    MessageBox.Show("Green line PLC not connected.");
+                }
+            }
+            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, localState);
+            Thread.Sleep(10);
+            this.RefreshWindow(localState);
         }
 
         //*******************************************************************************************************************************************
-        //mButton_SetAuthority_Click sets the authority for a specific block and then shows the change in the block view window.
+        //SetAuthority sets the authority for a specific block and then shows the change in the block view window.
         //<sender> event sender (form control)
         //<e> event arguments (button click)
         private void mLeft_Green_CheckedChanged(object sender, EventArgs e)
         {
             mCurrentBlockIndex = mComboBox_Select_Block.SelectedIndex - 1;
-            int mLocalState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
-            mLocalState = mLocalState | 0x00100000;
-            mLocalState = mLocalState & 0x0FDFFFFF;
-            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, mLocalState);
-            this.RefreshWindow(mLocalState);
-            MessageBox.Show(mLocalState.ToString());
+            int localState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
+            localState = localState | 0x00100000;
+            localState = localState & 0x0FDFFFFF;
+            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, localState);
+            this.RefreshWindow(localState);
         }
 
         //*******************************************************************************************************************************************
@@ -507,11 +530,37 @@ namespace Track_Controller_1._02
         private void mButton_Toggle_Lights_Right_Click(object sender, EventArgs e)
         {
             mCurrentBlockIndex = mComboBox_Select_Block.SelectedIndex - 1;
-            int mLocalState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
-            mLocalState = mLocalState ^ 0x00010000;
-            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, mLocalState);
-            this.RefreshWindow(mLocalState);
-            MessageBox.Show(mLocalState.ToString());
+            int localState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
+            localState = localState ^ 0x00010000;
+            if (mCurrentLineIndex == 0)
+            {
+                mRedOccupancies[mCurrentBlockIndex] = ((localState & 0x00010000) >> 16);
+                SplitArrays();
+                try
+                {
+                    mRedline1.SendRightLights(mRed1RightLights);
+                    mRedline2.SendRightLights(mRed2RightLights);
+                }
+                catch
+                {
+                    MessageBox.Show("Red line PLC not connected.");
+                }
+            }
+            else
+            {
+                mGreenOccupancies[mCurrentBlockIndex] = ((localState & 0x00010000) >> 16);
+                try
+                {
+                    mGreenLine1.SendRightLights(mGreenRightLights);
+                }
+                catch
+                {
+                    MessageBox.Show("Green line PLC not connected.");
+                }
+            }
+            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, localState);
+            Thread.Sleep(10);
+            this.RefreshWindow(localState);
         }
 
         //*******************************************************************************************************************************************
@@ -521,25 +570,49 @@ namespace Track_Controller_1._02
         private void mButton_Toggle_Signal_Click(object sender, EventArgs e)
         {
             mCurrentBlockIndex = mComboBox_Select_Block.SelectedIndex - 1;
-            int mLocalState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
-            mLocalState = mLocalState ^ 0x00000800;
-            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, mLocalState);
-            this.RefreshWindow(mLocalState);
-            MessageBox.Show(mLocalState.ToString());
+            int localState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
+            localState = localState ^ 0x00000800;
+            if (mCurrentLineIndex == 0)
+            {
+                mRedOccupancies[mCurrentBlockIndex] = ((localState & 0x00000800) >> 11);
+                SplitArrays();
+                try
+                {
+                    mRedline1.SendRightLights(mRed1RightLights);
+                    mRedline2.SendRightLights(mRed2RightLights);
+                }
+                catch
+                {
+                    MessageBox.Show("Red line PLC not connected.");
+                }
+            }
+            else
+            {
+                mGreenOccupancies[mCurrentBlockIndex] = ((localState & 0x00010000) >> 16);
+                try
+                {
+                    mGreenLine1.SendRightLights(mGreenRightLights);
+                }
+                catch
+                {
+                    MessageBox.Show("Green line PLC not connected.");
+                }
+            }
+            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, localState);
+            this.RefreshWindow(localState);
         }
 
         //*******************************************************************************************************************************************
-        //mButton_SetAuthority_Click toggles the crossing bar for a specific block and then shows the change in the block view window.
+        //SetAuthority toggles the crossing bar for a specific block and then shows the change in the block view window.
         //<sender> event sender (form control)
         //<e> event arguments (button click)
         private void mButton_Toggle_Bar_Click(object sender, EventArgs e)
         {
             mCurrentBlockIndex = mComboBox_Select_Block.SelectedIndex - 1;
-            int mLocalState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
-            mLocalState = mLocalState ^ 0x00000020;
-            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, mLocalState);
-            this.RefreshWindow(mLocalState);
-            MessageBox.Show(mLocalState.ToString());
+            int localState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
+            localState = localState ^ 0x00000020;
+            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, localState);
+            this.RefreshWindow(localState);
         }
 
         //*******************************************************************************************************************************************
@@ -549,25 +622,10 @@ namespace Track_Controller_1._02
         private void mButton_Toggle_Crossing_Lights_Click(object sender, EventArgs e)
         {
             mCurrentBlockIndex = mComboBox_Select_Block.SelectedIndex - 1;
-            int mLocalState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
-            mLocalState = mLocalState ^ 0x00000010;
-            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, mLocalState);
-            this.RefreshWindow(mLocalState);
-            MessageBox.Show(mLocalState.ToString());
-        }
-
-        //*******************************************************************************************************************************************
-        //mButton_SetBlockSpeed_Click sets the speed limit for a specific block and then shows the change in the block view window.
-        //<sender> event sender (form control)
-        //<e> event arguments (button click)
-        private void mButton_SetBlockSpeed_Click(object sender, EventArgs e)
-        {
-            mCurrentBlockIndex = mComboBox_Select_Block.SelectedIndex - 1;
-            int mLocalSpeed = mLines[mCurrentLineIndex].getmSpeedLimit(mCurrentSectionIndex, mCurrentBlockIndex);
-            mLocalSpeed = Convert.ToInt32(mTextBox_SetBlockSpeed.Text);
-            mLines[mCurrentLineIndex].setmSpeedLimit(mCurrentSectionIndex, mCurrentBlockIndex, mLocalSpeed);
-            mLabel_Display_Speed.Text = (mLines[mCurrentLineIndex].getmSpeedLimit(mCurrentSectionIndex, mCurrentBlockIndex)).ToString();
-            MessageBox.Show(mLocalSpeed.ToString());
+            int localState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
+            localState = localState ^ 0x00000010;
+            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, localState);
+            this.RefreshWindow(localState);
         }
 
         //*******************************************************************************************************************************************
@@ -577,11 +635,10 @@ namespace Track_Controller_1._02
         private void mButton_Toggle_Rail_Click(object sender, EventArgs e)
         {
             mCurrentBlockIndex = mComboBox_Select_Block.SelectedIndex - 1;
-            int mLocalState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
-            mLocalState = mLocalState ^ 0x00000400;
-            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, mLocalState);
-            this.RefreshWindow(mLocalState);
-            MessageBox.Show(mLocalState.ToString());
+            int localState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
+            localState = localState ^ 0x00000400;
+            mLines[mCurrentLineIndex].setmBlockState(mCurrentSectionIndex, mCurrentBlockIndex, localState);
+            this.RefreshWindow(localState);
         }
 
         //*******************************************************************************************************************************************
@@ -589,22 +646,37 @@ namespace Track_Controller_1._02
         //<mLocalState> integer holding the state of the current block
         private void RefreshWindow(int mLocalState)
         {
+            
+            //0x00000002 = contains switch on siding
+            //0x00000003 = contains switch on main
+            //0x00000004 = contains station
+            //0x00000040 = contains crossing, all open
+            //0x00000060 = contains crossing, bar closed
+            //0x00000050 = contains crossing, lights on
+            //0x00100000 = transit light left is green
+            //0x00200000 = transit light left is yellow
+            //0x00300000 = transit light left is red
+            //0x00010000 = transit light right is green
+            //0x00020000 = transit light right is Yellow
+            //0x00030000 = tranist light right is red
+            //0x00000400 = track is broken
+            //0x00000800 = no track signal
+            //0x00001000 = block not occupied
+            //0x00002000 = CTC has not locked out
+            //0x00004000 = Wayside controller has locked out
+
             mImage_Switch_Siding.Visible = (((mLocalState & 0x00000002) == 0x00000002) && ((mLocalState & 0x00000003) != 0x00000003));
             mImage_Switch_Main.Visible = ((mLocalState & 0x00000003) == 0x00000003);
             mImage_Crossing_Closed.Visible = ((mLocalState & 0x00000060) == 0x00000060);
             mImage_Crossing_Open.Visible = ((mLocalState & 0x00000040) == 0x00000040);
-            mImage_CrossingLights_Off.Visible = ((mLocalState & 0x00000040) == 0x00000040);
-            mImage_CrossingLights_On.Visible = ((mLocalState & 0x00000050) == 0x00000050);
             mImage_TransitLeft_Green.Visible = ((mLocalState & 0x00100000) == 0x00100000);
             mImage_TransitLeft_Red.Visible = ((mLocalState & 0x00200000) == 0x00200000);
             mImage_TransitLeft_Yellow.Visible = ((mLocalState & 0x00300000) == 0x00300000);
             mImage_TransitRight_Green.Visible = ((mLocalState & 0x00010000) == 0x00010000);
             mImage_TransitRight_Red.Visible = ((mLocalState & 0x00020000) == 0x00020000);
             mImage_TransitRight_Yellow.Visible = ((mLocalState & 0x00030000) == 0x00030000);
-            mImage_BrokenRail.Visible = ((mLocalState & 0x00000400) == 0x00000400);
-            mImage_NoTrackSignal.Visible = ((mLocalState & 0x00000800) == 0x00000800);
-            mImage_Unoccupied_Block.Visible = ((mLocalState & 0x00001000) != 0x00001000);
-            mImage_Occupied_Block.Visible = ((mLocalState & 0x00001000) == 0x00001000);
+            mImage_Unoccupied_Block.Visible = ((mLocalState & 0x00001000) == 0x00001000);
+            mImage_Occupied_Block.Visible = ((mLocalState & 0x00001000) != 0x00001000);
             mLabel_Suggested_Speed.Text = mCurrentSuggestedSpeed.ToString();
             mLabel_Authority.Text = mCurrentAuthority.ToString();
 
@@ -612,21 +684,18 @@ namespace Track_Controller_1._02
 
             if ((mLocalState & 0x00002000) == 0x00002000)
             {
-                mButton_CTC_Lockout.BackColor = Color.FromArgb(0, 192, 0);
-                mButton_CTC_Lockout.Image = Track_Controller_1._02.Properties.Resources.Lock_Open;
+
             }
             else
             {
-                mButton_CTC_Lockout.BackColor = Color.Red;
-                mButton_CTC_Lockout.Image = Track_Controller_1._02.Properties.Resources.Lock_Closed;
             }
 
             if ((mLocalState & 0x00004000) != 0x00004000)
             {
-                mButton_Lock_Local.BackColor = Color.FromArgb(0, 192, 0);
-                mButton_Lock_Local.Image = Track_Controller_1._02.Properties.Resources.Lock_Open;
-                this.mButton_Lock_Local.Image = Track_Controller_1._02.Properties.Resources.Lock_Open;
-                this.mButton_Lock_Local.BackColor = Color.FromArgb(0, 192, 0);
+                mButtonLockLocal.BackColor = Color.FromArgb(0, 192, 0);
+                mButtonLockLocal.Image = Track_Controller_1._02.Properties.Resources.Lock_Open;
+                this.mButtonLockLocal.Image = Track_Controller_1._02.Properties.Resources.Lock_Open;
+                this.mButtonLockLocal.BackColor = Color.FromArgb(0, 192, 0);
                 this.mButton_Toggle_Track_Occupancy.Enabled = false;
                 this.mButton_Toggle_Track_Occupancy.BackColor = SystemColors.ControlDark;
                 this.mButton_Toggle_Lights_Left.Enabled = false;
@@ -635,28 +704,16 @@ namespace Track_Controller_1._02
                 this.mButton_Toggle_Lights_Right.BackColor = SystemColors.ControlDark;
                 this.mButton_Toggle_Switch.Enabled = false;
                 this.mButton_Toggle_Switch.BackColor = SystemColors.ControlDark;
-                this.mButton_Toggle_Rail.Enabled = false;
-                this.mButton_Toggle_Rail.BackColor = SystemColors.ControlDark;
-                this.mButton_Toggle_Signal.Enabled = false;
-                this.mButton_Toggle_Signal.BackColor = SystemColors.ControlDark;
                 this.mButton_Toggle_Bar.Enabled = false;
-                this.mButton_Toggle_Bar.BackColor = SystemColors.ControlDark;
-                this.mButton_Toggle_Crossing_Lights.Enabled = false;
-                this.mButton_Toggle_Crossing_Lights.BackColor = SystemColors.ControlDark;
-                this.mButton_SetBlockSpeed.Enabled = false;
-                this.mButton_SetBlockSpeed.BackColor = SystemColors.ControlDark;
-                this.mTextBox_SetBlockSpeed.Text = "";
-                this.mTextBox_SetBlockSpeed.Enabled = false;
-                this.mRichText_Serial_Data.Enabled = true;
                 this.button3.Enabled = false;
                 this.button3.BackColor = SystemColors.ControlDark;
             }
             else
             {
-                mButton_Lock_Local.BackColor = Color.Red;
-                mButton_Lock_Local.Image = Track_Controller_1._02.Properties.Resources.Lock_Closed;
-                this.mButton_Lock_Local.Image = Track_Controller_1._02.Properties.Resources.Lock_Closed;
-                this.mButton_Lock_Local.BackColor = Color.Red;
+                mButtonLockLocal.BackColor = Color.Red;
+                mButtonLockLocal.Image = Track_Controller_1._02.Properties.Resources.Lock_Closed;
+                this.mButtonLockLocal.Image = Track_Controller_1._02.Properties.Resources.Lock_Closed;
+                this.mButtonLockLocal.BackColor = Color.Red;
                 this.mButton_Toggle_Track_Occupancy.Enabled = true;
                 this.mButton_Toggle_Track_Occupancy.BackColor = SystemColors.ButtonFace;
                 this.mButton_Toggle_Lights_Left.Enabled = true;
@@ -665,50 +722,14 @@ namespace Track_Controller_1._02
                 this.mButton_Toggle_Lights_Right.BackColor = SystemColors.ButtonFace;
                 this.mButton_Toggle_Switch.Enabled = true;
                 this.mButton_Toggle_Switch.BackColor = SystemColors.ButtonFace;
-                this.mButton_Toggle_Rail.Enabled = true;
-                this.mButton_Toggle_Rail.BackColor = SystemColors.ButtonFace;
-                this.mButton_Toggle_Signal.Enabled = true;
-                this.mButton_Toggle_Signal.BackColor = SystemColors.ButtonFace;
                 this.mButton_Toggle_Bar.Enabled = true;
                 this.mButton_Toggle_Bar.BackColor = SystemColors.ButtonFace;
-                this.mButton_Toggle_Crossing_Lights.Enabled = true;
-                this.mButton_Toggle_Crossing_Lights.BackColor = SystemColors.ButtonFace;
-                this.mButton_SetBlockSpeed.Enabled = true;
-                this.mButton_SetBlockSpeed.BackColor = SystemColors.ButtonFace;
-                this.mTextBox_SetBlockSpeed.Enabled = true;
-                this.mRichText_Serial_Data.Enabled = true;
                 this.button3.Enabled = true;
                 this.button3.BackColor = SystemColors.ButtonFace;
             }
 
             mLabel_Display_Speed.Text = (mLines[mCurrentLineIndex].getmSpeedLimit(mCurrentSectionIndex, mCurrentBlockIndex)).ToString();
         }
-
-        //This section may become obselete
-        //*******************************************************************************************************************************************
-        //mbutton3_Click Sends a serial packet to a dummy server to test TCP communications
-        //<sender> event sender (form control)
-        //<e> event arguments (button click)
-        /*
-        private void button3_Click(object sender, EventArgs e)
-        {
-            mCurrentBlockIndex = mComboBox_Select_Block.SelectedIndex - 1;
-            int mLocalState = mLines[mCurrentLineIndex].getmBlockState(mCurrentSectionIndex, mCurrentBlockIndex);
-
-            string msg = mLines[mCurrentLineIndex].getmnameLine() + "." + mCurrentSectionIndex + "." + mCurrentBlockIndex.ToString() + "." + mLocalState.ToString();
-            string mIP = "127.0.0.1";
-            int mPort = 1300;
-
-            CommunicationClient mClient2 = new CommunicationClient();
-            string response = mClient2.MessageSender(mIP, mPort, msg);
-
-            mRichText_Serial_Data.AppendText("\r\n" + msg);
-            mRichText_Serial_Data.ScrollToCaret();
-            mRichText_Serial_Data.AppendText("\r\n" + response);
-            mRichText_Serial_Data.ScrollToCaret();
-
-        }*/
-
 
         //*******************************************************************************************************************************************
         //mButton_SetSuggestedSpeed_Click sets the suggested speed for a specific block and then shows the change in the block view window.
@@ -720,52 +741,88 @@ namespace Track_Controller_1._02
             mCurrentSuggestedSpeed = Convert.ToInt32(mText_SuggestedSpeed.Text);
             mLines[mCurrentLineIndex].setSuggested(mCurrentSectionIndex, mCurrentBlockIndex, mCurrentSuggestedSpeed);
             mLabel_Suggested_Speed.Text = (mLines[mCurrentLineIndex].getSuggested(mCurrentSectionIndex, mCurrentBlockIndex)).ToString();
-            MessageBox.Show(mCurrentSuggestedSpeed.ToString());
         }
 
         //*******************************************************************************************************************************************
-        //mButton_SetAuthority_Click sets the authority for a specific block and then shows the change in the block view window.
+        //SetAuthority sets the authority for a specific block and then shows the change in the block view window.
         //<sender> event sender (form control)
         //<e> event arguments (button click)
-        private void mButton_SetAuthority_Click(object sender, EventArgs e)
+        private void SetAuthority(object sender, EventArgs e)
         {
             mCurrentBlockIndex = mComboBox_Select_Block.SelectedIndex - 1;
             mCurrentAuthority = Convert.ToInt32(mTextBox_Authority.Text);
             mLines[mCurrentLineIndex].setAuthority(mCurrentSectionIndex, mCurrentBlockIndex, mCurrentAuthority);
             mLabel_Authority.Text = (mLines[mCurrentLineIndex].getAuthority(mCurrentSectionIndex, mCurrentBlockIndex)).ToString();
-            MessageBox.Show(mCurrentAuthority.ToString());
         }
 
         //********************************************************************************************************************************************
-        //mButton_Block_Adder_Click: This function originally managed which block data would be sent to which PLC. This has since become obsolete.
-        //<sender> event sender (form control)
-        //<e> event arguments (button click)
-        private void mButton_Block_Adder_Click(object sender, EventArgs e)
+        //SplitArrays: This function splits the full line arrays into subarrays for each PLC.
+        private void SplitArrays()
         {
             
-            //mRichText_BlockInfo.AppendText("\r\n" + mCurrentLineIndex + "." + mCurrentSectionIndex + "." + mCurrentBlockIndex);
-            //mRichText_BlockInfo.ScrollToCaret();
+             Array.Copy(mRedMaintenanceBlocks,0,mRed1MaintenanceBlocks,0,38);
+             Array.Copy(mRedOccupancies,0,mRed1Occupancies,0,38);
+             Array.Copy(mRedSpeeds,0,mRed1Speeds,0,38);
+             Array.Copy(mRedAuthorities,0,mRed1Authorities,0,38);
+             Array.Copy(mRedCrossings,0,mRed1Crossings,0,38);
+             Array.Copy(mRedSwitches,0,mRed1Switches,0,38);
+             Array.Copy(mRedLeftLights,0,mRed1LeftLights,0,38);
+             Array.Copy(mRedRightLights,0,mRed1RightLights,0,38);
 
+             Array.Copy(mRedMaintenanceBlocks,71,mRed1MaintenanceBlocks,38,6);
+             Array.Copy(mRedOccupancies,71,mRed1Occupancies,38,6);
+             Array.Copy(mRedSpeeds,71,mRed1Speeds,38,6);
+             Array.Copy(mRedAuthorities,71,mRed1Authorities,38,6);
+             Array.Copy(mRedCrossings,71,mRed1Crossings,38,6);
+             Array.Copy(mRedSwitches,71,mRed1Switches,38,6);
+             Array.Copy(mRedLeftLights,71,mRed1LeftLights,38,6);
+             Array.Copy(mRedRightLights,71,mRed1RightLights,38,6);
 
-            //mControllerLine = mCurrentLineIndex;
-            //mControllerBlocks.Add(mCurrentBlockIndex);
-            //mControllerSections.Add(mCurrentSectionIndex);
+             Array.Copy(mRedMaintenanceBlocks,32,mRed2MaintenanceBlocks,0,39);
+             Array.Copy(mRedOccupancies,32,mRed2Occupancies,0,39);
+             Array.Copy(mRedSpeeds,32,mRed2Speeds,0,39);
+             Array.Copy(mRedAuthorities,32,mRed2Authorities,0,39);
+             Array.Copy(mRedCrossings,32,mRed2Crossings,0,39);
+             Array.Copy(mRedSwitches,32,mRed2Switches,0,39);
+             Array.Copy(mRedLeftLights,32,mRed2LeftLights,0,39);
+             Array.Copy(mRedRightLights,32,mRed2RightLights,0,39);
 
-
+            return;
         }
 
         //********************************************************************************************************************************************
-        //mButton_Block_Adder_Click: This function originally cleared the text window for the block adder. This has since become obsolete.
-        //<sender> event sender (form control)
-        //<e> event arguments (button click)
-        private void mButton_Clear_Click(object sender, EventArgs e)
+        //ArrayMerger: This function merges the subarrays into full line arrays
+        private void ArrayMerger()
         {
-            /*
-            mRichText_BlockInfo.Text = "";
-            mText_Port.Text = "";
-            mText_Address.Text = "";
-            */
-        }
 
+            Array.Copy(mRed1MaintenanceBlocks, 0, mRedMaintenanceBlocks, 0, 38);
+            Array.Copy(mRed1Occupancies, 0, mRedOccupancies, 0, 38);
+            Array.Copy(mRed1Speeds, 0, mRedSpeeds, 0, 38);
+            Array.Copy(mRed1Authorities, 0, mRedAuthorities, 0, 38);
+            Array.Copy(mRed1Crossings, 0, mRedCrossings, 0, 38);
+            Array.Copy(mRed1Switches, 0, mRedSwitches, 0, 38);
+            Array.Copy(mRed1LeftLights, 0, mRedLeftLights, 0, 38);
+            Array.Copy(mRed1RightLights, 0, mRedRightLights, 0, 38);
+
+            Array.Copy(mRed1MaintenanceBlocks, 37, mRedMaintenanceBlocks, 71, 6);
+            Array.Copy(mRed1Occupancies, 37, mRedOccupancies, 71, 6);
+            Array.Copy(mRed1Speeds, 37, mRedSpeeds, 71, 6);
+            Array.Copy(mRed1Authorities, 37, mRedAuthorities, 71, 6);
+            Array.Copy(mRed1Crossings, 37, mRedCrossings, 71, 6);
+            Array.Copy(mRed1Switches, 37, mRedSwitches, 71, 6);
+            Array.Copy(mRed1LeftLights, 37, mRedLeftLights, 71, 6);
+            Array.Copy(mRed1RightLights, 37, mRedRightLights, 71, 6);
+
+            Array.Copy(mRed2MaintenanceBlocks, 0, mRedMaintenanceBlocks, 32, 39);
+            Array.Copy(mRed2Occupancies, 0, mRedOccupancies, 32, 39);
+            Array.Copy(mRed2Speeds, 0, mRedSpeeds, 32, 39);
+            Array.Copy(mRed2Authorities, 0, mRedAuthorities, 32, 39);
+            Array.Copy(mRed2Crossings, 0, mRedCrossings, 32, 39);
+            Array.Copy(mRed2Switches, 0, mRedSwitches, 32, 39);
+            Array.Copy(mRed2LeftLights, 0, mRedLeftLights, 32, 39);
+            Array.Copy(mRed2RightLights, 0, mRedRightLights, 32, 39);
+
+            return;
+        }
     }
 }

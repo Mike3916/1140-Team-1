@@ -12,10 +12,10 @@
         <Button x:Name="Open" Content="Open" HorizontalAlignment="Left" Margin="137,144,0,0" VerticalAlignment="Top" Background="LightGreen" Click="Open_Click"/>
         <Button x:Name="Close" Content="Close" HorizontalAlignment="Left" Margin="79,144,0,0" VerticalAlignment="Top" Click="Close_Click"/>
         <TextBlock HorizontalAlignment="Left" Margin="51,236,0,0" TextWrapping="Wrap" Text="Tickets per Hour:" VerticalAlignment="Top"/>
-        <Rectangle x:Name ="UnoccupiedRect" HorizontalAlignment="Left" Height="30" Margin="51,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="68" Fill="LightGreen"/>
-        <TextBlock HorizontalAlignment="Left" Margin="53,0,0,0" TextWrapping="Wrap" Text="Unoccupied" VerticalAlignment="Center"/>
-        <TextBlock HorizontalAlignment="Left" Margin="132,0,0,0" TextWrapping="Wrap" Text="Occupied" VerticalAlignment="Center"/>
-        <Rectangle x:Name="OccupiedRect" HorizontalAlignment="Left" Height="30" Margin="126,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="68" RenderTransformOrigin="0.5,0.5">
+        <Rectangle x:Name ="UnoccupiedRect" HorizontalAlignment="Left" Height="30" Margin="49,197,0,0" Stroke="Black" VerticalAlignment="Top" Width="68" Fill="LightGreen"/>
+        <TextBlock HorizontalAlignment="Left" Margin="51,176,0,0" TextWrapping="Wrap" Text="Unoccupied" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="129,176,0,0" TextWrapping="Wrap" Text="Occupied" VerticalAlignment="Top"/>
+        <Rectangle x:Name="OccupiedRect" HorizontalAlignment="Left" Height="30" Margin="124,197,0,0" Stroke="Black" VerticalAlignment="Top" Width="68" RenderTransformOrigin="0.5,0.5">
             <Rectangle.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -25,7 +25,7 @@
                 </TransformGroup>
             </Rectangle.RenderTransform>
         </Rectangle>
-        <TextBlock HorizontalAlignment="Left" Margin="151,236,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top"/>
+        <TextBlock x:Name="ThrougputText" HorizontalAlignment="Left" Margin="151,236,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top"/>
         <Rectangle x:Name="SignalLeft" Fill="LightGray" HorizontalAlignment="Left" Height="29" Margin="205,117,0,0" Stroke="Black" VerticalAlignment="Top" Width="69"/>
         <TextBlock HorizontalAlignment="Left" Margin="209,124,0,0" TextWrapping="Wrap" Text="Signal Left" VerticalAlignment="Top"/>
         <Rectangle x:Name="CrossingRect" Fill="LightGray" HorizontalAlignment="Left" Height="42" Margin="228,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="92"/>

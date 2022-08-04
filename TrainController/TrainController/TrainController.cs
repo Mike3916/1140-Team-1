@@ -43,6 +43,7 @@ namespace TrainController
         public int mCmdAuthority = 0;
         public int mCurAuthority = 0;
         public string mBeacon = "-";
+        public string mPortName = "COM";
         public double mCurPower = 0;
 
         public const float Pmax = 120000; // 120 kW
@@ -59,7 +60,7 @@ namespace TrainController
         public void setupHardware()
         {
             // Setup serial port information: 
-            pi.PortName = "COM3";
+            pi.PortName = mPortName;
             pi.BaudRate = 115200;
             pi.Parity = Parity.None;
             pi.DataBits = 8;
@@ -584,6 +585,61 @@ namespace TrainController
 
             updateSpeed.Interval = new TimeSpan(0, 0, 0, 0, T);
             updateSpeed.Start();*/
+        }
+
+        public void UpdateSpeed()
+        {
+            if (mEmergencyBrakeStatus)
+            {
+                if (mCurSpeed <= 0)
+                {
+                    mEmergencyBrakeStatus = false;
+                }
+                else
+                {
+                    mCmdSpeed = 0;
+                    mSetSpeed = 0;
+
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) - 1);
+                }
+            }
+            else if (mServiceBrakeStatus)
+            {
+                if (mCurSpeed > 0)
+                {
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) - 1);
+                }
+            }
+            else if (mAutoMode)
+            {
+                if (Math.Abs(mCurSpeed - mCmdSpeed) < 0.5)
+                {
+                    mCurSpeed = mCmdSpeed;
+                }
+                else if (mCurSpeed < mCmdSpeed)
+                {
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) + 1);
+                }
+                else if (mCurSpeed > mCmdSpeed)
+                {
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) - 1);
+                }
+            }
+            else
+            {
+                if (Math.Abs(mCurSpeed - mSetSpeed) < 0.5)
+                {
+                    mCurSpeed = mSetSpeed;
+                }
+                else if (mCurSpeed < mSetSpeed)
+                {
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) + 1);
+                }
+                else if (mCurSpeed > mSetSpeed)
+                {
+                    mCurSpeed = convertToMetric(convertToImperial(mCurSpeed) - 1);
+                }
+            }
         }
 
         public void UpdateSpeed(object sender, EventArgs e)
