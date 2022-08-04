@@ -1338,7 +1338,37 @@ namespace gogTests
             Assert.AreEqual(true, chooChoo.getServiceBrake(), "Service brake not activated");
         }
 
-        
+        [TestMethod]
+        public void accelerationTest()
+        {
+            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
+            chooChoo.setPowerCmd(120000);
+            chooChoo.increment();
+            chooChoo.increment();
+            Assert.AreEqual(0.5, chooChoo.getAcceleration(), "Acceleration not working");
+            for(int i = 0; i < 1000; i++)
+            {
+                chooChoo.increment();
+            }
+            Assert.IsTrue(chooChoo.getAcceleration() < 0.5, "Acceleration not working");
+        }
+
+        [TestMethod]
+        public void gradTest()
+        {
+            TrainObject.Train chooChoo = new TrainObject.Train(35, 1);
+            chooChoo.setPowerCmd(120000);
+            for (int i = 0; i < 1000; i++)
+            {
+                chooChoo.increment();
+            }
+            chooChoo.toggleServiceBrake();
+            double dec = chooChoo.getAcceleration();
+            chooChoo.setGrade(5);
+            Assert.IsTrue(dec > chooChoo.getAcceleration(), "Grad not working");
+
+
+        }
 
     }
 }
