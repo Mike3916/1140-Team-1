@@ -29,7 +29,7 @@ namespace Backend
 		public int destination; //holds the block number of the destination
 		public TimeSpan duration; //TimeSpan variable to keep track of time duration between ETD and ETA
         public double length = 0;  //The length of the route
-        public int authority;
+        //public int authority;
         public double speed;
         public List<int> route = new List<int>(); //holds list of blockNumbers that the train passes through
 
@@ -59,8 +59,11 @@ namespace Backend
         }
         public void calcRoute()
         {
+            int maxAuthority;
+            int tempAuthority;
+
             int i = 0; //Start at 0
-            if (line == 0) //The red line
+            if (line == 0) //The red line   [mRedAuthorities is 0 through 76]
             {
                 while (true)
                 {
@@ -69,6 +72,15 @@ namespace Backend
                     if (destination == mredRoute[i])
                         break;
                     i++; //increment i and add info to document, so it's already added by the time the while loop ends. (i=-1 before the while loop starts)
+                }
+
+                maxAuthority = route.Count - 1; //If there are 5 blocks in the route, we want the authority to be 0 on the fifth block, so the max authority should be 4, or 1 less than the number of block in the route
+                tempAuthority = maxAuthority;  //This is the temporary authority, it will decrease by 1 as authorities are consecutively assigned
+                
+                for (i=0; i<= maxAuthority; i++)
+                {
+                    ((MainWindow)Application.Current.MainWindow).mRedAuthorities[route[i] - 1] = tempAuthority; //The route values are 1-indexed, but the redAuthorities are 0-indexed, so subtract one
+                    tempAuthority--; //Decrease the authority for each iteration
                 }
             }
             else if (line == 1) //The green line
@@ -81,9 +93,16 @@ namespace Backend
                         break;
                     i++;
                 }
+                maxAuthority = route.Count - 1; //If there are 5 blocks in the route, we want the authority to be 0 on the fifth block, so the max authority should be 4, or 1 less than the number of block in the route
+                tempAuthority = maxAuthority;  //This is the temporary authority, it will decrease by 1 as authorities are consecutively assigned
+
+                for (i = 0; i <= maxAuthority; i++)
+                {
+                    ((MainWindow)Application.Current.MainWindow).mGreenAuthorities[route[i] - 1] = tempAuthority; //The route values are 1-indexed, but the redAuthorities are 0-indexed, so subtract one
+                    tempAuthority--; //Decrease the authority for each iteration
+                }
             }
 
-            authority = route.Count; //maybe make this equal to (route.Count-1)?
             speed = length / duration.TotalSeconds; //This will give speed in meters per second
         }
     }

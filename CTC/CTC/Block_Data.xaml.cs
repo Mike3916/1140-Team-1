@@ -51,7 +51,7 @@ namespace CTC
 
             if (blockType == 0) //If the selecte block is just a normal block, it doesn't have a switch or crossing light, so hide these properties
             {
-                ToggleButton.Visibility = Visibility.Collapsed;
+                ToggleButton.Visibility = Visibility.Collapsed; //Hide switching and crossing info
                 SwitchText.Visibility = Visibility.Collapsed;
                 SwitchNum.Visibility = Visibility.Collapsed;
 
@@ -61,9 +61,12 @@ namespace CTC
             }
             else if (blockType == 1) //The selected block is a switch block, hide crossing info
             {
-                CrossingRect.Visibility = Visibility.Collapsed;
-                CrossingText.Visibility = Visibility.Collapsed;
+                ToggleButton.Visibility = Visibility.Visible; //Show switch info
+                SwitchText.Visibility = Visibility.Visible;
+                SwitchNum.Visibility = Visibility.Visible;
 
+                CrossingRect.Visibility = Visibility.Collapsed; //Hide crossing info
+                CrossingText.Visibility = Visibility.Collapsed;
 
 
                 if (line == 0)
@@ -86,11 +89,14 @@ namespace CTC
                         ToggleButton.IsEnabled = true;
                 }
             }
-            else if (blockType == 2) //The block is a crossing block, hide switch info
+            else if (blockType == 2) //The block is a crossing block
             {
-                ToggleButton.Visibility = Visibility.Collapsed;
+                ToggleButton.Visibility = Visibility.Collapsed; //Hide switch info
                 SwitchText.Visibility = Visibility.Collapsed;
                 SwitchNum.Visibility = Visibility.Collapsed;
+
+                CrossingRect.Visibility = Visibility.Visible; //Show crossing info
+                CrossingText.Visibility = Visibility.Visible;
 
                 if (line == 0) //red line
                     if (((MainWindow)Application.Current.MainWindow).mRedCrossings[blockIdx] == 0) //no crossing light
@@ -173,10 +179,13 @@ namespace CTC
             Open.Background = Brushes.LightGreen;
             Close.Background = Brushes.LightGray;
 
+
             if (line==0)
                 ((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] = 0; //Block is out of maintenance, send 0
             else if(line==1)
                 ((MainWindow)Application.Current.MainWindow).mGreenMaintenanceBlocks[blockIdx] = 0; //Block is out of maintenance, send 0
+
+            checkToggle(); //Changing the maintenance status to closed may allow the toggle button to be shown, so call this function
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -184,10 +193,13 @@ namespace CTC
             Close.Background = Brushes.LightGreen;
             Open.Background = Brushes.LightGray;
 
+
             if (line == 0)
                 ((MainWindow)Application.Current.MainWindow).mRedMaintenanceBlocks[blockIdx] = 1; //Block is out of maintenance, send 1
             else if (line == 1)
                 ((MainWindow)Application.Current.MainWindow).mGreenMaintenanceBlocks[blockIdx] = 1; //Block is out of maintenance, send 1
+
+            checkToggle(); //Changing the maintenance status to closed may allow the toggle button to be shown, so call this function
         }
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e) //Change the switch to it's opposite position
