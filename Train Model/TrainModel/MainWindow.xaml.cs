@@ -110,7 +110,6 @@ namespace TrainModel
             Speed.Text = "Current Speed: " + Math.Round(Trains[i].getCurrentSpeedMPH(), 2).ToString() + "Mi/h\nCommanded Speed: " + Math.Round(Trains[i].getCommandedSpeedMPH(), 2).ToString() + "Mi/h\nCurrent Acceleration: " + Trains[i].getAccelerationFPS().ToString() + "ft/s^2\nTime to Next Block: " + Trains[i].getTimeTillNextBlock() + "s";
             power.Text = Trains[i].getPowerCmd().ToString() + " W";
             Beacon.Text = "Beacon: " + Trains[i].getBeacon();
-            cmdSpeed.Text = Trains[i].getCommandedSpeedMPH().ToString() + "Mi/h";
             non_Vitals.Text = "Number of Passengers: " + Trains[i].getPassengers() + "\nNumber of Crew: " + Trains[i].getCrew() + "\nNumber of Cars: " + Trains[i].getCars().ToString() + "\nCapacity: " + Trains[i].getCapacity().ToString() + "\nInterior Lights:\t\tExterior Lights: \nLeft Doors:\t\tRight Doors: \nTemperature: " + Trains[i].getTemperature().ToString() + "F";
             Position.Text = "Current Block: " + Trains[selectedTrain].getBlockID() + "\nAuthority: " + Trains[selectedTrain].getCmdAuthority().ToString() + " Blocks\nLength of Block:\nDistance left on block:" + Trains[selectedTrain].getRemainingDistMF() + " Ft\nGrade:";
 

@@ -495,6 +495,8 @@ namespace TrainObject
                 currAuthority = 0;
             }
 
+            commandedSpeed = b.mspeedLimit;
+
             blockID = b.mblockNum;
 
             if (b.mstationSide.Contains("Left"))
