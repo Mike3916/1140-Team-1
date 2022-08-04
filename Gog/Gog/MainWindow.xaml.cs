@@ -97,7 +97,7 @@ namespace Gog
         bool gotTrack = false;
         bool paused = true;
 
-        int mthroughPut, mtotalSales;
+        int mredThroughPut, mgreenThroughPut, mredTotalSales, mgreenTotalSales;
 
         int hour, minute, second, timeElapsed = 0;
         string hourString, minuteString, secondString;
@@ -374,8 +374,16 @@ namespace Gog
                                 int temp1 = bl.mPop;
                                 int temp2 = trains.Trains[j].UpdatePassenger(bl.mPop);
                                 track.SetPopulation(temp2, bl);
-                                mtotalSales += temp1 - temp2;
-                                mthroughPut = mtotalSales / timeElapsed;
+                                if(bl.mlineName == "Red")
+                                {
+                                    mredTotalSales += temp1 - temp2;
+                                    mredThroughPut = mredTotalSales / timeElapsed;
+                                }
+                                else
+                                {
+                                    mgreenTotalSales += temp1 - temp2;
+                                    mgreenThroughPut = mgreenTotalSales / timeElapsed;
+                                }
                             }
                         }
                         else
