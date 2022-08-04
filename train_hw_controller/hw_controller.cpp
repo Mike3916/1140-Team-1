@@ -20,8 +20,8 @@ class serialConnect
 		bool mAnnouncementsStatus=false;
 		
 		int mTemperature=72;
-		int mKp=250;
-		int mKi=100;
+		int mKp=10000;
+		int mKi=0;
 		
 		float mCmdSpeed=0;
 		float mSetSpeed=0;
@@ -36,7 +36,7 @@ class serialConnect
 		float Uk=0;
 		float Ek=0;
 		float Ek_prev=0;
-		int T=250; // 250 ms
+		int T=1; // 1 ms
 		
 		string mCurBeacon="-";
 		
@@ -89,8 +89,8 @@ class serialConnect
 			
 			// Misc Value:
 			mTemperature = 72;
-			mKp = 250;
-			mKi = 100;
+			mKp = 10000;
+			mKi = 0;
 			Uk = 0;
 			Ek = 0;
 			Ek_prev = 0;
