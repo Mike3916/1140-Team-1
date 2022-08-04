@@ -64,6 +64,9 @@ namespace CTC
         public int[] mGreenLeftLights = new int[151];
         public int[] mGreenRightLights = new int[151];
 
+        public bool mRedTrain = false; //This is set to true immediately after dispatching a train on the red line, gog will set it back to false after
+        public bool mGreenTrain = false; 
+
         
 
         public MainWindow()
@@ -146,11 +149,13 @@ namespace CTC
 
                 train_data.Dest.IsEnabled = true; //on the train_data page, enable editing of the Destination box if the user is in manual mode
                 train_data.ETA.IsEnabled = true; // on the train_data page, enable editing of the ETA box
-               
-                block_data.ToggleButton.IsEnabled = true; //on block_data page, enable editing of toggle switch button
+
+                block_data.checkToggle(); //Call checkToggle() to make sure not only the CTC is in maintenance mode, but the block is in maintenance mode too
                 block_data.Close.IsEnabled = true; //on block_data page, disabled editing of close/open block status
                 block_data.Open.IsEnabled = true;
                 train_data.UpdateTrain.IsEnabled = true; //on train_data page, make the update train button available
+
+
 
 
             }

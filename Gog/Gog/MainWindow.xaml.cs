@@ -92,13 +92,25 @@ namespace Gog
         */
 
         DispatcherTimer mGlobalTimer;
-        int mIterationMultiplier = 10, numTrains = 0, iter = 0;
+        int mIterationMultiplier = 1, numTrains = 0, iter = 0;
         bool newBlock;
         bool gotTrack = false;
+        bool paused = true;
+
+        int hour, minute, second;
+        string hourString, minuteString, secondString;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            DateTime now = DateTime.Now;
+            LiveTimeLabel.Content = now.ToString("HH:mm");
+
+            hour = now.Hour;
+            minute = now.Minute;
+            second = now.Second;
+
             InitTimer();
         }
 
@@ -152,6 +164,38 @@ namespace Gog
                 ctc.Activate();
         }
 
+        public void SpeedControl(object sender, RoutedEventArgs e)
+        {
+            if (mIterationMultiplier == 1)
+            {
+                mIterationMultiplier = 10;
+                SpeedMultiplier.Content = "Clock speed (10x)";
+            }
+            else
+            {
+                mIterationMultiplier = 1;
+                SpeedMultiplier.Content = "Clock speed (1x)";
+            }
+        }
+
+        public void PauseControl(object sender, RoutedEventArgs e)
+        {
+            if (paused)
+            {
+                paused = false;
+                mGlobalTimer.Start();
+                Pause.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF28C347"));
+                Pause.Content = "Running";
+            }
+            else
+            {
+                paused = true;
+                mGlobalTimer.Stop();
+                Pause.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFF5050"));
+                Pause.Content = "Paused";
+            }
+        }
+
         private void StartUpActivated(object sender, EventArgs e)
         {
             Application.Current.MainWindow = trainCtrl;
@@ -174,33 +218,94 @@ namespace Gog
             mGlobalTimer.Tick += new EventHandler(updateTick);
 
             mGlobalTimer.Interval = new TimeSpan(0, 0, 0, 0, 10); //1 millisecond
-            mGlobalTimer.Start();
         }
 
         private void updateTick(object sender, EventArgs e)
         {
             for (int i = 0; i < mIterationMultiplier; i++)
             {
-                if (iter++ % 10 == 0) TimeBox.Text = (iter).ToString();
+                if (iter++ == 63)
+                {
+                    iter = 0;
 
+                    if (second++ == 59)
+                    {
+                        second = 0;
+                        
+                        if (minute++ == 59)
+                        {
+                            minute = 0;
+
+                            if (hour++ == 23)
+                            {
+                                hour = 0;
+                            }
+                        }
+                    }
+
+                    if (second < 10)
+                    {
+                        secondString = "0" + second.ToString();
+                    }
+                    else
+                    {
+                        secondString = second.ToString();
+                    }
+
+                    if (minute < 10)
+                    {
+                        minuteString = "0" + minute.ToString();
+                    }
+                    else
+                    {
+                        minuteString = minute.ToString();
+                    }
+
+                    if (hour < 10)
+                    {
+                        hourString = "0" + hour.ToString();
+                    }
+                    else
+                    {
+                        hourString = hour.ToString();
+                    }
+
+                    LiveTimeLabel.Content = hourString + ":" + minuteString + ":" + secondString;
+                }
 
                 if (track != null && ctc != null && track.mLines.Count == 2 && iter % 20 == 10)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
                 {
+                    //Update Track Controller variables with values from CTC
+                    mRedMaintenanceBlocks = ctc.mRedMaintenanceBlocks;
+                    mRedOccupancies = ctc.mRedOccupancies;
+                    mRedSpeeds = ctc.mRedSpeeds;
+                    mRedAuthorities = ctc.mRedAuthorities;
+                    mRedCrossings = ctc.mRedCrossings;
+                    mRedSwitches = ctc.mRedSwitches;
+                    mRedLeftLights = ctc.mRedLeftLights;
+                    mRedRightLights = ctc.mRedRightLights;
+                    mRedTrain = ctc.mRedTrain;
+
+                    mGreenMaintenanceBlocks = ctc.mGreenMaintenanceBlocks;
+                    mGreenOccupancies = ctc.mGreenOccupancies;
+                    mGreenSpeeds = ctc.mGreenSpeeds;
+                    mGreenAuthorities = ctc.mGreenAuthorities;
+                    mGreenCrossings = ctc.mGreenCrossings;
+                    mGreenSwitches = ctc.mGreenSwitches;
+                    mGreenLeftLights = ctc.mGreenLeftLights;
+                    mGreenRightLights = ctc.mGreenRightLights;
+                    mGreenTrain = ctc.mGreenTrain;
+
                     PLCgetCTC();
                     PLCgetTrack();
                 }
 
                 if (track != null && ctc != null && track.mLines.Count == 2 && iter % 20 == 0)
                 {
-                    PLCsetCTC();
                     PLCsetTrack();
+                    PLCsetCTC();
+                    ctc.GetTrackController(mRedMaintenanceBlocks, mRedOccupancies, mRedSpeeds, mRedAuthorities, mRedCrossings, mRedSwitches, mRedLeftLights, mRedRightLights, mGreenMaintenanceBlocks, mGreenOccupancies, mGreenSpeeds, mGreenAuthorities, mGreenCrossings, mGreenSwitches, mGreenLeftLights, mGreenRightLights); //Write function in CTC to read in these values 
                 }
-
-                if (track != null)
-                    track.UpdateTick(mIterationMultiplier);
-
-                
-
 
                 if (track != null && ctc != null && gotTrack==false && track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
                 {                                                       
@@ -213,36 +318,32 @@ namespace Gog
 
                 if (track != null && ctc != null &&  track.mLines.Count == 2)    //As long as track and ctc both exist, and the track has not been sent to the CTC yet,
                 {
-                    ctc.GetTrackController(mRedMaintenanceBlocks, mRedOccupancies, mRedSpeeds, mRedAuthorities, mRedCrossings, mRedSwitches, mRedLeftLights, mRedRightLights, mGreenMaintenanceBlocks, mGreenOccupancies, mGreenSpeeds, mGreenAuthorities, mGreenCrossings, mGreenSwitches, mGreenLeftLights, mGreenRightLights); //Write function in CTC to read in these values
-                                                                                                                                                                                                                                                                                                                                  //Update Track Controller variables with values from CTC
-                    mRedMaintenanceBlocks = ctc.mRedMaintenanceBlocks;
-                    mRedOccupancies = ctc.mRedOccupancies;
-                    mRedSpeeds = ctc.mRedSpeeds;
-                    mRedAuthorities = ctc.mRedAuthorities;
-                    mRedCrossings = ctc.mRedCrossings;
-                    mRedSwitches = ctc.mRedSwitches;
-                    mRedLeftLights = ctc.mRedLeftLights;
-                    mRedRightLights = ctc.mRedRightLights;
-                    //mRedTrain = ctc.mRedTrain;
-
-                    mGreenMaintenanceBlocks = ctc.mGreenMaintenanceBlocks;
-                    mGreenOccupancies = ctc.mGreenOccupancies;
-                    mGreenSpeeds = ctc.mGreenSpeeds;
-                    mGreenAuthorities = ctc.mGreenAuthorities;
-                    mGreenCrossings = ctc.mGreenCrossings;
-                    mGreenSwitches = ctc.mGreenSwitches;
-                    mGreenLeftLights = ctc.mGreenLeftLights;
-                    mGreenRightLights = ctc.mGreenRightLights;
-                    //mGreenTrain = ctc.mGreenTrain;
+                    
+                                                                                                                                                                                                                                                                                                                                  
+                    
                 }
-                
+
                 //if (ctc.mDispatch != -1 && ctc != null && track != null && trains != null && trainCtrl != null)
                 //{
+                //    if (mRedTrain == true)
+                //    {
+                //        ctc.mDispatch = 0;
+                //    }
+                //    if (mGreenTrain == true)
+                //    {
+                //        ctc.mDispatch = 1;
+                //    }
                 //    track.AddTrain(ctc.mDispatch, ctc.mAuth);
                 //    trains.addTrain(ctc.mDispatch, ctc.mAuth);
                 //    trainCtrl.addController((ctc.mDispatch).ToBoolean());
                 //    ctc.mDispatch = -1;
+                //mRedline1.SendTrain(false);
+                //mGreenLine1.SendTrain(false);
                 //}
+
+
+
+
 
                 for (int j = 0; j < numTrains; j++)
                 {
@@ -272,19 +373,6 @@ namespace Gog
 
         private void PLCgetCTC()
         {
-            /*77 element integer arrays for red line
-            mRedMaintenanceBlocks = CTCReturnMaintenanceFunction;
-            mRedSpeeds = CTCReturnSpeedsFunction;
-            mRedAuthorities = CTCRetrunAuthoritiesFunction;
-            mRedSwitches = CTCReturnSwitchesFunction;
-            */
-
-            /*151 element integer arrays for red line
-            mGreenMaintenanceBlocks = CTCReturnMaintenanceFunction;
-            mGreenSpeeds = CTCReturnSpeedsFunction;
-            mGreenAuthorities = CTCReturnAuhtorityFunction;
-            mGreenSwitches = CTCReturnSwitchesFunction;
-            */
 
             ArraySplitter();
 
@@ -327,22 +415,10 @@ namespace Gog
             mGreenLine1.ReceiveRightLights(mGreen1RightLights.Length);
             mGreenLine1.ReceiveLeftLights(mGreen1LeftLights.Length);
 
-            //ctc.mRedTrain = false;
-            //ctc.mGreenTrain = false;
+            ctc.mRedTrain = false;
+            ctc.mGreenTrain = false;
 
             ArrayMerger();
-
-            /*77 element integer arrays for red line
-            
-            = mRedOccupancies;
-            = mRedCrossings;
-            = mRedSwitches;
-         */
-            /*151 element integer arrays for green line
-             = mGreenOccupancies;
-             = mGreenCrossings;
-             = mGreenSwitches;
-       */
            
         }
 
@@ -399,8 +475,9 @@ namespace Gog
             track.SetCrossings(mGreenCrossings, 1);
             track.SetSwitches(mGreenSwitches, 1);
 
-            mRedline1.SendTrain(false);
-            mGreenLine1.SendTrain(false);
+
+
+
         }
 
         private void ArraySplitter()

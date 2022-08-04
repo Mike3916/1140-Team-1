@@ -33,7 +33,6 @@ namespace CTC
         public Train_Data()
         {
             InitializeComponent();
-
         }
 
         public void update_Train_Data()
