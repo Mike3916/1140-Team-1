@@ -375,7 +375,10 @@ namespace Gog
         {
 
             ArraySplitter();
-
+            if(mRedTrain == true)
+            {
+                MessageBox.Show(mRedAuthorities[76].ToString() + " " + mRed1Authorities[43].ToString());
+            }
             mRedline1.SendMaintenance(mRed1MaintenanceBlocks);
             mRedline1.SendSpeeds(mRed1Speeds);
             mRedline1.SendAuthorities(mRed1Authorities);
@@ -525,14 +528,14 @@ namespace Gog
             Array.Copy(mRed1LeftLights, 0, mRedLeftLights, 0, 38);
             Array.Copy(mRed1RightLights, 0, mRedRightLights, 0, 38);
 
-            Array.Copy(mRed1MaintenanceBlocks, 37, mRedMaintenanceBlocks, 71, 6);
-            Array.Copy(mRed1Occupancies, 37, mRedOccupancies, 71, 6);
-            Array.Copy(mRed1Speeds, 37, mRedSpeeds, 71, 6);
-            Array.Copy(mRed1Authorities, 37, mRedAuthorities, 71, 6);
-            Array.Copy(mRed1Crossings, 37, mRedCrossings, 71, 6);
-            Array.Copy(mRed1Switches, 37, mRedSwitches, 71, 6);
-            Array.Copy(mRed1LeftLights, 37, mRedLeftLights, 71, 6);
-            Array.Copy(mRed1RightLights, 37, mRedRightLights, 71, 6);
+            Array.Copy(mRed1MaintenanceBlocks, 38, mRedMaintenanceBlocks, 71, 6);
+            Array.Copy(mRed1Occupancies, 38, mRedOccupancies, 71, 6);
+            Array.Copy(mRed1Speeds, 38, mRedSpeeds, 71, 6);
+            Array.Copy(mRed1Authorities, 38, mRedAuthorities, 71, 6);
+            Array.Copy(mRed1Crossings, 38, mRedCrossings, 71, 6);
+            Array.Copy(mRed1Switches, 38, mRedSwitches, 71, 6);
+            Array.Copy(mRed1LeftLights, 38, mRedLeftLights, 71, 6);
+            Array.Copy(mRed1RightLights, 38, mRedRightLights, 71, 6);
 
             Array.Copy(mRed2MaintenanceBlocks, 0, mRedMaintenanceBlocks, 32, 39);
             Array.Copy(mRed2Occupancies, 0, mRedOccupancies, 32, 39);
